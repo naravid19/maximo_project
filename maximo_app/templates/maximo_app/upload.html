@@ -1,31 +1,24 @@
+{% extends 'maximo_app/base.html' %}
 {% comment %} path: maximo_project\maximo_app\templates\upload.html {% endcomment %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    {% load static %}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
-    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
-    <style>
-        body {
-            font-family: 'Bai Jamjuree', sans-serif;
-            font-weight: 500;
-            font-style: normal;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        .error {
-            color: red;
-            font-size: 0.9em;
-        }
-    </style>
-    <title>Upload Files</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
+{% block title %}Upload Files{% endblock %}
+{% block style %}
+<style>
+    {% comment %} body {
+        font-family: 'Bai Jamjuree', sans-serif;
+        font-weight: 500;
+        font-style: normal;
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    .error {
+        color: red;
+        font-size: 0.9em;
+    } {% endcomment %}
+</style>
+{% endblock %}
+
+{% block content %}
     <div class="container">
         {% if not schedule_filename and not location_filename %}
             <h1>Upload Files</h1>
@@ -398,5 +391,4 @@
         });
     });
 </script>
-</body>
-</html>
+{% endblock content %}

@@ -8,28 +8,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>{% block title %}Home{% endblock %}</title>
-
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
     
+    <!-- Link to Tailwind CSS output file -->
+    {% compress css %} 
+    <link rel="stylesheet" href="{% static 'src/output.css' %}">
+    {% endcompress %}
+    
+    <!-- Custom inline style for font-family -->
     <style>
         body {
             font-family: 'Bai Jamjuree', sans-serif;
         }
     </style>
     
+    <!-- Block for additional CSS styles -->
     {% block style %}{% endblock %}
 
-    {% compress css %} 
-    <link rel="stylesheet" href="{% static 'src/output.css' %}">
-    {% endcompress %}
-    
+    <!-- jQuery Library -->
     <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
     
-    {% block script %}{% endblock %}
 </head>
+
 <body>
+    <!-- Content Block -->
     {% block content %}{% endblock %}
+    
+    <!-- Flowbite JavaScript -->
+    {% comment %} <script src="{% static 'node_modules/flowbite/dist/flowbite.min.js' %}"></script> {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+
+    <!-- Block for additional JS scripts -->
+    {% block script %}{% endblock %}
 </body>
 </html>
