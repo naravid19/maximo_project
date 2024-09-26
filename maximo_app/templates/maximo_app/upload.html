@@ -1,0 +1,402 @@
+{% comment %} path: maximo_project\maximo_app\templates\upload.html {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <style>
+        body {
+            font-family: 'Bai Jamjuree', sans-serif;
+            font-weight: 500;
+            font-style: normal;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+    <title>Upload Files</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container">
+        {% if not schedule_filename and not location_filename %}
+            <h1>Upload Files</h1>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Dropdown สำหรับเลือกปี -->
+                <div class="form-group">
+                    {{ form.year.label_tag }}
+                    {{ form.year }}
+                    {% if form.year.errors %}
+                        <div class="error">
+                            {% for error in form.year.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Dropdown สำหรับเลือก Site -->
+                <div class="form-group">
+                    {{ form.site.label_tag }}
+                    {{ form.site }}
+                    {% if form.site.errors %}
+                        <div class="error">
+                            {% for error in form.site.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p id="site_description" style="display: inline; margin-left: 10px;"></p>
+                </div>
+                
+                <!-- Dropdown สำหรับเลือก Plant Type -->
+                <div class="form-group">
+                    {{ form.plant_type.label_tag }}
+                    {{ form.plant_type }}
+                    {% if form.plant_type.errors %}
+                        <div class="error">
+                            {% for error in form.plant_type.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p id="plant_type_description" style="display: inline; margin-left: 10px;"></p>
+                </div>
+
+                <!-- Dropdown สำหรับเลือก Unit -->
+                <div class="form-group">
+                    {{ form.unit.label_tag }}
+                    {{ form.unit }}
+                    {% if form.unit.errors %}
+                        <div class="error">
+                            {% for error in form.unit.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Dropdown สำหรับเลือก Work Type -->
+                <div class="form-group">
+                    {{ form.work_type.label_tag }}
+                    {{ form.work_type }}
+                    {% if form.work_type.errors %}
+                        <div class="error">
+                            {% for error in form.work_type.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p id="work_type_description" style="display: inline; margin-left: 10px"></p>
+                </div>
+
+                <!-- Dropdown สำหรับเลือก ACTTYPE -->
+                <div class="form-group">
+                    {{ form.acttype.label_tag }}
+                    <select id="id_acttype" name="acttype">
+                        <option value="">กรุณาเลือก ACTTYPE</option>
+                    </select>
+                    {% if form.acttype.errors %}
+                        <div class="error">
+                            {% for error in form.acttype.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p id="acttype_description" style="display: inline; margin-left: 10px;"></p>
+                </div>
+
+                <!-- Dropdown สำหรับเลือก WBS -->
+                <div class="form-group">
+                    {{ form.wbs.label_tag }}
+                    {{ form.wbs }}
+                    {% if form.wbs.errors %}
+                        <div class="error">
+                            {% for error in form.wbs.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p id="wbs_description" style="display: inline; margin-left: 10px;"></p>
+                </div>
+
+                <!-- Dropdown สำหรับเลือก WO Status -->
+                <div class="form-group">
+                    {{ form.wostatus.label_tag }}
+                    {{ form.wostatus }}
+                    {% if form.wostatus.errors %}
+                        <div class="error">
+                            {% for error in form.wostatus.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p id="wostatus_description" style="display: inline; margin-left: 10px;"></p>
+                </div>
+
+                <!-- ฟิลด์สำหรับอัปโหลดไฟล์ -->
+                <div class="form-group">
+                    {{ form.schedule_file.label_tag }} 
+                    {{ form.schedule_file }}
+                    {% if form.schedule_file.errors %}
+                        <div class="error">
+                            {% for error in form.schedule_file.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    {{ form.location_file.label_tag }} 
+                    {{ form.location_file }}
+                    {% if form.location_file.errors %}
+                        <div class="error">
+                            {% for error in form.location_file.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+                <button type="submit" name="upload_files">Upload Files</button>
+            </form>
+        {% else %}
+        <h1>Uploaded Files</h1>
+            {% if request.session.schedule_filename %}
+                <p><strong>Schedule File:</strong> {{ request.session.schedule_filename }}</p>
+            {% endif %}
+            {% if request.session.location_filename %}
+                <p><strong>Location File:</strong> {{ request.session.location_filename }}</p>
+            {% endif %}
+        {% endif %}
+    
+    {% if request.session.download_link_comment %}
+    <hr>
+    <div>
+        <h1>Download Files</h1>
+        <a href="{% url 'download_comment_file' %}">
+            <button>Download Comment File</button>
+        </a>
+    </div>
+    <hr>
+
+    <div>
+        <h1>DATA PREVIEW BEFORE CONVERT</h1>
+            <p><strong>EGPROJECTID:</strong> {{ request.session.egprojectid }}</p>
+            <p><strong>EGWBS (MMA WORK LIST):</strong> {{ request.session.egwbs}}</p>
+            <p><strong>SITEID:</strong> {{ request.session.siteid}}</p>
+            <p><strong>LOCATION(UNIT):</strong> {{ request.session.location}}</p>
+            <p><strong>WORKTYPE:</strong> {{ request.session.worktype}}</p>
+            <p><strong>EGMNTACTTYPE:</strong> {{ request.session.egmntacttype}}</p>
+            <p><strong>WOSTATUS:</strong> {{ request.session.wostatus}}</p>
+            <p><strong>WBS Description:</strong> {{ request.session.wbs_desc}}</p>
+    </div>
+    {% endif %}
+
+    {% if error_message %}
+        <div class="alert alert-danger">
+            <p>{{ error_message }}</p>
+        </div>
+    {% endif %}
+
+    {% if not error_message %}
+        {% if extracted_kks_counts is not None and extracted_kks_counts.items %}
+        <hr>
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                <h1>Provide KKS Mappings</h1>
+                <ul>
+                    {% for kks_value, count in extracted_kks_counts.items %}
+                        <input type="hidden" name="extracted_kks_counts[{{ kks_value }}]" value="{{ count }}">
+                        {% if user_input_mapping %}
+                            {% for key, value in user_input_mapping.items %}
+                                <li>{{ key }} คือ {{ value }}</li>
+                            {% endfor %}
+                        {% else %}
+                        <div>
+                            <label for="{{ kks_value }}">{{ kks_value }} ({{ count }} times):</label>
+                            <input type="text" name="{{ kks_value }}" id="{{ kks_value }}" required>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% if not user_input_mapping %}
+                <button type="submit" name="kks_mapping_submit">Submit Mappings</button>
+                {% endif %}
+            </form>
+        </div>
+        {% endif %}
+    {% endif %}
+    
+    <hr>
+    {% if request.session.download_link_job_plan_task %}
+    <a href="{% url 'download_job_plan_task_file' %}">
+        <button>Download Job Plan Task File</button>
+    </a>
+    {% endif %}
+    
+    {% if request.session.download_link_job_plan_labor %}
+    <a href="{% url 'download_job_plan_labor_file' %}">
+        <button>Download Job Plan Labor File</button>
+    </a>
+    {% endif %}
+    
+    {% if request.session.download_link_pm_plan %}
+    <a href="{% url 'download_pm_plan_file' %}">
+        <button>Download PM Plan File</button>
+    </a>
+    {% endif %}
+    
+    {% if request.session.download_link_template %}
+    <a href="{% url 'download_template_file' %}">
+        <button>Download Template-MxLoader-JP-PMPlan File</button>
+    </a>
+    {% endif %}
+    
+<!-- AJAX for updating ACTTYPE -->
+<script>
+    $(document).ready(function() {
+        // เมื่อผู้ใช้เลือก Plant Type
+        $('#id_plant_type').change(function() {
+            var plant_code = $(this).val(); // ดึง plant_code ที่เลือก
+
+            if (plant_code) {
+                // ส่ง AJAX request ไปที่ server
+                $.ajax({
+                    url: "{% url 'filter_plant_type' %}",
+                    data: {'plant_code': plant_code},    // ส่งค่า plant_code ไปยัง backend
+                    success: function (data) {
+                        // อัปเดต dropdown ACTTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
+                        $('#id_acttype').empty();
+                        $('#id_acttype').append('<option value="">กรุณาเลือก ACTTYPE</option>');
+
+                        // เพิ่มตัวเลือกที่ได้รับจาก server
+                        $.each(data.acttypes, function (index, acttype) {
+                            $('#id_acttype').append('<option value="' + acttype.id + '">' + acttype.acttype + '</option>');
+                        });
+                        
+                        $('#plant_type_description').text(data.plant_type_th); // Display the description in the HTML
+                    }
+                });
+            } else {
+                // ถ้าไม่เลือก Plant Type ให้แสดงค่า default
+                $('#id_acttype').empty();
+                $('#id_acttype').append('<option value="">กรุณาเลือก ACTTYPE</option>');
+                $('#plant_type_description').text('');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // เมื่อผู้ใช้เลือก SITE
+        $('#id_site').change(function() {
+            var site_id = $(this).val();  // ดึงค่า site_id ที่ผู้ใช้เลือก
+
+            if (site_id) {
+                // ส่ง AJAX request ไปที่เซิร์ฟเวอร์
+                $.ajax({
+                    url: "{% url 'filter_site' %}",  // URL สำหรับ view ที่ใช้กรอง SITE
+                    data: {'site_id': site_id},  // ส่ง site_id ไปที่ backend
+                    success: function (data) {
+                        // อัปเดตคำอธิบาย site_name
+                        $('#site_description').text(data.site_name);  // แสดง site_name ใน HTML
+                    }
+                });
+            } else {
+                // ล้างคำอธิบายถ้าไม่ได้เลือก SITE
+                $('#site_description').text('');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+
+        $('#id_work_type').change(function() {
+            var work_type_id = $(this).val();
+        
+            if(work_type_id){
+                $.ajax({
+                    url: "{% url 'filter_worktype' %}",
+                    data: {'work_type_id': work_type_id},
+                    success: function (data){
+                        $('#work_type_description').text(data.description);
+                    }
+                });
+            } else {
+                $('#work_type_description').text('');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#id_acttype').change(function() {
+            var acttype_id = $(this).val();
+
+            if (acttype_id){
+                $.ajax({
+                    url: "{% url 'filter_acttype' %}",
+                    data: {'acttype_id': acttype_id},
+                    success: function (data) {
+                        $('#acttype_description').text(data.description + ' (' + data.code + ')');
+                    }
+                });
+            } else {
+                $('#acttype_description').text('');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#id_wbs').change(function() {
+            var wbs_id = $(this).val();
+
+            if (wbs_id){
+                $.ajax({
+                    url: "{% url 'filter_wbs' %}",
+                    data: {'wbs_id': wbs_id},
+                    success: function (data) {
+                        $('#wbs_description').text(data.description);
+                    }
+                });
+            } else {
+                $('#wbs_description').text('');
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#id_wostatus').change(function() {
+            var wostatus_id = $(this).val();
+        
+            if (wostatus_id) {
+                $.ajax({
+                    url: "{% url 'filter_wostatus' %}",
+                    data: {'wostatus_id': wostatus_id},
+                    success: function (data) {
+                        $('#wostatus_description').text(data.description);
+                    }
+                });
+            } else {
+                $('#wostatus_description').text('');
+            }
+        });
+    });
+</script>
+</body>
+</html>
