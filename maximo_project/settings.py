@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from logging.handlers import RotatingFileHandler
+from concurrent_log_handler import ConcurrentRotatingFileHandler
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -179,9 +180,9 @@ LOGGING = {
             'maxBytes': 10 * 1024 * 1024,
             'backupCount': 10,
         },
-        'file_debug': {  # แฮนด์เลอร์สำหรับ DEBUG log
+        'file_debug': {
             'level': 'DEBUG',
-            'class': 'logging.handlers.RotatingFileHandler',
+            'class': 'concurrent_log_handler.ConcurrentRotatingFileHandler',
             'filename': os.path.join(LOGS_DIR, 'debug.log'),
             'formatter': 'verbose',
             'maxBytes': 10 * 1024 * 1024,
@@ -204,3 +205,4 @@ LOGGING = {
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 3600
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'

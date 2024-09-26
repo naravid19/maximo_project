@@ -240,25 +240,25 @@
     {% endif %}
     
     <hr>
-    {% if request.session.download_link_job_plan_task %}
+    {% if 'download_link_job_plan_task' in request.session %}
     <a href="{% url 'download_job_plan_task_file' %}">
         <button>Download Job Plan Task File</button>
     </a>
     {% endif %}
     
-    {% if request.session.download_link_job_plan_labor %}
+    {% if 'download_link_job_plan_labor' in request.session %}
     <a href="{% url 'download_job_plan_labor_file' %}">
         <button>Download Job Plan Labor File</button>
     </a>
     {% endif %}
     
-    {% if request.session.download_link_pm_plan %}
+    {% if 'download_link_pm_plan' in request.session %}
     <a href="{% url 'download_pm_plan_file' %}">
         <button>Download PM Plan File</button>
     </a>
     {% endif %}
     
-    {% if request.session.download_link_template %}
+    {% if 'download_link_template' in request.session %}
     <a href="{% url 'download_template_file' %}">
         <button>Download Template-MxLoader-JP-PMPlan File</button>
     </a>

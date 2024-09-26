@@ -37,6 +37,7 @@ def index(request):
     location_filename = None
     extracted_kks_counts = None
     user_input_mapping = {}
+    error_message = ""
 ############
 ############
     print(request.POST)
@@ -807,8 +808,6 @@ def index(request):
             
             # การตรวจสอบข้อมูล
             if missing_columns or invalid_columns:
-                # สร้างข้อความแจ้งเตือน
-                error_message = ''
                 if missing_columns:
                     error_message += f"พบข้อมูลขาดหายในคอลัมน์: {', '.join(missing_columns)} "
                 if invalid_columns:
@@ -1759,35 +1758,38 @@ def index(request):
         # จะมีการสร้างอินสแตนซ์ของ UploadFileForm() ซึ่งเป็นฟอร์มที่ใช้ในการอัปโหลดไฟล์ เพื่อให้ฟอร์มแสดงในหน้าเว็บ 
         # ผู้ใช้สามารถเห็นฟอร์มและอัปโหลดไฟล์ได้
         
-        #! Clear session data after download
-        request.session.pop('schedule_filename', None)
-        request.session.pop('location_filename', None)
-        request.session.pop('extracted_kks_counts', None)
-        request.session.pop('first_plant', None)
-        request.session.pop('df_original', None)
-        request.session.pop('df_original_copy', None)
-        request.session.pop('df_original_newcol', None)
-        request.session.pop('df_comment', None)
-        request.session.pop('user_input_mapping', None)
-        request.session.pop('download_link_comment', None)
-        request.session.pop('download_link_job_plan_task', None)
-        request.session.pop('download_link_job_plan_labor', None)
-        request.session.pop('download_link_pm_plan', None)
-        request.session.pop('download_link_template', None)
+        # #! Clear session data after download
+        # request.session.pop('schedule_filename', None)
+        # request.session.pop('location_filename', None)
+        # request.session.pop('extracted_kks_counts', None)
+        # request.session.pop('first_plant', None)
+        # request.session.pop('df_original', None)
+        # request.session.pop('df_original_copy', None)
+        # request.session.pop('df_original_newcol', None)
+        # request.session.pop('df_comment', None)
+        # request.session.pop('user_input_mapping', None)
+        # request.session.pop('download_link_comment', None)
+        # request.session.pop('download_link_job_plan_task', None)
+        # request.session.pop('download_link_job_plan_labor', None)
+        # request.session.pop('download_link_pm_plan', None)
+        # request.session.pop('download_link_template', None)
         
-        #! Dropdown
-        request.session.pop('egmntacttype', None)
-        request.session.pop('egprojectid', None)
-        request.session.pop('egwbs', None)
-        request.session.pop('location', None)
-        request.session.pop('siteid', None)
-        request.session.pop('wbs_desc', None)
-        request.session.pop('worktype', None)
-        request.session.pop('wostatus', None)
+        # #! Dropdown
+        # request.session.pop('egmntacttype', None)
+        # request.session.pop('egprojectid', None)
+        # request.session.pop('egwbs', None)
+        # request.session.pop('location', None)
+        # request.session.pop('siteid', None)
+        # request.session.pop('wbs_desc', None)
+        # request.session.pop('worktype', None)
+        # request.session.pop('wostatus', None)
+        
+        request.session.clear()
         form = UploadFileForm()
     
     return render(request, 'maximo_app/upload.html', {
         'form': form,
+        'error_message': error_message,
         'schedule_filename': schedule_filename,
         'location_filename': location_filename,
         'extracted_kks_counts': extracted_kks_counts,

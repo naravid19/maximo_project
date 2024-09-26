@@ -513,3 +513,94 @@ Traceback (most recent call last):
     ^^^^^^^^^^^^^^^
 NameError: name 'primary_counter' is not defined
 2024-09-25 21:09:32,360 ERROR "POST / HTTP/1.1" 500 204183 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 10:37:35,760 ERROR Internal Server Error: / C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\log.py 248
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1793, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+2024-09-26 10:37:35,764 ERROR "GET / HTTP/1.1" 500 68071 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 10:37:39,436 ERROR Internal Server Error: / C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\log.py 248
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1793, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+2024-09-26 10:37:39,439 ERROR "GET / HTTP/1.1" 500 68071 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 10:37:42,305 ERROR Internal Server Error: / C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\log.py 248
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1793, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+2024-09-26 10:37:42,308 ERROR "GET / HTTP/1.1" 500 67934 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 10:38:36,026 ERROR Internal Server Error: / C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\log.py 248
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1793, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+2024-09-26 10:38:36,031 ERROR "GET / HTTP/1.1" 500 68071 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 10:38:39,528 ERROR Internal Server Error: / C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\log.py 248
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1793, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+2024-09-26 10:38:39,531 ERROR "GET / HTTP/1.1" 500 67934 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 10:39:36,793 ERROR Internal Server Error: / C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\log.py 248
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1793, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+2024-09-26 10:39:36,798 ERROR "GET / HTTP/1.1" 500 68071 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 10:49:37,743 ERROR Internal Server Error: / C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\log.py 248
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1794, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+2024-09-26 10:49:37,747 ERROR "GET / HTTP/1.1" 500 68071 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
