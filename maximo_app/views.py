@@ -30,6 +30,9 @@ logger = logging.getLogger(__name__)
 # ฟังก์ชันพื้นฐาน
 # ---------------------------------
 
+def test(request):
+    return render(request, 'maximo_app/usebase.html')
+
 def index(request):
 ############
 ############
@@ -872,7 +875,7 @@ def index(request):
             # Get variables
             schedule_filename = request.session.get('schedule_filename', '')
             location_filename = request.session.get('location_filename', '')
-            comment_path = request.session.get('download_link_comment')
+            comment_path = request.session.get('download_link_comment', None)
             first_plant = request.session.get('first_plant')
             temp_dir = request.session.get('temp_dir')
             # Get Dropdown

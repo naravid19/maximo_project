@@ -9,6 +9,7 @@ handler500 = 'maximo_app.views.custom_500'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('test/', views.test, name='test'),
     path('download_comment_file/', views.download_comment_file, name='download_comment_file'),
     path('download_job_plan_task_file/', views.download_job_plan_task_file, name='download_job_plan_task_file'),
     path('download_job_plan_labor_file/', views.download_job_plan_labor_file, name='download_job_plan_labor_file'),
