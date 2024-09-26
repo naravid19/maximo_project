@@ -1932,3 +1932,63 @@ NameError: name 'primary_counter' is not defined
 2024-09-26 09:23:30,768 INFO "POST / HTTP/1.1" 200 8507 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
 2024-09-26 09:24:05,827 INFO "POST / HTTP/1.1" 200 8509 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
 2024-09-26 09:24:08,498 INFO "GET /download_template_file/ HTTP/1.1" 200 820303 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 09:41:22,486 INFO "GET / HTTP/1.1" 200 14008 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 09:47:57,447 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:47:58,562 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 09:51:21,412 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:51:22,561 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 09:51:58,743 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:52:00,090 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 09:52:08,488 INFO "GET / HTTP/1.1" 200 14008 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 09:52:12,634 INFO "GET / HTTP/1.1" 200 14008 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 09:52:58,415 INFO "GET /filter_plant_type/?plant_code=T HTTP/1.1" 200 446 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 09:52:59,561 INFO "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 09:53:05,099 INFO "POST / HTTP/1.1" 200 8507 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-26 09:53:39,824 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:53:40,729 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 09:54:54,694 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:54:55,806 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 09:55:21,158 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:55:22,113 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 09:55:27,590 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:55:28,471 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 09:56:56,025 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:56:57,070 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 09:57:03,628 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:57:04,693 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 09:57:34,715 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:57:35,906 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 09:59:02,381 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:59:03,191 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 09:59:24,703 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 09:59:25,771 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:00:19,837 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:00:20,650 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:04:27,704 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:04:28,630 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:04:41,239 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:04:42,183 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:05:03,598 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:05:04,496 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:05:14,422 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:05:15,303 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:05:23,644 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:05:24,570 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:05:32,844 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:05:33,680 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:06:13,101 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:06:14,082 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:07:34,264 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:07:35,227 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:08:37,484 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:08:38,379 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:09:44,902 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:09:45,702 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:10:13,674 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:10:14,910 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:11:51,941 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:11:52,843 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:12:30,558 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:12:31,512 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-26 10:13:40,625 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-26 10:13:41,737 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668

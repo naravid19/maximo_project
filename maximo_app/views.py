@@ -13,6 +13,7 @@ import numpy as np
 from openpyxl import load_workbook
 from openpyxl.styles import Border, Side, PatternFill, Alignment
 from openpyxl.styles import Font
+import logging
 import os
 import pandas as pd
 import re
@@ -20,6 +21,9 @@ import shutil
 import time
 import uuid
 import xlwings as xw
+
+logger = logging.getLogger(__name__)
+
 # Create your views here.
 
 # ---------------------------------
@@ -75,21 +79,21 @@ def index(request):
             wostatus = form.cleaned_data.get('wostatus')
             
             if year:
-                print(f"ผู้ใช้เลือก Year: {year}")
+                logger.info(f"Year: {year}")
             if site:
-                print(f"ผู้ใช้เลือก Site: {site.site_id}")
+                logger.info(f"Site: {site.site_id}")
             if plant_type:
-                print(f"ผู้ใช้เลือก Plant Type: {plant_type.plant_code}")
+                logger.info(f"Plant Type: {plant_type.plant_code}")
             if unit:
-                print(f"ผู้ใช้เลือก Unit: {unit.unit_code}")
+                logger.info(f"Unit: {unit.unit_code}")
             if work_type:
-                print(f"ผู้ใช้เลือก Work Type: {work_type.worktype}")
+                logger.info(f"Work Type: {work_type.worktype}")
             if acttype:
-                print(f"ผู้ใช้เลือก ACTTYPE: {acttype.acttype}")
+                logger.info(f"ACTTYPE: {acttype.acttype}")
             if wbs:
-                print(f"ผู้ใช้เลือก WBS: {wbs.wbs_code}")
+                logger.info(f"WBS: {wbs.wbs_code}")
             if wostatus:
-                print(f"ผู้ใช้เลือก Status: {wostatus.status}")
+                logger.info(f"Status: {wostatus.status}")
 
             schedule_filename = schedule_file.name
             location_filename = location_file.name
@@ -102,6 +106,8 @@ def index(request):
             location_path = os.path.join(temp_dir, unique_location_name)
             comment_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Comment.xlsx")
             
+            logger.info(f"Files uploaded: Schedule file: {schedule_filename}, Location file: {schedule_filename}")
+            
             try:
                 with open(schedule_path, 'wb+') as destination:
                     for chunk in schedule_file.chunks():
@@ -110,7 +116,10 @@ def index(request):
                 with open(location_path, 'wb+') as destination:
                     for chunk in location_file.chunks():
                         destination.write(chunk)
+                        
+                logger.info(f"Files saved successfully at: {schedule_path} and {location_path}")
             except IOError as e:
+                logger.error(f"Error saving files: {str(e)}")
                 return HttpResponse(f"Error saving files: {str(e)}")
 ############
 ############
@@ -155,10 +164,10 @@ def index(request):
                 egwbs = f"{egprojectid}-{wbs.wbs_code}" # 'O-SRDH02-67MI-WO'
                 wbs_desc = f"{wbs.description} {acttype.description} {location} {buddhist_year}"
 
-            print(f"EGPROJECTID: {egprojectid}")
-            print(f"EGWBS: {egwbs}")
-            print(f"WBS DESC: {wbs_desc}")
-            print(location) 
+            logger.info(f"EGPROJECTID: {egprojectid}")
+            logger.info(f"EGWBS: {egwbs}")
+            logger.info(f"WBS DESC: {wbs_desc}")
+            logger.info(f"Location: {location}") 
 ############
 ############
             # บันทึกค่าลงเซสชัน
@@ -195,19 +204,23 @@ def index(request):
                 df_original = read_excel_with_error_handling(schedule_path)
                 if df_original is None:
                         raise ValueError("Cannot proceed without a valid DataFrame.")
-                    
+                logger.info("Excel file loaded successfully.")
+                
                 # ลบช่องว่างที่ไม่จำเป็นออกจากชื่อคอลัมน์และแปลงชื่อคอลัมน์เป็นตัวพิมพ์ใหญ่ พร้อมแทนที่ช่องว่างด้วยขีดล่าง
                 df_original.columns = df_original.columns.str.strip()
                 df_original.columns = [col.upper().replace(' ', '_') for col in df_original.columns]
-
+                logger.info("Column names cleaned and formatted.")
+                
                 # ตรวจสอบว่าคอลัมน์ที่จำเป็นทั้งหมดมีอยู่หรือไม่
                 missing_columns = [col for col in required_columns if col not in df_original.columns]
                 if missing_columns:
+                    logger.error(f"Missing required columns: {', '.join(missing_columns)}")
                     raise ValueError(f"ข้อผิดพลาด: ไม่มีคอลัมน์ {', '.join(missing_columns)}")
-
+                
                 # ตรวจสอบว่าคอลัมน์ที่สำคัญมีข้อมูลอย่างน้อยหนึ่งค่า
                 empty_columns = [col for col in important_columns if df_original[col].isna().all() or (df_original[col] == '').all()]
                 if empty_columns:
+                    logger.error(f"Important columns without data: {', '.join(empty_columns)}")
                     raise ValueError(f"ข้อผิดพลาด: คอลัมน์ต่อไปนี้ไม่มีข้อมูล: {', '.join(empty_columns)}")
                 
                 df_original = df_original[required_columns]
@@ -231,13 +244,15 @@ def index(request):
                 df_original_extracted = df_original
                 
             except ValueError as ve:
-                # จัดการกับข้อผิดพลาดที่เกิดจากคอลัมน์ที่ขาดหายไป
-                print(ve)
+                # ข้อผิดพลาดที่เกิดจากคอลัมน์ที่ขาดหายไป
+                logger.error(f"Validation error: {str(ve)}")
                 raise
             except Exception as e:
-                print(f"ข้อผิดพลาด: {e}")
+                logger.critical(f"Unexpected error: {str(e)}", exc_info=True)
                 raise
-
+            
+            logger.info("DataFrame preparation completed successfully.")
+            
             df_comment = pd.DataFrame()
             df_comment['KKS'] = df_original['KKS']
             df_comment['COMMENT'] = ''

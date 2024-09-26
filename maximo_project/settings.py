@@ -171,6 +171,14 @@ LOGGING = {
             'maxBytes': 10 * 1024 * 1024,
             'backupCount': 10,
         },
+        'file_critical': {
+            'level': 'CRITICAL',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGS_DIR, 'critical.log'),
+            'formatter': 'verbose',
+            'maxBytes': 10 * 1024 * 1024,
+            'backupCount': 10,
+        },
         'file_debug': {  # แฮนด์เลอร์สำหรับ DEBUG log
             'level': 'DEBUG',
             'class': 'logging.handlers.RotatingFileHandler',
