@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'maximo_app',
     'background_task',
     'compressor',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [

@@ -23,6 +23,8 @@
     <style>
         body {
             font-family: 'Bai Jamjuree', sans-serif;
+            margin: 0;
+            padding: 12px;
         }
     </style>
     
@@ -31,7 +33,6 @@
 
     <!-- jQuery Library -->
     <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
-    
 </head>
 
 <body>
@@ -39,8 +40,8 @@
     {% block content %}{% endblock %}
     
     <!-- Flowbite JavaScript -->
-    {% comment %} <script src="{% static 'node_modules/flowbite/dist/flowbite.min.js' %}"></script> {% endcomment %}
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
+    <script src="{% static 'flowbite/dist/flowbite.min.js' %}"></script>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script> {% endcomment %}
 
     <!-- Block for additional JS scripts -->
     {% block script %}{% endblock %}

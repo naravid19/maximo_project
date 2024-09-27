@@ -12,17 +12,17 @@ class UploadFileForm(forms.Form):
     
     # Dropdown สำหรับเลือกปี
     current_year = datetime.now().year
-    YEARS_CHOICES = [('', 'กรุณาเลือกปี')] + [(str(year), str(year)) for year in range(current_year, current_year + 20)]
+    YEARS_CHOICES = [('', 'เลือก')] + [(str(year), str(year)) for year in range(current_year, current_year + 20)]
     year = forms.ChoiceField(label='YEAR', choices=YEARS_CHOICES, required=True)
     
     # Dropdown สำหรับเลือกข้อมูล จากฐานข้อมูล
-    site = forms.ModelChoiceField(queryset=Site.objects.all(), label='SITE', required=True, empty_label="กรุณาเลือก Site")
-    plant_type = forms.ModelChoiceField(queryset=PlantType.objects.all(),label='PLANT TYPE', required=True, empty_label="กรุณาเลือก Plant Type")
-    unit = forms.ModelChoiceField(queryset=Unit.objects.all(), label='UNIT', required=True, empty_label="กรุณาเลือก UNIT")
-    work_type = forms.ModelChoiceField(queryset=WorkType.objects.filter(worktype__in=["APOO", "APAO"]), label='WORKTYPE', required=True, empty_label="กรุณาเลือก WORKTYPE")
-    acttype = forms.ModelChoiceField(queryset=ActType.objects.none(), label='ACTTYPE', required=True, empty_label="กรุณาเลือก ACTTYPE")
-    wbs = forms.ModelChoiceField(queryset=WBSCode.objects.all(), label='SUBWBS GROUP', required=True, empty_label="กรุณาเลือก Sub WBS Code")
-    wostatus = forms.ModelChoiceField(queryset=Status.objects.all(), label='STATUS', required=True, empty_label="กรุณาเลือก WO Status")
+    site = forms.ModelChoiceField(queryset=Site.objects.all(), label='SITE', required=True, empty_label="เลือก")
+    plant_type = forms.ModelChoiceField(queryset=PlantType.objects.all(),label='PLANT TYPE', required=True, empty_label="เลือก")
+    unit = forms.ModelChoiceField(queryset=Unit.objects.all(), label='UNIT', required=True, empty_label="เลือก")
+    work_type = forms.ModelChoiceField(queryset=WorkType.objects.filter(worktype__in=["APOO", "APAO"]), label='WORKTYPE', required=True, empty_label="เลือก")
+    acttype = forms.ModelChoiceField(queryset=ActType.objects.none(), label='ACTTYPE', required=True, empty_label="เลือก")
+    wbs = forms.ModelChoiceField(queryset=WBSCode.objects.all(), label='SUBWBS GROUP', required=True, empty_label="เลือก")
+    wostatus = forms.ModelChoiceField(queryset=Status.objects.all(), label='STATUS', required=True, empty_label="เลือก")
     def __init__(self, *args, **kwargs):
         super(UploadFileForm, self).__init__(*args, **kwargs)
         self.fields['plant_type'].queryset = PlantType.objects.all()
