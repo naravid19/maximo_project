@@ -4939,3 +4939,380 @@ django.urls.exceptions.NoReverseMatch: Reverse for 'your_upload_view' not found.
 2024-09-27 16:05:52,949 INFO "POST / HTTP/1.1" 200 28561 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
 2024-09-27 16:06:16,529 INFO "POST / HTTP/1.1" 200 27816 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
 2024-09-27 16:06:20,556 INFO "GET /download_template_file/ HTTP/1.1" 200 820353 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 16:09:04,451 INFO - Broken pipe from ('127.0.0.1', 57562) C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 81
+2024-09-27 16:09:04,483 INFO - Broken pipe from ('127.0.0.1', 56901) C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 81
+2024-09-27 21:20:18,265 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 21:20:29,820 INFO "GET / HTTP/1.1" 200 31504 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:20:29,867 INFO "GET /static/CACHE/css/output.831eeae178fd.css HTTP/1.1" 200 42921 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:20:29,874 INFO "GET /static/js/jquery-3.7.1.min.js HTTP/1.1" 304 0 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:20:29,874 INFO "GET /static/flowbite/dist/flowbite.min.js HTTP/1.1" 304 0 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:20:30,147 WARNING Not Found: /favicon.ico C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\log.py 248
+2024-09-27 21:20:30,148 WARNING "GET /favicon.ico HTTP/1.1" 404 5789 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:20:35,213 INFO "GET / HTTP/1.1" 200 31504 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:20:35,251 INFO "GET /static/CACHE/css/output.831eeae178fd.css HTTP/1.1" 304 0 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:21:12,459 INFO "GET / HTTP/1.1" 200 31504 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:21:12,512 INFO "GET /static/CACHE/css/output.831eeae178fd.css HTTP/1.1" 304 0 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:33:35,534 INFO "GET / HTTP/1.1" 200 31504 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:33:35,587 INFO "GET /static/CACHE/css/output.831eeae178fd.css HTTP/1.1" 304 0 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:33:47,843 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 21:33:52,925 INFO "GET / HTTP/1.1" 200 31504 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:33:56,420 INFO "GET / HTTP/1.1" 200 31504 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:43:53,085 INFO "GET / HTTP/1.1" 200 13844 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:44:51,019 INFO "GET / HTTP/1.1" 200 13844 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:44:55,446 INFO "GET / HTTP/1.1" 200 13844 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:44:59,129 INFO "GET / HTTP/1.1" 200 13844 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:45:06,923 INFO "GET / HTTP/1.1" 200 13844 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:53:45,888 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 21:53:47,167 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 21:56:40,819 INFO "GET / HTTP/1.1" 200 13865 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 21:58:11,045 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 21:58:12,171 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:01:09,659 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:01:10,617 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:02:17,394 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:02:18,280 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:02:45,481 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:02:46,365 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:03:34,397 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:03:35,288 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:04:00,478 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:04:01,403 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:04:03,207 INFO "GET / HTTP/1.1" 200 13843 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:04:06,008 ERROR Internal Server Error: /filter_plant_type/ C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\log.py 248
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1946, in filter_plant_type
+    plant_type = PlantType.objects.get(plant_code=plant_code)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 649, in get
+    raise self.model.DoesNotExist(
+maximo_app.models.PlantType.DoesNotExist: PlantType matching query does not exist.
+2024-09-27 22:04:06,011 ERROR "GET /filter_plant_type/?plant_code=1 HTTP/1.1" 500 82840 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:07:23,215 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:07:24,122 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:07:25,689 INFO "GET / HTTP/1.1" 200 13843 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:07:27,047 INFO "GET /filter_plant_type/?plant_code=2 HTTP/1.1" 200 470 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:07:28,499 INFO "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:07:30,105 INFO "GET /filter_plant_type/?plant_code=3 HTTP/1.1" 200 416 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:07:32,064 INFO "GET /filter_acttype/?acttype_id=4 HTTP/1.1" 200 47 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:07:34,041 INFO "GET /filter_plant_type/?plant_code=1 HTTP/1.1" 200 446 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:07:35,254 INFO "GET /filter_plant_type/?plant_code=3 HTTP/1.1" 200 416 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:07:36,801 INFO "GET /filter_acttype/?acttype_id=7 HTTP/1.1" 200 96 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:07:39,019 INFO "GET /filter_acttype/?acttype_id=8 HTTP/1.1" 200 50 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:08:10,703 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:08:11,566 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:13:02,276 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:13:03,271 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:13:14,906 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:13:15,833 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:13:25,440 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:13:26,342 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:13:32,658 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:13:33,632 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:13:42,024 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:13:42,973 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:13:52,386 INFO "GET / HTTP/1.1" 200 13855 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:13:56,640 INFO "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 470 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:13:59,231 INFO "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 300 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:14:32,366 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:14:33,251 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:14:37,859 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:14:38,736 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:15:17,001 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:15:17,624 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:15:20,541 INFO "GET / HTTP/1.1" 200 13855 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:15:26,529 INFO "GET /filter_site/?site_id=1 HTTP/1.1" 200 89 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:20:58,010 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:20:59,134 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:21:28,554 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:21:29,830 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:21:33,430 INFO "GET / HTTP/1.1" 200 13855 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:21:35,656 INFO "GET /filter_site/?site_id=1 HTTP/1.1" 200 89 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:21:37,739 INFO "GET /filter_site/?site_id=2 HTTP/1.1" 200 89 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:22:18,478 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:22:19,341 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:22:22,729 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:22:23,683 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:23:55,523 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:23:56,552 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:24:40,926 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:24:41,492 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:24:46,774 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:24:47,640 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:24:50,705 INFO "GET / HTTP/1.1" 200 13855 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:24:52,729 INFO "GET /filter_site/?site_id=1 HTTP/1.1" 200 89 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:24:53,960 INFO "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 446 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:24:56,204 INFO "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:24:57,328 INFO "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 470 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:24:58,820 INFO "GET /filter_acttype/?acttype_id=5 HTTP/1.1" 200 52 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:25:00,478 INFO "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 300 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:25:01,760 INFO "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:25:06,865 INFO "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:25:08,998 INFO "GET /filter_acttype/?acttype_id=3 HTTP/1.1" 200 41 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:25:10,052 INFO "GET /filter_wostatus/?wostatus_id=2 HTTP/1.1" 200 38 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:25:10,976 INFO "GET /filter_wbs/?wbs_id=2 HTTP/1.1" 200 30 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:25:16,873 INFO "POST / HTTP/1.1" 200 14227 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:25:20,782 INFO "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 446 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:25:21,907 INFO "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 300 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:25:23,060 INFO "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:25:30,010 INFO "POST / HTTP/1.1" 200 14227 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:28:00,963 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:28:01,961 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:28:31,484 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:28:32,506 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:28:37,366 INFO "GET / HTTP/1.1" 200 13855 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:28:40,104 INFO - Broken pipe from ('127.0.0.1', 57961) C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 81
+2024-09-27 22:28:44,225 INFO "GET /filter_site/?site_id=1 HTTP/1.1" 200 89 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:28:45,323 INFO "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 446 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:28:47,029 INFO "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:28:47,791 INFO "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:28:48,705 INFO "GET /filter_wbs/?wbs_id=2 HTTP/1.1" 200 30 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:28:49,625 INFO "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:28:58,130 INFO "POST / HTTP/1.1" 200 8507 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:29:27,204 INFO "GET / HTTP/1.1" 200 13855 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:29:32,661 INFO "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 470 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:29:33,946 INFO "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:29:35,476 INFO "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 300 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:29:36,372 INFO "GET /filter_acttype/?acttype_id=5 HTTP/1.1" 200 52 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:37:23,737 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:37:24,745 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:37:58,207 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:37:59,234 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:38:07,825 INFO "POST / HTTP/1.1" 200 8503 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:38:37,202 INFO "POST / HTTP/1.1" 200 8505 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:39:54,948 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:39:56,252 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:41:03,307 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:41:04,401 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:46:30,338 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:46:31,265 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:46:54,338 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:46:55,223 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:54:55,973 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:54:56,865 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:55:11,705 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:55:12,647 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:55:31,547 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:55:32,428 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:55:50,469 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:55:51,336 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:55:59,742 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:56:00,600 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:57:22,907 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 22:57:23,997 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 22:57:27,019 INFO "GET / HTTP/1.1" 200 13855 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:57:29,148 INFO "GET /filter_site/?site_id=1 HTTP/1.1" 200 89 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:57:30,566 INFO "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 446 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:57:33,259 INFO "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 300 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:57:34,323 INFO "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:57:35,319 INFO "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:57:36,547 INFO "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:57:37,635 INFO "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:57:46,782 INFO "POST / HTTP/1.1" 200 8512 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:57:50,881 INFO "GET /download_comment_file/ HTTP/1.1" 200 276390 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:58:13,326 INFO "POST / HTTP/1.1" 200 8514 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 22:58:16,285 INFO "GET /download_template_file/ HTTP/1.1" 200 820226 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+2024-09-27 23:03:55,160 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+2024-09-27 23:05:13,953 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+2024-09-27 23:05:23,397 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+27/Sep/2024 23:05:24 INFO Watching for file changes with StatReloader C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 668
+27/Sep/2024 23:06:10 INFO "GET / HTTP/1.1" 200 13855 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+27/Sep/2024 23:07:39 INFO C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading. C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\autoreload.py 266
+[27/Sep/2024 23:18:26] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:19:51] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:19:52] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:20:10] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:20:11] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:20:39] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:20:40] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:21:02] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:21:57] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:22:38] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:22:39] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:22:59] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:24:47] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:24:48] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:24:58] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:26:12] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:26:13] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:26:48] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:26:55] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:27:58] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:28:22] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:28:23] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:28:30] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:28:34] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:28:35] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:28:49] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:28:50] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:29:04] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:29:05] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:29:18] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:30:40] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:31:01] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:31:02] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:31:11] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:32:09] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:32:10] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:32:15] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:32:43] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:32:44] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:33:02] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:33:03] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:33:09] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:33:49] INFO [django.request:15] HTTP Request and Response
+[27/Sep/2024 23:33:49] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[27/Sep/2024 23:34:47] INFO [django.request:15] HTTP Request and Response
+[27/Sep/2024 23:34:47] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[27/Sep/2024 23:36:55] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:37:27] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:37:45] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[27/Sep/2024 23:37:46] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[27/Sep/2024 23:37:55] INFO [django.request:15] HTTP Request and Response
+[27/Sep/2024 23:37:55] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[27/Sep/2024 23:38:04] INFO [django.request:15] HTTP Request and Response
+[27/Sep/2024 23:38:04] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:08:35] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:09:03] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:09:03] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:09:03] INFO [django.server:213] "GET /static/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+[30/Sep/2024 09:09:03] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:09:03] WARNING [django.request:248] Not Found: /favicon.ico
+[30/Sep/2024 09:09:03] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 5789
+[30/Sep/2024 09:09:09] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:09:09] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 95
+[30/Sep/2024 09:09:15] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:09:15] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 300
+[30/Sep/2024 09:09:24] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:09:24] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[30/Sep/2024 09:09:27] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:09:27] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[30/Sep/2024 09:09:29] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:09:29] INFO [django.server:213] "GET /filter_wbs/?wbs_id=4 HTTP/1.1" 200 33
+[30/Sep/2024 09:09:31] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:09:31] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[30/Sep/2024 09:09:45] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:09:46] INFO [django.server:213] "POST / HTTP/1.1" 200 8503
+[30/Sep/2024 09:10:16] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:10:16] INFO [django.server:213] "POST / HTTP/1.1" 200 8505
+[30/Sep/2024 09:10:19] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:10:19] INFO [django.server:213] "GET /download_template_file/ HTTP/1.1" 200 820181
+[30/Sep/2024 09:44:46] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:44:48] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:45:06] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:45:07] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:45:18] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:45:18] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:45:23] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:45:23] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:45:25] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:45:25] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:45:25] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:45:25] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:45:26] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:45:26] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:45:28] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:45:28] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:46:04] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:46:04] INFO [django.server:213] "GET /filter_site/?site_id=1 HTTP/1.1" 200 89
+[30/Sep/2024 09:46:05] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:46:05] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 446
+[30/Sep/2024 09:46:07] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:46:07] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[30/Sep/2024 09:46:08] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:46:08] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[30/Sep/2024 09:46:09] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:46:09] INFO [django.server:213] "GET /filter_wbs/?wbs_id=2 HTTP/1.1" 200 30
+[30/Sep/2024 09:46:09] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:46:09] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[30/Sep/2024 09:46:18] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:46:18] INFO [django.server:213] "POST / HTTP/1.1" 200 8500
+[30/Sep/2024 09:47:09] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:47:10] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:47:23] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:47:28] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:47:28] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:47:34] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:47:34] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:50:01] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:50:01] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:50:10] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:50:11] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:50:32] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:50:32] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:51:18] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:51:19] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:51:40] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:51:40] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:51:42] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:51:42] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:51:43] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:51:43] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:52:26] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:52:26] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:52:28] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:52:28] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:52:29] INFO [django.request:15] HTTP Request and Response
+[30/Sep/2024 09:52:29] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:55:48] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\custom_logging_middleware.py changed, reloading.
+[30/Sep/2024 09:55:48] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:56:10] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:56:11] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:56:18] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:57:13] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:57:14] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:57:22] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:57:22] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:57:23] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:57:40] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:57:44] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:57:44] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:57:44] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:58:03] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:58:04] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:59:01] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:59:02] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:59:06] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:59:21] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:59:21] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 09:59:26] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 09:59:56] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 09:59:57] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:00:35] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\custom_logging_middleware.py changed, reloading.
+[30/Sep/2024 10:00:36] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:00:46] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 10:00:47] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:00:52] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 10:00:54] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 10:01:19] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 10:02:43] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 10:02:44] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:02:51] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 10:02:52] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:03:01] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 10:03:01] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:03:23] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[30/Sep/2024 10:03:24] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:03:26] INFO [django.server:213] "GET / HTTP/1.1" 200 13855
+[30/Sep/2024 10:11:40] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[30/Sep/2024 10:11:41] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:11:46] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[30/Sep/2024 10:11:47] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:12:04] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[30/Sep/2024 10:12:05] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:12:58] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[30/Sep/2024 10:12:59] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:13:29] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[30/Sep/2024 10:13:30] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:14:06] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[30/Sep/2024 10:14:07] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 10:14:11] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[30/Sep/2024 10:14:12] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader

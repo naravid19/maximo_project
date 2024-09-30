@@ -148,9 +148,9 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
-        'verbose': {
-            'format': '{asctime} {levelname} {message} {pathname} {lineno}',
-            'style': '{',
+        'verbose_default': {
+            'format': '[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s',
+            'datefmt': '%d/%b/%Y %H:%M:%S',
         },
         'simple': {
             'format': '{levelname} {message}',
@@ -162,15 +162,23 @@ LOGGING = {
             'level': 'INFO',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOGS_DIR, 'info.log'),
-            'formatter': 'verbose',
-            'maxBytes': 10 * 1024 * 1024,  # ขนาดไฟล์สูงสุด 10MB
-            'backupCount': 10,  # เก็บไฟล์สำรองไว้ 10 ไฟล์
+            'formatter': 'verbose_default',
+            'maxBytes': 10 * 1024 * 1024,
+            'backupCount': 10,
+        },
+        'file_warning': {
+            'level': 'WARNING',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': os.path.join(LOGS_DIR, 'error.log'),
+            'formatter': 'verbose_default',
+            'maxBytes': 10 * 1024 * 1024,
+            'backupCount': 10,
         },
         'file_error': {
             'level': 'ERROR',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOGS_DIR, 'error.log'),
-            'formatter': 'verbose',
+            'formatter': 'verbose_default',
             'maxBytes': 10 * 1024 * 1024,
             'backupCount': 10,
         },
@@ -178,7 +186,7 @@ LOGGING = {
             'level': 'CRITICAL',
             'class': 'logging.handlers.RotatingFileHandler',
             'filename': os.path.join(LOGS_DIR, 'critical.log'),
-            'formatter': 'verbose',
+            'formatter': 'verbose_default',
             'maxBytes': 10 * 1024 * 1024,
             'backupCount': 10,
         },
@@ -186,20 +194,20 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'concurrent_log_handler.ConcurrentRotatingFileHandler',
             'filename': os.path.join(LOGS_DIR, 'debug.log'),
-            'formatter': 'verbose',
+            'formatter': 'verbose_default',
             'maxBytes': 10 * 1024 * 1024,
             'backupCount': 10,
         },
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
-            'level': 'DEBUG',  # แสดง DEBUG log บน console
+            'level': 'DEBUG',
         },
     },
     'loggers': {
         'django': {
-            'handlers': ['file_info', 'file_error', 'file_debug', 'console'],
-            'level': 'DEBUG',  # เปลี่ยนระดับเป็น DEBUG เพื่อบันทึกข้อมูลละเอียด DEBUG, INFO
+            'handlers': ['file_info', 'file_error', 'file_warning', 'file_critical', 'file_debug', 'console'],  # ส่งข้อความการบันทึก
+            'level': 'DEBUG',   # ระดับของข้อความที่ logger จะบันทึกได้
             'propagate': True,
         },
     },

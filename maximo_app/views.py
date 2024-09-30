@@ -5,6 +5,7 @@ from background_task import background
 from django.conf import settings
 from django.http import FileResponse, HttpResponse, Http404, JsonResponse
 from django.shortcuts import render, HttpResponse, Http404
+from django.views.decorators.http import require_GET
 from django.urls import reverse
 from maximo_app.models import Site, PlantType, Unit, WorkType, ActType, WBSCode, Status
 
@@ -1527,9 +1528,9 @@ def index(request):
                             parent1 = ''
                     
                     except KeyError as e:
-                        print(f"Column not found: {e}")
+                        logger.error(f"Column not found: {e}")
                     except Exception as e:
-                        print(f"Error processing row: {e}")
+                        logger.error(f"Error processing row: {e}")
                     
                     return pd.Series([self.pmnum0, pmnum1, jpnum1, parent1])
 
@@ -1718,7 +1719,7 @@ def index(request):
 
                     # บันทึกไฟล์ .xlsm ที่ตกแต่งแล้ว
                     book_xlsm.save(file_template_xlsm)
-                    print(f"File saved successfully as {file_template_xlsm}")
+                    logger.info(f"File saved successfully as {file_template_xlsm}")
 
             except Exception as e:
                 print(f"An error occurred: {e}")
@@ -1728,14 +1729,14 @@ def index(request):
                 try:
                     openpyxl_book.close()
                 except Exception as e:
-                    print(f"Error closing the openpyxl book: {e}")
+                    logger.error(f"Error closing the openpyxl book: {e}")
                 
                 try:
                     os.remove(file_template_xlsx)
                 except FileNotFoundError:
-                    print(f"Temporary file {file_template_xlsx} not found for deletion.")
+                    logger.warning(f"Temporary file {file_template_xlsx} not found for deletion.")
                 except Exception as e:
-                    print(f"Error deleting temporary file: {e}")
+                    logger.error(f"Error deleting temporary file: {e}")
 ############
 ############
             # บันทึกลิงก์ดาวน์โหลดลงใน session
@@ -1928,9 +1929,26 @@ def download_template_file(request):
 # ฟังก์ชันการกรองข้อมูล (Filter Functions)
 # ---------------------------------
 
+@require_GET
 def filter_site(request):
-    site_id = request.GET.get('site_id')    # รับค่า site_id ที่ถูกส่งมาจาก request
-    site = Site.objects.get(id=site_id) # ดึงข้อมูล Site จากฐานข้อมูลโดยใช้ site_id
+    site_id = request.GET.get('site_id')  # รับค่า site_id ที่ถูกส่งมาจาก request
+    
+    if not site_id:
+        return JsonResponse({'error': 'No site_id provided.'}, status=400)
+    
+    try:
+        site_id = int(site_id)
+    except ValueError:
+        return JsonResponse({'error': 'Invalid site_id format. Must be an integer.'}, status=400)
+    
+    try:
+        site = Site.objects.get(id=site_id) # ดึงข้อมูล Site จากฐานข้อมูลโดยใช้ site_id
+    except Site.DoesNotExist:
+        logger.warning(f"Site with id {site_id} does not exist.")
+        return JsonResponse({'error': 'Site not found.'}, status=404)
+    except Exception as e:
+        logger.error(f"Unexpected error in filter_site: {e}", exc_info=True)
+        return JsonResponse({'error': str(e)}, status=500)
     return JsonResponse({'site_name': site.site_name})  # ส่ง site_name กลับไปที่ frontend ในรูปแบบ JSON
 
 def filter_worktype(request):
@@ -1938,35 +1956,101 @@ def filter_worktype(request):
     work_type = WorkType.objects.get(id=work_type_id)   # ค้นหา WORKTYPE จากฐานข้อมูล
     return JsonResponse({'description': work_type.description}) # ส่ง description กลับไปที่ frontend
 
+@require_GET
 def filter_plant_type(request):
-    # รับค่าของ plant_code ที่ส่งมาจาก frontend (จาก request)
-    plant_code = request.GET.get('plant_code')
+    plant_type_id = request.GET.get('plant_type_id')
     
-    # ค้นหาข้อมูล PlantType ตาม plant_code
-    plant_type = PlantType.objects.get(plant_code=plant_code)
+    if not plant_type_id:
+        return JsonResponse({'error': 'No plant_type_id provided.'}, status=400)
     
-    # กรองข้อมูล ActType ที่ remark ไม่เท่ากับ unit_code
-    acttypes = ActType.objects.exclude(remark=plant_code).values('id', 'acttype')
+    try:
+        plant_type_id = int(plant_type_id)
+    except ValueError:
+        return JsonResponse({'error': 'Invalid plant_type_id format. Must be an integer.'}, status=400)
     
-    # ส่งข้อมูลกลับไปยัง frontend ในรูปแบบ JSON
+    try:
+        plant_type = PlantType.objects.get(id=plant_type_id)
+        # กรองข้อมูล ActType ที่ remark ไม่เท่ากับ plant_code ของ plant_type
+        acttypes = ActType.objects.exclude(remark=plant_type.plant_code).values('id', 'acttype')
+    except PlantType.DoesNotExist:
+        logger.warning(f"PlantType with id {plant_type_id} does not exist.")
+        return JsonResponse({'error': 'PlantType not found.'}, status=404)
+    except Exception as e:
+        logger.error(f"Unexpected error in filter_plant_type: {e}", exc_info=True)
+        return JsonResponse({'error': str(e)}, status=500)
+        
     return JsonResponse({
-        'acttypes': list(acttypes),  # List of ACTTYPEs
-        'plant_type_th': plant_type.plant_type_th  # The description of the selected plant_type
-})
+    'acttypes': list(acttypes),  # รายการของ ACTTYPEs
+    'plant_type_th': plant_type.plant_type_th  # คำอธิบายของ plant_type ที่เลือก
+    })
 
+@require_GET
 def filter_acttype(request):
     acttype_id = request.GET.get('acttype_id')
-    acttype = ActType.objects.get(id=acttype_id)
+
+    if not acttype_id:
+        return JsonResponse({'error': 'No acttype_id provided.'}, status=400)
+
+    try:
+        acttype_id = int(acttype_id)
+    except ValueError:
+        return JsonResponse({'error': 'Invalid acttype_id format. Must be an integer.'}, status=400)
+
+    try:
+        acttype = ActType.objects.get(id=acttype_id)
+    except ActType.DoesNotExist:
+        logger.warning(f"ActType with id {acttype_id} does not exist.")
+        return JsonResponse({'error': 'ActType not found.'}, status=404)
+    except Exception as e:
+        logger.error(f"Unexpected error in filter_acttype: {e}", exc_info=True)
+        return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
+    
     return JsonResponse({'description': acttype.description, 'code': acttype.code})
 
+@require_GET
 def filter_wbs(request):
     wbs_id = request.GET.get('wbs_id')
-    wbs = WBSCode.objects.get(id=wbs_id)
+
+    if not wbs_id:
+        return JsonResponse({'error': 'No wbs_id provided.'}, status=400)
+
+    try:
+        wbs_id = int(wbs_id)
+    except ValueError:
+        return JsonResponse({'error': 'Invalid wbs_id format. Must be an integer.'}, status=400)
+
+    try:
+        wbs = WBSCode.objects.get(id=wbs_id)
+    except WBSCode.DoesNotExist:
+        logger.warning(f"WBSCode with id {wbs_id} does not exist.")
+        return JsonResponse({'error': 'WBSCode not found.'}, status=404)
+    except Exception as e:
+        logger.error(f"Unexpected error in filter_wbs: {e}", exc_info=True)
+        return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
+    
     return JsonResponse({'description': wbs.description})
 
+@require_GET
 def filter_wostatus(request):
     wostatus_id = request.GET.get('wostatus_id')
-    wostatus = Status.objects.get(id=wostatus_id)
+
+    if not wostatus_id:
+        return JsonResponse({'error': 'No wostatus_id provided.'}, status=400)
+
+    try:
+        wostatus_id = int(wostatus_id)
+    except ValueError:
+        return JsonResponse({'error': 'Invalid wostatus_id format. Must be an integer.'}, status=400)
+
+    try:
+        wostatus = Status.objects.get(id=wostatus_id)
+    except Status.DoesNotExist:
+        logger.warning(f"Status with id {wostatus_id} does not exist.")
+        return JsonResponse({'error': 'Status not found.'}, status=404)
+    except Exception as e:
+        logger.error(f"Unexpected error in filter_wostatus: {e}", exc_info=True)
+        return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
+    
     return JsonResponse({'description': wostatus.description})
 
 # ---------------------------------
@@ -2022,10 +2106,10 @@ def read_excel_with_error_handling(schedule_path, sheet_name=0):
         return df_original
     except ValueError as ve:
         # หาก sheet_name ไม่ถูกต้อง
-        print(f"ข้อผิดพลาด: {ve}. กรุณาตรวจสอบว่าชื่อชีท '{sheet_name}' ถูกต้องหรือไม่.")
+        logger.error(f"ข้อผิดพลาด: {ve}. กรุณาตรวจสอบว่าชื่อชีท '{sheet_name}' ถูกต้องหรือไม่.")
         return None
     except Exception as e:
-        print(f"ข้อผิดพลาด: {e}")
+        logger.error(f"ข้อผิดพลาด: {e}")
         return None
 
 def convert_duration(value):
@@ -2097,7 +2181,7 @@ def clean_ptw_column(ptw_value):
             return ptw_value  # ถ้าไม่มี '//' ในข้อความให้คืนค่าตามเดิม
 
     except Exception as e:
-        print(f"เกิดข้อผิดพลาด: {str(e)}")
+        logger.error(f"An error occurred: {e}")
         return ptw_value
 
 def replace_columns(col, replace_dict):
@@ -2105,7 +2189,7 @@ def replace_columns(col, replace_dict):
         for key, value in replace_dict.items():
             col = re.sub(rf'\b{key}\b', value, col)
     except Exception as e:
-        print(f"An error occurred: {e}")
+        logger.error(f"An error occurred: {e}")
     return col
 
 def create_workorder(df, pmnum_col, orgid):

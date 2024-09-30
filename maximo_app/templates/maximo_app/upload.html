@@ -1,380 +1,242 @@
-{% extends 'maximo_app/base.html' %}
 {% comment %} path: maximo_project\maximo_app\templates\upload.html {% endcomment %}
-{% load widget_tweaks %}
-{% block title %}Upload Files{% endblock %}
-{% block style %}
-<style>
-    {% comment %} html {
-        background: #154295;
-    } {% endcomment %}
-    body {
-        margin: 0;
-        background-color: #f0ebf8;
-    }
-
-    .form-container {
-        max-width: 640px;
-        margin: 12px auto;
-        background-color: #fff;
-    }
-
-    .form-title {
-        font-size: 1.75rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-    }
-</style>
-{% endblock %}
-
-{% block content %}
-    {% if not schedule_filename and not location_filename %}
-        
-        <div class="container relative px-6 pt-[1.375rem] pb-4 bg-white rounded-lg shadow-md form-container">
-            <h1 class="text-center text-gray-800 form-title">Upload Files</h1>
-            <form id="uploadForm" method="post" enctype="multipart/form-data" class="space-y-6">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <style>
+        body {
+            font-family: 'Bai Jamjuree', sans-serif;
+            font-weight: 500;
+            font-style: normal;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .error {
+            color: red;
+            font-size: 0.9em;
+        }
+    </style>
+    <title>Upload Files</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container">
+        {% if not schedule_filename and not location_filename %}
+            <h1>Upload Files</h1>
+            <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-
+                
                 <!-- Dropdown สำหรับเลือกปี -->
-                <div class="sm:col-span-3">
-                    <label for="year" class="block text-sm font-medium leading-6 text-gray-900">{{ form.year.label_tag }}</label>
-                    <div class="mt-2">
-                        {{ form.year|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
-                    </div>
+                <div class="form-group">
+                    {{ form.year.label_tag }}
+                    {{ form.year }}
                     {% if form.year.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
+                        <div class="error">
                             {% for error in form.year.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
                 </div>
-
+                
                 <!-- Dropdown สำหรับเลือก Site -->
-                <div class="sm:col-span-3">
-                    <label for="site" class="block text-sm font-medium leading-6 text-gray-900">{{ form.site.label_tag }}</label>
-                    <div class="mt-2">
-                        {{ form.site|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
-                    </div>
+                <div class="form-group">
+                    {{ form.site.label_tag }}
+                    {{ form.site }}
                     {% if form.site.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
+                        <div class="error">
                             {% for error in form.site.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
-                    <p id="site_description" class="mt-1 text-sm text-gray-500"></p>
+                    <p id="site_description" style="display: inline; margin-left: 10px;"></p>
                 </div>
-
+                
                 <!-- Dropdown สำหรับเลือก Plant Type -->
-                <div class="sm:col-span-3">
-                    <label for="plant_type" class="block text-sm font-medium leading-6 text-gray-900">{{ form.plant_type.label_tag }}</label>
-                    <div class="mt-2">
-                        {{ form.plant_type|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
-                    </div>
+                <div class="form-group">
+                    {{ form.plant_type.label_tag }}
+                    {{ form.plant_type }}
                     {% if form.plant_type.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
+                        <div class="error">
                             {% for error in form.plant_type.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
-                    <p id="plant_type_description" class="mt-1 text-sm text-gray-500"></p>
+                    <p id="plant_type_description" style="display: inline; margin-left: 10px;"></p>
                 </div>
 
                 <!-- Dropdown สำหรับเลือก Unit -->
-                <div class="sm:col-span-3">
-                    <label for="unit" class="block text-sm font-medium leading-6 text-gray-900">{{ form.unit.label_tag }}</label>
-                    <div class="mt-2">
-                        {{ form.unit|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
-                    </div>
+                <div class="form-group">
+                    {{ form.unit.label_tag }}
+                    {{ form.unit }}
                     {% if form.unit.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
+                        <div class="error">
                             {% for error in form.unit.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
                 </div>
-
+                
                 <!-- Dropdown สำหรับเลือก Work Type -->
-                <div class="sm:col-span-3">
-                    <label for="work_type" class="block text-sm font-medium leading-6 text-gray-900">{{ form.work_type.label_tag }}</label>
-                    <div class="mt-2">
-                        {{ form.work_type|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
-                    </div>
+                <div class="form-group">
+                    {{ form.work_type.label_tag }}
+                    {{ form.work_type }}
                     {% if form.work_type.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
+                        <div class="error">
                             {% for error in form.work_type.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
-                    <p id="work_type_description" class="mt-1 text-sm text-gray-500"></p>
+                    <p id="work_type_description" style="display: inline; margin-left: 10px"></p>
                 </div>
-                
+
                 <!-- Dropdown สำหรับเลือก ACTTYPE -->
-                <div class="sm:col-span-3">
-                    <label for="acttype" class="block text-sm font-medium leading-6 text-gray-900">{{ form.acttype.label_tag }}</label>
-                    <div class="mt-2">
-                        <select id="id_acttype" name="acttype" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                            <option value="">เลือก</option>
-                        </select>
-                    </div>
+                <div class="form-group">
+                    {{ form.acttype.label_tag }}
+                    <select id="id_acttype" name="acttype">
+                        <option value="">กรุณาเลือก ACTTYPE</option>
+                    </select>
                     {% if form.acttype.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
+                        <div class="error">
                             {% for error in form.acttype.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
-                    <p id="acttype_description" class="mt-1 text-sm text-gray-500"></p>
+                    <p id="acttype_description" style="display: inline; margin-left: 10px;"></p>
                 </div>
 
                 <!-- Dropdown สำหรับเลือก WBS -->
-                <div class="sm:col-span-3">
-                    <label for="wbs" class="block text-sm font-medium leading-6 text-gray-900">{{ form.wbs.label_tag }}</label>
-                    <div class="mt-2">
-                        {{ form.wbs|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
-                    </div>
+                <div class="form-group">
+                    {{ form.wbs.label_tag }}
+                    {{ form.wbs }}
                     {% if form.wbs.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
+                        <div class="error">
                             {% for error in form.wbs.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
-                    <p id="wbs_description" class="mt-1 text-sm text-gray-500"></p>
+                    <p id="wbs_description" style="display: inline; margin-left: 10px;"></p>
                 </div>
 
                 <!-- Dropdown สำหรับเลือก WO Status -->
-                <div class="sm:col-span-3">
-                    <label for="wostatus" class="block text-sm font-medium leading-6 text-gray-900">{{ form.wostatus.label_tag }}</label>
-                    <div class="mt-2">
-                        {{ form.wostatus|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
-                    </div>
+                <div class="form-group">
+                    {{ form.wostatus.label_tag }}
+                    {{ form.wostatus }}
                     {% if form.wostatus.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
+                        <div class="error">
                             {% for error in form.wostatus.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
-                    <p id="wostatus_description" class="mt-1 text-sm text-gray-500"></p>
+                    <p id="wostatus_description" style="display: inline; margin-left: 10px;"></p>
                 </div>
-                
-                <!-- ฟิลด์สำหรับอัปโหลดไฟล์ Schedule -->
-                <div class="sm:col-span-3">
-                    <label for="schedule_file" class="block mb-2 text-sm font-medium text-gray-900">{{ form.schedule_file.label_tag }}</label>
-                    <div class="mt-2">
-                        {{ form.schedule_file|add_class:"block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
-                    </div>
+
+                <!-- ฟิลด์สำหรับอัปโหลดไฟล์ -->
+                <div class="form-group">
+                    {{ form.schedule_file.label_tag }} 
+                    {{ form.schedule_file }}
                     {% if form.schedule_file.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
+                        <div class="error">
                             {% for error in form.schedule_file.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
-                    <p class="mt-1 text-sm text-gray-500">Allowed formats: XLSM, XLSX.</p>
                 </div>
-
-                <!-- ฟิลด์สำหรับอัปโหลดไฟล์ Location -->
-                <div class="sm:col-span-3">
-                    <label for="location_file" class="block mb-2 text-sm font-medium text-gray-900">{{ form.location_file.label_tag }}</label>
-                    <div class="mt-2">
-                        {{ form.location_file|add_class:"block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" }}
-                    </div>
-
+                
+                <div class="form-group">
+                    {{ form.location_file.label_tag }} 
+                    {{ form.location_file }}
                     {% if form.location_file.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
-
+                        <div class="error">
                             {% for error in form.location_file.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
-                            
                         </div>
                     {% endif %}
-
-                    <p class="mt-1 text-sm text-gray-500">Allowed formats: XLSM, XLSX.</p>
                 </div>
-
-                <!-- ปุ่ม Submit -->
-                <button id="uploadBtn" type="submit" name="upload_files" onclick="validateUploadForm(event)" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 inline-flex items-center">
-                        Upload Files
-                    </span>
-                </button>
+                <button type="submit" name="upload_files">Upload Files</button>
             </form>
-        </div>
-
-    {% else %}
-
-        <div class="container relative px-6 pt-[1.375rem] pb-4 bg-white rounded-lg shadow-md form-container">
-            <h1 class="text-center text-gray-800 form-title">Uploaded Files</h1>
-                {% if request.session.schedule_filename %}
-                    <p><strong>Schedule File:</strong> {{ request.session.schedule_filename }}</p>
-                {% endif %}
-                {% if request.session.location_filename %}
-                    <p><strong>Location File:</strong> {{ request.session.location_filename }}</p>
-                {% endif %}
-        </div>
+        {% else %}
+        <h1>Uploaded Files</h1>
+            {% if request.session.schedule_filename %}
+                <p><strong>Schedule File:</strong> {{ request.session.schedule_filename }}</p>
+            {% endif %}
+            {% if request.session.location_filename %}
+                <p><strong>Location File:</strong> {{ request.session.location_filename }}</p>
+            {% endif %}
+        {% endif %}
     
-    {% endif %}
+    {% if 'download_link_comment' in request.session %}
+    <hr>
+    <div>
+        <h1>Download Files</h1>
+        <a href="{% url 'download_comment_file' %}">
+            <button>Download Comment File</button>
+        </a>
+    </div>
+    <hr>
 
-    {% if request.session.download_link_comment %}
-
-        <div class="container p-6 bg-white rounded-lg shadow-md form-container">    
-            <div class="inline-flex rounded-md shadow-sm" role="group">
-                <a href="{% url 'download_comment_file' %}">
-                    <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                        <svg class="w-3 h-3 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
-                            <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
-                        </svg>
-                        Download Comment File
-                    </button>
-                </a>
-            </div>
-            
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                DATA PREVIEW BEFORE CONVERT
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Value
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- EGPROJECTID -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                EGPROJECTID
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.egprojectid }}
-                            </td>
-                        </tr>
-                        <!-- EGWBS (MMA WORK LIST) -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                EGWBS (MMA WORK LIST)
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.egwbs }}
-                            </td>
-                        </tr>
-                        <!-- SITEID -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                SITEID
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.siteid }}
-                            </td>
-                        </tr>
-                        <!-- LOCATION(UNIT) -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                LOCATION (UNIT)
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.location }}
-                            </td>
-                        </tr>
-                        <!-- WORKTYPE -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                WORKTYPE
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.worktype }}
-                            </td>
-                        </tr>
-                        <!-- EGMNTACTTYPE -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                EGMNTACTTYPE
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.egmntacttype }}
-                            </td>
-                        </tr>
-                        <!-- WOSTATUS -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                WOSTATUS
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.wostatus }}
-                            </td>
-                        </tr>
-                        <!-- WBS Description -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                WBS Description
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.wbs_desc }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-        </div>
+    <div>
+        <h1>DATA PREVIEW BEFORE CONVERT</h1>
+            <p><strong>EGPROJECTID:</strong> {{ request.session.egprojectid }}</p>
+            <p><strong>EGWBS (MMA WORK LIST):</strong> {{ request.session.egwbs}}</p>
+            <p><strong>SITEID:</strong> {{ request.session.siteid}}</p>
+            <p><strong>LOCATION(UNIT):</strong> {{ request.session.location}}</p>
+            <p><strong>WORKTYPE:</strong> {{ request.session.worktype}}</p>
+            <p><strong>EGMNTACTTYPE:</strong> {{ request.session.egmntacttype}}</p>
+            <p><strong>WOSTATUS:</strong> {{ request.session.wostatus}}</p>
+            <p><strong>WBS Description:</strong> {{ request.session.wbs_desc}}</p>
+    </div>
     {% endif %}
 
     {% if error_message %}
-
         <div class="alert alert-danger">
             <p>{{ error_message }}</p>
         </div>
-
     {% endif %}
 
     {% if not error_message %}
-
         {% if extracted_kks_counts is not None and extracted_kks_counts.items %}
-
-            <div>
-                <form id="mappingForm" method="post">
-                    {% csrf_token %}
-                    <h1>Provide KKS Mappings</h1>
-                    <ul>
-                        {% for kks_value, count in extracted_kks_counts.items %}
-                            <input type="hidden" name="extracted_kks_counts[{{ kks_value }}]" value="{{ count }}">
-                            {% if user_input_mapping %}
-                                {% for key, value in user_input_mapping.items %}
-                                    <li>{{ key }} คือ {{ value }}</li>
-                                {% endfor %}
-                            {% else %}
-                            <div>
-                                <label for="{{ kks_value }}">{{ kks_value }} ({{ count }} times):</label>
-                                <input type="text" name="{{ kks_value }}" id="{{ kks_value }}" required>
-                            </div>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-
-                    {% if not user_input_mapping %}
-                    <!-- ปุ่ม Submit -->
-                    <button id="mappingBtn" type="submit" name="kks_mapping_submit" onclick="validateMappingForm(event)" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 inline-flex items-center">
-                            Submit Mappings
-                        </span>
-                    </button>
-
-                    {% endif %}
-                
-                </form>
-            </div>
-
+        <hr>
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                <h1>Provide KKS Mappings</h1>
+                <ul>
+                    {% for kks_value, count in extracted_kks_counts.items %}
+                        <input type="hidden" name="extracted_kks_counts[{{ kks_value }}]" value="{{ count }}">
+                        {% if user_input_mapping %}
+                            {% for key, value in user_input_mapping.items %}
+                                <li>{{ key }} คือ {{ value }}</li>
+                            {% endfor %}
+                        {% else %}
+                        <div>
+                            <label for="{{ kks_value }}">{{ kks_value }} ({{ count }} times):</label>
+                            <input type="text" name="{{ kks_value }}" id="{{ kks_value }}" required>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+                {% if not user_input_mapping %}
+                <button type="submit" name="kks_mapping_submit">Submit Mappings</button>
+                {% endif %}
+            </form>
+        </div>
         {% endif %}
-
     {% endif %}
     
     <hr>
@@ -401,213 +263,140 @@
         <button>Download Template-MxLoader-JP-PMPlan File</button>
     </a>
     {% endif %}
-
-{% block script %}
-<!-- ตกเเต่ง -->
-    <script>
-        function validateUploadForm(event) {
-            // ดึงข้อมูลฟอร์ม
-            let form = document.getElementById('uploadForm');
-            // ตรวจสอบว่าฟอร์ม valid หรือไม่
-            if (!form.checkValidity()) {
-                // ถ้าฟอร์มไม่ผ่านการตรวจสอบ ให้ป้องกันการ submit และแจ้งเตือน
-                event.preventDefault(); // ป้องกันไม่ให้ฟอร์มถูกส่ง
-                form.reportValidity();  // แสดงข้อความแจ้งเตือนว่าไม่ได้กรอกฟิลด์ที่จำเป็น
-            } else {
-                // ถ้าฟอร์ม valid เรียกใช้ showUploadLoading()
-                showUploadLoading(form);
-            }
-        }
-
-        function showUploadLoading(form) {
-            let button = document.getElementById('uploadBtn');
-
-            // ปิดการใช้งานปุ่มเพื่อป้องกันการกดซ้ำ
-            button.disabled = true;
-
-            // เปลี่ยนเนื้อหาของปุ่มให้แสดงไอคอนโหลดและข้อความ Loading
-            button.innerHTML = `
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        <svg aria-hidden="true" role="status" class="inline w-4 h-4 text-gray-200 me-3 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
-                        </svg>
-                        Loading...
-                    </span>`;
-
-            // ส่งฟอร์มจริงเมื่อปุ่มเปลี่ยนสถานะเป็น Loading
-            form.submit();
-        }
-
-        {% comment %} function validateMappingForm(event) {
-            // ดึงข้อมูลฟอร์ม
-            var form = document.getElementById('mappingForm');
-    
-            // ตรวจสอบว่าฟอร์ม valid หรือไม่
-            if (!form.checkValidity()) {
-                // ถ้าฟอร์มไม่ผ่านการตรวจสอบ ให้ป้องกันการ submit และแจ้งเตือน
-                event.preventDefault(); // ป้องกันไม่ให้ฟอร์มถูกส่ง
-                form.reportValidity();  // แสดงข้อความแจ้งเตือนว่าไม่ได้กรอกฟิลด์ที่จำเป็น
-            } else {
-                // ถ้าฟอร์ม valid เรียกใช้ showMappingLoading()
-                showMappingLoading(form);
-            }
-        }
-    
-        function showMappingLoading(form) {
-            var button = document.getElementById('mappingBtn');
-    
-            // ปิดการใช้งานปุ่มเพื่อป้องกันการกดซ้ำ
-            button.disabled = true;
-    
-            // เปลี่ยนเนื้อหาของปุ่มให้แสดงไอคอนโหลดและข้อความ Loading
-            button.innerHTML = `
-                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                    <svg aria-hidden="true" role="status" class="inline w-4 h-4 text-gray-200 me-3 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
-                    </svg>
-                    Loading...
-                </span>`;
-    
-            // ส่งฟอร์มจริงเมื่อปุ่มเปลี่ยนสถานะเป็น Loading
-            form.submit();
-        } {% endcomment %}
-    </script>
     
 <!-- AJAX for updating ACTTYPE -->
-    <script>
-        $(document).ready(function() {
-            // เมื่อผู้ใช้เลือก Plant Type
-            $('#id_plant_type').change(function() {
-                const plant_code = $(this).val(); // ดึง plant_code ที่เลือก
+<script>
+    $(document).ready(function() {
+        // เมื่อผู้ใช้เลือก Plant Type
+        $('#id_plant_type').change(function() {
+            var plant_type_id = $(this).val(); // ดึง plant_code ที่เลือก
 
-                if (plant_code) {
-                    // ส่ง AJAX request ไปที่ server
-                    $.ajax({
-                        url: "{% url 'filter_plant_type' %}",
-                        data: {'plant_code': plant_code},    // ส่งค่า plant_code ไปยัง backend
-                        success: function (data) {
-                            // อัปเดต dropdown ACTTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
-                            $('#id_acttype').empty();
-                            $('#id_acttype').append('<option value="">เลือก</option>');
+            if (plant_type_id) {
+                // ส่ง AJAX request ไปที่ server
+                $.ajax({
+                    url: "{% url 'filter_plant_type' %}",
+                    data: {'plant_type_id': plant_type_id},    // ส่งค่า plant_code ไปยัง backend
+                    success: function (data) {
+                        // อัปเดต dropdown ACTTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
+                        $('#id_acttype').empty();
+                        $('#id_acttype').append('<option value="">กรุณาเลือก ACTTYPE</option>');
 
-                            // เพิ่มตัวเลือกที่ได้รับจาก server
-                            $.each(data.acttypes, function (index, acttype) {
-                                $('#id_acttype').append('<option value="' + acttype.id + '">' + acttype.acttype + '</option>');
-                            });
-                            
-                            $('#plant_type_description').text(data.plant_type_th); // Display the description in the HTML
-                        }
-                    });
-                } else {
-                    // ถ้าไม่เลือก Plant Type ให้แสดงค่า default
-                    $('#id_acttype').empty();
-                    $('#id_acttype').append('<option value="">เลือก</option>');
-                    $('#plant_type_description').text('');
-                }
-            });
+                        // เพิ่มตัวเลือกที่ได้รับจาก server
+                        $.each(data.acttypes, function (index, acttype) {
+                            $('#id_acttype').append('<option value="' + acttype.id + '">' + acttype.acttype + '</option>');
+                        });
+                        
+                        $('#plant_type_description').text(data.plant_type_th); // Display the description in the HTML
+                    }
+                });
+            } else {
+                // ถ้าไม่เลือก Plant Type ให้แสดงค่า default
+                $('#id_acttype').empty();
+                $('#id_acttype').append('<option value="">กรุณาเลือก ACTTYPE</option>');
+                $('#plant_type_description').text('');
+            }
         });
-    </script>
-    <script>
-        $(document).ready(function() {
-            // เมื่อผู้ใช้เลือก SITE
-            $('#id_site').change(function() {
-                const site_id = $(this).val();  // ดึงค่า site_id ที่ผู้ใช้เลือก
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // เมื่อผู้ใช้เลือก SITE
+        $('#id_site').change(function() {
+            var site_id = $(this).val();  // ดึงค่า site_id ที่ผู้ใช้เลือก
 
-                if (site_id) {
-                    // ส่ง AJAX request ไปที่เซิร์ฟเวอร์
-                    $.ajax({
-                        url: "{% url 'filter_site' %}",  // URL สำหรับ view ที่ใช้กรอง SITE
-                        data: {'site_id': site_id},  // ส่ง site_id ไปที่ backend
-                        success: function (data) {
-                            // อัปเดตคำอธิบาย site_name
-                            $('#site_description').text(data.site_name);  // แสดง site_name ใน HTML
-                        }
-                    });
-                } else {
-                    // ล้างคำอธิบายถ้าไม่ได้เลือก SITE
-                    $('#site_description').text('');
-                }
-            });
+            if (site_id) {
+                // ส่ง AJAX request ไปที่เซิร์ฟเวอร์
+                $.ajax({
+                    url: "{% url 'filter_site' %}",  // URL สำหรับ view ที่ใช้กรอง SITE
+                    data: {'site_id': site_id},  // ส่ง site_id ไปที่ backend
+                    success: function (data) {
+                        // อัปเดตคำอธิบาย site_name
+                        $('#site_description').text(data.site_name);  // แสดง site_name ใน HTML
+                    }
+                });
+            } else {
+                // ล้างคำอธิบายถ้าไม่ได้เลือก SITE
+                $('#site_description').text('');
+            }
         });
-    </script>
-    <script>
-        $(document).ready(function() {
+    });
+</script>
+<script>
+    $(document).ready(function() {
 
-            $('#id_work_type').change(function() {
-                const work_type_id = $(this).val();
-            
-                if(work_type_id){
-                    $.ajax({
-                        url: "{% url 'filter_worktype' %}",
-                        data: {'work_type_id': work_type_id},
-                        success: function (data){
-                            $('#work_type_description').text(data.description);
-                        }
-                    });
-                } else {
-                    $('#work_type_description').text('');
-                }
-            });
+        $('#id_work_type').change(function() {
+            var work_type_id = $(this).val();
+        
+            if(work_type_id){
+                $.ajax({
+                    url: "{% url 'filter_worktype' %}",
+                    data: {'work_type_id': work_type_id},
+                    success: function (data){
+                        $('#work_type_description').text(data.description);
+                    }
+                });
+            } else {
+                $('#work_type_description').text('');
+            }
         });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#id_acttype').change(function() {
-                const acttype_id = $(this).val();
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#id_acttype').change(function() {
+            var acttype_id = $(this).val();
 
-                if (acttype_id){
-                    $.ajax({
-                        url: "{% url 'filter_acttype' %}",
-                        data: {'acttype_id': acttype_id},
-                        success: function (data) {
-                            $('#acttype_description').text(data.description + ' (' + data.code + ')');
-                        }
-                    });
-                } else {
-                    $('#acttype_description').text('');
-                }
-            });
+            if (acttype_id){
+                $.ajax({
+                    url: "{% url 'filter_acttype' %}",
+                    data: {'acttype_id': acttype_id},
+                    success: function (data) {
+                        $('#acttype_description').text(data.description + ' (' + data.code + ')');
+                    }
+                });
+            } else {
+                $('#acttype_description').text('');
+            }
         });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#id_wbs').change(function() {
-                const wbs_id = $(this).val();
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#id_wbs').change(function() {
+            var wbs_id = $(this).val();
 
-                if (wbs_id){
-                    $.ajax({
-                        url: "{% url 'filter_wbs' %}",
-                        data: {'wbs_id': wbs_id},
-                        success: function (data) {
-                            $('#wbs_description').text(data.description);
-                        }
-                    });
-                } else {
-                    $('#wbs_description').text('');
-                }
-            });
+            if (wbs_id){
+                $.ajax({
+                    url: "{% url 'filter_wbs' %}",
+                    data: {'wbs_id': wbs_id},
+                    success: function (data) {
+                        $('#wbs_description').text(data.description);
+                    }
+                });
+            } else {
+                $('#wbs_description').text('');
+            }
         });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#id_wostatus').change(function() {
-                const wostatus_id = $(this).val();
-            
-                if (wostatus_id) {
-                    $.ajax({
-                        url: "{% url 'filter_wostatus' %}",
-                        data: {'wostatus_id': wostatus_id},
-                        success: function (data) {
-                            $('#wostatus_description').text(data.description);
-                        }
-                    });
-                } else {
-                    $('#wostatus_description').text('');
-                }
-            });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#id_wostatus').change(function() {
+            var wostatus_id = $(this).val();
+        
+            if (wostatus_id) {
+                $.ajax({
+                    url: "{% url 'filter_wostatus' %}",
+                    data: {'wostatus_id': wostatus_id},
+                    success: function (data) {
+                        $('#wostatus_description').text(data.description);
+                    }
+                });
+            } else {
+                $('#wostatus_description').text('');
+            }
         });
-    </script>
-{% endblock %}
-{% endblock content %}
+    });
+</script>
+</body>
+</html>

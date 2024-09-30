@@ -26,15 +26,16 @@ class UploadFileForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(UploadFileForm, self).__init__(*args, **kwargs)
         self.fields['plant_type'].queryset = PlantType.objects.all()
-        self.fields['plant_type'].to_field_name = 'plant_code'
+        self.fields['plant_type'].to_field_name = 'id'
+        self.fields['acttype'].queryset = ActType.objects.none()
 
-        # ตรวจสอบว่ามีค่า plant_type ใน data หรือไม่
-        plant_code = self.data.get('plant_type')
-        if plant_code:
+        if 'plant_type' in self.data:
             try:
-                # กรอง acttype ที่ remark ไม่เท่ากับ plant_code
-                self.fields['acttype'].queryset = ActType.objects.exclude(remark=plant_code)
-            except (ValueError, TypeError):
+                plant_type_id = int(self.data.get('plant_type'))
+                plant_type = PlantType.objects.get(id=plant_type_id)
+                # กรองข้อมูล ActType ที่ remark ไม่เท่ากับ plant_code
+                self.fields['acttype'].queryset = ActType.objects.exclude(remark=plant_type.plant_code)
+            except (ValueError, TypeError, PlantType.DoesNotExist):
                 self.fields['acttype'].queryset = ActType.objects.none()
         else:
             self.fields['acttype'].queryset = ActType.objects.none()
@@ -44,19 +45,25 @@ class UploadFileForm(forms.Form):
         schedule_file = cleaned_data.get('schedule_file')
         location_file = cleaned_data.get('location_file')
         
-        # ตรวจสอบ mimetype ของ schedule_file
+        # ตรวจสอบประเภทของ schedule_file
         if schedule_file:
-            mimetype = mimetypes.guess_type(schedule_file.name)[0]
-            if mimetype not in ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel.sheet.macroEnabled.12']:
-                self.add_error('schedule_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
+                content_type = schedule_file.content_type
+                if content_type not in [
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'application/vnd.ms-excel.sheet.macroEnabled.12'
+                ]:
+                    self.add_error('schedule_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
                 # ฟังก์ชัน add_error จะเพิ่มข้อความข้อผิดพลาดให้กับฟิลด์ที่ไม่ผ่านการตรวจสอบ ข้อผิดพลาดนี้จะถูกแสดงในฟอร์มเมื่อผู้ใช้ทำการส่งฟอร์ม
         
-        # ตรวจสอบ mimetype ของ location_file
+        # ตรวจสอบประเภทของ location_file         
         if location_file:
-            mimetype = mimetypes.guess_type(location_file.name)[0]
-            if mimetype not in ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel.sheet.macroEnabled.12']:
-                self.add_error('location_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
-
+                content_type = location_file.content_type
+                if content_type not in [
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'application/vnd.ms-excel.sheet.macroEnabled.12'
+                ]:
+                    self.add_error('location_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
+                    
         # ตรวจสอบว่าฟิลด์ที่จำเป็นถูกเลือกหรือไม่
         required_fields = ['year', 'site', 'plant_type', 'unit', 'work_type', 'acttype', 'wbs', 'wostatus']
         for field in required_fields:
