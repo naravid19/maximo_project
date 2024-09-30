@@ -2187,3 +2187,29 @@ Traceback (most recent call last):
     raise self.model.DoesNotExist(
 maximo_app.models.PlantType.DoesNotExist: PlantType matching query does not exist.
 2024-09-27 22:04:06,011 ERROR "GET /filter_plant_type/?plant_code=1 HTTP/1.1" 500 82840 C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\servers\basehttp.py 213
+[30/Sep/2024 11:13:28] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 77, in index
+    location = form.cleaned_dat.get('location')
+               ^^^^^^^^^^^^^^^^
+AttributeError: 'UploadFileForm' object has no attribute 'cleaned_dat'. Did you mean: 'cleaned_data'?
+[30/Sep/2024 11:13:28] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 77, in index
+    location = form.cleaned_dat.get('location')
+               ^^^^^^^^^^^^^^^^
+AttributeError: 'UploadFileForm' object has no attribute 'cleaned_dat'. Did you mean: 'cleaned_data'?
+[30/Sep/2024 11:13:28] ERROR [django.server:213] "POST / HTTP/1.1" 500 79109
+[30/Sep/2024 11:13:28] ERROR [django.server:213] "POST / HTTP/1.1" 500 79109

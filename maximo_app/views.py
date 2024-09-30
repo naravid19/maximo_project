@@ -74,6 +74,7 @@ def index(request):
             
             schedule_file = request.FILES.get('schedule_file', None)
             location_file = request.FILES.get('location_file', None)
+            plant = form.cleaned_data.get('plant')
             year = form.cleaned_data.get('year')
             site = form.cleaned_data.get('site')
             plant_type = form.cleaned_data.get('plant_type')
@@ -145,8 +146,8 @@ def index(request):
                 
             if site:
                 siteid = site.site_id   # 'SRD0'
-                site_str = re.sub(r'\d+', '', siteid)
-                location = f'{site_str}-{plant_type}{unit}' # 'SRD-H02'
+                # site_str = re.sub(r'\d+', '', siteid)
+                location = f'{plant}-{plant_type}{unit}' # 'SRD-H02'
             
             if work_type:
                 worktype = work_type.worktype   # 'APOO'
@@ -160,12 +161,12 @@ def index(request):
                 two_digits_year = buddhist_year % 100
 
             # ตรวจสอบว่าข้อมูลครบถ้วนก่อนการสร้าง egprojectid และ egwbs
-            if siteid and plant_type and unit and acttype and wbs and two_digits_year:
-                plant_type = plant_type.plant_code
-                unit_code = unit.unit_code
+            if acttype and wbs and two_digits_year:
+                # plant_type = plant_type.plant_code
+                # unit_code = unit.unit_code
 
                 # สร้าง egprojectid และ egwbs
-                egprojectid = f"O-{siteid}{plant_type}{unit_code}-{two_digits_year}{acttype.code}"  # 'O-SRDH02-67MI'
+                egprojectid = f"O-{location.replace('-', '')}-{two_digits_year}{acttype.code}"  # 'O-SRDH02-67MI'
                 egwbs = f"{egprojectid}-{wbs.wbs_code}" # 'O-SRDH02-67MI-WO'
                 wbs_desc = f"{wbs.description} {acttype.description} {location} {buddhist_year}"
 
@@ -571,12 +572,6 @@ def index(request):
             cond2 = df_original_newcol['MAIN_SYSTEM_DESC']=='No_kks_found'
             cond3 = df_original_newcol['SUB_SYSTEM_DESC']=='No_kks_found'
             cond4 = df_original_newcol['KKS_NEW_DESC']=='No_kks_found'
-            #df_original_newcol[cond1&(cond2|cond3|cond4)]
-
-            cond1 = df_original_newcol['KKS_NEW'].notna()
-            cond2 = df_original_newcol['MAIN_SYSTEM_DESC']=='No_kks_found'
-            cond3 = df_original_newcol['SUB_SYSTEM_DESC']=='No_kks_found'
-            cond4 = df_original_newcol['KKS_NEW_DESC']=='No_kks_found'
             cond5 = df_original_newcol['KKS_NEW'].isin([''])
             cond6 = df_original_newcol['TASK_ORDER_NEW']!='xx'
 
@@ -863,6 +858,7 @@ def index(request):
             
             # Save variables
             request.session['first_plant'] = first_plant
+            request.session['most_common_plant_unit'] = most_common_plant_unit
 ############
 ############        
             print('1 form schedule_filename:',schedule_filename)
@@ -879,6 +875,7 @@ def index(request):
             comment_path = request.session.get('download_link_comment', None)
             first_plant = request.session.get('first_plant')
             temp_dir = request.session.get('temp_dir')
+            most_common_plant_unit = request.session.get('most_common_plant_unit')
             # Get Dropdown
             egmntacttype = request.session.get('egmntacttype')
             egprojectid = request.session.get('egprojectid')
@@ -1767,6 +1764,7 @@ def index(request):
         # request.session.pop('location_filename', None)
         # request.session.pop('extracted_kks_counts', None)
         # request.session.pop('first_plant', None)
+        # request.session.pop('most_common_plant_unit', None)
         # request.session.pop('df_original', None)
         # request.session.pop('df_original_copy', None)
         # request.session.pop('df_original_newcol', None)

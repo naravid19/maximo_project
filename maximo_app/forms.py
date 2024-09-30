@@ -7,22 +7,78 @@ from maximo_app.models import Site, PlantType, Unit, WorkType, ActType, WBSCode,
 import mimetypes
 
 class UploadFileForm(forms.Form):
-    schedule_file = forms.FileField(label='Schedule File', widget=forms.ClearableFileInput(attrs={'accept': '.xlsx,.xlsm'}))
-    location_file = forms.FileField(label='Location File', widget=forms.ClearableFileInput(attrs={'accept': '.xlsx,.xlsm'}))
+    schedule_file = forms.FileField(
+        label='Schedule File', 
+        widget=forms.ClearableFileInput(attrs={'accept': '.xlsx,.xlsm'})
+    )
+    location_file = forms.FileField(
+        label='Location File', 
+        widget=forms.ClearableFileInput(attrs={'accept': '.xlsx,.xlsm'})
+    )
+    
+    # Input Field
+    plant = forms.CharField(
+        label='PLANT NAME',
+        required=True,
+        max_length=8,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'PMN'
+        })
+    )
     
     # Dropdown สำหรับเลือกปี
     current_year = datetime.now().year
     YEARS_CHOICES = [('', 'เลือก')] + [(str(year), str(year)) for year in range(current_year, current_year + 20)]
-    year = forms.ChoiceField(label='YEAR', choices=YEARS_CHOICES, required=True)
+    year = forms.ChoiceField(
+        label='YEAR', 
+        choices=YEARS_CHOICES, 
+        required=True
+    )
     
     # Dropdown สำหรับเลือกข้อมูล จากฐานข้อมูล
-    site = forms.ModelChoiceField(queryset=Site.objects.all(), label='SITE', required=True, empty_label="เลือก")
-    plant_type = forms.ModelChoiceField(queryset=PlantType.objects.all(),label='PLANT TYPE', required=True, empty_label="เลือก")
-    unit = forms.ModelChoiceField(queryset=Unit.objects.all(), label='UNIT', required=True, empty_label="เลือก")
-    work_type = forms.ModelChoiceField(queryset=WorkType.objects.filter(worktype__in=["APOO", "APAO"]), label='WORKTYPE', required=True, empty_label="เลือก")
-    acttype = forms.ModelChoiceField(queryset=ActType.objects.none(), label='ACTTYPE', required=True, empty_label="เลือก")
-    wbs = forms.ModelChoiceField(queryset=WBSCode.objects.all(), label='SUBWBS GROUP', required=True, empty_label="เลือก")
-    wostatus = forms.ModelChoiceField(queryset=Status.objects.all(), label='STATUS', required=True, empty_label="เลือก")
+    site = forms.ModelChoiceField(
+        queryset=Site.objects.all(), 
+        label='SITE', 
+        required=True, 
+        empty_label="เลือก"
+    )
+    plant_type = forms.ModelChoiceField(
+        queryset=PlantType.objects.all(), 
+        label='PLANT TYPE', 
+        required=True, 
+        empty_label="เลือก"
+    )
+    unit = forms.ModelChoiceField(
+        queryset=Unit.objects.all(), 
+        label='UNIT', 
+        required=True, 
+        empty_label="เลือก"
+    )
+    work_type = forms.ModelChoiceField(
+        queryset=WorkType.objects.filter(worktype__in=["APOO", "APAO"]), 
+        label='WORKTYPE', 
+        required=True, 
+        empty_label="เลือก"
+    )
+    acttype = forms.ModelChoiceField(
+        queryset=ActType.objects.none(), 
+        label='ACTTYPE', 
+        required=True, 
+        empty_label="เลือก"
+    )
+    wbs = forms.ModelChoiceField(
+        queryset=WBSCode.objects.all(), 
+        label='SUBWBS GROUP', 
+        required=True, 
+        empty_label="เลือก"
+    )
+    wostatus = forms.ModelChoiceField(
+        queryset=Status.objects.all(), 
+        label='STATUS', 
+        required=True, 
+        empty_label="เลือก"
+    )
+    
     def __init__(self, *args, **kwargs):
         super(UploadFileForm, self).__init__(*args, **kwargs)
         self.fields['plant_type'].queryset = PlantType.objects.all()
@@ -44,6 +100,7 @@ class UploadFileForm(forms.Form):
         cleaned_data = super().clean()
         schedule_file = cleaned_data.get('schedule_file')
         location_file = cleaned_data.get('location_file')
+        plant = cleaned_data.get('plant')
         
         # ตรวจสอบประเภทของ schedule_file
         if schedule_file:
@@ -65,9 +122,9 @@ class UploadFileForm(forms.Form):
                     self.add_error('location_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
                     
         # ตรวจสอบว่าฟิลด์ที่จำเป็นถูกเลือกหรือไม่
-        required_fields = ['year', 'site', 'plant_type', 'unit', 'work_type', 'acttype', 'wbs', 'wostatus']
+        required_fields = ['year', 'site', 'plant_type', 'unit', 'work_type', 'acttype', 'wbs', 'wostatus', 'plant']
         for field in required_fields:
             if not cleaned_data.get(field):
-                self.add_error(field, f'กรุณาเลือก {field.upper()}')
+                self.add_error(field, f'{field.upper()} ว่าง')
 
         return cleaned_data

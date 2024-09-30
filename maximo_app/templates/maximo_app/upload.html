@@ -44,6 +44,20 @@
                         </div>
                     {% endif %}
                 </div>
+
+                <!-- Dropdown สำหรับเลือก Plant Type -->
+                <div class="form-group">
+                    {{ form.plant_type.label_tag }}
+                    {{ form.plant_type }}
+                    {% if form.plant_type.errors %}
+                        <div class="error">
+                            {% for error in form.plant_type.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p id="plant_type_description" style="display: inline; margin-left: 10px;"></p>
+                </div>
                 
                 <!-- Dropdown สำหรับเลือก Site -->
                 <div class="form-group">
@@ -59,18 +73,17 @@
                     <p id="site_description" style="display: inline; margin-left: 10px;"></p>
                 </div>
                 
-                <!-- Dropdown สำหรับเลือก Plant Type -->
+                <!-- Input Field สำหรับกรอก Plant -->
                 <div class="form-group">
-                    {{ form.plant_type.label_tag }}
-                    {{ form.plant_type }}
-                    {% if form.plant_type.errors %}
+                    {{ form.plant.label_tag }}
+                    {{ form.plant }}
+                    {% if form.plant.errors %}
                         <div class="error">
-                            {% for error in form.plant_type.errors %}
+                            {% for error in form.plant.errors %}
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
-                    <p id="plant_type_description" style="display: inline; margin-left: 10px;"></p>
                 </div>
 
                 <!-- Dropdown สำหรับเลือก Unit -->
@@ -84,6 +97,20 @@
                             {% endfor %}
                         </div>
                     {% endif %}
+                </div>
+
+                <!-- Dropdown สำหรับเลือก WO Status -->
+                <div class="form-group">
+                    {{ form.wostatus.label_tag }}
+                    {{ form.wostatus }}
+                    {% if form.wostatus.errors %}
+                        <div class="error">
+                            {% for error in form.wostatus.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p id="wostatus_description" style="display: inline; margin-left: 10px;"></p>
                 </div>
                 
                 <!-- Dropdown สำหรับเลือก Work Type -->
@@ -128,20 +155,6 @@
                         </div>
                     {% endif %}
                     <p id="wbs_description" style="display: inline; margin-left: 10px;"></p>
-                </div>
-
-                <!-- Dropdown สำหรับเลือก WO Status -->
-                <div class="form-group">
-                    {{ form.wostatus.label_tag }}
-                    {{ form.wostatus }}
-                    {% if form.wostatus.errors %}
-                        <div class="error">
-                            {% for error in form.wostatus.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <p id="wostatus_description" style="display: inline; margin-left: 10px;"></p>
                 </div>
 
                 <!-- ฟิลด์สำหรับอัปโหลดไฟล์ -->
@@ -196,6 +209,7 @@
             <p><strong>EGWBS (MMA WORK LIST):</strong> {{ request.session.egwbs}}</p>
             <p><strong>SITEID:</strong> {{ request.session.siteid}}</p>
             <p><strong>LOCATION(UNIT):</strong> {{ request.session.location}}</p>
+            <p><strong>PLANT(พบมากสุด):</strong> {{ request.session.most_common_plant_unit}}</p>
             <p><strong>WORKTYPE:</strong> {{ request.session.worktype}}</p>
             <p><strong>EGMNTACTTYPE:</strong> {{ request.session.egmntacttype}}</p>
             <p><strong>WOSTATUS:</strong> {{ request.session.wostatus}}</p>

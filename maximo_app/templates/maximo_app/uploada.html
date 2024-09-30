@@ -49,22 +49,6 @@
                     {% endif %}
                 </div>
 
-                <!-- Dropdown สำหรับเลือก Site -->
-                <div class="sm:col-span-3">
-                    <label for="site" class="block text-sm font-medium leading-6 text-gray-900">{{ form.site.label_tag }}</label>
-                    <div class="mt-2">
-                        {{ form.site|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
-                    </div>
-                    {% if form.site.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
-                            {% for error in form.site.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <p id="site_description" class="mt-1 text-sm text-gray-500"></p>
-                </div>
-
                 <!-- Dropdown สำหรับเลือก Plant Type -->
                 <div class="sm:col-span-3">
                     <label for="plant_type" class="block text-sm font-medium leading-6 text-gray-900">{{ form.plant_type.label_tag }}</label>
@@ -81,6 +65,22 @@
                     <p id="plant_type_description" class="mt-1 text-sm text-gray-500"></p>
                 </div>
 
+                <!-- Dropdown สำหรับเลือก Site -->
+                <div class="sm:col-span-3">
+                    <label for="site" class="block text-sm font-medium leading-6 text-gray-900">{{ form.site.label_tag }}</label>
+                    <div class="mt-2">
+                        {{ form.site|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
+                    </div>
+                    {% if form.site.errors %}
+                        <div class="mt-2 text-sm text-red-600 error">
+                            {% for error in form.site.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p id="site_description" class="mt-1 text-sm text-gray-500"></p>
+                </div>
+
                 <!-- Dropdown สำหรับเลือก Unit -->
                 <div class="sm:col-span-3">
                     <label for="unit" class="block text-sm font-medium leading-6 text-gray-900">{{ form.unit.label_tag }}</label>
@@ -94,6 +94,22 @@
                             {% endfor %}
                         </div>
                     {% endif %}
+                </div>
+
+                <!-- Dropdown สำหรับเลือก WO Status -->
+                <div class="sm:col-span-3">
+                    <label for="wostatus" class="block text-sm font-medium leading-6 text-gray-900">{{ form.wostatus.label_tag }}</label>
+                    <div class="mt-2">
+                        {{ form.wostatus|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
+                    </div>
+                    {% if form.wostatus.errors %}
+                        <div class="mt-2 text-sm text-red-600 error">
+                            {% for error in form.wostatus.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <p id="wostatus_description" class="mt-1 text-sm text-gray-500"></p>
                 </div>
 
                 <!-- Dropdown สำหรับเลือก Work Type -->
@@ -144,22 +160,6 @@
                         </div>
                     {% endif %}
                     <p id="wbs_description" class="mt-1 text-sm text-gray-500"></p>
-                </div>
-
-                <!-- Dropdown สำหรับเลือก WO Status -->
-                <div class="sm:col-span-3">
-                    <label for="wostatus" class="block text-sm font-medium leading-6 text-gray-900">{{ form.wostatus.label_tag }}</label>
-                    <div class="mt-2">
-                        {{ form.wostatus|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
-                    </div>
-                    {% if form.wostatus.errors %}
-                        <div class="mt-2 text-sm text-red-600 error">
-                            {% for error in form.wostatus.errors %}
-                                <p>{{ error }}</p>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <p id="wostatus_description" class="mt-1 text-sm text-gray-500"></p>
                 </div>
                 
                 <!-- ฟิลด์สำหรับอัปโหลดไฟล์ Schedule -->
