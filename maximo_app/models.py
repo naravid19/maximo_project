@@ -1,23 +1,6 @@
 from django.db import models
 
 # Create your models here.
-#! Site
-class Site(models.Model):
-    site_id = models.CharField(max_length=8, unique=True, verbose_name="site_id")  # SITEID
-    site_name = models.CharField(max_length=100, verbose_name="site_name")  # คำอธิบาย
-    organization = models.CharField(max_length=8, verbose_name="organization")  # องค์กร
-    class Meta:
-        verbose_name = "Site"
-        verbose_name_plural = "Site"
-
-    def __str__(self):
-        return f"{self.site_id}"
-
-    def save(self, *args, **kwargs):
-        # แปลง plant_code ให้เป็นตัวพิมพ์ใหญ่
-        self.site_id = self.site_id.upper()
-        super().save(*args, **kwargs)
-
 #! Plant Type
 class PlantType(models.Model):
     plant_code = models.CharField(max_length=8, unique=True, verbose_name="plant_code")  # รหัสโรงไฟฟ้า
@@ -33,6 +16,24 @@ class PlantType(models.Model):
 
     def save(self, *args, **kwargs):
         self.plant_code = self.plant_code.upper()
+        super().save(*args, **kwargs)
+
+#! Site
+class Site(models.Model):
+    site_id = models.CharField(max_length=8, unique=True, verbose_name="site_id")  # SITEID
+    site_name = models.CharField(max_length=100, verbose_name="site_name")  # คำอธิบาย
+    organization = models.CharField(max_length=8, verbose_name="organization")  # องค์กร
+    plant_types = models.ManyToManyField(PlantType, related_name='sites')   # เพิ่ม ManyToManyField เพื่อเชื่อมโยงกับ PlantType
+    class Meta:
+        verbose_name = "Site"
+        verbose_name_plural = "Site"
+
+    def __str__(self):
+        return f"{self.site_id}"
+
+    def save(self, *args, **kwargs):
+        # แปลง plant_code ให้เป็นตัวพิมพ์ใหญ่
+        self.site_id = self.site_id.upper()
         super().save(*args, **kwargs)
 
 #! Unit

@@ -2213,3 +2213,9 @@ Traceback (most recent call last):
 AttributeError: 'UploadFileForm' object has no attribute 'cleaned_dat'. Did you mean: 'cleaned_data'?
 [30/Sep/2024 11:13:28] ERROR [django.server:213] "POST / HTTP/1.1" 500 79109
 [30/Sep/2024 11:13:28] ERROR [django.server:213] "POST / HTTP/1.1" 500 79109
+[30/Sep/2024 14:55:34] WARNING [django.request:248] Not Found: /process/
+[30/Sep/2024 14:55:34] WARNING [django.server:213] "GET /process/ HTTP/1.1" 404 5780
+[30/Sep/2024 14:55:35] WARNING [django.request:248] Not Found: /favicon.ico
+[30/Sep/2024 14:55:35] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 5789
+[01/Oct/2024 09:57:20] WARNING [django.request:248] Not Found: /favicon.ico
+[01/Oct/2024 09:57:20] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 5789

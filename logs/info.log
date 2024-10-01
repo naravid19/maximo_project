@@ -5469,3 +5469,79 @@ AttributeError: 'UploadFileForm' object has no attribute 'cleaned_dat'. Did you 
 [30/Sep/2024 11:53:43] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
 [30/Sep/2024 11:53:44] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
 [30/Sep/2024 11:55:05] INFO [django.server:213] "POST / HTTP/1.1" 200 8574
+[30/Sep/2024 11:58:41] INFO [django.server:213] "POST / HTTP/1.1" 200 8576
+[30/Sep/2024 11:58:43] INFO [django.server:213] "GET /download_template_file/ HTTP/1.1" 200 820537
+[30/Sep/2024 11:59:28] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[30/Sep/2024 11:59:29] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[30/Sep/2024 11:59:32] INFO [django.server:213] "GET / HTTP/1.1" 200 14185
+[30/Sep/2024 11:59:39] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 300
+[30/Sep/2024 11:59:40] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[30/Sep/2024 11:59:46] INFO [django.server:213] "POST / HTTP/1.1" 200 8574
+[30/Sep/2024 12:00:12] INFO [django.server:213] "POST / HTTP/1.1" 200 8576
+[30/Sep/2024 12:00:14] INFO [django.server:213] "GET /download_template_file/ HTTP/1.1" 200 820560
+[30/Sep/2024 14:55:34] WARNING [django.request:248] Not Found: /process/
+[30/Sep/2024 14:55:34] WARNING [django.server:213] "GET /process/ HTTP/1.1" 404 5780
+[30/Sep/2024 14:55:35] WARNING [django.request:248] Not Found: /favicon.ico
+[30/Sep/2024 14:55:35] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 5789
+[30/Sep/2024 14:55:40] INFO [django.server:213] "GET / HTTP/1.1" 200 14185
+[30/Sep/2024 14:55:40] INFO [django.server:213] "GET /static/js/jquery-3.7.1.min.js HTTP/1.1" 200 87533
+[30/Sep/2024 16:00:10] INFO [django.server:213] "GET / HTTP/1.1" 200 14185
+[30/Sep/2024 16:00:15] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 446
+[30/Sep/2024 16:00:24] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=4 HTTP/1.1" 200 458
+[30/Sep/2024 16:02:07] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 300
+[30/Sep/2024 16:03:24] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=5 HTTP/1.1" 200 459
+[01/Oct/2024 09:57:04] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[01/Oct/2024 09:57:19] INFO [django.server:213] "GET /admin HTTP/1.1" 301 0
+[01/Oct/2024 09:57:19] INFO [django.server:213] "GET /admin/ HTTP/1.1" 302 0
+[01/Oct/2024 09:57:20] INFO [django.server:213] "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4160
+[01/Oct/2024 09:57:20] INFO [django.server:213] "GET /static/admin/css/base.css HTTP/1.1" 200 22092
+[01/Oct/2024 09:57:20] INFO [django.server:213] "GET /static/admin/css/login.css HTTP/1.1" 200 951
+[01/Oct/2024 09:57:20] INFO [django.server:213] "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+[01/Oct/2024 09:57:20] INFO [django.server:213] "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2804
+[01/Oct/2024 09:57:20] INFO [django.server:213] "GET /static/admin/css/responsive.css HTTP/1.1" 200 17972
+[01/Oct/2024 09:57:20] INFO [django.server:213] "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+[01/Oct/2024 09:57:20] INFO [django.server:213] "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+[01/Oct/2024 09:57:20] WARNING [django.request:248] Not Found: /favicon.ico
+[01/Oct/2024 09:57:20] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 5789
+[01/Oct/2024 09:57:30] INFO [django.server:213] "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[01/Oct/2024 09:57:30] INFO [django.server:213] "GET /admin/ HTTP/1.1" 200 15025
+[01/Oct/2024 09:57:30] INFO [django.server:213] "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+[01/Oct/2024 09:57:30] INFO [django.server:213] "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+[01/Oct/2024 09:57:30] INFO [django.server:213] "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+[01/Oct/2024 09:57:30] INFO [django.server:213] "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+[01/Oct/2024 09:57:36] INFO [django.server:213] "GET /admin/maximo_app/site/ HTTP/1.1" 200 35478
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9097
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+[01/Oct/2024 09:57:37] INFO [django.server:213] "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+[01/Oct/2024 10:04:55] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[01/Oct/2024 10:04:56] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[01/Oct/2024 10:05:00] INFO [django.server:213] "GET /admin/maximo_app/site/ HTTP/1.1" 200 35478
+[01/Oct/2024 10:05:01] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[01/Oct/2024 10:05:03] INFO [django.server:213] "GET /admin/maximo_app/site/30/change/ HTTP/1.1" 200 14013
+[01/Oct/2024 10:05:03] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[01/Oct/2024 10:05:03] INFO [django.server:213] "GET /static/admin/css/forms.css HTTP/1.1" 200 8710
+[01/Oct/2024 10:05:03] INFO [django.server:213] "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+[01/Oct/2024 10:05:03] INFO [django.server:213] "GET /static/admin/css/widgets.css HTTP/1.1" 200 11564
+[01/Oct/2024 10:05:03] INFO [django.server:213] "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+[01/Oct/2024 10:05:12] INFO [django.server:213] "GET /admin/maximo_app/site/ HTTP/1.1" 200 35478
+[01/Oct/2024 10:08:18] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[01/Oct/2024 10:08:19] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[01/Oct/2024 10:09:22] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[01/Oct/2024 10:09:23] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[01/Oct/2024 10:10:11] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[01/Oct/2024 10:10:12] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[01/Oct/2024 10:10:16] INFO [django.server:213] "GET /admin/maximo_app/site/ HTTP/1.1" 200 35977
+[01/Oct/2024 10:10:16] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[01/Oct/2024 10:15:36] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[01/Oct/2024 10:15:37] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
