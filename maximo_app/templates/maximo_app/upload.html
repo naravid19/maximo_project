@@ -73,18 +73,19 @@
                     <p id="site_description" style="display: inline; margin-left: 10px;"></p>
                 </div>
                 
-                <!-- Input Field สำหรับกรอก Plant -->
+                <!-- Dropdown สำหรับเลือก Child Site -->
                 <div class="form-group">
-                    {{ form.plant.label_tag }}
-                    {{ form.plant }}
-                    {% if form.plant.errors %}
+                    {{ form.child_site.label_tag }}  <!-- ป้ายชื่อ (label) ของฟิลด์ child_site -->
+                    {{ form.child_site }}  <!-- dropdown ของฟิลด์ child_site -->
+                    {% if form.child_site.errors %}  <!-- ตรวจสอบว่ามีข้อผิดพลาดหรือไม่ -->
                         <div class="error">
-                            {% for error in form.plant.errors %}
+                            {% for error in form.child_site.errors %}  <!-- แสดงข้อความผิดพลาด -->
                                 <p>{{ error }}</p>
                             {% endfor %}
                         </div>
                     {% endif %}
-                </div>
+                    <p id="child_site_description" style="display: inline; margin-left: 10px;"></p>
+                </div> 
 
                 <!-- Dropdown สำหรับเลือก Unit -->
                 <div class="form-group">
@@ -291,46 +292,124 @@
                     url: "{% url 'filter_plant_type' %}",
                     data: {'plant_type_id': plant_type_id},    // ส่งค่า plant_code ไปยัง backend
                     success: function (data) {
-                        // อัปเดต dropdown ACTTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
-                        $('#id_acttype').empty();
-                        $('#id_acttype').append('<option value="">กรุณาเลือก ACTTYPE</option>');
+                        // ตรวจสอบว่า server ส่งข้อมูลมาถูกต้องหรือไม่
+                        if (data) {
+                            // อัปเดตคำอธิบายของ plant_type
+                            $('#plant_type_description').text(data.plant_type_th); // แสดงคำอธิบาย plant_type
+                            
+                            // อัปเดต dropdown ACTTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
+                            $('#id_acttype').empty();
+                            $('#id_acttype').append('<option value="">เลือก</option>');
+                            $.each(data.acttypes, function (index, acttype) {
+                                $('#id_acttype').append('<option value="' + acttype.id + '">' + acttype.acttype + '</option>');
+                            });
 
-                        // เพิ่มตัวเลือกที่ได้รับจาก server
-                        $.each(data.acttypes, function (index, acttype) {
-                            $('#id_acttype').append('<option value="' + acttype.id + '">' + acttype.acttype + '</option>');
-                        });
-                        
-                        $('#plant_type_description').text(data.plant_type_th); // Display the description in the HTML
+                            // อัปเดต dropdown SITE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
+                            $('#id_site').empty();
+                            $('#id_site').append('<option value="">เลือก</option>');
+                            $.each(data.sites, function (index, site) {
+                                $('#id_site').append('<option value="' + site.id + '">' + site.site_id + '</option>');
+                            });
+
+                            // อัปเดต dropdown WORKTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
+                            $('#id_work_type').empty();
+                            $('#id_work_type').append('<option value="">เลือก</option>');
+                            $.each(data.work_types, function(index, worktype) {
+                                $('#id_work_type').append('<option value="' + worktype.id + '">' + worktype.worktype + '</option>');
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        $('#plant_type_description').text('');
+                        $('#id_acttype').empty();
+                        $('#id_acttype').append('<option value="">เลือก</option>');
+                        $('#id_site').empty();
+                        $('#id_site').append('<option value="">เลือก</option>');
+                        $('#id_work_type').empty();
+                        $('#id_work_type').append('<option value="">เลือก</option>');
+                        alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก server: " + error);
                     }
                 });
             } else {
                 // ถ้าไม่เลือก Plant Type ให้แสดงค่า default
+                $('#plant_type_description').text('');  // ล้างคำอธิบาย
                 $('#id_acttype').empty();
-                $('#id_acttype').append('<option value="">กรุณาเลือก ACTTYPE</option>');
-                $('#plant_type_description').text('');
+                $('#id_acttype').append('<option value="">เลือก</option>');  // ล้าง dropdown ACTTYPE
+                $('#id_site').empty();
+                $('#id_site').append('<option value="">เลือก</option>');  // ล้าง dropdown SITE
+                $('#id_work_type').empty();
+                $('#id_work_type').append('<option value="">เลือก</option>');  // ล้าง dropdown WORKTYPE
             }
         });
     });
 </script>
 <script>
     $(document).ready(function() {
-        // เมื่อผู้ใช้เลือก SITE
+        // ฟังก์ชันที่ถูกเรียกเมื่อผู้ใช้เลือก Site
         $('#id_site').change(function() {
             var site_id = $(this).val();  // ดึงค่า site_id ที่ผู้ใช้เลือก
 
             if (site_id) {
-                // ส่ง AJAX request ไปที่เซิร์ฟเวอร์
                 $.ajax({
                     url: "{% url 'filter_site' %}",  // URL สำหรับ view ที่ใช้กรอง SITE
                     data: {'site_id': site_id},  // ส่ง site_id ไปที่ backend
+                    dataType: 'json',  // กำหนดประเภทข้อมูลที่คาดว่าจะได้รับเป็น JSON
                     success: function (data) {
+                        // ตรวจสอบว่ามีข้อมูล ChildSite หรือไม่
+                        if (data.child_sites.length > 0) {
+                            // ล้างค่าที่มีอยู่ใน dropdown ของ ChildSite และเพิ่มตัวเลือกใหม่
+                            $('#id_child_site').empty();
+                            $('#id_child_site').append('<option value="">เลือก</option>');
+                            $.each(data.child_sites, function(index, child_site) {
+                                $('#id_child_site').append('<option value="' + child_site.id + '">' + child_site.site_id + '</option>');
+                            });
+                        } else {
+                            // ถ้าไม่มีข้อมูล ChildSite
+                            $('#id_child_site').empty();
+                            $('#id_child_site').append('<option value="">ไม่พบข้อมูล Child Site</option>');
+                        }
+
                         // อัปเดตคำอธิบาย site_name
                         $('#site_description').text(data.site_name);  // แสดง site_name ใน HTML
+                    },
+                    error: function(xhr, status, error) {
+                        // หากเกิดข้อผิดพลาด ให้ล้าง dropdown ของ ChildSite และแสดงข้อความเตือน
+                        $('#id_child_site').empty();
+                        $('#id_child_site').append('<option value="">เลือก</option>');
+                        alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก server: " + error);
                     }
                 });
             } else {
-                // ล้างคำอธิบายถ้าไม่ได้เลือก SITE
-                $('#site_description').text('');
+                // ถ้าไม่เลือก Site ให้ล้าง dropdown ของ ChildSite และล้างคำอธิบาย Site
+                $('#id_child_site').empty();
+                $('#id_child_site').append('<option value="">เลือก</option>');
+                $('#site_description').text('');  // ล้างคำอธิบายของ Site
+            }
+        });
+
+        // ฟังก์ชันที่ถูกเรียกเมื่อผู้ใช้เลือก Child Site
+        $('#id_child_site').change(function() {
+            var child_site_id = $(this).val();  // ดึงค่า child_site_id ที่ผู้ใช้เลือก
+
+            if (child_site_id) {
+                // ส่ง AJAX request ไปที่ server เพื่อดึงคำอธิบายของ Child Site
+                $.ajax({
+                    url: "{% url 'filter_child_site' %}",  // URL ไปยัง view ที่จะดึงคำอธิบายของ Child Site
+                    data: {'child_site_id': child_site_id},  // ส่งค่า child_site_id ไปยัง backend
+                    dataType: 'json',  // กำหนดประเภทข้อมูลที่คาดว่าจะได้รับเป็น JSON
+                    success: function(data) {
+                        // อัปเดตคำอธิบายของ Child Site
+                        $('#child_site_description').text(data.description);  // แสดงคำอธิบายใน #child_site_description
+                    },
+                    error: function(xhr, status, error) {
+                        // หากเกิดข้อผิดพลาด ให้ล้างคำอธิบาย
+                        $('#child_site_description').text('ไม่สามารถดึงคำอธิบายได้');
+                        alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก server: " + error);
+                    }
+                });
+            } else {
+                // ล้างคำอธิบายเมื่อไม่มีการเลือก Child Site
+                $('#child_site_description').text('');
             }
         });
     });

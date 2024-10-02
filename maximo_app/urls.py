@@ -16,6 +16,7 @@ urlpatterns = [
     path('download_pm_plan_file/', views.download_pm_plan_file, name='download_pm_plan_file'),
     path('download_template_file/', views.download_template_file, name='download_template_file'),
     path('filter_plant_type/', views.filter_plant_type, name='filter_plant_type'),
+    path('filter_child_site/', views.filter_child_site, name='filter_child_site'),
     path('filter_site/', views.filter_site, name='filter_site'),
     path('filter_worktype/', views.filter_worktype, name='filter_worktype'),
     path('filter_acttype/', views.filter_acttype, name='filter_acttype'),

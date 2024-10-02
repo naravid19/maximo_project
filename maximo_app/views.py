@@ -7,7 +7,7 @@ from django.http import FileResponse, HttpResponse, Http404, JsonResponse
 from django.shortcuts import render, HttpResponse, Http404
 from django.views.decorators.http import require_GET
 from django.urls import reverse
-from maximo_app.models import Site, PlantType, Unit, WorkType, ActType, WBSCode, Status
+from maximo_app.models import Site, ChildSite, PlantType, Unit, WorkType, ActType, WBSCode, Status
 
 import datetime
 import numpy as np
@@ -74,7 +74,7 @@ def index(request):
             
             schedule_file = request.FILES.get('schedule_file', None)
             location_file = request.FILES.get('location_file', None)
-            plant = form.cleaned_data.get('plant')
+            child_site = form.cleaned_data.get('child_site')
             year = form.cleaned_data.get('year')
             site = form.cleaned_data.get('site')
             plant_type = form.cleaned_data.get('plant_type')
@@ -147,7 +147,7 @@ def index(request):
             if site:
                 siteid = site.site_id   # 'SRD0'
                 # site_str = re.sub(r'\d+', '', siteid)
-                location = f'{plant}-{plant_type}{unit}' # 'SRD-H02'
+                location = f'{child_site}-{plant_type}{unit}' # 'SRD-H02'
             
             if work_type:
                 worktype = work_type.worktype   # 'APOO'
@@ -160,7 +160,6 @@ def index(request):
                 buddhist_year = int(year) + 543
                 two_digits_year = buddhist_year % 100
 
-            # ตรวจสอบว่าข้อมูลครบถ้วนก่อนการสร้าง egprojectid และ egwbs
             if acttype and wbs and two_digits_year:
                 # plant_type = plant_type.plant_code
                 # unit_code = unit.unit_code
@@ -1941,17 +1940,64 @@ def filter_site(request):
     
     try:
         site = Site.objects.get(id=site_id) # ดึงข้อมูล Site จากฐานข้อมูลโดยใช้ site_id
+        child_sites = site.child_sites.all()
+        
     except Site.DoesNotExist:
         logger.warning(f"Site with id {site_id} does not exist.")
         return JsonResponse({'error': 'Site not found.'}, status=404)
     except Exception as e:
         logger.error(f"Unexpected error in filter_site: {e}", exc_info=True)
         return JsonResponse({'error': str(e)}, status=500)
-    return JsonResponse({'site_name': site.site_name})  # ส่ง site_name กลับไปที่ frontend ในรูปแบบ JSON
+
+    child_site_list = [{
+        'id': child_site.id,
+        'site_id': child_site.site_id,
+        'site_name': child_site.site_name,
+        'description': child_site.site_name
+    } for child_site in child_sites]
+    
+    return JsonResponse({
+        'site_name': site.site_name,
+        'child_sites': child_site_list,
+    })
+
+def filter_child_site(request):
+    # ดึงค่า child_site_id จาก request GET
+    child_site_id = request.GET.get('child_site_id')
+
+    if not child_site_id:
+        return JsonResponse({'error': 'No child_site_id provided.'}, status=400)
+    
+    try:
+        # ดึงข้อมูล ChildSite โดยใช้ child_site_id
+        child_site = ChildSite.objects.get(id=child_site_id)
+    except ChildSite.DoesNotExist:
+        return JsonResponse({'error': 'Child Site not found.'}, status=404)
+
+    # ส่งคำอธิบายของ Child Site กลับไป
+    return JsonResponse({
+        'description': child_site.site_name
+    })
 
 def filter_worktype(request):
     work_type_id = request.GET.get('work_type_id')  # รับค่า work_type_id จาก request
-    work_type = WorkType.objects.get(id=work_type_id)   # ค้นหา WORKTYPE จากฐานข้อมูล
+    
+    if not work_type_id:
+        return JsonResponse({'error': 'No work_type_id provided.'}, status=400)
+    
+    try:
+        work_type_id = int(work_type_id)
+    except ValueError:
+        return JsonResponse({'error': 'Invalid work_type_id format. Must be an integer.'}, status=400)
+    
+    try:
+        work_type = WorkType.objects.get(id=work_type_id)   # ค้นหา WORKTYPE จากฐานข้อมูล
+    except WorkType.DoesNotExist:
+        logger.warning(f"WorkType with id {work_type_id} does not exist.")
+        return JsonResponse({'error': 'WorkType not found.'}, status=404)
+    except Exception as e:
+        logger.error(f"Unexpected error in filter_worktype: {e}", exc_info=True)
+        return JsonResponse({'error': str(e)}, status=500)
     return JsonResponse({'description': work_type.description}) # ส่ง description กลับไปที่ frontend
 
 @require_GET
@@ -1968,20 +2014,33 @@ def filter_plant_type(request):
     
     try:
         plant_type = PlantType.objects.get(id=plant_type_id)
-        # กรองข้อมูล ActType ที่ remark ไม่เท่ากับ plant_code ของ plant_type
-        acttypes = ActType.objects.exclude(remark=plant_type.plant_code).values('id', 'acttype')
+        
+        # Get the ActTypes associated with the PlantType
+        acttypes = plant_type.act_types.all()
+        
+        # Get the Sites associated with the PlantType
+        sites = plant_type.sites.all()
+        
+        # Get the WorkType associated with the PlantType
+        work_types = plant_type.work_types.all()
+        
     except PlantType.DoesNotExist:
         logger.warning(f"PlantType with id {plant_type_id} does not exist.")
         return JsonResponse({'error': 'PlantType not found.'}, status=404)
     except Exception as e:
         logger.error(f"Unexpected error in filter_plant_type: {e}", exc_info=True)
         return JsonResponse({'error': str(e)}, status=500)
-        
+    
+    acttype_list = [{'id': acttype.id, 'acttype': acttype.acttype} for acttype in acttypes]
+    site_list = [{'id': site.id, 'site_id': site.site_id, 'site_name': site.site_name} for site in sites]    
+    work_type_list = [{'id': worktype.id, 'worktype': worktype.worktype} for worktype in work_types]
     return JsonResponse({
-    'acttypes': list(acttypes),  # รายการของ ACTTYPEs
-    'plant_type_th': plant_type.plant_type_th  # คำอธิบายของ plant_type ที่เลือก
+        'acttypes': acttype_list,
+        'sites': site_list,
+        'plant_type_th': plant_type.plant_type_th,
+        'work_types': work_type_list,
     })
-
+    
 @require_GET
 def filter_acttype(request):
     acttype_id = request.GET.get('acttype_id')
