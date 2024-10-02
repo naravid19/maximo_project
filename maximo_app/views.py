@@ -1940,20 +1940,20 @@ def filter_site(request):
     
     try:
         site = Site.objects.get(id=site_id) # ดึงข้อมูล Site จากฐานข้อมูลโดยใช้ site_id
-        child_sites = site.child_sites.all()
+        logger.info(f"Successfully retrieved Site with id {site_id}")
+        child_sites = site.child_sites.values('id', 'site_id', 'site_name')
         
     except Site.DoesNotExist:
         logger.warning(f"Site with id {site_id} does not exist.")
         return JsonResponse({'error': 'Site not found.'}, status=404)
     except Exception as e:
-        logger.error(f"Unexpected error in filter_site: {e}", exc_info=True)
-        return JsonResponse({'error': str(e)}, status=500)
+        logger.error(f"Unexpected error in filter_site: {str(e)}", exc_info=True)
+        return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
 
     child_site_list = [{
-        'id': child_site.id,
-        'site_id': child_site.site_id,
-        'site_name': child_site.site_name,
-        'description': child_site.site_name
+        'id': child_site['id'],
+        'site_id': child_site['site_id'],
+        'site_name': child_site['site_name']
     } for child_site in child_sites]
     
     return JsonResponse({
@@ -1961,6 +1961,7 @@ def filter_site(request):
         'child_sites': child_site_list,
     })
 
+@require_GET
 def filter_child_site(request):
     # ดึงค่า child_site_id จาก request GET
     child_site_id = request.GET.get('child_site_id')
@@ -1969,16 +1970,20 @@ def filter_child_site(request):
         return JsonResponse({'error': 'No child_site_id provided.'}, status=400)
     
     try:
-        # ดึงข้อมูล ChildSite โดยใช้ child_site_id
         child_site = ChildSite.objects.get(id=child_site_id)
+        logger.info(f"Successfully retrieved ChildSite with id {child_site_id}")
     except ChildSite.DoesNotExist:
+        logger.warning(f"ChildSite with id {child_site_id} does not exist.")
         return JsonResponse({'error': 'Child Site not found.'}, status=404)
+    except Exception as e:
+        logger.error(f"Unexpected error in filter_child_site: {str(e)}")
+        return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
 
-    # ส่งคำอธิบายของ Child Site กลับไป
     return JsonResponse({
         'description': child_site.site_name
     })
 
+@require_GET
 def filter_worktype(request):
     work_type_id = request.GET.get('work_type_id')  # รับค่า work_type_id จาก request
     
@@ -1991,14 +1996,15 @@ def filter_worktype(request):
         return JsonResponse({'error': 'Invalid work_type_id format. Must be an integer.'}, status=400)
     
     try:
-        work_type = WorkType.objects.get(id=work_type_id)   # ค้นหา WORKTYPE จากฐานข้อมูล
+        work_type = WorkType.objects.get(id=work_type_id)
+        logger.info(f"Successfully retrieved WorkType with id {work_type_id}")
     except WorkType.DoesNotExist:
         logger.warning(f"WorkType with id {work_type_id} does not exist.")
         return JsonResponse({'error': 'WorkType not found.'}, status=404)
     except Exception as e:
-        logger.error(f"Unexpected error in filter_worktype: {e}", exc_info=True)
-        return JsonResponse({'error': str(e)}, status=500)
-    return JsonResponse({'description': work_type.description}) # ส่ง description กลับไปที่ frontend
+        logger.error(f"Unexpected error in filter_worktype: {str(e)}", exc_info=True)
+        return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
+    return JsonResponse({'description': work_type.description})
 
 @require_GET
 def filter_plant_type(request):
@@ -2013,8 +2019,9 @@ def filter_plant_type(request):
         return JsonResponse({'error': 'Invalid plant_type_id format. Must be an integer.'}, status=400)
     
     try:
+        # ดึงข้อมูล PlantType ตาม id
         plant_type = PlantType.objects.get(id=plant_type_id)
-        
+        logger.info(f"Successfully retrieved PlantType with id {plant_type_id}")
         # Get the ActTypes associated with the PlantType
         acttypes = plant_type.act_types.all()
         
@@ -2028,12 +2035,14 @@ def filter_plant_type(request):
         logger.warning(f"PlantType with id {plant_type_id} does not exist.")
         return JsonResponse({'error': 'PlantType not found.'}, status=404)
     except Exception as e:
-        logger.error(f"Unexpected error in filter_plant_type: {e}", exc_info=True)
-        return JsonResponse({'error': str(e)}, status=500)
+        logger.error(f"Unexpected error in filter_plant_type: {str(e)}", exc_info=True)
+        return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     
+    # แปลงข้อมูลเป็น list เพื่อส่งกลับไปยัง frontend
     acttype_list = [{'id': acttype.id, 'acttype': acttype.acttype} for acttype in acttypes]
     site_list = [{'id': site.id, 'site_id': site.site_id, 'site_name': site.site_name} for site in sites]    
     work_type_list = [{'id': worktype.id, 'worktype': worktype.worktype} for worktype in work_types]
+    
     return JsonResponse({
         'acttypes': acttype_list,
         'sites': site_list,
@@ -2055,11 +2064,12 @@ def filter_acttype(request):
 
     try:
         acttype = ActType.objects.get(id=acttype_id)
+        logger.info(f"Successfully retrieved ActType with id {acttype_id}")
     except ActType.DoesNotExist:
         logger.warning(f"ActType with id {acttype_id} does not exist.")
         return JsonResponse({'error': 'ActType not found.'}, status=404)
     except Exception as e:
-        logger.error(f"Unexpected error in filter_acttype: {e}", exc_info=True)
+        logger.error(f"Unexpected error in filter_acttype: {str(e)}", exc_info=True)
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     
     return JsonResponse({'description': acttype.description, 'code': acttype.code})
@@ -2078,6 +2088,7 @@ def filter_wbs(request):
 
     try:
         wbs = WBSCode.objects.get(id=wbs_id)
+        logger.info(f"Successfully retrieved WBSCode with id {wbs_id}")
     except WBSCode.DoesNotExist:
         logger.warning(f"WBSCode with id {wbs_id} does not exist.")
         return JsonResponse({'error': 'WBSCode not found.'}, status=404)
@@ -2101,6 +2112,7 @@ def filter_wostatus(request):
 
     try:
         wostatus = Status.objects.get(id=wostatus_id)
+        logger.info(f"Successfully retrieved Status with id {wostatus_id}")
     except Status.DoesNotExist:
         logger.warning(f"Status with id {wostatus_id} does not exist.")
         return JsonResponse({'error': 'Status not found.'}, status=404)

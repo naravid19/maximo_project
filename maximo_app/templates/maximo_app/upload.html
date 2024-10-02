@@ -132,7 +132,7 @@
                 <div class="form-group">
                     {{ form.acttype.label_tag }}
                     <select id="id_acttype" name="acttype">
-                        <option value="">กรุณาเลือก ACTTYPE</option>
+                        <option value="">เลือก</option>
                     </select>
                     {% if form.acttype.errors %}
                         <div class="error">
@@ -320,25 +320,35 @@
                         }
                     },
                     error: function(xhr, status, error) {
-                        $('#plant_type_description').text('');
                         $('#id_acttype').empty();
                         $('#id_acttype').append('<option value="">เลือก</option>');
                         $('#id_site').empty();
                         $('#id_site').append('<option value="">เลือก</option>');
+                        $('#id_child_site').empty();
+                        $('#id_child_site').append('<option value="">เลือก</option>');
                         $('#id_work_type').empty();
                         $('#id_work_type').append('<option value="">เลือก</option>');
+                        $('#plant_type_description').text('');
+                        $('#site_description').text('');
+                        $('#child_site_description').text('');
                         alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก server: " + error);
                     }
                 });
             } else {
                 // ถ้าไม่เลือก Plant Type ให้แสดงค่า default
-                $('#plant_type_description').text('');  // ล้างคำอธิบาย
                 $('#id_acttype').empty();
                 $('#id_acttype').append('<option value="">เลือก</option>');  // ล้าง dropdown ACTTYPE
                 $('#id_site').empty();
                 $('#id_site').append('<option value="">เลือก</option>');  // ล้าง dropdown SITE
+                $('#id_child_site').empty();
+                $('#id_child_site').append('<option value="">เลือก</option>');  // ล้าง dropdown CHILD SITE
                 $('#id_work_type').empty();
                 $('#id_work_type').append('<option value="">เลือก</option>');  // ล้าง dropdown WORKTYPE
+                $('#plant_type_description').text('');  // ล้างคำอธิบาย
+                $('#site_description').text('');
+                $('#child_site_description').text('');
+                $('#work_type_description').text('');
+                $('#acttype_description').text('');
             }
         });
     });
@@ -383,7 +393,8 @@
                 // ถ้าไม่เลือก Site ให้ล้าง dropdown ของ ChildSite และล้างคำอธิบาย Site
                 $('#id_child_site').empty();
                 $('#id_child_site').append('<option value="">เลือก</option>');
-                $('#site_description').text('');  // ล้างคำอธิบายของ Site
+                $('#site_description').text('');
+                $('#child_site_description').text('');
             }
         });
 

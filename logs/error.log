@@ -3309,3 +3309,99 @@ Traceback (most recent call last):
 django.urls.exceptions.NoReverseMatch: Reverse for 'get_child_site_description' not found. 'get_child_site_description' is not a valid view function or pattern name.
 [02/Oct/2024 09:33:16] ERROR [django.server:213] "GET / HTTP/1.1" 500 131888
 [02/Oct/2024 09:33:16] ERROR [django.server:213] "GET / HTTP/1.1" 500 131888
+[02/Oct/2024 10:26:28] ERROR [django.request:248] Internal Server Error: /filter_acttype/
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2062, in filter_acttype
+    description = acttype.description if acttype.description else "No description available"
+                                         ^^^^^^^
+UnboundLocalError: cannot access local variable 'acttype' where it is not associated with a value
+[02/Oct/2024 10:26:28] ERROR [django.request:248] Internal Server Error: /filter_acttype/
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2062, in filter_acttype
+    description = acttype.description if acttype.description else "No description available"
+                                         ^^^^^^^
+UnboundLocalError: cannot access local variable 'acttype' where it is not associated with a value
+[02/Oct/2024 10:26:28] ERROR [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 500 79100
+[02/Oct/2024 10:26:28] ERROR [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 500 79100
+[02/Oct/2024 10:26:29] ERROR [django.request:248] Internal Server Error: /filter_acttype/
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2062, in filter_acttype
+    description = acttype.description if acttype.description else "No description available"
+                                         ^^^^^^^
+UnboundLocalError: cannot access local variable 'acttype' where it is not associated with a value
+[02/Oct/2024 10:26:29] ERROR [django.request:248] Internal Server Error: /filter_acttype/
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2062, in filter_acttype
+    description = acttype.description if acttype.description else "No description available"
+                                         ^^^^^^^
+UnboundLocalError: cannot access local variable 'acttype' where it is not associated with a value
+[02/Oct/2024 10:26:29] ERROR [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 500 79100
+[02/Oct/2024 10:26:29] ERROR [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 500 79100
+[02/Oct/2024 10:26:30] ERROR [django.request:248] Internal Server Error: /filter_acttype/
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2062, in filter_acttype
+    description = acttype.description if acttype.description else "No description available"
+                                         ^^^^^^^
+UnboundLocalError: cannot access local variable 'acttype' where it is not associated with a value
+[02/Oct/2024 10:26:30] ERROR [django.request:248] Internal Server Error: /filter_acttype/
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\views\decorators\http.py", line 64, in inner
+    return func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2062, in filter_acttype
+    description = acttype.description if acttype.description else "No description available"
+                                         ^^^^^^^
+UnboundLocalError: cannot access local variable 'acttype' where it is not associated with a value
+[02/Oct/2024 10:26:30] ERROR [django.server:213] "GET /filter_acttype/?acttype_id=4 HTTP/1.1" 500 79100
+[02/Oct/2024 10:26:30] ERROR [django.server:213] "GET /filter_acttype/?acttype_id=4 HTTP/1.1" 500 79100
