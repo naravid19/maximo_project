@@ -48,7 +48,7 @@ class Command(BaseCommand):
         df.columns = df.columns.str.upper()
 
         # ตรวจสอบว่าคอลัมน์ที่จำเป็นมีอยู่ใน DataFrame หรือไม่
-        required_columns = ['ACTTYPE', 'DESC', 'CODE', 'REMARK']
+        required_columns = ['ACTTYPE', 'DESC', 'CODE']
         missing_columns = [col for col in required_columns if col not in df.columns]
         if missing_columns:
             logger.error(f"Missing required columns in the Excel file: {', '.join(missing_columns)}")
@@ -73,7 +73,7 @@ class Command(BaseCommand):
             with transaction.atomic():
                 for index, row in df.iterrows():
                     # ตรวจสอบความยาวของฟิลด์ต่างๆ
-                    if len(row['ACTTYPE']) > 8 or len(row['DESC']) > 100 or len(row['CODE']) > 8 or len(row['REMARK']) > 100:
+                    if len(row['ACTTYPE']) > 8 or len(row['DESC']) > 100 or len(row['CODE']) > 8:
                         logger.warning(f"Skipping row {index+1}: Field length exceeded")
                         self.stdout.write(self.style.WARNING(f"Skipping row {index+1}: Field length exceeded"))
                         continue
@@ -90,7 +90,6 @@ class Command(BaseCommand):
                             defaults={
                                 'description': row['DESC'],
                                 'code': row['CODE'],
-                                'remark': row['REMARK'],
                             }
                         )
                         if created:

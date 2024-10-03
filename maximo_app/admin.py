@@ -4,10 +4,10 @@ from maximo_app.models import PlantType, Site, ChildSite, Unit, WorkType, ActTyp
 
 @admin.register(PlantType)
 class PlantTypeAdmin(admin.ModelAdmin):
-    list_display = ('plant_code', 'plant_type_th', 'plant_type_eng', 'get_act_types', 'get_work_types')
-    search_fields = ('plant_code', 'plant_type_th', 'plant_type_eng')
+    list_display = ('plant_code', 'plant_type_th', 'plant_type_eng', 'get_act_types', 'get_work_types', 'get_units')
+    search_fields = ('plant_code', 'plant_type_th', 'plant_type_eng', 'act_types__acttype', 'work_types__worktype', 'units__unit_code')
     list_filter = ('plant_code', 'plant_type_th')
-    fields = ('plant_code', 'plant_type_th', 'plant_type_eng', 'act_types', 'work_types')
+    fields = ('plant_code', 'plant_type_th', 'plant_type_eng', 'act_types', 'work_types', 'units')
     
     def get_act_types(self, obj):
         act_types = obj.act_types.all()
@@ -23,7 +23,13 @@ class PlantTypeAdmin(admin.ModelAdmin):
         return ""
     get_work_types.short_description = 'Work Types'
 
-    
+    def get_units(self, obj):
+        units = obj.units.all()
+        if units.exists():
+            return ", ".join([unit.unit_code for unit in units])
+        return ""
+    get_units.short_description = 'Units'
+
     def has_add_permission(self, request):
         return request.user.is_superuser
     
@@ -36,7 +42,7 @@ class PlantTypeAdmin(admin.ModelAdmin):
 @admin.register(Site)
 class SiteAdmin(admin.ModelAdmin):
     list_display = ('site_id', 'site_name', 'organization', 'get_plant_types')  # ฟิลด์ที่จะแสดงในหน้า Admin
-    search_fields = ('site_id', 'site_name', 'organization')  # ฟิลด์ที่สามารถค้นหาได้ใน Admin
+    search_fields = ('site_id', 'site_name', 'organization', 'plant_types__plant_code')  # ฟิลด์ที่สามารถค้นหาได้ใน Admin
     list_filter = ('site_id', 'site_name', 'organization')  # ฟิลด์ที่ใช้สำหรับการกรองข้อมูล
     fields = ('site_id', 'site_name', 'organization', 'plant_types')  # กำหนดฟิลด์ที่จะแสดงในฟอร์มเพิ่มหรือแก้ไขข้อมูล
     
@@ -58,7 +64,7 @@ class SiteAdmin(admin.ModelAdmin):
 @admin.register(ChildSite)
 class ChildSiteAdmin(admin.ModelAdmin):
     list_display = ('site_id', 'site_name', 'get_parent_sites')
-    search_fields = ('site_id', 'site_name')
+    search_fields = ('site_id', 'site_name', 'parent_site__site_id')
     list_filter = ('site_id', 'site_name')
     fields = ('site_id', 'site_name', 'parent_site')
     

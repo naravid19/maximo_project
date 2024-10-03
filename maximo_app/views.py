@@ -1753,6 +1753,13 @@ def index(request):
             print('download_link_job_plan_labor:',  request.session['download_link_job_plan_labor'])
             print('download_link_pm_plan:',  request.session['download_link_pm_plan'])
             print('download_link_template:',  request.session['download_link_template'])
+        
+        else:
+            # ถ้าฟอร์มไม่ถูกต้อง ให้แสดงฟอร์มพร้อมกับข้อมูลเดิม
+            return render(request, 'maximo_app/upload.html', {
+                'form': form,
+                'error_message': error_message,
+            })
     else:
         # เมื่อไม่มีการส่งข้อมูลผ่านแบบฟอร์ม (เช่น เมื่อผู้ใช้เข้าถึงหน้าเว็บครั้งแรกหรือรีเฟรชหน้าเว็บโดยไม่มีการส่งแบบฟอร์ม) 
         # จะมีการสร้างอินสแตนซ์ของ UploadFileForm() ซึ่งเป็นฟอร์มที่ใช้ในการอัปโหลดไฟล์ เพื่อให้ฟอร์มแสดงในหน้าเว็บ 
@@ -2031,6 +2038,8 @@ def filter_plant_type(request):
         # Get the WorkType associated with the PlantType
         work_types = plant_type.work_types.all()
         
+        # Get the Units associated with the PlantType
+        units = plant_type.units.all()
     except PlantType.DoesNotExist:
         logger.warning(f"PlantType with id {plant_type_id} does not exist.")
         return JsonResponse({'error': 'PlantType not found.'}, status=404)
@@ -2042,12 +2051,13 @@ def filter_plant_type(request):
     acttype_list = [{'id': acttype.id, 'acttype': acttype.acttype} for acttype in acttypes]
     site_list = [{'id': site.id, 'site_id': site.site_id, 'site_name': site.site_name} for site in sites]    
     work_type_list = [{'id': worktype.id, 'worktype': worktype.worktype} for worktype in work_types]
-    
+    unit_list = [{'id': unit.id, 'unit_code': unit.unit_code} for unit in units]
     return JsonResponse({
         'acttypes': acttype_list,
         'sites': site_list,
         'plant_type_th': plant_type.plant_type_th,
         'work_types': work_type_list,
+        'units' : unit_list,
     })
     
 @require_GET

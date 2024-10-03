@@ -7457,3 +7457,928 @@ UnboundLocalError: cannot access local variable 'acttype' where it is not associ
 [02/Oct/2024 10:31:42] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
 [02/Oct/2024 10:31:57] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
 [02/Oct/2024 10:31:58] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 10:32:37] INFO [django.server:213] "GET / HTTP/1.1" 200 20372
+[02/Oct/2024 10:32:38] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 1528
+[02/Oct/2024 10:32:41] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 10:32:44] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 10:32:45] INFO [django.server:213] "GET /filter_child_site/?child_site_id=21 HTTP/1.1" 200 187
+[02/Oct/2024 10:32:50] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 10:32:52] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 10:32:53] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 10:32:55] INFO [django.server:213] "GET /filter_wbs/?wbs_id=4 HTTP/1.1" 200 33
+[02/Oct/2024 10:33:04] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 10:33:06] INFO [django.server:213] "GET /download_comment_file/ HTTP/1.1" 200 276389
+[02/Oct/2024 10:33:40] INFO [django.server:213] "POST / HTTP/1.1" 200 15651
+[02/Oct/2024 10:33:41] INFO [django.server:213] "GET /download_template_file/ HTTP/1.1" 200 820171
+[02/Oct/2024 10:34:16] INFO [django.server:213] "GET / HTTP/1.1" 200 20372
+[02/Oct/2024 10:34:38] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 10:34:41] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 10:34:44] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 10:34:48] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 10:34:49] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 10:35:02] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 10:35:05] INFO [django.server:213] "GET / HTTP/1.1" 200 20372
+[02/Oct/2024 10:39:51] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 10:39:54] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 10:39:55] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 10:39:58] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 10:40:00] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 10:40:05] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 10:40:07] INFO [django.server:213] "GET / HTTP/1.1" 200 20414
+[02/Oct/2024 10:40:47] INFO [django.server:213] "GET / HTTP/1.1" 200 20435
+[02/Oct/2024 10:40:50] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 10:40:54] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 10:40:56] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 10:41:00] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 10:41:02] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 10:41:03] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 10:41:05] INFO [django.server:213] "GET /filter_wbs/?wbs_id=4 HTTP/1.1" 200 33
+[02/Oct/2024 10:41:13] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 10:41:15] INFO [django.server:213] "GET / HTTP/1.1" 200 20435
+[02/Oct/2024 10:42:38] INFO [django.server:213] "GET / HTTP/1.1" 200 20474
+[02/Oct/2024 10:42:43] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1120
+[02/Oct/2024 10:42:45] INFO [django.server:213] "GET /filter_site/?site_id=4 HTTP/1.1" 200 91
+[02/Oct/2024 10:44:18] INFO [django.server:213] "GET / HTTP/1.1" 200 20420
+[02/Oct/2024 10:44:21] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 10:44:22] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[02/Oct/2024 10:44:28] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 10:44:30] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 10:44:36] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 10:44:37] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 10:44:38] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 10:44:40] INFO [django.server:213] "GET /filter_wbs/?wbs_id=4 HTTP/1.1" 200 33
+[02/Oct/2024 10:44:49] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 10:44:59] INFO [django.server:213] "GET / HTTP/1.1" 200 20420
+[02/Oct/2024 10:45:35] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 10:45:38] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 10:45:39] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 10:45:41] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 10:45:43] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 10:45:47] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 10:45:48] INFO [django.server:213] "GET / HTTP/1.1" 200 20441
+[02/Oct/2024 10:46:45] INFO [django.server:213] "GET / HTTP/1.1" 200 20547
+[02/Oct/2024 10:46:47] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 10:46:49] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 10:46:50] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 10:46:53] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 10:46:55] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 10:46:56] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 10:46:57] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 10:47:05] INFO [django.server:213] "POST / HTTP/1.1" 200 15658
+[02/Oct/2024 10:47:10] INFO [django.server:213] "GET / HTTP/1.1" 200 20547
+[02/Oct/2024 10:50:06] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 1528
+[02/Oct/2024 10:50:11] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 10:50:14] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 10:50:18] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 10:50:19] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 10:50:21] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 10:50:27] INFO [django.server:213] "POST / HTTP/1.1" 200 15658
+[02/Oct/2024 10:50:28] INFO [django.server:213] "GET / HTTP/1.1" 200 20559
+[02/Oct/2024 10:54:16] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 10:54:17] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 10:54:18] INFO [django.server:213] "GET / HTTP/1.1" 200 20555
+[02/Oct/2024 10:54:20] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1120
+[02/Oct/2024 10:54:24] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 10:54:28] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 10:54:30] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 10:54:33] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 10:54:35] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 10:54:36] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 10:54:38] INFO [django.server:213] "GET /filter_wbs/?wbs_id=4 HTTP/1.1" 200 33
+[02/Oct/2024 10:54:46] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 10:54:52] INFO [django.server:213] "GET / HTTP/1.1" 200 20555
+[02/Oct/2024 10:56:07] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 10:56:08] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 10:56:11] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 10:56:13] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 10:56:15] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 10:56:17] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 10:56:18] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 10:56:24] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 10:56:25] INFO [django.server:213] "GET / HTTP/1.1" 200 20420
+[02/Oct/2024 10:56:53] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 10:56:54] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:02:32] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 11:02:35] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 11:02:36] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 11:02:38] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 11:02:39] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 11:02:46] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 11:04:49] INFO [django.server:213] "GET / HTTP/1.1" 200 20420
+[02/Oct/2024 11:05:14] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 11:05:14] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:05:29] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 11:05:30] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:05:39] INFO [django.server:213] "GET / HTTP/1.1" 200 20420
+[02/Oct/2024 11:05:46] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 11:05:47] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[02/Oct/2024 11:05:49] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 11:05:52] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 11:05:54] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 11:05:56] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 11:05:57] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 11:05:59] INFO [django.server:213] "GET /filter_wbs/?wbs_id=4 HTTP/1.1" 200 33
+[02/Oct/2024 11:06:08] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 11:06:10] INFO [django.server:213] "GET / HTTP/1.1" 200 20420
+[02/Oct/2024 11:07:08] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 11:07:09] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:08:02] INFO [django.server:213] "GET / HTTP/1.1" 200 20437
+[02/Oct/2024 11:08:06] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 11:08:08] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 11:08:10] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 11:08:16] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 11:08:17] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 11:08:19] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 11:08:21] INFO [django.server:213] "GET /filter_wbs/?wbs_id=4 HTTP/1.1" 200 33
+[02/Oct/2024 11:08:30] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 11:08:32] INFO [django.server:213] "GET / HTTP/1.1" 200 20437
+[02/Oct/2024 11:09:49] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 11:09:52] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 11:09:53] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 11:09:55] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[02/Oct/2024 11:09:56] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[02/Oct/2024 11:09:57] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 11:10:02] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 11:10:04] INFO [django.server:213] "GET / HTTP/1.1" 200 20458
+[02/Oct/2024 11:11:12] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 11:11:14] INFO [django.server:213] "GET /filter_site/?site_id=24 HTTP/1.1" 200 536
+[02/Oct/2024 11:11:16] INFO [django.server:213] "GET /filter_child_site/?child_site_id=22 HTTP/1.1" 200 181
+[02/Oct/2024 11:11:18] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[02/Oct/2024 11:11:19] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 11:11:24] INFO [django.server:213] "POST / HTTP/1.1" 200 15649
+[02/Oct/2024 11:11:25] INFO [django.server:213] "GET / HTTP/1.1" 200 20437
+[02/Oct/2024 11:11:27] INFO [django.server:213] "GET / HTTP/1.1" 200 20437
+[02/Oct/2024 11:11:29] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1120
+[02/Oct/2024 11:11:31] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 11:11:32] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[02/Oct/2024 11:11:33] INFO [django.server:213] "GET /filter_child_site/?child_site_id=6 HTTP/1.1" 200 181
+[02/Oct/2024 11:11:35] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 11:11:36] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[02/Oct/2024 11:11:36] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 11:11:37] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 11:11:46] INFO [django.server:213] "POST / HTTP/1.1" 200 15658
+[02/Oct/2024 11:11:46] INFO [django.server:213] "GET / HTTP/1.1" 200 20437
+[02/Oct/2024 11:12:24] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 11:12:26] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:12:46] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1120
+[02/Oct/2024 11:12:47] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 11:12:55] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[02/Oct/2024 11:12:56] INFO [django.server:213] "GET /filter_child_site/?child_site_id=6 HTTP/1.1" 200 181
+[02/Oct/2024 11:12:58] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[02/Oct/2024 11:12:59] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 11:13:03] INFO [django.server:213] "POST / HTTP/1.1" 200 15658
+[02/Oct/2024 11:13:05] INFO [django.server:213] "GET / HTTP/1.1" 200 20437
+[02/Oct/2024 11:29:00] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 11:29:01] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[02/Oct/2024 11:31:49] INFO [django.server:213] "GET /admin/ HTTP/1.1" 302 0
+[02/Oct/2024 11:31:49] INFO [django.server:213] "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4160
+[02/Oct/2024 11:31:55] INFO [django.server:213] "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[02/Oct/2024 11:31:55] INFO [django.server:213] "GET /admin/ HTTP/1.1" 200 15892
+[02/Oct/2024 11:31:58] INFO [django.server:213] "GET /admin/maximo_app/childsite/ HTTP/1.1" 200 43052
+[02/Oct/2024 11:31:58] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:33:38] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:33:39] INFO [django.server:213] "GET /admin/maximo_app/site/ HTTP/1.1" 200 36429
+[02/Oct/2024 11:33:39] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:33:43] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:33:45] INFO [django.server:213] "GET /admin/maximo_app/planttype/ HTTP/1.1" 200 19335
+[02/Oct/2024 11:33:45] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:33:49] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:33:51] INFO [django.server:213] "GET /admin/maximo_app/planttype/ HTTP/1.1" 200 19335
+[02/Oct/2024 11:33:51] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:33:52] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:33:57] INFO [django.server:213] "GET /admin/maximo_app/site/ HTTP/1.1" 200 36429
+[02/Oct/2024 11:33:57] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:35:35] INFO [django.server:213] "GET /admin/maximo_app/site/22/change/ HTTP/1.1" 200 16038
+[02/Oct/2024 11:35:35] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:35:38] INFO [django.server:213] "GET /admin/maximo_app/site/ HTTP/1.1" 200 36429
+[02/Oct/2024 11:35:39] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:35:40] INFO [django.server:213] "GET /admin/maximo_app/childsite/ HTTP/1.1" 200 43052
+[02/Oct/2024 11:35:40] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:36:05] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=MMR1 HTTP/1.1" 200 29345
+[02/Oct/2024 11:36:05] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:36:27] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=NL1P HTTP/1.1" 200 29345
+[02/Oct/2024 11:36:27] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:36:28] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=NL1P HTTP/1.1" 200 29345
+[02/Oct/2024 11:36:28] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:36:34] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=NRHP HTTP/1.1" 200 29345
+[02/Oct/2024 11:36:34] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:36:35] INFO [django.server:213] "GET /admin/maximo_app/childsite/? HTTP/1.1" 200 43052
+[02/Oct/2024 11:36:35] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:36:39] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=RPB0 HTTP/1.1" 200 29345
+[02/Oct/2024 11:36:39] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:36:40] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=RPB0 HTTP/1.1" 200 29345
+[02/Oct/2024 11:36:40] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:36:41] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=RPB0 HTTP/1.1" 200 29345
+[02/Oct/2024 11:36:44] INFO [django.server:213] "GET /admin/maximo_app/childsite/? HTTP/1.1" 200 43052
+[02/Oct/2024 11:36:44] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=NRHP HTTP/1.1" 200 29345
+[02/Oct/2024 11:36:45] INFO [django.server:213] "GET /admin/maximo_app/childsite/? HTTP/1.1" 200 43052
+[02/Oct/2024 11:37:30] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 11:37:32] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:37:35] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 11:37:36] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:37:41] INFO [django.server:213] "GET /admin/maximo_app/childsite/? HTTP/1.1" 200 43052
+[02/Oct/2024 11:37:41] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:37:46] ERROR [django.request:248] Internal Server Error: /admin/maximo_app/childsite/
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 718, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\sites.py", line 241, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 2001, in changelist_view
+    cl = self.get_changelist_instance(request)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 866, in get_changelist_instance
+    return ChangeList(
+           ^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\views\main.py", line 145, in __init__
+    self.queryset = self.get_queryset(request)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\views\main.py", line 583, in get_queryset
+    qs, search_may_have_duplicates = self.model_admin.get_search_results(
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 1222, in get_search_results
+    queryset = queryset.filter(models.Q.create(term_queries))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1468, in build_filter
+    return self._add_q(
+           ^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1468, in build_filter
+    return self._add_q(
+           ^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1555, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1379, in build_lookup
+    lhs = self.try_transform(lhs, lookup_name)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1423, in try_transform
+    raise FieldError(
+django.core.exceptions.FieldError: Unsupported lookup 'icontains' for ForeignKey or join on the field not permitted.
+[02/Oct/2024 11:37:46] ERROR [django.server:213] "GET /admin/maximo_app/childsite/?q=RPB0 HTTP/1.1" 500 211852
+[02/Oct/2024 11:37:51] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 11:37:52] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:37:58] INFO [django.server:213] "GET /admin/maximo_app/childsite/? HTTP/1.1" 200 43052
+[02/Oct/2024 11:37:59] ERROR [django.request:248] Internal Server Error: /admin/maximo_app/childsite/
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 718, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\sites.py", line 241, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 2001, in changelist_view
+    cl = self.get_changelist_instance(request)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 866, in get_changelist_instance
+    return ChangeList(
+           ^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\views\main.py", line 145, in __init__
+    self.queryset = self.get_queryset(request)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\views\main.py", line 583, in get_queryset
+    qs, search_may_have_duplicates = self.model_admin.get_search_results(
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 1222, in get_search_results
+    queryset = queryset.filter(models.Q.create(term_queries))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1468, in build_filter
+    return self._add_q(
+           ^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1468, in build_filter
+    return self._add_q(
+           ^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1491, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1303, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1768, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'get_parent_sites' into field. Choices are: id, parent_site, parent_site_id, site_id, site_name
+[02/Oct/2024 11:37:59] ERROR [django.server:213] "GET /admin/maximo_app/childsite/?q=RPB0 HTTP/1.1" 500 210257
+[02/Oct/2024 11:38:04] ERROR [django.request:248] Internal Server Error: /admin/maximo_app/childsite/
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 718, in wrapper
+    return self.admin_site.admin_view(view)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\views\decorators\cache.py", line 80, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\sites.py", line 241, in inner
+    return view(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 48, in _wrapper
+    return bound_method(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 2001, in changelist_view
+    cl = self.get_changelist_instance(request)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 866, in get_changelist_instance
+    return ChangeList(
+           ^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\views\main.py", line 145, in __init__
+    self.queryset = self.get_queryset(request)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\views\main.py", line 583, in get_queryset
+    qs, search_may_have_duplicates = self.model_admin.get_search_results(
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\contrib\admin\options.py", line 1222, in get_search_results
+    queryset = queryset.filter(models.Q.create(term_queries))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1609, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1468, in build_filter
+    return self._add_q(
+           ^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1468, in build_filter
+    return self._add_q(
+           ^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1641, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1491, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1303, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\db\models\sql\query.py", line 1768, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'get_parent_sites' into field. Choices are: id, parent_site, parent_site_id, site_id, site_name
+[02/Oct/2024 11:38:04] ERROR [django.server:213] "GET /admin/maximo_app/childsite/?q=RPB0 HTTP/1.1" 500 210394
+[02/Oct/2024 11:38:05] INFO [django.server:213] "GET /admin/maximo_app/childsite/? HTTP/1.1" 200 43052
+[02/Oct/2024 11:38:13] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 11:38:14] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:39:19] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 11:39:20] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:39:21] INFO [django.server:213] "GET /admin/maximo_app/childsite/? HTTP/1.1" 200 43052
+[02/Oct/2024 11:39:21] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:39:25] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=RPB0 HTTP/1.1" 200 31046
+[02/Oct/2024 11:39:25] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:39:28] INFO [django.server:213] "GET /admin/maximo_app/childsite/? HTTP/1.1" 200 43052
+[02/Oct/2024 11:39:38] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:39:43] INFO [django.server:213] "GET /admin/maximo_app/site/ HTTP/1.1" 200 36429
+[02/Oct/2024 11:39:43] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:40:29] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 11:40:30] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:40:31] INFO [django.server:213] "GET /admin/maximo_app/site/ HTTP/1.1" 200 36429
+[02/Oct/2024 11:40:31] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:40:34] INFO [django.server:213] "GET /admin/maximo_app/site/?q=H HTTP/1.1" 200 33378
+[02/Oct/2024 11:40:34] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:40:42] INFO [django.server:213] "GET /admin/maximo_app/site/add/?_changelist_filters=q%3DH HTTP/1.1" 200 15730
+[02/Oct/2024 11:40:42] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:40:44] INFO [django.server:213] "GET /admin/maximo_app/site/?q=H HTTP/1.1" 200 33378
+[02/Oct/2024 11:40:44] INFO [django.server:213] "GET /admin/maximo_app/site/ HTTP/1.1" 200 36429
+[02/Oct/2024 11:40:45] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:40:47] INFO [django.server:213] "GET /admin/maximo_app/acttype/ HTTP/1.1" 200 18285
+[02/Oct/2024 11:40:47] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:40:49] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:40:50] INFO [django.server:213] "GET /admin/maximo_app/planttype/ HTTP/1.1" 200 19335
+[02/Oct/2024 11:40:50] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:41:59] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 11:42:00] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 11:42:02] INFO [django.server:213] "GET /admin/maximo_app/planttype/ HTTP/1.1" 200 19335
+[02/Oct/2024 11:42:02] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:06] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q=AO1%2C HTTP/1.1" 200 15801
+[02/Oct/2024 11:42:06] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:07] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q=AO1 HTTP/1.1" 200 18661
+[02/Oct/2024 11:42:08] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:11] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q=ACMO HTTP/1.1" 200 17514
+[02/Oct/2024 11:42:11] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:17] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q=AO1%2C+AO2%2C HTTP/1.1" 200 15908
+[02/Oct/2024 11:42:17] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:19] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q=AO1+AO2 HTTP/1.1" 200 15818
+[02/Oct/2024 11:42:19] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:20] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q=AO1+AO2 HTTP/1.1" 200 15818
+[02/Oct/2024 11:42:21] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:22] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q=AO1AO2 HTTP/1.1" 200 15801
+[02/Oct/2024 11:42:22] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:25] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:42:26] INFO [django.server:213] "GET /admin/maximo_app/worktype/ HTTP/1.1" 200 16903
+[02/Oct/2024 11:42:26] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:28] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:42:29] INFO [django.server:213] "GET /admin/maximo_app/wbscode/ HTTP/1.1" 200 15971
+[02/Oct/2024 11:42:29] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:31] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:42:32] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 200 20375
+[02/Oct/2024 11:42:32] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:34] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:42:35] INFO [django.server:213] "GET /admin/maximo_app/status/ HTTP/1.1" 200 14917
+[02/Oct/2024 11:42:35] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:36] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:42:37] INFO [django.server:213] "GET /admin/maximo_app/site/ HTTP/1.1" 200 36429
+[02/Oct/2024 11:42:37] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:38] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:42:39] INFO [django.server:213] "GET /admin/maximo_app/planttype/ HTTP/1.1" 200 19335
+[02/Oct/2024 11:42:39] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:40] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:42:41] INFO [django.server:213] "GET /admin/maximo_app/childsite/ HTTP/1.1" 200 43052
+[02/Oct/2024 11:42:41] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:44] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 11:42:45] INFO [django.server:213] "GET /admin/maximo_app/childsite/ HTTP/1.1" 200 43052
+[02/Oct/2024 11:42:45] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:42:55] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=MMR1 HTTP/1.1" 200 29345
+[02/Oct/2024 11:42:55] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:43:00] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=NNP1 HTTP/1.1" 200 29345
+[02/Oct/2024 11:43:00] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:43:07] INFO [django.server:213] "GET /admin/maximo_app/childsite/?q=SBR1 HTTP/1.1" 200 29345
+[02/Oct/2024 11:43:07] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 11:45:28] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 200 9594
+[02/Oct/2024 16:01:23] INFO [django.server:213] "GET / HTTP/1.1" 200 20372
+[02/Oct/2024 16:01:23] INFO [django.server:213] "GET / HTTP/1.1" 200 20372
+[02/Oct/2024 16:01:26] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2867
+[02/Oct/2024 16:02:45] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[02/Oct/2024 16:03:03] INFO [django.server:213] "GET /filter_child_site/?child_site_id=6 HTTP/1.1" 200 181
+[02/Oct/2024 16:03:06] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 16:03:07] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[02/Oct/2024 16:03:08] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[02/Oct/2024 16:03:09] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[02/Oct/2024 16:03:47] INFO [django.server:213] "POST / HTTP/1.1" 200 15658
+[02/Oct/2024 16:04:59] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 302 0
+[02/Oct/2024 16:04:59] INFO [django.server:213] "GET /admin/login/?next=/admin/maximo_app/unit/ HTTP/1.1" 200 4192
+[02/Oct/2024 16:05:02] INFO [django.server:213] "GET /admin/maximo_app/ HTTP/1.1" 302 0
+[02/Oct/2024 16:05:02] INFO [django.server:213] "GET /admin/login/?next=/admin/maximo_app/ HTTP/1.1" 200 4182
+[02/Oct/2024 20:59:12] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 20:59:17] INFO [django.server:213] "GET / HTTP/1.1" 200 20372
+[02/Oct/2024 20:59:17] INFO [django.server:213] "GET / HTTP/1.1" 200 20372
+[02/Oct/2024 20:59:18] WARNING [django.request:248] Not Found: /favicon.ico
+[02/Oct/2024 20:59:18] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[02/Oct/2024 21:01:51] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 21:01:53] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:02:24] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 21:02:25] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:03:06] INFO [django.server:213] "GET /admin/ HTTP/1.1" 302 0
+[02/Oct/2024 21:03:06] INFO [django.server:213] "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4160
+[02/Oct/2024 21:03:13] INFO [django.server:213] "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[02/Oct/2024 21:03:13] INFO [django.server:213] "GET /admin/ HTTP/1.1" 200 15892
+[02/Oct/2024 21:03:17] INFO [django.server:213] "GET /admin/maximo_app/planttype/ HTTP/1.1" 200 19335
+[02/Oct/2024 21:03:17] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 21:03:21] INFO [django.server:213] "GET /admin/ HTTP/1.1" 200 15892
+[02/Oct/2024 21:03:23] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 200 20375
+[02/Oct/2024 21:03:24] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 21:03:27] INFO [django.server:213] "GET /admin/ HTTP/1.1" 200 15892
+[02/Oct/2024 21:06:08] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 21:06:09] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:09:58] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 200 20375
+[02/Oct/2024 21:09:58] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 21:10:01] INFO [django.server:213] "GET /admin/ HTTP/1.1" 200 15892
+[02/Oct/2024 21:10:04] INFO [django.server:213] "GET /admin/maximo_app/planttype/ HTTP/1.1" 200 19335
+[02/Oct/2024 21:10:04] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 21:10:12] INFO [django.server:213] "GET /admin/ HTTP/1.1" 200 15892
+[02/Oct/2024 21:16:49] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\models.py changed, reloading.
+[02/Oct/2024 21:16:51] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:20:29] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\models.py changed, reloading.
+[02/Oct/2024 21:20:30] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:21:31] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 21:21:32] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:21:46] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 21:21:47] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:21:50] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 21:21:52] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:22:07] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 21:22:09] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:22:34] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 21:22:35] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:23:00] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 21:23:01] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:23:45] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 21:23:46] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:23:48] INFO [django.server:213] "GET /admin/maximo_app/planttype/ HTTP/1.1" 200 19335
+[02/Oct/2024 21:23:48] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 21:25:24] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\models.py changed, reloading.
+[02/Oct/2024 21:25:25] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:28:14] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\models.py changed, reloading.
+[02/Oct/2024 21:28:15] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:29:18] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 21:29:19] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:33:46] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 21:33:48] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:33:58] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 21:33:59] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:34:07] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 21:34:08] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 21:45:04] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\models.py changed, reloading.
+[02/Oct/2024 21:45:05] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:03:29] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:03:30] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:03:41] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:03:42] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:04:20] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:04:21] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:04:22] INFO [django.server:213] "GET /admin/ HTTP/1.1" 302 0
+[02/Oct/2024 22:04:22] INFO [django.server:213] "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4160
+[02/Oct/2024 22:04:28] INFO [django.server:213] "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[02/Oct/2024 22:04:28] INFO [django.server:213] "GET /admin/ HTTP/1.1" 200 15892
+[02/Oct/2024 22:04:30] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 200 22500
+[02/Oct/2024 22:04:31] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:04:48] INFO [django.server:213] "GET /admin/maximo_app/unit/add/ HTTP/1.1" 200 15390
+[02/Oct/2024 22:04:48] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:05:02] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 200 22500
+[02/Oct/2024 22:07:00] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:07:01] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:07:23] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:07:24] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:07:25] ERROR [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 500 400021
+[02/Oct/2024 22:07:41] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:07:42] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:08:32] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:08:33] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:08:34] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 200 22411
+[02/Oct/2024 22:08:34] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:08:48] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:08:49] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:09:11] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\models.py changed, reloading.
+[02/Oct/2024 22:09:12] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:09:35] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 22:09:36] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:11:35] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\models.py changed, reloading.
+[02/Oct/2024 22:11:36] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:13:04] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\models.py changed, reloading.
+[02/Oct/2024 22:13:05] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:13:19] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 200 21260
+[02/Oct/2024 22:13:19] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:13:20] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 200 21260
+[02/Oct/2024 22:13:20] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:15:09] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 22:15:10] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:17:45] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[02/Oct/2024 22:17:46] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:19:19] INFO [django.server:213] "GET / HTTP/1.1" 200 20054
+[02/Oct/2024 22:19:24] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 1545
+[02/Oct/2024 22:19:26] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 2884
+[02/Oct/2024 22:27:30] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:27:31] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:27:52] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:27:53] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:27:56] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 302 0
+[02/Oct/2024 22:27:56] INFO [django.server:213] "GET /admin/login/?next=/admin/maximo_app/unit/ HTTP/1.1" 200 4192
+[02/Oct/2024 22:28:02] INFO [django.server:213] "POST /admin/login/?next=/admin/maximo_app/unit/ HTTP/1.1" 302 0
+[02/Oct/2024 22:28:02] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 200 21260
+[02/Oct/2024 22:28:02] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:28:04] INFO [django.server:213] "GET /admin/maximo_app/unit/ HTTP/1.1" 200 21260
+[02/Oct/2024 22:28:05] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:28:30] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:28:31] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:28:32] INFO [django.server:213] "GET /admin/login/?next=/admin/maximo_app/unit/ HTTP/1.1" 302 0
+[02/Oct/2024 22:28:33] INFO [django.server:213] "GET /admin/ HTTP/1.1" 200 15892
+[02/Oct/2024 22:28:35] INFO [django.server:213] "GET /admin/maximo_app/planttype/ HTTP/1.1" 200 19929
+[02/Oct/2024 22:28:35] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:28:48] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q=1 HTTP/1.1" 200 20210
+[02/Oct/2024 22:28:48] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:28:50] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q=1 HTTP/1.1" 200 20210
+[02/Oct/2024 22:28:50] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:28:54] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q=52 HTTP/1.1" 200 19100
+[02/Oct/2024 22:28:55] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:28:57] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q= HTTP/1.1" 200 20187
+[02/Oct/2024 22:28:57] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:29:31] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\admin.py changed, reloading.
+[02/Oct/2024 22:29:32] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:29:33] INFO [django.server:213] "GET /admin/maximo_app/planttype/add/?_changelist_filters=q%3D HTTP/1.1" 200 19809
+[02/Oct/2024 22:29:34] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:29:40] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q= HTTP/1.1" 200 20187
+[02/Oct/2024 22:29:50] INFO [django.server:213] "GET /admin/maximo_app/planttype/5/change/?_changelist_filters=q%3D HTTP/1.1" 200 20595
+[02/Oct/2024 22:29:50] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[02/Oct/2024 22:29:55] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q= HTTP/1.1" 200 20187
+[02/Oct/2024 22:29:59] INFO [django.server:213] "GET / HTTP/1.1" 200 20054
+[02/Oct/2024 22:30:01] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3152
+[02/Oct/2024 22:33:16] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[02/Oct/2024 22:33:18] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[02/Oct/2024 22:33:42] INFO [django.server:213] "GET / HTTP/1.1" 200 20054
+[02/Oct/2024 22:33:44] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3152
+[02/Oct/2024 22:33:47] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2070
+[02/Oct/2024 22:33:50] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3152
+[02/Oct/2024 22:33:58] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q= HTTP/1.1" 302 0
+[02/Oct/2024 22:33:58] INFO [django.server:213] "GET /admin/login/?next=/admin/maximo_app/planttype/%3Fq%3D HTTP/1.1" 200 4212
+[02/Oct/2024 22:34:05] INFO [django.server:213] "POST /admin/login/?next=/admin/maximo_app/planttype/%3Fq%3D HTTP/1.1" 302 0
+[02/Oct/2024 22:34:05] INFO [django.server:213] "GET /admin/maximo_app/planttype/?q= HTTP/1.1" 200 20187
+[02/Oct/2024 22:34:05] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[03/Oct/2024 08:47:38] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[03/Oct/2024 08:47:49] INFO [django.server:213] "GET / HTTP/1.1" 200 20054
+[03/Oct/2024 08:47:49] INFO [django.server:213] "GET /static/js/jquery-3.7.1.min.js HTTP/1.1" 304 0
+[03/Oct/2024 08:47:49] WARNING [django.request:248] Not Found: /favicon.ico
+[03/Oct/2024 08:47:49] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[03/Oct/2024 08:47:51] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3152
+[03/Oct/2024 08:53:35] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\forms.py changed, reloading.
+[03/Oct/2024 08:53:36] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[03/Oct/2024 08:53:38] INFO [django.server:213] "GET / HTTP/1.1" 200 20054
+[03/Oct/2024 08:53:39] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3152
+[03/Oct/2024 08:53:51] INFO [django.server:213] "GET /filter_site/?site_id=1 HTTP/1.1" 200 588
+[03/Oct/2024 08:53:51] INFO [django.server:213] "GET /filter_child_site/?child_site_id=4 HTTP/1.1" 200 181
+[03/Oct/2024 08:54:35] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[03/Oct/2024 08:54:36] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[03/Oct/2024 08:54:44] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[03/Oct/2024 08:54:45] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[03/Oct/2024 08:54:47] INFO [django.server:213] "GET / HTTP/1.1" 200 20054
+[03/Oct/2024 08:54:48] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3148
+[03/Oct/2024 08:55:30] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3148
+[03/Oct/2024 08:59:46] INFO [django.server:213] "GET / HTTP/1.1" 200 19579
+[03/Oct/2024 08:59:58] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3148
+[03/Oct/2024 08:59:59] INFO [django.server:213] "GET /filter_site/?site_id=1 HTTP/1.1" 200 588
+[03/Oct/2024 09:00:00] INFO [django.server:213] "GET /filter_child_site/?child_site_id=4 HTTP/1.1" 200 181
+[03/Oct/2024 09:00:02] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:00:03] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:00:04] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[03/Oct/2024 09:00:05] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:00:14] INFO [django.server:213] "POST / HTTP/1.1" 200 15638
+[03/Oct/2024 09:01:14] INFO [django.server:213] "POST / HTTP/1.1" 200 15640
+[03/Oct/2024 09:01:15] INFO [django.server:213] "GET /download_template_file/ HTTP/1.1" 200 820585
+[03/Oct/2024 09:02:49] INFO [django.server:213] "POST / HTTP/1.1" 200 15640
+[03/Oct/2024 09:03:00] INFO [django.server:213] "GET /download_template_file/ HTTP/1.1" 200 820196
+[03/Oct/2024 09:04:25] INFO [django.server:213] "GET / HTTP/1.1" 200 19579
+[03/Oct/2024 09:04:26] INFO [django.server:213] "GET / HTTP/1.1" 200 19579
+[03/Oct/2024 09:04:29] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=5 HTTP/1.1" 200 5897
+[03/Oct/2024 09:04:33] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:05:54] INFO [django.server:213] "GET /filter_site/?site_id=4 HTTP/1.1" 200 91
+[03/Oct/2024 09:05:56] INFO [django.server:213] "GET /filter_site/?site_id=10 HTTP/1.1" 200 103
+[03/Oct/2024 09:05:59] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3148
+[03/Oct/2024 09:06:00] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[03/Oct/2024 09:06:01] INFO [django.server:213] "GET /filter_child_site/?child_site_id=6 HTTP/1.1" 200 181
+[03/Oct/2024 09:08:06] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1798, in index
+    return render(request, 'maximo_app/upload.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for '" + url_name + "' not found. '" + url_name + "' is not a valid view function or pattern name.
+[03/Oct/2024 09:08:06] ERROR [django.server:213] "GET / HTTP/1.1" 500 130920
+[03/Oct/2024 09:09:30] INFO [django.server:213] "GET / HTTP/1.1" 200 20422
+[03/Oct/2024 09:09:30] INFO [django.server:213] "GET / HTTP/1.1" 200 20422
+[03/Oct/2024 09:09:31] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:09:33] INFO [django.server:213] "GET /filter_site/?site_id=5 HTTP/1.1" 200 73
+[03/Oct/2024 09:09:35] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:09:36] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:09:39] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[03/Oct/2024 09:09:40] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:10:25] INFO [django.server:213] "GET /filter_site/?site_id=10 HTTP/1.1" 200 103
+[03/Oct/2024 09:10:26] INFO [django.server:213] "GET /filter_site/?site_id=18 HTTP/1.1" 200 85
+[03/Oct/2024 09:10:27] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3148
+[03/Oct/2024 09:10:29] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[03/Oct/2024 09:10:31] INFO [django.server:213] "GET /filter_child_site/?child_site_id=6 HTTP/1.1" 200 181
+[03/Oct/2024 09:10:40] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:10:40] INFO [django.server:213] "POST / HTTP/1.1" 200 21873
+[03/Oct/2024 09:10:48] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[03/Oct/2024 09:10:51] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:11:56] INFO [django.server:213] "POST / HTTP/1.1" 200 21647
+[03/Oct/2024 09:11:58] INFO [django.server:213] "GET / HTTP/1.1" 200 20196
+[03/Oct/2024 09:12:01] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3148
+[03/Oct/2024 09:12:03] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[03/Oct/2024 09:12:04] INFO [django.server:213] "GET /filter_child_site/?child_site_id=6 HTTP/1.1" 200 181
+[03/Oct/2024 09:12:07] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:12:08] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:12:09] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[03/Oct/2024 09:12:10] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[03/Oct/2024 09:12:12] INFO [django.server:213] "GET /filter_wbs/?wbs_id=4 HTTP/1.1" 200 33
+[03/Oct/2024 09:12:21] INFO [django.server:213] "POST / HTTP/1.1" 200 16246
+[03/Oct/2024 09:13:00] INFO [django.server:213] "GET / HTTP/1.1" 200 20196
+[03/Oct/2024 09:13:03] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3148
+[03/Oct/2024 09:13:05] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[03/Oct/2024 09:13:07] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:14:08] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:14:09] INFO [django.server:213] "GET / HTTP/1.1" 200 20244
+[03/Oct/2024 09:14:10] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:14:12] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:14:13] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[03/Oct/2024 09:14:14] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=2 HTTP/1.1" 200 38
+[03/Oct/2024 09:14:17] INFO [django.server:213] "GET /filter_site/?site_id=4 HTTP/1.1" 200 91
+[03/Oct/2024 09:14:28] INFO [django.server:213] "GET / HTTP/1.1" 200 20244
+[03/Oct/2024 09:14:30] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:14:31] INFO [django.server:213] "GET /filter_site/?site_id=5 HTTP/1.1" 200 73
+[03/Oct/2024 09:14:33] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:14:34] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:14:35] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[03/Oct/2024 09:14:36] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:14:39] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:15:23] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:15:25] INFO [django.server:213] "GET / HTTP/1.1" 200 20220
+[03/Oct/2024 09:15:26] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:15:27] INFO [django.server:213] "GET /filter_site/?site_id=5 HTTP/1.1" 200 73
+[03/Oct/2024 09:15:30] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:15:31] INFO [django.server:213] "GET /filter_site/?site_id=10 HTTP/1.1" 200 103
+[03/Oct/2024 09:15:34] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:15:34] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[03/Oct/2024 09:15:35] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[03/Oct/2024 09:15:37] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:16:47] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:16:48] INFO [django.server:213] "GET /filter_site/?site_id=4 HTTP/1.1" 200 91
+[03/Oct/2024 09:16:51] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:16:52] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[03/Oct/2024 09:16:54] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:16:55] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:17:00] INFO [django.server:213] "GET / HTTP/1.1" 200 20240
+[03/Oct/2024 09:17:01] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:17:04] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[03/Oct/2024 09:17:07] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:17:08] INFO [django.server:213] "GET /filter_site/?site_id=4 HTTP/1.1" 200 91
+[03/Oct/2024 09:17:10] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:17:10] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:17:11] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[03/Oct/2024 09:17:12] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:18:36] INFO [django.server:213] "GET / HTTP/1.1" 200 20288
+[03/Oct/2024 09:18:37] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:18:39] INFO [django.server:213] "GET /filter_site/?site_id=4 HTTP/1.1" 200 91
+[03/Oct/2024 09:18:42] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3148
+[03/Oct/2024 09:18:44] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[03/Oct/2024 09:18:45] INFO [django.server:213] "GET /filter_child_site/?child_site_id=7 HTTP/1.1" 200 199
+[03/Oct/2024 09:18:47] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:18:48] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:18:49] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[03/Oct/2024 09:18:50] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:19:50] INFO [django.server:213] "GET /filter_child_site/?child_site_id=6 HTTP/1.1" 200 181
+[03/Oct/2024 09:19:51] INFO [django.server:213] "GET /filter_child_site/?child_site_id=7 HTTP/1.1" 200 199
+[03/Oct/2024 09:22:23] INFO [django.server:213] "GET / HTTP/1.1" 200 20304
+[03/Oct/2024 09:22:24] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:22:25] INFO [django.server:213] "GET /filter_site/?site_id=4 HTTP/1.1" 200 91
+[03/Oct/2024 09:22:27] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3148
+[03/Oct/2024 09:22:28] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[03/Oct/2024 09:22:29] INFO [django.server:213] "GET /filter_child_site/?child_site_id=6 HTTP/1.1" 200 181
+[03/Oct/2024 09:22:31] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:22:33] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:22:35] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[03/Oct/2024 09:22:35] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:22:42] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:22:42] INFO [django.server:213] "GET /filter_site/?site_id=8 HTTP/1.1" 200 85
+[03/Oct/2024 09:22:46] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:22:47] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[03/Oct/2024 09:22:50] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:24:49] INFO [django.server:213] "GET / HTTP/1.1" 200 20444
+[03/Oct/2024 09:24:51] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:24:52] INFO [django.server:213] "GET /filter_site/?site_id=8 HTTP/1.1" 200 85
+[03/Oct/2024 09:24:54] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:24:55] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:24:55] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[03/Oct/2024 09:24:57] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:24:58] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:25:05] INFO [django.server:213] "GET / HTTP/1.1" 200 20444
+[03/Oct/2024 09:25:06] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:25:08] INFO [django.server:213] "GET /filter_site/?site_id=5 HTTP/1.1" 200 73
+[03/Oct/2024 09:25:11] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:25:12] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:25:13] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[03/Oct/2024 09:25:15] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3148
+[03/Oct/2024 09:25:19] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=4 HTTP/1.1" 200 1797
+[03/Oct/2024 09:25:21] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:25:59] INFO [django.server:213] "GET / HTTP/1.1" 200 20444
+[03/Oct/2024 09:26:00] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658
+[03/Oct/2024 09:26:01] INFO [django.server:213] "GET /filter_site/?site_id=4 HTTP/1.1" 200 91
+[03/Oct/2024 09:26:04] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[03/Oct/2024 09:26:04] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[03/Oct/2024 09:26:05] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[03/Oct/2024 09:26:07] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2066
+[03/Oct/2024 09:26:35] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=3 HTTP/1.1" 200 3148
+[03/Oct/2024 09:26:37] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 1176
+[03/Oct/2024 09:26:39] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 1658

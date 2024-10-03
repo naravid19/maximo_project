@@ -286,6 +286,9 @@
         $('#id_plant_type').change(function() {
             var plant_type_id = $(this).val(); // ดึง plant_code ที่เลือก
 
+            // ปิดการใช้งาน dropdown ขณะที่รอข้อมูลจาก server
+            $('#id_acttype, #id_site, #id_work_type, #id_unit').prop('disabled', true);
+            $('#plant_type_description, #site_description, #child_site_description, #work_type_description, #acttype_description').text('');
             if (plant_type_id) {
                 // ส่ง AJAX request ไปที่ server
                 $.ajax({
@@ -298,57 +301,49 @@
                             $('#plant_type_description').text(data.plant_type_th); // แสดงคำอธิบาย plant_type
                             
                             // อัปเดต dropdown ACTTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
-                            $('#id_acttype').empty();
-                            $('#id_acttype').append('<option value="">เลือก</option>');
+                            $('#id_acttype').empty().append('<option value="">เลือก</option>');
                             $.each(data.acttypes, function (index, acttype) {
                                 $('#id_acttype').append('<option value="' + acttype.id + '">' + acttype.acttype + '</option>');
                             });
-
+                            
                             // อัปเดต dropdown SITE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
-                            $('#id_site').empty();
-                            $('#id_site').append('<option value="">เลือก</option>');
+                            $('#id_site').empty().append('<option value="">เลือก</option>');
                             $.each(data.sites, function (index, site) {
                                 $('#id_site').append('<option value="' + site.id + '">' + site.site_id + '</option>');
                             });
-
+                            
                             // อัปเดต dropdown WORKTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
-                            $('#id_work_type').empty();
-                            $('#id_work_type').append('<option value="">เลือก</option>');
+                            $('#id_work_type').empty().append('<option value="">เลือก</option>');
                             $.each(data.work_types, function(index, worktype) {
                                 $('#id_work_type').append('<option value="' + worktype.id + '">' + worktype.worktype + '</option>');
                             });
+
+                            // อัปเดต dropdown UNIT
+                            $('#id_unit').empty().append('<option value="">เลือก</option>');
+                            $.each(data.units, function(index, unit) {
+                                $('#id_unit').append('<option value="' + unit.id + '">' + unit.unit_code + '</option>');
+                            });
+
+                            // เปิดใช้งาน dropdown หลังจากอัปเดตข้อมูล
+                            $('#id_acttype, #id_site, #id_work_type, #id_unit').prop('disabled', false);
                         }
                     },
                     error: function(xhr, status, error) {
-                        $('#id_acttype').empty();
-                        $('#id_acttype').append('<option value="">เลือก</option>');
-                        $('#id_site').empty();
-                        $('#id_site').append('<option value="">เลือก</option>');
-                        $('#id_child_site').empty();
-                        $('#id_child_site').append('<option value="">เลือก</option>');
-                        $('#id_work_type').empty();
-                        $('#id_work_type').append('<option value="">เลือก</option>');
-                        $('#plant_type_description').text('');
-                        $('#site_description').text('');
-                        $('#child_site_description').text('');
+                        $('#id_acttype, #id_site, #id_child_site, #id_work_type, #id_unit').empty().append('<option value="">เลือก</option>');
+                        $('#plant_type_description, #site_description, #child_site_description, #work_type_description, #acttype_description').text('');
                         alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก server: " + error);
+
+                        // เปิดใช้งาน dropdown และตั้งค่าเป็นค่า default
+                        $('#id_acttype, #id_site, #id_work_type, #id_unit').prop('disabled', false);
                     }
                 });
             } else {
                 // ถ้าไม่เลือก Plant Type ให้แสดงค่า default
-                $('#id_acttype').empty();
-                $('#id_acttype').append('<option value="">เลือก</option>');  // ล้าง dropdown ACTTYPE
-                $('#id_site').empty();
-                $('#id_site').append('<option value="">เลือก</option>');  // ล้าง dropdown SITE
-                $('#id_child_site').empty();
-                $('#id_child_site').append('<option value="">เลือก</option>');  // ล้าง dropdown CHILD SITE
-                $('#id_work_type').empty();
-                $('#id_work_type').append('<option value="">เลือก</option>');  // ล้าง dropdown WORKTYPE
-                $('#plant_type_description').text('');  // ล้างคำอธิบาย
-                $('#site_description').text('');
-                $('#child_site_description').text('');
-                $('#work_type_description').text('');
-                $('#acttype_description').text('');
+                $('#id_acttype, #id_site, #id_child_site, #id_work_type, #id_unit').empty().append('<option value="">เลือก</option>');
+                $('#plant_type_description, #site_description, #child_site_description, #work_type_description, #acttype_description').text('');
+                
+                // เปิดใช้งาน dropdown และตั้งค่าเป็นค่า default
+                $('#id_acttype, #id_site, #id_work_type, #id_unit').prop('disabled', false);
             }
         });
     });
@@ -359,6 +354,9 @@
         $('#id_site').change(function() {
             var site_id = $(this).val();  // ดึงค่า site_id ที่ผู้ใช้เลือก
 
+            // ปิดการใช้งาน dropdown ของ Child Site ขณะรอข้อมูลจาก server
+            $('#id_child_site').prop('disabled', true);
+
             if (site_id) {
                 $.ajax({
                     url: "{% url 'filter_site' %}",  // URL สำหรับ view ที่ใช้กรอง SITE
@@ -368,33 +366,34 @@
                         // ตรวจสอบว่ามีข้อมูล ChildSite หรือไม่
                         if (data.child_sites.length > 0) {
                             // ล้างค่าที่มีอยู่ใน dropdown ของ ChildSite และเพิ่มตัวเลือกใหม่
-                            $('#id_child_site').empty();
-                            $('#id_child_site').append('<option value="">เลือก</option>');
+                            $('#id_child_site').empty().append('<option value="">เลือก</option>');
                             $.each(data.child_sites, function(index, child_site) {
                                 $('#id_child_site').append('<option value="' + child_site.id + '">' + child_site.site_id + '</option>');
                             });
                         } else {
                             // ถ้าไม่มีข้อมูล ChildSite
-                            $('#id_child_site').empty();
-                            $('#id_child_site').append('<option value="">ไม่พบข้อมูล Child Site</option>');
+                            $('#id_child_site').empty().append('<option value="">ไม่พบข้อมูล Child Site</option>');
                         }
 
                         // อัปเดตคำอธิบาย site_name
                         $('#site_description').text(data.site_name);  // แสดง site_name ใน HTML
+                        // เปิดใช้งาน dropdown ของ Child Site หลังจากอัปเดตข้อมูลเสร็จ
+                        $('#id_child_site').prop('disabled', false);
                     },
                     error: function(xhr, status, error) {
                         // หากเกิดข้อผิดพลาด ให้ล้าง dropdown ของ ChildSite และแสดงข้อความเตือน
-                        $('#id_child_site').empty();
-                        $('#id_child_site').append('<option value="">เลือก</option>');
+                        $('#id_child_site').empty().append('<option value="">เลือก</option>');
                         alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก server: " + error);
+                        // เปิดใช้งาน dropdown ของ Child Site เพื่อให้ผู้ใช้สามารถเลือกใหม่ได้
+                        $('#id_child_site').prop('disabled', false);
                     }
                 });
             } else {
                 // ถ้าไม่เลือก Site ให้ล้าง dropdown ของ ChildSite และล้างคำอธิบาย Site
-                $('#id_child_site').empty();
-                $('#id_child_site').append('<option value="">เลือก</option>');
+                $('#id_child_site').empty().append('<option value="">เลือก</option>');
                 $('#site_description').text('');
                 $('#child_site_description').text('');
+                $('#id_child_site').prop('disabled', false);  // เปิดใช้งาน dropdown ของ ChildSite
             }
         });
 

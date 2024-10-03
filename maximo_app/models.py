@@ -8,6 +8,7 @@ class PlantType(models.Model):
     plant_type_eng = models.CharField(max_length=100, verbose_name="plant_type_eng")  # ประเภทโรงไฟฟ้า (ENG)
     act_types = models.ManyToManyField('ActType', related_name='plant_types')   # เชื่อมโยงกับ ActType ผ่าน ManyToManyField
     work_types = models.ManyToManyField('WorkType', related_name='plant_types')  # ความสัมพันธ์ Many-to-Many กับ WorkType
+    units = models.ManyToManyField('Unit', related_name='plant_types')
     class Meta:
         verbose_name = "Plant Type"
         verbose_name_plural = "Plant Type"

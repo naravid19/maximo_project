@@ -44,7 +44,7 @@ class UploadFileForm(forms.Form):
         empty_label="เลือก"
     )
     unit = forms.ModelChoiceField(
-        queryset=Unit.objects.all(), 
+        queryset=Unit.objects.none(), 
         label='UNIT', 
         required=True, 
         empty_label="เลือก"
@@ -92,12 +92,16 @@ class UploadFileForm(forms.Form):
                 
                 # กรองข้อมูล work_type ที่เชื่อมโยงกับ plant_type
                 self.fields['work_type'].queryset = plant_type.work_types.all()
-
+                
+                # กรองข้อมูล unit ที่เชื่อมโยงกับ plant_type
+                self.fields['unit'].queryset = plant_type.units.all()
+                
             except (ValueError, TypeError, PlantType.DoesNotExist):
                 # ถ้ามีข้อผิดพลาด ให้กำหนด queryset เป็นว่าง
                 self.fields['acttype'].queryset = ActType.objects.none()
                 self.fields['site'].queryset = Site.objects.none()
                 self.fields['work_type'].queryset = WorkType.objects.none()
+                self.fields['unit'].queryset = Unit.objects.none()
 
         # เมื่อผู้ใช้เลือก site จะต้องกรองข้อมูล child_site
         if 'site' in self.data:
@@ -112,7 +116,6 @@ class UploadFileForm(forms.Form):
                 # ถ้ามีข้อผิดพลาด ให้กำหนด queryset เป็นว่าง
                 self.fields['child_site'].queryset = ChildSite.objects.none()
 
-            
     def clean(self):
         cleaned_data = super().clean()
         schedule_file = cleaned_data.get('schedule_file')

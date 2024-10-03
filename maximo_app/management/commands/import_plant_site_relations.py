@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
-    help = 'Imports plant_code and site_id from an Excel file and creates Many-to-Many relations'
+    help = 'Imports PLANT_CODE and SITE_ID from an Excel file and creates Many-to-Many relations'
 
     def add_arguments(self, parser):
         # ตั้งค่า default file path ไปยังไฟล์ Database.xlsx
@@ -63,11 +63,10 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR("The Excel file is empty. No data to import."))
             return
         
-        # แปลงชื่อคอลัมน์ให้เป็นตัวพิมพ์ใหญ่ทั้งหมด
-        df.columns = df.columns.str.lower()
+        df.columns = df.columns.str.upper()
         
         # ตรวจสอบว่าคอลัมน์ที่จำเป็นมีอยู่ใน DataFrame หรือไม่
-        required_columns = ['plant_code', 'site_id']
+        required_columns = ['PLANT_CODE', 'SITE_ID']
         missing_columns = [col for col in required_columns if col not in df.columns]
         if missing_columns:
             logger.error(f"Missing required columns in the Excel file: {', '.join(missing_columns)}")
@@ -78,12 +77,12 @@ class Command(BaseCommand):
         df = df.fillna('')
         df = df.astype(str)
         df = df.apply(lambda col: col.map(lambda x: x.strip() if isinstance(x, str) else x) if col.dtype == 'object' else col)
-        df['plant_code'] = df['plant_code'].str.upper()
-        df['site_id'] = df['site_id'].str.upper()
+        df['PLANT_CODE'] = df['PLANT_CODE'].str.upper()
+        df['SITE_ID'] = df['SITE_ID'].str.upper()
         
         # ตรวจสอบข้อมูลที่ซ้ำในไฟล์ Excel เองก่อน
-        if df.duplicated(subset=['plant_code', 'site_id']).any():
-            duplicates = df[df.duplicated(subset=['plant_code', 'site_id'], keep=False)]
+        if df.duplicated(subset=['PLANT_CODE', 'SITE_ID']).any():
+            duplicates = df[df.duplicated(subset=['PLANT_CODE', 'SITE_ID'], keep=False)]
             logger.error(f"Duplicate entries found in Excel file:\n{duplicates}")
             self.stdout.write(self.style.ERROR(f"Duplicate entries found in Excel file:\n{duplicates}"))
             return
@@ -93,27 +92,27 @@ class Command(BaseCommand):
             with transaction.atomic():
                 # ลูปผ่านข้อมูลในแต่ละแถวและนำเข้าลงฐานข้อมูล
                 for index, row in df.iterrows():
-                    plant_code = row['plant_code']
-                    site_id = row['site_id']
+                    PLANT_CODE = row['PLANT_CODE']
+                    SITE_ID = row['SITE_ID']
 
                     try:
                         # ดึง PlantType และ Site จากฐานข้อมูล
-                        plant_type = PlantType.objects.get(plant_code=plant_code)
-                        site = Site.objects.get(site_id=site_id)
+                        plant_type = PlantType.objects.get(PLANT_CODE=PLANT_CODE)
+                        site = Site.objects.get(SITE_ID=SITE_ID)
                         
                         # เพิ่มความสัมพันธ์ Many-to-Many
                         site.plant_types.add(plant_type)
                         site.save()
 
-                        logger.info(f"Successfully added {site_id} to {plant_code}")
-                        self.stdout.write(self.style.SUCCESS(f"Successfully added {site_id} to {plant_code}"))
+                        logger.info(f"Successfully added {SITE_ID} to {PLANT_CODE}")
+                        self.stdout.write(self.style.SUCCESS(f"Successfully added {SITE_ID} to {PLANT_CODE}"))
                     
                     except PlantType.DoesNotExist:
-                        logger.error(f"PlantType with code {plant_code} does not exist.")
-                        self.stdout.write(self.style.ERROR(f"PlantType with code {plant_code} does not exist."))
+                        logger.error(f"PlantType with code {PLANT_CODE} does not exist.")
+                        self.stdout.write(self.style.ERROR(f"PlantType with code {PLANT_CODE} does not exist."))
                     except Site.DoesNotExist:
-                        logger.error(f"Site with id {site_id} does not exist.")
-                        self.stdout.write(self.style.ERROR(f"Site with id {site_id} does not exist."))
+                        logger.error(f"Site with id {SITE_ID} does not exist.")
+                        self.stdout.write(self.style.ERROR(f"Site with id {SITE_ID} does not exist."))
                 
                 logger.info("Data import completed successfully")
                 self.stdout.write(self.style.SUCCESS("Data import completed successfully"))
