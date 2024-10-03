@@ -16,6 +16,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         # สร้างเส้นทางไปยังไฟล์ Database.xlsx ที่อยู่ใน static/excel
         excel_file_path = os.path.join(settings.BASE_DIR, 'static', 'excel', 'Database.xlsx')
+        sheet_name = 'child_site'
         
         # ตรวจสอบว่าไฟล์ Excel มีอยู่หรือไม่
         if not os.path.exists(excel_file_path):
@@ -25,7 +26,7 @@ class Command(BaseCommand):
         
         try:
             # อ่านข้อมูลจาก Excel
-            df = pd.read_excel(excel_file_path, sheet_name='ChildSite')
+            df = pd.read_excel(excel_file_path, sheet_name=sheet_name)
         except FileNotFoundError:
             logger.error("Error: The specified file was not found.")
             self.stdout.write(self.style.ERROR("Error: The specified file was not found."))

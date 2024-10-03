@@ -11,12 +11,13 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
-    help = 'นำเข้าข้อมูลจากไฟล์ Excel สำหรับ ACTTYPE'
+    help = 'Import data from an Excel file for ACTTYPE'
 
     def handle(self, *args, **kwargs):
         # เส้นทางไฟล์ Excel
         excel_file_path = os.path.join(settings.BASE_DIR, 'static', 'excel', 'Database.xlsx')
-
+        sheet_name = 'acttype'
+        
         # ตรวจสอบว่าไฟล์ Excel มีอยู่จริงหรือไม่
         if not os.path.exists(excel_file_path):
             logger.error(f"File {excel_file_path} not found")
@@ -25,7 +26,7 @@ class Command(BaseCommand):
 
         try:
             # อ่านข้อมูลจาก Excel
-            df = pd.read_excel(excel_file_path, sheet_name='ACTTYPE')
+            df = pd.read_excel(excel_file_path, sheet_name=sheet_name)
         except FileNotFoundError:
             logger.error("Error: The specified file was not found.")
             self.stdout.write(self.style.ERROR("Error: The specified file was not found."))

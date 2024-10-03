@@ -13,28 +13,11 @@ logger = logging.getLogger(__name__)
 class Command(BaseCommand):
     help = 'Imports PLANT_CODE and UNIT from an Excel file and creates Many-to-Many relations between PlantType and Unit'
 
-    def add_arguments(self, parser):
-        # ตั้งค่า default file path ไปยังไฟล์ Database.xlsx
-        default_file_path = os.path.join(settings.BASE_DIR, 'static', 'excel', 'Database.xlsx')
-        
-        parser.add_argument(
-            'file_path', 
-            type=str, 
-            nargs='?',  # ทำให้ file_path เป็น optional
-            default=default_file_path,  # ใช้ default file path ที่กำหนดไว้
-            help='The path to the Excel file'
-        )
-        parser.add_argument(
-            '--sheet_name', 
-            type=str, 
-            default='PlantType-Unit',  # กำหนดค่าเริ่มต้นของ sheet_name
-            help='The name of the sheet to read from the Excel file'
-        )
-
     def handle(self, *args, **kwargs):
-        file_path = kwargs['file_path']
-        sheet_name = kwargs['sheet_name']
-        
+        # กำหนดค่า default file path ไปยังไฟล์ Database.xlsx และ sheet_name ที่ต้องการอ่าน
+        file_path = os.path.join(settings.BASE_DIR, 'static', 'excel', 'Database.xlsx')
+        sheet_name = 'plant_unit_relations'
+
         # ตรวจสอบว่าไฟล์ Excel มีอยู่หรือไม่
         if not os.path.exists(file_path):
             logger.error(f"File {file_path} not found")

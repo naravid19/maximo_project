@@ -11,11 +11,12 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
-    help = 'นำเข้าความสัมพันธ์ระหว่าง PlantType และ ActType จากไฟล์ Excel'
+    help = 'Import the relationship between PlantType and ActType from an Excel file'
 
     def handle(self, *args, **kwargs):
         # สร้างเส้นทางไปยังไฟล์ Database.xlsx ที่อยู่ใน static/excel
         excel_file_path = os.path.join(settings.BASE_DIR, 'static', 'excel', 'Database.xlsx')
+        sheet_name = 'plant_acttype_relations'
         
         # ตรวจสอบว่าไฟล์ Excel มีอยู่หรือไม่
         if not os.path.exists(excel_file_path):
@@ -25,7 +26,7 @@ class Command(BaseCommand):
         
         try:
             # อ่านข้อมูลจาก Excel
-            df = pd.read_excel(excel_file_path, sheet_name='PlantType-ActType')
+            df = pd.read_excel(excel_file_path, sheet_name=sheet_name)
         except FileNotFoundError:
             logger.error("Error: The specified file was not found.")
             self.stdout.write(self.style.ERROR("Error: The specified file was not found."))

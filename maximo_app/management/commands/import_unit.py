@@ -11,12 +11,13 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
-    help = 'นำเข้าข้อมูลจากไฟล์ Excel สำหรับ UNIT'
+    help = 'Import data from an Excel file for UNIT'
 
     def handle(self, *args, **kwargs):
         # เส้นทางไฟล์ Excel
         excel_file_path = os.path.join(settings.BASE_DIR, 'static', 'excel', 'Database.xlsx')
-
+        sheet_name = 'unit'
+        
         if not os.path.exists(excel_file_path):
             logger.error(f"File {excel_file_path} not found")
             self.stdout.write(self.style.ERROR(f"File {excel_file_path} not found"))
@@ -24,7 +25,7 @@ class Command(BaseCommand):
 
         try:
             # อ่านข้อมูลจาก Excel โดยบังคับให้คอลัมน์ 'UNIT' เป็น string
-            df = pd.read_excel(excel_file_path, sheet_name='UNIT', dtype={'UNIT': str})
+            df = pd.read_excel(excel_file_path, sheet_name=sheet_name, dtype={'UNIT': str})
         except FileNotFoundError:
             logger.error("Error: The specified file was not found.")
             self.stdout.write(self.style.ERROR("Error: The specified file was not found."))
