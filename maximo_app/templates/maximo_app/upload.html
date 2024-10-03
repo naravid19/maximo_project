@@ -45,6 +45,19 @@
                     {% endif %}
                 </div>
 
+                <!-- Dropdown สำหรับเลือกความถี่ -->
+                <div class="form-group">
+                    {{ form.frequency.label_tag }}
+                    {{ form.frequency }}
+                    {% if form.frequency.errors %}
+                        <div class="error">
+                            {% for error in form.frequency.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
                 <!-- Dropdown สำหรับเลือก Plant Type -->
                 <div class="form-group">
                     {{ form.plant_type.label_tag }}
@@ -303,7 +316,7 @@
                             // อัปเดต dropdown ACTTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
                             $('#id_acttype').empty().append('<option value="">เลือก</option>');
                             $.each(data.acttypes, function (index, acttype) {
-                                $('#id_acttype').append('<option value="' + acttype.id + '">' + acttype.acttype + '</option>');
+                                $('#id_acttype').append('<option value="' + acttype.id + '">' + acttype.acttype + ' - ' + acttype.description + '</option>');
                             });
                             
                             // อัปเดต dropdown SITE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
@@ -315,7 +328,7 @@
                             // อัปเดต dropdown WORKTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
                             $('#id_work_type').empty().append('<option value="">เลือก</option>');
                             $.each(data.work_types, function(index, worktype) {
-                                $('#id_work_type').append('<option value="' + worktype.id + '">' + worktype.worktype + '</option>');
+                                $('#id_work_type').append('<option value="' + worktype.id + '">' + worktype.worktype + ' - ' + worktype.description +'</option>');
                             });
 
                             // อัปเดต dropdown UNIT

@@ -76,6 +76,7 @@ def index(request):
             location_file = request.FILES.get('location_file', None)
             child_site = form.cleaned_data.get('child_site')
             year = form.cleaned_data.get('year')
+            frequency = form.cleaned_data.get('frequency')
             site = form.cleaned_data.get('site')
             plant_type = form.cleaned_data.get('plant_type')
             unit = form.cleaned_data.get('unit')
@@ -86,6 +87,8 @@ def index(request):
             
             if year:
                 logger.info(f"Year: {year}")
+            if frequency:
+                logger.info(f"Frequency: {frequency}")
             if site:
                 logger.info(f"Site: {site.site_id}")
             if plant_type:
@@ -136,43 +139,49 @@ def index(request):
             pluscrevum = 0
             status = 'ACTIVE'
             pluscjprevnum = 0
-            frequency = 4
             frequnit = 'YEARS'
             route = ''
             leadtime = 7
-            
-            if acttype:
-                egmntacttype = acttype.acttype
-                
-            if site:
-                siteid = site.site_id   # 'SRD0'
-                # site_str = re.sub(r'\d+', '', siteid)
-                location = f'{child_site}-{plant_type}{unit}' # 'SRD-H02'
-            
-            if work_type:
-                worktype = work_type.worktype   # 'APOO'
-                
-            
-            if wostatus:
-                wostatus = wostatus.status  # 'WSCH'
-                
-            if year:
-                buddhist_year = int(year) + 543
-                two_digits_year = buddhist_year % 100
+        
+            try:
+                if acttype and plant_type and unit and work_type and wostatus:
+                    egmntacttype = acttype.acttype
+                    plant_type = plant_type.plant_code
+                    unit = unit.unit_code
+                    worktype = work_type.worktype   # 'APOO'
+                    wostatus = wostatus.status  # 'WSCH'
+                else:
+                    raise ValueError("ข้อมูลที่จำเป็นบางอย่างจาก dropdown ขาดหายไป (เช่น acttype, plant_type, unit, work_type, หรือ wostatus)")
 
-            if acttype and wbs and two_digits_year:
-                # plant_type = plant_type.plant_code
-                # unit_code = unit.unit_code
+                if site and child_site:
+                    siteid = site.site_id   # 'SRD0'
+                    child_site = child_site.site_id # SRD
+                    location = f'{child_site}-{plant_type}{unit}' # 'SRD-H02'
+                else:
+                    raise ValueError("Site หรือ Child Site ขาดหายไป")
 
-                # สร้าง egprojectid และ egwbs
-                egprojectid = f"O-{location.replace('-', '')}-{two_digits_year}{acttype.code}"  # 'O-SRDH02-67MI'
-                egwbs = f"{egprojectid}-{wbs.wbs_code}" # 'O-SRDH02-67MI-WO'
-                wbs_desc = f"{wbs.description} {acttype.description} {location} {buddhist_year}"
+                if year:
+                    buddhist_year = int(year) + 543
+                    two_digits_year = buddhist_year % 100
+                else:
+                    raise ValueError("ปี (year) ขาดหายไป")
 
-            logger.info(f"EGPROJECTID: {egprojectid}")
-            logger.info(f"EGWBS: {egwbs}")
-            logger.info(f"WBS DESC: {wbs_desc}")
-            logger.info(f"Location: {location}") 
+                if acttype and wbs and two_digits_year:
+                    # สร้าง egprojectid และ egwbs
+                    location_sanitized = location.replace('-', '')
+                    egprojectid = f"O-{location_sanitized}-{two_digits_year}{acttype.code}"  # 'O-SRDH02-67MI'
+                    egwbs = f"{egprojectid}-{wbs.wbs_code}" # 'O-SRDH02-67MI-WO'
+                    wbs_desc = f"{wbs.description} {acttype.description} {location} {buddhist_year}"
+                else:
+                    raise ValueError("ข้อมูลที่จำเป็นบางอย่างจาก acttype, wbs ขาดหายไป")
+                
+                logger.info(f"EGPROJECTID: {egprojectid}")
+                logger.info(f"EGWBS: {egwbs}")
+                logger.info(f"WBS DESC: {wbs_desc}")
+                logger.info(f"Location: {location}") 
+            except Exception as e:
+                logger.critical(f"Unexpected error: {str(e)}", exc_info=True)
+                raise
 ############
 ############
             # บันทึกค่าลงเซสชัน
@@ -180,11 +189,13 @@ def index(request):
             request.session['location_filename'] = location_file.name
             request.session['temp_dir'] = temp_dir
             
+            request.session['frequency'] = frequency
             request.session['egmntacttype'] = egmntacttype
             request.session['egprojectid'] = egprojectid
             request.session['egwbs'] = egwbs
             request.session['location'] = location
             request.session['siteid'] = siteid
+            request.session['child_site'] = child_site
             request.session['wbs_desc'] = wbs_desc
             request.session['worktype'] = worktype
             request.session['wostatus'] = wostatus
@@ -873,9 +884,11 @@ def index(request):
             location_filename = request.session.get('location_filename', '')
             comment_path = request.session.get('download_link_comment', None)
             first_plant = request.session.get('first_plant')
+            child_site = request.session.get('child_site')
             temp_dir = request.session.get('temp_dir')
             most_common_plant_unit = request.session.get('most_common_plant_unit')
             # Get Dropdown
+            frequency = request.session.get('frequency')
             egmntacttype = request.session.get('egmntacttype')
             egprojectid = request.session.get('egprojectid')
             egwbs = request.session.get('egwbs')
@@ -940,7 +953,6 @@ def index(request):
             pluscrevum = 0
             status = 'ACTIVE'
             pluscjprevnum = 0
-            frequency = 4
             frequnit = 'YEARS'
             route = ''
             leadtime = 7
@@ -1469,7 +1481,7 @@ def index(request):
                                     (df_pm_plan3_master['JPNUM'] == '')
                     
                     # Update LOCATION column
-                    df_pm_plan3_master.loc[pm_plan_cond, 'LOCATION'] = f'{first_plant}{key}'
+                    df_pm_plan3_master.loc[pm_plan_cond, 'LOCATION'] = f'{child_site}-{key}'
 
             df_pm_plan3_master['NEXTDATE'] = df_pm_plan3_master['NEXTDATE'].astype('str')
             df_pm_plan3_master['FINISH_DATE'] = df_pm_plan3_master['FINISH_DATE'].astype('str')
@@ -1783,6 +1795,7 @@ def index(request):
         # request.session.pop('download_link_template', None)
         
         # #! Dropdown
+        # request.session.pop('frequency', None)
         # request.session.pop('egmntacttype', None)
         # request.session.pop('egprojectid', None)
         # request.session.pop('egwbs', None)
@@ -1791,6 +1804,7 @@ def index(request):
         # request.session.pop('wbs_desc', None)
         # request.session.pop('worktype', None)
         # request.session.pop('wostatus', None)
+        # request.session.pop('child_site', None)
         
         request.session.clear()
         form = UploadFileForm()
@@ -2011,7 +2025,9 @@ def filter_worktype(request):
     except Exception as e:
         logger.error(f"Unexpected error in filter_worktype: {str(e)}", exc_info=True)
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
-    return JsonResponse({'description': work_type.description})
+    return JsonResponse({
+        'description': work_type.description
+    })
 
 @require_GET
 def filter_plant_type(request):
@@ -2048,10 +2064,34 @@ def filter_plant_type(request):
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     
     # แปลงข้อมูลเป็น list เพื่อส่งกลับไปยัง frontend
-    acttype_list = [{'id': acttype.id, 'acttype': acttype.acttype} for acttype in acttypes]
-    site_list = [{'id': site.id, 'site_id': site.site_id, 'site_name': site.site_name} for site in sites]    
-    work_type_list = [{'id': worktype.id, 'worktype': worktype.worktype} for worktype in work_types]
-    unit_list = [{'id': unit.id, 'unit_code': unit.unit_code} for unit in units]
+    acttype_list = [
+        {
+            'id': acttype.id, 
+            'acttype': acttype.acttype, 
+            'description': acttype.description
+        } for acttype in acttypes
+    ]
+    site_list = [
+        {
+            'id': site.id, 
+            'site_id': site.site_id, 
+            'site_name': site.site_name
+        } for site in sites
+    ]    
+    work_type_list = [
+        {
+            'id': worktype.id, 
+            'worktype': worktype.worktype,
+            'description': worktype.description
+        } for worktype in work_types
+    ]
+    unit_list = [
+        {
+            'id': unit.id, 
+            'unit_code': unit.unit_code
+        } for unit in units
+    ]
+    
     return JsonResponse({
         'acttypes': acttype_list,
         'sites': site_list,
@@ -2082,7 +2122,10 @@ def filter_acttype(request):
         logger.error(f"Unexpected error in filter_acttype: {str(e)}", exc_info=True)
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     
-    return JsonResponse({'description': acttype.description, 'code': acttype.code})
+    return JsonResponse({
+        'description': acttype.description, 
+        'code': acttype.code
+    })
 
 @require_GET
 def filter_wbs(request):
@@ -2106,7 +2149,9 @@ def filter_wbs(request):
         logger.error(f"Unexpected error in filter_wbs: {e}", exc_info=True)
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     
-    return JsonResponse({'description': wbs.description})
+    return JsonResponse({
+        'description': wbs.description
+    })
 
 @require_GET
 def filter_wostatus(request):
@@ -2130,7 +2175,9 @@ def filter_wostatus(request):
         logger.error(f"Unexpected error in filter_wostatus: {e}", exc_info=True)
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     
-    return JsonResponse({'description': wostatus.description})
+    return JsonResponse({
+        'description': wostatus.description
+    })
 
 # ---------------------------------
 # ส่วนของ Custom Error Handlers

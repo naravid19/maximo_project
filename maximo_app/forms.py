@@ -4,8 +4,6 @@ from django import forms
 from django.core.exceptions import ValidationError
 from maximo_app.models import Site, ChildSite, PlantType, Unit, WorkType, ActType, WBSCode, Status
 
-import mimetypes
-
 class UploadFileForm(forms.Form):
     schedule_file = forms.FileField(
         label='Schedule File', 
@@ -18,55 +16,77 @@ class UploadFileForm(forms.Form):
     
     # Dropdown สำหรับเลือกปี
     current_year = datetime.now().year
-    YEARS_CHOICES = [('', 'เลือก')] + [(str(year), str(year)) for year in range(current_year, current_year + 20)]
+    YEAR_RANGE_CHOICES = [('', 'เลือก')] + [(str(year), str(year)) for year in range(current_year, current_year + 20)]
+    
     year = forms.ChoiceField(
         label='YEAR', 
-        choices=YEARS_CHOICES, 
+        choices=YEAR_RANGE_CHOICES, 
         required=True
     )
+    
+    FREQUENCY_CHOICES = [
+        ('', 'เลือก'),
+        ('1', '1 ปี'),
+        ('2', '2 ปี'),
+        ('3', '3 ปี'),
+        ('4', '4 ปี'),
+    ]
+    
+    frequency = forms.ChoiceField(
+        label='FREQUENCY',
+        choices=FREQUENCY_CHOICES,
+        required=True,
+    )
+    
     plant_type = forms.ModelChoiceField(
         queryset=PlantType.objects.all(), 
         label='PLANT TYPE', 
         required=True, 
         empty_label="เลือก"
     )
-    # Dropdown สำหรับเลือกข้อมูล จากฐานข้อมูล
+    
     site = forms.ModelChoiceField(
         queryset=Site.objects.none(), 
         label='SITE', 
         required=True, 
         empty_label="เลือก"
     )
+    
     child_site = forms.ModelChoiceField(
         queryset=ChildSite.objects.none(),
         label='CHILD SITE',
         required=True,
         empty_label="เลือก"
     )
+    
     unit = forms.ModelChoiceField(
         queryset=Unit.objects.none(), 
         label='UNIT', 
         required=True, 
         empty_label="เลือก"
     )
+    
     wostatus = forms.ModelChoiceField(
         queryset=Status.objects.all(), 
         label='STATUS', 
         required=True, 
         empty_label="เลือก"
     )
+    
     work_type = forms.ModelChoiceField(
         queryset=WorkType.objects.none(), 
         label='WORKTYPE', 
         required=True, 
         empty_label="เลือก"
     )
+    
     acttype = forms.ModelChoiceField(
         queryset=ActType.objects.none(), 
         label='ACTTYPE', 
         required=True, 
         empty_label="เลือก"
     )
+    
     wbs = forms.ModelChoiceField(
         queryset=WBSCode.objects.all(), 
         label='SUBWBS GROUP', 
@@ -78,7 +98,23 @@ class UploadFileForm(forms.Form):
         super(UploadFileForm, self).__init__(*args, **kwargs)
         self.fields['plant_type'].queryset = PlantType.objects.all()
         self.fields['plant_type'].to_field_name = 'id'
-
+        
+        # กำหนด choices สำหรับ wbs และ wostatus
+        self.fields['wbs'].choices = [
+            ('', 'เลือก')
+        ] + [
+            (wbs.id, f'{wbs.wbs_code} - {wbs.description}')
+            for wbs in WBSCode.objects.all()
+        ]
+        
+        self.fields['wostatus'].choices = [
+            ('', 'เลือก')
+        ] + [
+            (wo_status.id, f'{wo_status.status} - {wo_status.description}')
+            for wo_status in Status.objects.all()
+        ]
+        
+        # กรองข้อมูลจาก plant_type
         if 'plant_type' in self.data:
             try:
                 plant_type_id = int(self.data.get('plant_type'))  # ดึง plant_type_id ที่ถูกเลือก
@@ -97,13 +133,13 @@ class UploadFileForm(forms.Form):
                 self.fields['unit'].queryset = plant_type.units.all()
                 
             except (ValueError, TypeError, PlantType.DoesNotExist):
-                # ถ้ามีข้อผิดพลาด ให้กำหนด queryset เป็นว่าง
+                # กำหนดให้ queryset เป็น none ถ้ามีข้อผิดพลาด
                 self.fields['acttype'].queryset = ActType.objects.none()
                 self.fields['site'].queryset = Site.objects.none()
                 self.fields['work_type'].queryset = WorkType.objects.none()
                 self.fields['unit'].queryset = Unit.objects.none()
 
-        # เมื่อผู้ใช้เลือก site จะต้องกรองข้อมูล child_site
+        # กรองข้อมูลจาก site
         if 'site' in self.data:
             try:
                 site_id = int(self.data.get('site'))  # ดึง site_id ที่ถูกเลือก
@@ -113,9 +149,9 @@ class UploadFileForm(forms.Form):
                 self.fields['child_site'].queryset = site.child_sites.all()
 
             except (ValueError, TypeError, Site.DoesNotExist):
-                # ถ้ามีข้อผิดพลาด ให้กำหนด queryset เป็นว่าง
+                # กำหนดให้ queryset เป็น none ถ้ามีข้อผิดพลาด
                 self.fields['child_site'].queryset = ChildSite.objects.none()
-
+    
     def clean(self):
         cleaned_data = super().clean()
         schedule_file = cleaned_data.get('schedule_file')
@@ -141,7 +177,7 @@ class UploadFileForm(forms.Form):
                     self.add_error('location_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
                     
         # ตรวจสอบว่าฟิลด์ที่จำเป็นถูกเลือกหรือไม่
-        required_fields = ['year', 'site', 'plant_type', 'unit', 'work_type', 'acttype', 'wbs', 'wostatus', 'child_site']
+        required_fields = ['year', 'frequency', 'site', 'plant_type', 'unit', 'work_type', 'acttype', 'wbs', 'wostatus', 'child_site']
         for field in required_fields:
             if not cleaned_data.get(field):
                 self.add_error(field, f'{field.upper()} ว่าง')

@@ -6,7 +6,7 @@ from maximo_app.models import PlantType, Site, ChildSite, Unit, WorkType, ActTyp
 class PlantTypeAdmin(admin.ModelAdmin):
     list_display = ('plant_code', 'plant_type_th', 'plant_type_eng', 'get_act_types', 'get_work_types', 'get_units')
     search_fields = ('plant_code', 'plant_type_th', 'plant_type_eng', 'act_types__acttype', 'work_types__worktype', 'units__unit_code')
-    list_filter = ('plant_code', 'plant_type_th')
+    list_filter = ('act_types__acttype', 'work_types__worktype', 'units__unit_code')
     fields = ('plant_code', 'plant_type_th', 'plant_type_eng', 'act_types', 'work_types', 'units')
     
     def get_act_types(self, obj):
@@ -43,7 +43,7 @@ class PlantTypeAdmin(admin.ModelAdmin):
 class SiteAdmin(admin.ModelAdmin):
     list_display = ('site_id', 'site_name', 'organization', 'get_plant_types')  # ฟิลด์ที่จะแสดงในหน้า Admin
     search_fields = ('site_id', 'site_name', 'organization', 'plant_types__plant_code')  # ฟิลด์ที่สามารถค้นหาได้ใน Admin
-    list_filter = ('site_id', 'site_name', 'organization')  # ฟิลด์ที่ใช้สำหรับการกรองข้อมูล
+    list_filter = ('plant_types__plant_code',)  # ฟิลด์ที่ใช้สำหรับการกรองข้อมูล
     fields = ('site_id', 'site_name', 'organization', 'plant_types')  # กำหนดฟิลด์ที่จะแสดงในฟอร์มเพิ่มหรือแก้ไขข้อมูล
     
     def get_plant_types(self, obj):
@@ -65,7 +65,7 @@ class SiteAdmin(admin.ModelAdmin):
 class ChildSiteAdmin(admin.ModelAdmin):
     list_display = ('site_id', 'site_name', 'get_parent_sites')
     search_fields = ('site_id', 'site_name', 'parent_site__site_id')
-    list_filter = ('site_id', 'site_name')
+    list_filter = ('parent_site__site_id',)
     fields = ('site_id', 'site_name', 'parent_site')
     
     def get_parent_sites(self, obj):
@@ -99,6 +99,7 @@ class UnitAdmin(admin.ModelAdmin):
 class WorkTypeAdmin(admin.ModelAdmin):
     list_display = ('worktype', 'description')
     search_fields = ('worktype', 'description')
+    list_filter = ('description',)
     fields = ('worktype', 'description')
     
     def has_add_permission(self, request):
@@ -114,7 +115,7 @@ class WorkTypeAdmin(admin.ModelAdmin):
 class ActTypeAdmin(admin.ModelAdmin):
     list_display = ('acttype', 'description', 'code')
     search_fields = ('acttype', 'description', 'code')
-    list_filter = ('acttype',)
+    list_filter = ('description',)
     fields = ('acttype', 'description', 'code',)
     
     def has_add_permission(self, request):
@@ -130,7 +131,7 @@ class ActTypeAdmin(admin.ModelAdmin):
 class WBSCodeAdmin(admin.ModelAdmin):
     list_display = ('wbs_code', 'description')
     search_fields = ('wbs_code', 'description')
-    list_filter = ('wbs_code',)
+    list_filter = ('description', )
     fields = ('wbs_code', 'description')
     
     def has_add_permission(self, request):
@@ -146,7 +147,7 @@ class WBSCodeAdmin(admin.ModelAdmin):
 class StatusAdmin(admin.ModelAdmin):
     list_display = ('status', 'description')
     search_fields = ('status', 'description')
-    list_filter = ('status',)
+    list_filter = ('description', )
     fields = ('status', 'description')
     
     def has_add_permission(self, request):

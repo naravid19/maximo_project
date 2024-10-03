@@ -207,7 +207,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['file_info', 'file_error', 'file_warning', 'file_critical', 'file_debug', 'console'],  # ส่งข้อความการบันทึก
-            'level': 'INFO',   # ระดับของข้อความที่ logger จะบันทึกได้
+            'level': 'DEBUG',   # ระดับของข้อความที่ logger จะบันทึกได้
             'propagate': True,
         },
     },
