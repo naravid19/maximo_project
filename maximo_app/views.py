@@ -3,6 +3,7 @@
 from .forms import UploadFileForm
 from background_task import background
 from django.conf import settings
+from django.contrib import messages
 from django.http import FileResponse, HttpResponse, Http404, JsonResponse
 from django.shortcuts import render, HttpResponse, Http404, redirect
 from django.views.decorators.http import require_GET
@@ -1941,6 +1942,23 @@ def download_template_file(request):
             raise Http404("File not found")
     else:
         raise Http404("No file specified for download")
+
+def download_original_template(request):
+    try:
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', '1Template-MxLoader-JP-PMPlan.xlsm')
+        
+        if not os.path.exists(file_path):
+            messages.error(request, "ไม่พบไฟล์ที่ต้องการดาวน์โหลด")
+            return redirect('index')
+
+        # ส่งไฟล์กลับไปให้ผู้ใช้ดาวน์โหลด
+        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+        return response
+
+    except Exception as e:
+        messages.error(request, f"เกิดข้อผิดพลาด: {str(e)}")
+        return redirect('index')
 
 # ---------------------------------
 # ฟังก์ชันการกรองข้อมูล (Filter Functions)
