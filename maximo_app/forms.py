@@ -54,7 +54,7 @@ class UploadFileForm(forms.Form):
     
     child_site = forms.ModelChoiceField(
         queryset=ChildSite.objects.none(),
-        label='CHILD SITE',
+        label='PLANT NAME',
         required=True,
         empty_label="เลือก"
     )
@@ -181,5 +181,10 @@ class UploadFileForm(forms.Form):
         for field in required_fields:
             if not cleaned_data.get(field):
                 self.add_error(field, f'{field.upper()} ว่าง')
-
+        
+        required_file_fields = ['schedule_file', 'location_file']
+        for field in required_file_fields:
+            if not cleaned_data.get(field):
+                self.add_error(field, f'{field.upper()} ไม่มีไฟล์')
+        
         return cleaned_data

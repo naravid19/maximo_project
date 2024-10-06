@@ -25,8 +25,8 @@
     <style>
       body {
         font-family: "Bai Jamjuree", sans-serif;
-        margin: 0;
-        padding: 12px;
+        {% comment %} margin: 0;
+        padding: 12px; {% endcomment %}
       }
     </style>
 
@@ -34,7 +34,7 @@
     {% block style %}{% endblock %}
   </head>
 
-  <body>
+  <body class="m-0 p-3 bg-[#f0ebf8]">
     <!-- Content Block -->
     {% block content %}{% endblock %}
 

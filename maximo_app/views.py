@@ -4,7 +4,7 @@ from .forms import UploadFileForm
 from background_task import background
 from django.conf import settings
 from django.http import FileResponse, HttpResponse, Http404, JsonResponse
-from django.shortcuts import render, HttpResponse, Http404
+from django.shortcuts import render, HttpResponse, Http404, redirect
 from django.views.decorators.http import require_GET
 from django.urls import reverse
 from maximo_app.models import Site, ChildSite, PlantType, Unit, WorkType, ActType, WBSCode, Status
@@ -1765,7 +1765,6 @@ def index(request):
             print('download_link_job_plan_labor:',  request.session['download_link_job_plan_labor'])
             print('download_link_pm_plan:',  request.session['download_link_pm_plan'])
             print('download_link_template:',  request.session['download_link_template'])
-        
         else:
             # ถ้าฟอร์มไม่ถูกต้อง ให้แสดงฟอร์มพร้อมกับข้อมูลเดิม
             return render(request, 'maximo_app/upload.html', {

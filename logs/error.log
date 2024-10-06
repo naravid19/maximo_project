@@ -4251,3 +4251,87 @@ KeyError: 'worktype'
 [03/Oct/2024 15:48:25] ERROR [django.server:213] "GET / HTTP/1.1" 500 78981
 [03/Oct/2024 20:30:00] WARNING [django.request:248] Not Found: /favicon.ico
 [03/Oct/2024 20:30:00] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[03/Oct/2024 20:47:25] WARNING [django.request:248] Bad Request: /filter_plant_type/
+[03/Oct/2024 20:47:25] WARNING [django.server:213] "GET /filter_plant_type/?plant_code=1 HTTP/1.1" 400 39
+[03/Oct/2024 20:47:29] WARNING [django.request:248] Bad Request: /filter_plant_type/
+[03/Oct/2024 20:47:29] WARNING [django.server:213] "GET /filter_plant_type/?plant_code=3 HTTP/1.1" 400 39
+[03/Oct/2024 22:12:29] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Location'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 545, in index
+    plant_list1 = kks_read['Location'].str.split('-',expand=True)[0].value_counts().index.tolist()
+                  ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Location'
+[03/Oct/2024 22:12:29] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Location'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 545, in index
+    plant_list1 = kks_read['Location'].str.split('-',expand=True)[0].value_counts().index.tolist()
+                  ~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Location'
+[03/Oct/2024 22:12:29] ERROR [django.server:213] "POST / HTTP/1.1" 500 197012
+[03/Oct/2024 22:12:29] ERROR [django.server:213] "POST / HTTP/1.1" 500 197012
+[04/Oct/2024 08:28:50] WARNING [django.request:248] Not Found: /favicon.ico
+[04/Oct/2024 08:28:50] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[04/Oct/2024 08:50:04] WARNING [django.request:248] Not Found: /favicon.ico
+[04/Oct/2024 08:50:04] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[04/Oct/2024 12:51:42] WARNING [django.request:248] Not Found: /favicon.ico
+[04/Oct/2024 12:51:42] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[04/Oct/2024 12:51:42] WARNING [django.request:248] Not Found: /favicon.ico
+[04/Oct/2024 12:51:42] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[04/Oct/2024 12:52:07] WARNING [django.request:248] Not Found: /favicon.ico
+[04/Oct/2024 12:52:07] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[04/Oct/2024 12:52:07] WARNING [django.request:248] Not Found: /favicon.ico
+[04/Oct/2024 12:52:07] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[04/Oct/2024 12:52:43] WARNING [django.request:248] Not Found: /favicon.ico
+[04/Oct/2024 12:52:43] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[04/Oct/2024 12:52:43] WARNING [django.request:248] Not Found: /favicon.ico
+[04/Oct/2024 12:52:43] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[04/Oct/2024 12:54:00] WARNING [django.request:248] Not Found: /favicon.ico
+[04/Oct/2024 12:54:00] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
+[06/Oct/2024 14:45:45] WARNING [django.request:248] Not Found: /favicon.ico
+[06/Oct/2024 14:45:45] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6066
