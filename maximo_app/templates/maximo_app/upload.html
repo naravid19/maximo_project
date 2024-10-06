@@ -684,188 +684,38 @@
             // ตรวจสอบว่าฟิลด์ปีว่างหรือไม่
             let hasError = false; // ตัวแปรสำหรับตรวจสอบว่ามี error หรือไม่
         
-            if (yearField.value === '') {
-                event.preventDefault(); // ป้องกันการส่งฟอร์ม
-                hasError = true; // มี error
-        
-                // สร้าง Alert Box ใหม่สำหรับ Year
-                const alertBoxYear = document.createElement('div');
-                alertBoxYear.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBoxYear.setAttribute('role', 'alert');
-                
-                // ข้อความแจ้งเตือนสำหรับ Year
-                const messageTextYear = document.createElement('span');
-                messageTextYear.textContent = 'กรุณาเลือกปี';
-                alertBoxYear.appendChild(messageTextYear);
-        
-                // เพิ่ม Alert Box ไปใต้ dropdown ของ Year
-                yearFieldContainer.appendChild(alertBoxYear);
-            }
-        
-            // ตรวจสอบว่าฟิลด์ Frequency ว่างหรือไม่
-            if (frequencyField.value === '') {
-                event.preventDefault(); // ป้องกันการส่งฟอร์ม
-                hasError = true; // มี error
-        
-                // สร้าง Alert Box ใหม่สำหรับ Frequency
-                const alertBoxFrequency = document.createElement('div');
-                alertBoxFrequency.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBoxFrequency.setAttribute('role', 'alert');
-                
-                // ข้อความแจ้งเตือนสำหรับ Frequency
-                const messageTextFrequency = document.createElement('span');
-                messageTextFrequency.textContent = 'กรุณาเลือกความถี่';
-                alertBoxFrequency.appendChild(messageTextFrequency);
-        
-                // เพิ่ม Alert Box ไปใต้ dropdown ของ Frequency
-                frequencyFieldContainer.appendChild(alertBoxFrequency);
-            }
-            
-            if (plantTypeField.value === '') {
-                event.preventDefault();
-                hasError = true;
-        
-                const alertBoxPlantType = document.createElement('div');
-                alertBoxPlantType.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBoxPlantType.setAttribute('role', 'alert');
-        
-                const messageTextPlantType = document.createElement('span');
-                messageTextPlantType.textContent = 'กรุณาเลือกประเภทของโรงงานไฟฟ้า';
-                alertBoxPlantType.appendChild(messageTextPlantType);
-        
-                plantTypeFieldContainer.appendChild(alertBoxPlantType);
-            }
-        
-            if (siteField.value === '') {
-                event.preventDefault();
-                hasError = true;
-        
-                const alertBoxSite = document.createElement('div');
-                alertBoxSite.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBoxSite.setAttribute('role', 'alert');
-        
-                const messageTextSite = document.createElement('span');
-                messageTextSite.textContent = 'กรุณาเลือกโรงไฟฟ้า';
-                alertBoxSite.appendChild(messageTextSite);
-        
-                siteFieldContainer.appendChild(alertBoxSite);
-            }
+            const fieldsToValidate = [
+                { field: yearField, container: yearFieldContainer, message: 'กรุณาเลือกปี' },
+                { field: frequencyField, container: frequencyFieldContainer, message: 'กรุณาเลือกความถี่' },
+                { field: plantTypeField, container: plantTypeFieldContainer, message: 'กรุณาเลือกประเภทของโรงงานไฟฟ้า' },
+                { field: siteField, container: siteFieldContainer, message: 'กรุณาเลือกโรงไฟฟ้า' },
+                { field: childSiteField, container: childSiteFieldContainer, message: 'กรุณาเลือกชื่อย่อโรงไฟฟ้า' },
+                { field: unitField, container: unitFieldContainer, message: 'กรุณาเลือกลำดับโรงไฟฟ้า' },
+                { field: wostatusField, container: wostatusFieldContainer, message: 'กรุณาเลือกสถานะใบสั่งงาน' },
+                { field: workTypeField, container: workTypeFieldContainer, message: 'กรุณาเลือกประเภทของงาน' },
+                { field: acttypeField, container: acttypeFieldContainer, message: 'กรุณาเลือกประเภทของกิจกรรม' },
+                { field: wbsField, container: wbsFieldContainer, message: 'กรุณาเลือก WBS' },
+                { field: scheduleFileField, container: scheduleFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Schedule' },
+                { field: locationFileField, container: locationFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Location' }
+            ];
 
-            if (childSiteField.value === '') {
-                event.preventDefault();
-                hasError = true;
-        
-                const alertBoxChildSite = document.createElement('div');
-                alertBoxChildSite.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBoxChildSite.setAttribute('role', 'alert');
-        
-                const messageTextChildSite = document.createElement('span');
-                messageTextChildSite.textContent = 'กรุณาเลือกชื่อย่อโรงไฟฟ้า';
-                alertBoxChildSite.appendChild(messageTextChildSite);
-        
-                childSiteFieldContainer.appendChild(alertBoxChildSite);
-            }
-
-            if (unitField.value === '') {
-                const alerBoxUnit = document.createElement('div');
-                alerBoxUnit.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alerBoxUnit.setAttribute('role', 'alert');
-
-                const messageTextUnit = document.createElement('span');
-                messageTextUnit.textContent = 'กรุณาเลือกลำดับโรงไฟฟ้า';
-                alerBoxUnit.appendChild(messageTextUnit);
-
-                unitFieldContainer.appendChild(alerBoxUnit);
-            }
-
-            if (wostatusField.value === '') {
-                event.preventDefault();
-                hasError = true;
-        
-                const alertBoxWostatus = document.createElement('div');
-                alertBoxWostatus.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBoxWostatus.setAttribute('role', 'alert');
-        
-                const messageTextWostatus = document.createElement('span');
-                messageTextWostatus.textContent = 'กรุณาเลือกสถานะใบสั่งงาน';
-                alertBoxWostatus.appendChild(messageTextWostatus);
-        
-                wostatusFieldContainer.appendChild(alertBoxWostatus);
-            }
-
-            if (workTypeField.value === '') {
-                event.preventDefault();
-                hasError = true;
-        
-                const alertBoxWorkType = document.createElement('div');
-                alertBoxWorkType.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBoxWorkType.setAttribute('role', 'alert');
-        
-                const messageTextWorkType = document.createElement('span');
-                messageTextWorkType.textContent = 'กรุณาเลือกประเภทของงาน';
-                alertBoxWorkType.appendChild(messageTextWorkType);
-        
-                workTypeFieldContainer.appendChild(alertBoxWorkType);
-            }
-
-            if (acttypeField.value === '') {
-                event.preventDefault();
-                hasError = true;
-        
-                const alertBoxActtype = document.createElement('div');
-                alertBoxActtype.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBoxActtype.setAttribute('role', 'alert');
-        
-                const messageTextActtype = document.createElement('span');
-                messageTextActtype.textContent = 'กรุณาเลือกประเภทของกิจกรรม';
-                alertBoxActtype.appendChild(messageTextActtype);
-        
-                acttypeFieldContainer.appendChild(alertBoxActtype);
-            }
-
-            if (wbsField.value === '') {
-                event.preventDefault();
-                hasError = true;
-        
-                const alertBoxWbs = document.createElement('div');
-                alertBoxWbs.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBoxWbs.setAttribute('role', 'alert');
-        
-                const messageTextWbs = document.createElement('span');
-                messageTextWbs.textContent = 'กรุณาเลือก WBS';
-                alertBoxWbs.appendChild(messageTextWbs);
-        
-                wbsFieldContainer.appendChild(alertBoxWbs);
-            }
-            
-            if (scheduleFileField.value === '') {
-                event.preventDefault();
-                hasError = true;
-            
-                const alertBoxScheduleFile = document.createElement('div');
-                alertBoxScheduleFile.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBoxScheduleFile.setAttribute('role', 'alert');
-            
-                const messageTextScheduleFile = document.createElement('span');
-                messageTextScheduleFile.textContent = 'กรุณาอัปโหลดไฟล์ Schedule';
-                alertBoxScheduleFile.appendChild(messageTextScheduleFile);
-            
-                scheduleFileFieldContainer.appendChild(alertBoxScheduleFile);
-            }
-            
-            if (locationFileField.value === '') {
-                event.preventDefault();
-                hasError = true;
-            
-                const alertBoxLocationFile = document.createElement('div');
-                alertBoxLocationFile.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBoxLocationFile.setAttribute('role', 'alert');
-            
-                const messageTextLocationFile = document.createElement('span');
-                messageTextLocationFile.textContent = 'กรุณาอัปโหลดไฟล์ Location';
-                alertBoxLocationFile.appendChild(messageTextLocationFile);
-            
-                locationFileFieldContainer.appendChild(alertBoxLocationFile);
+            for (let i = 0; i < fieldsToValidate.length; i++) {
+                const { field, container, message } = fieldsToValidate[i];
+                if (field.value === '') {
+                    event.preventDefault();
+                    hasError = true;
+    
+                    const alertBox = document.createElement('div');
+                    alertBox.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
+                    alertBox.setAttribute('role', 'alert');
+    
+                    const messageText = document.createElement('span');
+                    messageText.textContent = message;
+                    alertBox.appendChild(messageText);
+    
+                    container.appendChild(alertBox);
+                    break; // หยุดการตรวจสอบเมื่อเจอข้อผิดพลาดอันแรก
+                }
             }
             
             // ถ้าไม่มี error ส่งฟอร์ม
