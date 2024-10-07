@@ -100,15 +100,54 @@
             <p class="mb-4 text-sm font-medium text-gray-600">FOR IBM MAXIMO</p>
         
             <!-- Content box -->
-            <div class="flex items-center justify-between px-6 pt-2 pb-3 border-t border-gray-200">
-                <p class="text-sm font-normal text-gray-700">
-                    TEMPLATE-PO-SCHDULE(BLANK)
-                </p>
-                <a href="{% url 'download_original_template' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
-                    DOWNLOAD
-                </a>
+            <div class="flex flex-col gap-3 px-6 pt-2 pb-3 mt-3 border-t border-gray-200">
+                <!-- Template PO-Schedule Section -->
+                <div class="flex items-center justify-between">
+                    <p class="text-sm font-normal text-gray-700">
+                        คู่มือการใช้งานระบบ
+                    </p>
+                    <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+                        DOWNLOAD
+                    </a>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <p class="text-sm font-normal text-gray-700">
+                        DRAFT SCHEDULE(BLANK)
+                    </p>
+                    <a href="{% url 'download_schedule' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+                        DOWNLOAD
+                    </a>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <p class="text-sm font-normal text-gray-700">
+                        TEMPLATE-MXLOADER-JP-PMPLAN(BLANK)
+                    </p>
+                    <a href="{% url 'download_original_template' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+                        DOWNLOAD
+                    </a>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <p class="text-sm font-normal text-gray-700">
+                        DRAFT SCHEDULE(EXAMPLE)
+                    </p>
+                    <a href="{% url 'download_example_schedule' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+                        DOWNLOAD
+                    </a>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <p class="text-sm font-normal text-gray-700">
+                        TEMPLATE-MXLOADER-JP-PMPLAN(EXAMPLE)
+                    </p>
+                    <a href="{% url 'download_example_template' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+                        DOWNLOAD
+                    </a>
+                </div>
             </div>
-        
+
             <!-- Required question notice -->
             <p class="px-6 mt-3 text-sm font-normal text-red-600">
                 * ระบุว่าเป็นคำถามที่จำเป็น
@@ -458,33 +497,50 @@
 
     {% else %}
 
-        <div class="container relative px-6 pt-[1.375rem] pb-4 bg-white rounded-lg shadow-md form-container">
-            <h1 class="text-center text-gray-800 form-title">Uploaded Files</h1>
+        <div class="container relative px-6 pt-[1.375rem] pb-4 max-w-screen-sm mx-auto my-4 bg-white rounded-md shadow-sm">
+            <div class="absolute top-0 left-0 w-full h-2 bg-[rgb(63,81,181)] rounded-t-md"></div>
+        
+            <h1 class="mb-4 text-4xl font-semibold text-left text-gray-800">Uploaded Files</h1>
+        
+            <!-- Content Box สำหรับแสดงไฟล์ที่อัปโหลด -->
+            <div class="flex flex-col gap-3 px-6 pt-2 pb-3 mt-3 border-t border-gray-200">
                 {% if request.session.schedule_filename %}
-                    <p><strong>Schedule File:</strong> {{ request.session.schedule_filename }}</p>
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm font-normal text-gray-700">
+                            <strong>Schedule File:</strong> {{ request.session.schedule_filename }}
+                        </p>
+                        <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+                            DOWNLOAD
+                        </a>
+                    </div>
                 {% endif %}
                 {% if request.session.location_filename %}
-                    <p><strong>Location File:</strong> {{ request.session.location_filename }}</p>
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm font-normal text-gray-700">
+                            <strong>Location File:</strong> {{ request.session.location_filename }}
+                        </p>
+                        <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+                            DOWNLOAD
+                        </a>
+                    </div>
                 {% endif %}
+    {% endif %}
+                {% if 'download_link_comment' in request.session %}
+                <div class="flex items-center justify-between">
+                    <p class="text-sm font-normal text-gray-700">
+                        <strong>Comment File:</strong> Comment.xlsx
+                    </p>
+                    <a href="{% url 'download_comment_file' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+                        DOWNLOAD
+                    </a>
+                </div>
+                {% endif %}
+            </div>
         </div>
     
-    {% endif %}
 
     {% if 'download_link_comment' in request.session %}
-
         <div class="container p-6 bg-white rounded-lg shadow-md form-container">    
-            <div class="inline-flex rounded-md shadow-sm" role="group">
-                <a href="{% url 'download_comment_file' %}">
-                    <button type="button" class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white">
-                        <svg class="w-3 h-3 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M14.707 7.793a1 1 0 0 0-1.414 0L11 10.086V1.5a1 1 0 0 0-2 0v8.586L6.707 7.793a1 1 0 1 0-1.414 1.414l4 4a1 1 0 0 0 1.416 0l4-4a1 1 0 0 0-.002-1.414Z"/>
-                            <path d="M18 12h-2.55l-2.975 2.975a3.5 3.5 0 0 1-4.95 0L4.55 12H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4a2 2 0 0 0-2-2Zm-3 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"/>
-                        </svg>
-                        Download Comment File
-                    </button>
-                </a>
-            </div>
-            
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -587,7 +643,7 @@
 
     {% if not error_message %}
 
-        {% if extracted_kks_counts is not None and extracted_kks_counts.items %}
+    {% if extracted_kks_counts is not None and extracted_kks_counts|length > 0 %}
 
             <div>
                 <form id="mappingForm" method="post">
@@ -618,7 +674,7 @@
                     </div>
                     {% if not user_input_mapping %}
                     <!-- ปุ่ม Submit -->
-                    <button id="mappingBtn" type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                    <button id="mappingBtn" name="kks_mapping_submit" value="submit" type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
                         <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 inline-flex items-center">
                             Submit Mappings
                         </span>
@@ -770,14 +826,6 @@
         }
     </script>
 <!--############################-->
-<script>
-
-</script>
-
-
-
-
-
 
 
 

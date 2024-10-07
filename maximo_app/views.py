@@ -881,8 +881,8 @@ def index(request):
 ############                        
         elif 'kks_mapping_submit' in request.POST:
             # Get variables
-            schedule_filename = request.session.get('schedule_filename', '')
-            location_filename = request.session.get('location_filename', '')
+            schedule_filename = request.session.get('schedule_filename', None)
+            location_filename = request.session.get('location_filename', None)
             comment_path = request.session.get('download_link_comment', None)
             first_plant = request.session.get('first_plant')
             child_site = request.session.get('child_site')
@@ -1768,9 +1768,16 @@ def index(request):
             print('download_link_template:',  request.session['download_link_template'])
         else:
             # ถ้าฟอร์มไม่ถูกต้อง ให้แสดงฟอร์มพร้อมกับข้อมูลเดิม
+            schedule_filename = request.session.get('schedule_filename', None)
+            location_filename = request.session.get('location_filename', None)
+            extracted_kks_counts = request.session.get('extracted_kks_counts', None)
+            
             return render(request, 'maximo_app/upload.html', {
                 'form': form,
                 'error_message': error_message,
+                'schedule_filename': schedule_filename,
+                'location_filename': location_filename,
+                'extracted_kks_counts': extracted_kks_counts,
             })
     else:
         # เมื่อไม่มีการส่งข้อมูลผ่านแบบฟอร์ม (เช่น เมื่อผู้ใช้เข้าถึงหน้าเว็บครั้งแรกหรือรีเฟรชหน้าเว็บโดยไม่มีการส่งแบบฟอร์ม) 
@@ -1922,7 +1929,8 @@ def download_pm_plan_file(request):
 def download_template_file(request):
     # ดึงลิงก์ไฟล์จาก session
     template_file = request.session.get('download_link_template', None)
-    original_file_name = 'Template-MxLoader-JP-PMPlan_(Blank).xlsm'
+    location = request.session.get('location', 'BLANK')
+    original_file_name = f'Template-MxLoader-JP-PMPlan-({location}).xlsm'
 
     if template_file:
         # ตรวจสอบเส้นทางของไฟล์ให้เป็นเส้นทางสมบูรณ์
@@ -1945,7 +1953,7 @@ def download_template_file(request):
 
 def download_original_template(request):
     try:
-        file_path = os.path.join(settings.STATIC_ROOT, 'excel', '1Template-MxLoader-JP-PMPlan.xlsm')
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template-MxLoader-JP-PMPlan.xlsm')
         
         if not os.path.exists(file_path):
             messages.error(request, "ไม่พบไฟล์ที่ต้องการดาวน์โหลด")
@@ -1960,6 +1968,56 @@ def download_original_template(request):
         messages.error(request, f"เกิดข้อผิดพลาด: {str(e)}")
         return redirect('index')
 
+def download_schedule(request):
+    try:
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Draft Schedule.xlsx')
+        
+        if not os.path.exists(file_path):
+            messages.error(request, "ไม่พบไฟล์ที่ต้องการดาวน์โหลด")
+            return redirect('index')
+
+        # ส่งไฟล์กลับไปให้ผู้ใช้ดาวน์โหลด
+        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+        return response
+
+    except Exception as e:
+        messages.error(request, f"เกิดข้อผิดพลาด: {str(e)}")
+        return redirect('index')
+
+def download_example_schedule(request):
+    try:
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Draft Schedule (SNR-H).xlsx')
+        
+        if not os.path.exists(file_path):
+            messages.error(request, "ไม่พบไฟล์ที่ต้องการดาวน์โหลด")
+            return redirect('index')
+
+        # ส่งไฟล์กลับไปให้ผู้ใช้ดาวน์โหลด
+        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+        return response
+
+    except Exception as e:
+        messages.error(request, f"เกิดข้อผิดพลาด: {str(e)}")
+        return redirect('index')
+
+def download_example_template(request):
+    try:
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template-MxLoader-JP-PMPlan-(SNR-H03).xlsm')
+        
+        if not os.path.exists(file_path):
+            messages.error(request, "ไม่พบไฟล์ที่ต้องการดาวน์โหลด")
+            return redirect('index')
+
+        # ส่งไฟล์กลับไปให้ผู้ใช้ดาวน์โหลด
+        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+        return response
+
+    except Exception as e:
+        messages.error(request, f"เกิดข้อผิดพลาด: {str(e)}")
+        return redirect('index')
 # ---------------------------------
 # ฟังก์ชันการกรองข้อมูล (Filter Functions)
 # ---------------------------------

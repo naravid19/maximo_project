@@ -11281,3 +11281,826 @@ django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 91: 'e
 [06/Oct/2024 21:57:40] INFO [django.server:213] "GET / HTTP/1.1" 200 62954
 [06/Oct/2024 21:57:42] INFO [django.server:213] "GET / HTTP/1.1" 200 62954
 [06/Oct/2024 21:57:42] INFO [django.server:213] "GET / HTTP/1.1" 200 62954
+[06/Oct/2024 22:01:38] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=2 HTTP/1.1" 200 2462
+[06/Oct/2024 22:01:40] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 261
+[06/Oct/2024 22:01:41] INFO [django.server:213] "GET /filter_child_site/?child_site_id=28 HTTP/1.1" 200 109
+[06/Oct/2024 22:01:44] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:01:46] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[06/Oct/2024 22:01:48] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[06/Oct/2024 22:01:49] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:01:58] INFO [django.server:213] "POST / HTTP/1.1" 200 57721
+[06/Oct/2024 22:01:58] INFO [django.server:213] "GET /static/CACHE/css/output.54e7e1f53a33.css HTTP/1.1" 304 0
+[06/Oct/2024 22:03:32] INFO [django.server:213] "GET / HTTP/1.1" 200 62954
+[06/Oct/2024 22:03:32] INFO [django.server:213] "GET /static/CACHE/css/output.e5fe50c55241.css HTTP/1.1" 200 51584
+[06/Oct/2024 22:03:39] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 2006
+[06/Oct/2024 22:03:40] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 261
+[06/Oct/2024 22:03:42] INFO [django.server:213] "GET /filter_child_site/?child_site_id=28 HTTP/1.1" 200 109
+[06/Oct/2024 22:03:45] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:03:46] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[06/Oct/2024 22:03:47] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[06/Oct/2024 22:03:47] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:03:58] INFO [django.server:213] "POST / HTTP/1.1" 200 58731
+[06/Oct/2024 22:03:58] INFO [django.server:213] "GET /static/CACHE/css/output.e5fe50c55241.css HTTP/1.1" 304 0
+[06/Oct/2024 22:06:22] INFO [django.server:213] "GET / HTTP/1.1" 200 62954
+[06/Oct/2024 22:06:22] INFO [django.server:213] "GET /static/CACHE/css/output.e5fe50c55241.css HTTP/1.1" 304 0
+[06/Oct/2024 22:06:28] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 2006
+[06/Oct/2024 22:06:29] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 261
+[06/Oct/2024 22:06:30] INFO [django.server:213] "GET /filter_child_site/?child_site_id=28 HTTP/1.1" 200 109
+[06/Oct/2024 22:06:32] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:06:34] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[06/Oct/2024 22:06:35] INFO [django.server:213] "GET /filter_acttype/?acttype_id=2 HTTP/1.1" 200 49
+[06/Oct/2024 22:06:36] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:06:45] INFO [django.server:213] "POST / HTTP/1.1" 200 57855
+[06/Oct/2024 22:06:45] INFO [django.server:213] "GET /static/CACHE/css/output.e5fe50c55241.css HTTP/1.1" 304 0
+[06/Oct/2024 22:09:11] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endblock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1812, in index
+    return render(request, 'maximo_app/upload.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\defaulttags.py", line 976, in do_if
+    nodelist = parser.parse(("endif",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 563, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 1023: 'endblock', expected 'endif'. Did you forget to register or load this tag?
+[06/Oct/2024 22:09:11] ERROR [django.server:213] "GET / HTTP/1.1" 500 223546
+[06/Oct/2024 22:11:02] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endblock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1812, in index
+    return render(request, 'maximo_app/upload.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\defaulttags.py", line 976, in do_if
+    nodelist = parser.parse(("endif",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 563, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 1026: 'endblock', expected 'endif'. Did you forget to register or load this tag?
+[06/Oct/2024 22:11:02] ERROR [django.server:213] "GET / HTTP/1.1" 500 223715
+[06/Oct/2024 22:11:02] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 510, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'endblock'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1812, in index
+    return render(request, 'maximo_app/upload.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\backends\django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 295, in do_extends
+    nodelist = parser.parse()
+               ^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 234, in do_block
+    nodelist = parser.parse(("endblock",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 518, in parse
+    raise self.error(token, e)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 516, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\defaulttags.py", line 976, in do_if
+    nodelist = parser.parse(("endif",))
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 512, in parse
+    self.invalid_block_tag(token, command, parse_until)
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 563, in invalid_block_tag
+    raise self.error(
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 1026: 'endblock', expected 'endif'. Did you forget to register or load this tag?
+[06/Oct/2024 22:11:03] ERROR [django.server:213] "GET / HTTP/1.1" 500 223715
+[06/Oct/2024 22:11:22] INFO [django.server:213] "GET / HTTP/1.1" 200 62954
+[06/Oct/2024 22:11:22] INFO [django.server:213] "GET /static/CACHE/css/output.e5fe50c55241.css HTTP/1.1" 304 0
+[06/Oct/2024 22:12:51] INFO [django.server:213] "GET / HTTP/1.1" 200 62954
+[06/Oct/2024 22:12:51] INFO [django.server:213] "GET /static/CACHE/css/output.e5fe50c55241.css HTTP/1.1" 304 0
+[06/Oct/2024 22:12:54] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 2006
+[06/Oct/2024 22:12:55] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 261
+[06/Oct/2024 22:12:56] INFO [django.server:213] "GET /filter_child_site/?child_site_id=28 HTTP/1.1" 200 109
+[06/Oct/2024 22:12:58] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:12:59] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[06/Oct/2024 22:13:01] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[06/Oct/2024 22:13:03] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:13:17] INFO [django.server:213] "POST / HTTP/1.1" 200 58096
+[06/Oct/2024 22:13:25] INFO [django.server:213] "GET /download_comment_file/ HTTP/1.1" 200 276389
+[06/Oct/2024 22:14:12] INFO [django.server:213] "GET / HTTP/1.1" 200 62954
+[06/Oct/2024 22:14:12] INFO [django.server:213] "GET /static/CACHE/css/output.e5fe50c55241.css HTTP/1.1" 304 0
+[06/Oct/2024 22:20:02] INFO [django.server:213] "GET / HTTP/1.1" 200 63010
+[06/Oct/2024 22:20:02] INFO [django.server:213] "GET /static/CACHE/css/output.e5fe50c55241.css HTTP/1.1" 304 0
+[06/Oct/2024 22:20:06] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 2006
+[06/Oct/2024 22:20:07] INFO [django.server:213] "GET /filter_site/?site_id=2 HTTP/1.1" 200 261
+[06/Oct/2024 22:20:09] INFO [django.server:213] "GET /filter_child_site/?child_site_id=28 HTTP/1.1" 200 109
+[06/Oct/2024 22:20:11] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:20:12] INFO [django.server:213] "GET /filter_worktype/?work_type_id=5 HTTP/1.1" 200 39
+[06/Oct/2024 22:20:13] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[06/Oct/2024 22:20:15] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:20:24] INFO [django.server:213] "POST / HTTP/1.1" 200 58101
+[06/Oct/2024 22:21:23] INFO [django.server:213] "GET / HTTP/1.1" 200 63010
+[06/Oct/2024 22:21:28] INFO [django.server:213] "GET /filter_plant_type/?plant_type_id=1 HTTP/1.1" 200 2006
+[06/Oct/2024 22:21:28] INFO [django.server:213] "GET /filter_site/?site_id=5 HTTP/1.1" 200 249
+[06/Oct/2024 22:21:30] INFO [django.server:213] "GET /filter_child_site/?child_site_id=31 HTTP/1.1" 200 103
+[06/Oct/2024 22:21:31] INFO [django.server:213] "GET /filter_wostatus/?wostatus_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:21:32] INFO [django.server:213] "GET /filter_worktype/?work_type_id=3 HTTP/1.1" 200 57
+[06/Oct/2024 22:21:34] INFO [django.server:213] "GET /filter_acttype/?acttype_id=1 HTTP/1.1" 200 56
+[06/Oct/2024 22:21:35] INFO [django.server:213] "GET /filter_wbs/?wbs_id=1 HTTP/1.1" 200 42
+[06/Oct/2024 22:21:45] INFO [django.server:213] "POST / HTTP/1.1" 200 58093
+[06/Oct/2024 22:21:45] INFO [django.server:213] "GET /static/CACHE/css/output.e5fe50c55241.css HTTP/1.1" 304 0
+[07/Oct/2024 08:25:26] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 08:25:39] INFO [django.server:213] "GET / HTTP/1.1" 200 63010
+[07/Oct/2024 08:25:39] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 200 47432
+[07/Oct/2024 08:25:39] WARNING [django.request:248] Not Found: /favicon.ico
+[07/Oct/2024 08:25:39] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 6352
+[07/Oct/2024 08:27:03] INFO [django.server:213] "GET / HTTP/1.1" 200 63319
+[07/Oct/2024 08:27:03] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 08:27:20] INFO [django.server:213] "GET / HTTP/1.1" 200 63319
+[07/Oct/2024 08:27:20] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 08:27:22] INFO [django.server:213] "GET / HTTP/1.1" 200 63010
+[07/Oct/2024 08:28:39] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1812, in index
+    return render(request, 'maximo_app/upload.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'download_location_template' not found. 'download_location_template' is not a valid view function or pattern name.
+[07/Oct/2024 08:28:39] ERROR [django.server:213] "GET / HTTP/1.1" 500 197334
+[07/Oct/2024 08:28:55] INFO [django.server:213] "GET / HTTP/1.1" 200 63449
+[07/Oct/2024 08:28:55] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 08:29:10] INFO [django.server:213] "GET / HTTP/1.1" 200 63325
+[07/Oct/2024 08:30:14] INFO [django.server:213] "GET / HTTP/1.1" 200 63198
+[07/Oct/2024 08:30:14] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 08:32:59] INFO [django.server:213] "GET / HTTP/1.1" 200 63705
+[07/Oct/2024 08:32:59] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 08:33:09] INFO [django.server:213] "GET / HTTP/1.1" 200 63198
+[07/Oct/2024 08:34:54] INFO [django.server:213] "GET / HTTP/1.1" 200 63332
+[07/Oct/2024 08:34:54] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 08:35:07] INFO [django.server:213] "GET / HTTP/1.1" 200 63332
+[07/Oct/2024 08:35:08] INFO [django.server:213] "GET / HTTP/1.1" 200 63315
+[07/Oct/2024 08:35:55] INFO [django.server:213] "GET / HTTP/1.1" 200 63524
+[07/Oct/2024 08:35:55] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 08:38:06] INFO [django.server:213] "GET / HTTP/1.1" 200 63667
+[07/Oct/2024 08:38:06] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 08:38:47] INFO [django.server:213] "GET /download-original/ HTTP/1.1" 302 0
+[07/Oct/2024 08:38:47] INFO [django.server:213] "GET / HTTP/1.1" 200 65255
+[07/Oct/2024 08:38:57] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 08:38:58] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 08:39:00] INFO [django.server:213] "GET / HTTP/1.1" 200 64095
+[07/Oct/2024 08:39:02] INFO [django.server:213] "GET /download-original/ HTTP/1.1" 200 548461
+[07/Oct/2024 08:45:32] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 08:45:33] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 08:45:51] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 08:45:52] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 08:46:09] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 08:46:10] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 08:46:43] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\urls.py changed, reloading.
+[07/Oct/2024 08:46:43] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 08:49:07] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\urls.py changed, reloading.
+[07/Oct/2024 08:49:08] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 08:49:59] INFO [django.server:213] "GET / HTTP/1.1" 200 64083
+[07/Oct/2024 08:49:59] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 08:50:02] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 302 0
+[07/Oct/2024 08:50:02] INFO [django.server:213] "GET / HTTP/1.1" 200 65671
+[07/Oct/2024 08:50:19] INFO [django.server:213] "GET / HTTP/1.1" 200 64083
+[07/Oct/2024 08:50:21] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 200 14286
+[07/Oct/2024 08:51:38] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\urls.py changed, reloading.
+[07/Oct/2024 08:51:39] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 08:51:49] INFO [django.server:213] "GET / HTTP/1.1" 200 64089
+[07/Oct/2024 08:51:54] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 08:51:56] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 08:56:17] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1812, in index
+    return render(request, 'maximo_app/upload.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'filter-plant-type' not found. 'filter-plant-type' is not a valid view function or pattern name.
+[07/Oct/2024 08:56:17] ERROR [django.server:213] "GET / HTTP/1.1" 500 192975
+[07/Oct/2024 08:56:19] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1812, in index
+    return render(request, 'maximo_app/upload.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\defaulttags.py", line 480, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\urls\resolvers.py", line 831, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'filter-plant-type' not found. 'filter-plant-type' is not a valid view function or pattern name.
+[07/Oct/2024 08:56:19] ERROR [django.server:213] "GET / HTTP/1.1" 500 192975
+[07/Oct/2024 08:56:28] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\urls.py changed, reloading.
+[07/Oct/2024 08:56:29] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 08:58:04] INFO [django.server:213] "GET / HTTP/1.1" 200 64089
+[07/Oct/2024 08:58:04] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 08:58:08] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[07/Oct/2024 08:58:10] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 08:58:11] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[07/Oct/2024 08:58:12] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[07/Oct/2024 08:58:12] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 08:58:15] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[07/Oct/2024 08:59:47] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\urls.py changed, reloading.
+[07/Oct/2024 08:59:48] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 09:00:05] INFO [django.server:213] "GET / HTTP/1.1" 200 64089
+[07/Oct/2024 09:00:11] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[07/Oct/2024 09:00:12] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[07/Oct/2024 09:00:13] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[07/Oct/2024 09:00:15] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:00:16] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[07/Oct/2024 09:00:17] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[07/Oct/2024 09:00:18] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:00:28] INFO [django.server:213] "POST / HTTP/1.1" 200 58094
+[07/Oct/2024 09:00:35] INFO [django.server:213] "GET / HTTP/1.1" 200 64089
+[07/Oct/2024 09:02:48] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 09:02:49] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 09:03:41] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\urls.py changed, reloading.
+[07/Oct/2024 09:03:43] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 09:04:10] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 09:04:11] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 09:05:04] INFO [django.server:213] "GET / HTTP/1.1" 200 64514
+[07/Oct/2024 09:05:04] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 09:05:07] INFO [django.server:213] "GET /download-example-schedule/ HTTP/1.1" 200 207545
+[07/Oct/2024 09:06:08] INFO [django.server:213] "GET / HTTP/1.1" 200 64479
+[07/Oct/2024 09:06:32] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=3 HTTP/1.1" 200 2823
+[07/Oct/2024 09:10:06] INFO [django.server:213] "GET /filter-site/?site_id=14 HTTP/1.1" 200 1175
+[07/Oct/2024 09:10:12] INFO [django.server:213] "GET /filter-child-site/?child_site_id=40 HTTP/1.1" 200 169
+[07/Oct/2024 09:10:19] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:10:21] INFO [django.server:213] "GET /filter-work-type/?work_type_id=5 HTTP/1.1" 200 39
+[07/Oct/2024 09:10:23] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[07/Oct/2024 09:15:00] INFO [django.server:213] "GET /filter-act-type/?acttype_id=3 HTTP/1.1" 200 41
+[07/Oct/2024 09:15:02] INFO [django.server:213] "GET /filter-wbs/?wbs_id=4 HTTP/1.1" 200 33
+[07/Oct/2024 09:16:05] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[07/Oct/2024 09:18:30] INFO [django.server:213] "GET /filter-act-type/?acttype_id=3 HTTP/1.1" 200 41
+[07/Oct/2024 09:18:36] INFO [django.server:213] "POST / HTTP/1.1" 200 58070
+[07/Oct/2024 09:18:36] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 09:18:43] INFO [django.server:213] "POST / HTTP/1.1" 200 82149
+[07/Oct/2024 09:21:41] INFO [django.server:213] "GET / HTTP/1.1" 200 64429
+[07/Oct/2024 09:21:45] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[07/Oct/2024 09:21:46] INFO [django.server:213] "GET /filter-site/?site_id=5 HTTP/1.1" 200 249
+[07/Oct/2024 09:21:47] INFO [django.server:213] "GET /filter-child-site/?child_site_id=31 HTTP/1.1" 200 103
+[07/Oct/2024 09:21:49] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:21:50] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[07/Oct/2024 09:21:52] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[07/Oct/2024 09:21:54] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:22:03] INFO [django.server:213] "POST / HTTP/1.1" 200 58037
+[07/Oct/2024 09:22:06] INFO [django.server:213] "POST / HTTP/1.1" 200 82116
+[07/Oct/2024 09:25:27] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 09:25:28] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 09:30:30] INFO [django.server:213] "GET / HTTP/1.1" 200 64429
+[07/Oct/2024 09:30:31] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 09:30:35] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[07/Oct/2024 09:30:36] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[07/Oct/2024 09:30:37] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[07/Oct/2024 09:30:39] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:30:40] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[07/Oct/2024 09:30:42] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[07/Oct/2024 09:30:43] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:30:53] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 1812, in index
+    return render(request, 'maximo_app/upload.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\backends\django.py", line 107, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\defaulttags.py", line 327, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 1008, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\base.py", line 969, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\template\defaulttags.py", line 326, in render
+    if match:
+       ^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\generic.py", line 1577, in __nonzero__
+    raise ValueError(
+ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+[07/Oct/2024 09:30:53] ERROR [django.server:213] "POST / HTTP/1.1" 500 325901
+[07/Oct/2024 09:31:53] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[07/Oct/2024 09:31:54] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[07/Oct/2024 09:31:55] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[07/Oct/2024 09:31:56] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[07/Oct/2024 09:31:58] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[07/Oct/2024 09:32:00] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[07/Oct/2024 09:32:05] INFO [django.server:213] "POST / HTTP/1.1" 200 58040
+[07/Oct/2024 09:33:57] INFO [django.server:213] "GET / HTTP/1.1" 200 64425
+[07/Oct/2024 09:34:00] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[07/Oct/2024 09:34:01] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[07/Oct/2024 09:34:02] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[07/Oct/2024 09:34:04] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:34:05] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[07/Oct/2024 09:34:07] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[07/Oct/2024 09:34:08] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:34:21] INFO [django.server:213] "POST / HTTP/1.1" 200 58040
+[07/Oct/2024 09:34:31] INFO [django.server:213] "POST / HTTP/1.1" 200 82119
+[07/Oct/2024 09:40:29] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 09:40:31] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 09:42:11] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 09:42:12] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 09:42:26] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 09:42:27] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 09:42:43] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 09:42:44] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 09:42:47] INFO [django.server:213] "GET / HTTP/1.1" 200 64425
+[07/Oct/2024 09:42:47] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 09:42:51] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[07/Oct/2024 09:42:52] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[07/Oct/2024 09:42:54] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[07/Oct/2024 09:42:56] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:42:57] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[07/Oct/2024 09:42:59] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[07/Oct/2024 09:43:00] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:43:13] INFO [django.server:213] "POST / HTTP/1.1" 200 58040
+[07/Oct/2024 09:43:26] INFO [django.server:213] "POST / HTTP/1.1" 200 58040
+[07/Oct/2024 09:43:35] INFO [django.server:213] "POST / HTTP/1.1" 200 58040
+[07/Oct/2024 09:43:50] INFO [django.server:213] "POST / HTTP/1.1" 200 58040
+[07/Oct/2024 09:47:11] INFO [django.server:213] "GET / HTTP/1.1" 200 64425
+[07/Oct/2024 09:47:15] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[07/Oct/2024 09:47:15] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[07/Oct/2024 09:47:17] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[07/Oct/2024 09:47:19] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:47:21] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[07/Oct/2024 09:47:23] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[07/Oct/2024 09:47:24] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:47:35] INFO [django.server:213] "POST / HTTP/1.1" 200 58081
+[07/Oct/2024 09:48:02] INFO [django.server:213] "POST / HTTP/1.1" 200 57338
+[07/Oct/2024 09:48:12] INFO [django.server:213] "GET /download-template/ HTTP/1.1" 200 819639
+[07/Oct/2024 09:48:29] INFO [django.server:213] "GET / HTTP/1.1" 200 64425
+[07/Oct/2024 09:49:31] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=3 HTTP/1.1" 200 2823
+[07/Oct/2024 09:49:58] INFO [django.server:213] "GET /filter-site/?site_id=14 HTTP/1.1" 200 1175
+[07/Oct/2024 09:50:11] INFO [django.server:213] "GET /filter-child-site/?child_site_id=40 HTTP/1.1" 200 169
+[07/Oct/2024 09:50:21] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:50:23] INFO [django.server:213] "GET /filter-work-type/?work_type_id=5 HTTP/1.1" 200 39
+[07/Oct/2024 09:50:25] INFO [django.server:213] "GET /filter-act-type/?acttype_id=3 HTTP/1.1" 200 41
+[07/Oct/2024 09:50:27] INFO [django.server:213] "GET /filter-wbs/?wbs_id=4 HTTP/1.1" 200 33
+[07/Oct/2024 09:50:57] INFO [django.server:213] "POST / HTTP/1.1" 200 55535
+[07/Oct/2024 09:50:57] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 09:51:37] INFO [django.server:213] "GET / HTTP/1.1" 200 64425
+[07/Oct/2024 09:55:44] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=3 HTTP/1.1" 200 2823
+[07/Oct/2024 09:55:47] INFO [django.server:213] "GET /filter-site/?site_id=14 HTTP/1.1" 200 1175
+[07/Oct/2024 09:55:48] INFO [django.server:213] "GET /filter-child-site/?child_site_id=40 HTTP/1.1" 200 169
+[07/Oct/2024 09:55:54] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 09:55:55] INFO [django.server:213] "GET /filter-work-type/?work_type_id=5 HTTP/1.1" 200 39
+[07/Oct/2024 09:55:57] INFO [django.server:213] "GET /filter-act-type/?acttype_id=3 HTTP/1.1" 200 41
+[07/Oct/2024 09:55:59] INFO [django.server:213] "GET /filter-wbs/?wbs_id=4 HTTP/1.1" 200 33
+[07/Oct/2024 09:56:19] INFO [django.server:213] "POST / HTTP/1.1" 200 58848
+[07/Oct/2024 09:57:20] INFO [django.server:213] "POST / HTTP/1.1" 200 57524
+[07/Oct/2024 09:57:40] INFO [django.server:213] "GET /download-template/ HTTP/1.1" 200 1297708
+[07/Oct/2024 09:58:05] INFO [django.server:213] "GET / HTTP/1.1" 200 64425
+[07/Oct/2024 10:00:53] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 10:00:55] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 10:01:06] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 10:01:07] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 10:01:38] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\urls.py changed, reloading.
+[07/Oct/2024 10:01:39] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 10:02:08] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\urls.py changed, reloading.
+[07/Oct/2024 10:02:09] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 10:03:03] INFO [django.server:213] "GET /download-original/ HTTP/1.1" 200 548461
+[07/Oct/2024 10:04:14] INFO [django.server:213] "GET / HTTP/1.1" 200 64865
+[07/Oct/2024 10:04:14] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 10:04:19] INFO [django.server:213] "GET /download-example-template/ HTTP/1.1" 200 1297708
+[07/Oct/2024 10:09:52] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 10:09:53] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 10:09:57] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 10:09:58] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 10:10:59] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 10:11:00] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 10:11:10] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[07/Oct/2024 10:11:11] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[07/Oct/2024 10:11:12] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[07/Oct/2024 10:11:14] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 10:11:15] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[07/Oct/2024 10:11:16] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[07/Oct/2024 10:11:18] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[07/Oct/2024 10:11:34] INFO [django.server:213] "POST / HTTP/1.1" 200 58872
+[07/Oct/2024 10:12:07] INFO [django.server:213] "POST / HTTP/1.1" 200 57548
+[07/Oct/2024 10:12:09] INFO [django.server:213] "GET /download-template/ HTTP/1.1" 200 1298191
+[07/Oct/2024 10:14:42] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 10:14:43] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 10:14:47] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 10:14:48] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 10:14:50] INFO [django.server:213] "GET / HTTP/1.1" 200 64865
+[07/Oct/2024 10:14:50] INFO [django.server:213] "GET /static/CACHE/css/output.af0067ac8812.css HTTP/1.1" 304 0
+[07/Oct/2024 10:15:02] INFO [django.server:213] "GET /download-example-template/ HTTP/1.1" 302 0
+[07/Oct/2024 10:15:02] INFO [django.server:213] "GET / HTTP/1.1" 200 66453
+[07/Oct/2024 10:15:09] INFO [django.server:213] "GET /download-example-schedule/ HTTP/1.1" 200 207630
+[07/Oct/2024 10:15:11] INFO [django.server:213] "GET /download-example-template/ HTTP/1.1" 302 0
+[07/Oct/2024 10:15:11] INFO [django.server:213] "GET / HTTP/1.1" 200 66453
+[07/Oct/2024 10:15:14] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[07/Oct/2024 10:15:14] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[07/Oct/2024 10:15:16] INFO [django.server:213] "GET / HTTP/1.1" 200 64865
+[07/Oct/2024 10:15:24] INFO [django.server:213] "GET / HTTP/1.1" 200 64865
+[07/Oct/2024 10:15:24] INFO [django.server:213] "GET /download-example-template/ HTTP/1.1" 200 1297708
+[07/Oct/2024 10:15:41] INFO [django.server:213] "GET /download-example-schedule/ HTTP/1.1" 200 207630
