@@ -166,6 +166,12 @@ class UploadFileForm(forms.Form):
         schedule_file = cleaned_data.get('schedule_file')
         location_file = cleaned_data.get('location_file')
         
+        required_file_fields = ['schedule_file', 'location_file']
+        
+        for field in required_file_fields:
+            if not cleaned_data.get(field):
+                self.add_error(field, f'{field.upper()} ไม่มีไฟล์')
+            
         allowed_mime_types = [
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'application/vnd.ms-excel.sheet.macroEnabled.12'
@@ -207,10 +213,5 @@ class UploadFileForm(forms.Form):
         for field, field_label in required_fields.items():
             if not cleaned_data.get(field):
                 self.add_error(field, f'{field_label} ว่าง')
-        
-        required_file_fields = ['schedule_file', 'location_file']
-        for field in required_file_fields:
-            if not cleaned_data.get(field):
-                self.add_error(field, f'{field.upper()} ไม่มีไฟล์')
         
         return cleaned_data
