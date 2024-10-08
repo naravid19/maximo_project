@@ -3,6 +3,7 @@ from datetime import datetime
 from django import forms
 from django.core.exceptions import ValidationError
 from maximo_app.models import Site, ChildSite, PlantType, Unit, WorkType, ActType, WBSCode, Status
+import os
 
 class UploadFileForm(forms.Form):
     schedule_file = forms.FileField(
@@ -16,25 +17,33 @@ class UploadFileForm(forms.Form):
     
     # Dropdown สำหรับเลือกปี
     current_year = datetime.now().year
-    YEAR_RANGE_CHOICES = [('', 'เลือก')] + [(str(year), str(year)) for year in range(current_year, current_year + 20)]
+    YEAR_RANGE_CHOICES = [('', 'เลือก')] + [(str(year), str(year)) for year in range(current_year, current_year + 10)]
     
     year = forms.ChoiceField(
-        label='YEAR', 
+        label='PLANT OUTAGE YEAR', 
         choices=YEAR_RANGE_CHOICES, 
         required=True
     )
     
     FREQUENCY_CHOICES = [
         ('', 'เลือก'),
-        ('1', '1 ปี'),
-        ('2', '2 ปี'),
-        ('3', '3 ปี'),
-        ('4', '4 ปี'),
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+        ('5', '5'),
+        ('6', '6'),
     ]
     
     frequency = forms.ChoiceField(
         label='FREQUENCY',
         choices=FREQUENCY_CHOICES,
+        required=True,
+    )
+    
+    frequnit = forms.ChoiceField(
+        choices=[('YEARS', 'Years'), ('MONTHS', 'Months')],
+        label="FREQUENCY UNIT",
         required=True,
     )
     
@@ -75,7 +84,7 @@ class UploadFileForm(forms.Form):
     
     work_type = forms.ModelChoiceField(
         queryset=WorkType.objects.none(), 
-        label='WORKTYPE', 
+        label='WORK TYPE', 
         required=True, 
         empty_label="เลือก"
     )
@@ -157,30 +166,47 @@ class UploadFileForm(forms.Form):
         schedule_file = cleaned_data.get('schedule_file')
         location_file = cleaned_data.get('location_file')
         
+        allowed_mime_types = [
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'application/vnd.ms-excel.sheet.macroEnabled.12'
+        ]
+        
+        allowed_extensions = ['.xlsx', '.xlsm']
+        
         # ตรวจสอบประเภทของ schedule_file
         if schedule_file:
-                content_type = schedule_file.content_type
-                if content_type not in [
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'application/vnd.ms-excel.sheet.macroEnabled.12'
-                ]:
-                    self.add_error('schedule_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
+            content_type = schedule_file.content_type
+            ext = os.path.splitext(schedule_file.name)[1].lower()  # ตรวจสอบนามสกุลไฟล์
+            if content_type not in allowed_mime_types or ext not in allowed_extensions:
+                self.add_error('schedule_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
                 # ฟังก์ชัน add_error จะเพิ่มข้อความข้อผิดพลาดให้กับฟิลด์ที่ไม่ผ่านการตรวจสอบ ข้อผิดพลาดนี้จะถูกแสดงในฟอร์มเมื่อผู้ใช้ทำการส่งฟอร์ม
         
         # ตรวจสอบประเภทของ location_file         
         if location_file:
-                content_type = location_file.content_type
-                if content_type not in [
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'application/vnd.ms-excel.sheet.macroEnabled.12'
-                ]:
-                    self.add_error('location_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
-                    
+            content_type = location_file.content_type
+            ext = os.path.splitext(location_file.name)[1].lower()
+            if content_type not in allowed_mime_types or ext not in allowed_extensions:
+                self.add_error('location_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
+        
         # ตรวจสอบว่าฟิลด์ที่จำเป็นถูกเลือกหรือไม่
-        required_fields = ['year', 'frequency', 'site', 'plant_type', 'unit', 'work_type', 'acttype', 'wbs', 'wostatus', 'child_site']
-        for field in required_fields:
+        required_fields = {
+            'year': 'PLANT OUTAGE YEAR',
+            'frequency': 'FREQUENCY',
+            'frequnit': 'FREQUENCY UNIT',
+            'plant_type': 'PLANT TYPE',
+            'site': 'SITE',
+            'child_site': 'PLANT NAME',
+            'unit': 'UNIT',
+            'wostatus': 'STATUS',
+            'work_type': 'WORK TYPE',
+            'acttype': 'ACTTYPE',
+            'wbs': 'SUBWBS GROUP',
+            
+        }
+
+        for field, field_label in required_fields.items():
             if not cleaned_data.get(field):
-                self.add_error(field, f'{field.upper()} ว่าง')
+                self.add_error(field, f'{field_label} ว่าง')
         
         required_file_fields = ['schedule_file', 'location_file']
         for field in required_file_fields:

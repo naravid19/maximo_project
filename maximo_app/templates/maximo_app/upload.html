@@ -1,5 +1,6 @@
 {% extends 'maximo_app/base.html' %}
 {% comment %} path: maximo_project\maximo_app\templates\upload.html {% endcomment %}
+{% load static %}
 {% load widget_tweaks %}
 {% block title %}Upload Files{% endblock %}
 {% block style %}
@@ -91,7 +92,7 @@
         {% endfor %}
     {% endif %}
 
-    {% if not schedule_filename and not location_filename %}
+    {% if not schedule_filename and not location_filename and not 'download_link_comment' in request.session %}
     
         <div class="container relative px-6 pt-[1.375rem] pb-4 max-w-screen-sm mx-auto my-4 bg-white rounded-md shadow-sm">
             <div class="absolute top-0 left-0 w-full h-2 bg-[rgb(63,81,181)] rounded-t-md"></div>
@@ -206,6 +207,45 @@
                         <div>
                             <span class="font-medium">Error:</span> 
                             {% for error in form.frequency.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="sm:col-span-3">
+                    <div class="flex">
+                        <!-- Radio button สำหรับ MONTHS -->
+                        <div class="flex items-center mr-4">
+                            <input id="id_frequnit_0" name="frequnit" type="radio" value="MONTHS" 
+                                class="w-4 h-4 text-[rgb(63,81,181)] bg-gray-100 border-gray-300 
+                                focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 
+                                focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                aria-label="Select frequency in months">
+                            <label for="id_frequnit_0" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-200">MONTHS</label>
+                        </div>
+                
+                        <!-- Radio button สำหรับ YEARS -->
+                        <div class="flex items-center mr-4">
+                            <input id="id_frequnit_1" name="frequnit" type="radio" value="YEARS" 
+                                class="w-4 h-4 text-[rgb(63,81,181)] bg-gray-100 border-gray-300 
+                                focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 
+                                focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                aria-label="Select frequency in years">
+                            <label for="id_frequnit_1" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-200">YEARS</label>
+                        </div>
+                    </div>
+                
+                    {% if form.frequnit.errors %}
+                    <div class="flex items-center p-4 mt-2 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert" aria-live="assertive">
+                        <svg class="flex-shrink-0 inline w-4 h-4 mr-3" role="img" aria-label="Error Icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                        </svg>
+                        <span class="sr-only">Error</span>
+                        <div>
+                            <span class="font-medium">Error:</span>
+                            {% for error in form.frequnit.errors %}
                                 {{ error }}
                             {% endfor %}
                         </div>
@@ -505,132 +545,118 @@
             <!-- Content Box สำหรับแสดงไฟล์ที่อัปโหลด -->
             <div class="flex flex-col gap-3 px-6 pt-2 pb-3 mt-3 border-t border-gray-200">
                 {% if request.session.schedule_filename %}
+                
                     <div class="flex items-center justify-between">
                         <p class="text-sm font-normal text-gray-700">
-                            <strong>Schedule File:</strong> {{ request.session.schedule_filename }}
+                            <strong class="text-base">Schedule File:</strong> {{ request.session.schedule_filename }}
                         </p>
-                        <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+                        <a href="{% url 'download_user_schedule' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
                             DOWNLOAD
                         </a>
                     </div>
+
                 {% endif %}
                 {% if request.session.location_filename %}
+
                     <div class="flex items-center justify-between">
                         <p class="text-sm font-normal text-gray-700">
-                            <strong>Location File:</strong> {{ request.session.location_filename }}
+                            <strong class="text-base">Location File:</strong> {{ request.session.location_filename }}
                         </p>
-                        <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+                        <a href="{% url 'download_user_location' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
                             DOWNLOAD
                         </a>
                     </div>
+
                 {% endif %}
+                
     {% endif %}
+                
                 {% if 'download_link_comment' in request.session %}
-                <div class="flex items-center justify-between">
-                    <p class="text-sm font-normal text-gray-700">
-                        <strong>Comment File:</strong> Comment.xlsx
-                    </p>
-                    <a href="{% url 'download_comment_file' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
-                        DOWNLOAD
-                    </a>
-                </div>
+                
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm font-normal text-gray-700">
+                            <strong class="text-base">Comment File:</strong> Comment.xlsx
+                        </p>
+                        <a href="{% url 'download_comment_file' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
+                            DOWNLOAD
+                        </a>
+                    </div>
+
                 {% endif %}
+                
             </div>
         </div>
     
 
     {% if 'download_link_comment' in request.session %}
-        <div class="container p-6 bg-white rounded-lg shadow-md form-container">    
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                DATA PREVIEW BEFORE CONVERT
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Value
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- EGPROJECTID -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                EGPROJECTID
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.egprojectid }}
-                            </td>
-                        </tr>
-                        <!-- EGWBS (MMA WORK LIST) -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                EGWBS (MMA WORK LIST)
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.egwbs }}
-                            </td>
-                        </tr>
-                        <!-- SITEID -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                SITEID
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.siteid }}
-                            </td>
-                        </tr>
-                        <!-- LOCATION(UNIT) -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                LOCATION (UNIT)
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.location }}
-                            </td>
-                        </tr>
-                        <!-- WORKTYPE -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                WORKTYPE
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.worktype }}
-                            </td>
-                        </tr>
-                        <!-- EGMNTACTTYPE -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                EGMNTACTTYPE
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.egmntacttype }}
-                            </td>
-                        </tr>
-                        <!-- WOSTATUS -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                WOSTATUS
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.wostatus }}
-                            </td>
-                        </tr>
-                        <!-- WBS Description -->
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                WBS Description
-                            </th>
-                            <td class="px-6 py-4">
-                                {{ request.session.wbs_desc }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-        </div>
+    
+    <div class="container relative max-w-screen-sm mx-auto my-4 overflow-x-auto bg-white rounded-lg shadow-sm sm:rounded-xl dark:bg-gray-800">    
+        <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+            <thead class="bg-gray-100 dark:bg-gray-700">
+                <tr>
+                    <th class="px-6 py-3 font-semibold text-gray-500 uppercase dark:text-gray-400">Data Preview Before Convert</th>
+                    <th class="px-6 py-3 font-semibold text-gray-500 uppercase dark:text-gray-400">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- EGPROJECTID -->
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        EGPROJECTID
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.egprojectid }}
+                    </td>
+                </tr>
+                <!-- EGWBS (MMA WORK LIST) -->
+                <tr class="border-b bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        EGWBS (MMA WORK LIST)
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.egwbs }}
+                    </td>
+                </tr>
+                <!-- SITEID -->
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        SITEID
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.siteid }}
+                    </td>
+                </tr>
+                <!-- LOCATION(UNIT) -->
+                <tr class="border-b bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        LOCATION (UNIT)
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.location }}
+                    </td>
+                </tr>
+                <!-- WORKTYPE -->
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        WORKTYPE
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.worktype }}
+                    </td>
+                </tr>
+                <!-- EGMNTACTTYPE -->
+                <tr class="border-b bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        EGMNTACTTYPE
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.egmntacttype }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
     {% endif %}
 
     {% if error_message %}
@@ -643,45 +669,52 @@
 
     {% if not error_message %}
 
-    {% if extracted_kks_counts is not None and extracted_kks_counts|length > 0 %}
+        {% if extracted_kks_counts is not None and extracted_kks_counts|length > 0 %}
 
-            <div>
+            <div class="container relative px-6 pt-[1.375rem] pb-4 max-w-screen-sm mx-auto my-4 bg-white rounded-md shadow-sm">
                 <form id="mappingForm" method="post">
                     {% csrf_token %}
-                    <h1>Provide KKS Mappings</h1>
+                    <h1 class="mb-6 text-2xl font-semibold text-gray-800">Provide KKS Mappings</h1>
                     <ul>
                         {% for kks_value, count in extracted_kks_counts.items %}
                             <input type="hidden" name="extracted_kks_counts[{{ kks_value }}]" value="{{ count }}">
+                            
                             {% if user_input_mapping %}
+                            
                                 {% for key, value in user_input_mapping.items %}
-                                    <li>{{ key }} คือ {{ value }}</li>
+                                    <div class="relative mb-4">
+                                        <input type="text" id="disabled_{{ forloop.counter }}" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value="{{ value }}" disabled />
+                                        <label for="disabled_{{ forloop.counter }}" class="absolute text-sm text-gray-400 dark:text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                                            {{ key }}
+                                        </label>
+                                    </div>
                                 {% endfor %}
+                                
                             {% else %}
-                            <div>
-                                <label for="{{ kks_value }}">{{ kks_value }} ({{ count }} times):</label>
-                                <input type="text" name="{{ kks_value }}" id="{{ kks_value }}" required>
+                            
+                            <div class="relative mb-4">
+                                <input type="text" name="{{ kks_value }}" id="{{ kks_value }}" required 
+                                        class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
+                                        placeholder=" ">
+                                <label for="{{ kks_value }}" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
+                                    {{ kks_value }} ({{ count }} times)
+                                </label>
                             </div>
                             {% endif %}
                         {% endfor %}
                     </ul>
-                    
-                    <div id="loadingSpinner" class="fixed inset-0 flex items-center justify-center hidden bg-gray-50 dark:bg-gray-800">
-                        <div class="flex items-center justify-center w-56 h-56 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                            <div class="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
-                                loading...
-                            </div>
-                        </div>
-                    </div>
+            
                     {% if not user_input_mapping %}
-                    <!-- ปุ่ม Submit -->
-                    <button id="mappingBtn" name="kks_mapping_submit" value="submit" type="submit" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+
+                    <button id="mappingBtn" name="kks_mapping_submit" value="submit" type="submit" 
+                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
                         <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 inline-flex items-center">
                             Submit Mappings
                         </span>
                     </button>
-
+                    
                     {% endif %}
-                
+
                 </form>
             </div>
 
@@ -689,7 +722,69 @@
 
     {% endif %}
     
-    <hr>
+    {% if 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}
+        <div class="container relative max-w-screen-sm mx-auto my-4 bg-[#f0ebf8] rounded-md shadow-sm mb-16">
+            <details open class="mt-4 bg-white border border-gray-200 rounded">
+                <summary class="flex items-center justify-between p-4 font-bold text-white bg-[rgb(63,81,181)] rounded-t">
+                    <span class="text-lg">Download Files</span>
+                </summary>
+                <div class="p-4 mt-3">
+                    <ul class="space-y-4">
+                        {% if 'download_link_job_plan_task' in request.session %}
+                        <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
+                            <div class="flex items-center">
+                                <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2" />
+                                <a href="{% url 'download_job_plan_task_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
+                                    Download Job Plan Task File
+                                </a>
+                            </div>
+                        </li>
+                        {% endif %}
+        
+                        {% if 'download_link_job_plan_labor' in request.session %}
+                        <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
+                            <div class="flex items-center">
+                                <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2" />
+                                <a href="{% url 'download_job_plan_labor_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
+                                    Download Job Plan Labor File
+                                </a>
+                            </div>
+                        </li>
+                        {% endif %}
+        
+                        {% if 'download_link_pm_plan' in request.session %}
+                        <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
+                            <div class="flex items-center">
+                                <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2" />
+                                <a href="{% url 'download_pm_plan_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
+                                    Download PM Plan File
+                                </a>
+                            </div>
+                        </li>
+                        {% endif %}
+        
+                        {% if 'download_link_template' in request.session %}
+                        <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
+                            <div class="flex items-center">
+                                <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2" />
+                                <a href="{% url 'download_template_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
+                                    Download Template-MxLoader-JP-PMPlan File
+                                </a>
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </details>
+        </div>
+        
+    {% endif %}
+    
+
+    
+    
+    
+    {% comment %} <hr>
     {% if 'download_link_job_plan_task' in request.session %}
     <a href="{% url 'download_job_plan_task_file' %}">
         <button>Download Job Plan Task File</button>
@@ -712,7 +807,7 @@
     <a href="{% url 'download_template_file' %}">
         <button>Download Template-MxLoader-JP-PMPlan File</button>
     </a>
-    {% endif %}
+    {% endif %} {% endcomment %}
 
 {% block script %}
 <!-- ตกเเต่ง -->
@@ -733,6 +828,7 @@
             const wbsField = document.getElementById('id_wbs'); // Dropdown WBS
             const scheduleFileField = document.getElementById('id_schedule_file');  // Input File Schedule
             const locationFileField = document.getElementById('id_location_file');  // Input File Location
+            const frequnitRadioButtons = document.getElementsByName('frequnit');
             
             const yearFieldContainer = yearField.closest('.sm\\:col-span-3'); // ค้นหาส่วนที่จะแสดง alert ของ Year
             const frequencyFieldContainer = frequencyField.closest('.sm\\:col-span-3');
@@ -746,13 +842,15 @@
             const wbsFieldContainer = wbsField.closest('.sm\\:col-span-3');
             const scheduleFileFieldContainer = scheduleFileField.closest('.sm\\:col-span-3');
             const locationFileFieldContainer = locationFileField.closest('.sm\\:col-span-3');
+            const frequnitFieldContainer = frequnitRadioButtons[0].closest('.sm\\:col-span-3');
             
             // ลบ Alert เก่าถ้ามีอยู่ในแต่ละ Field
             const existingFields = [
                 yearFieldContainer, frequencyFieldContainer, plantTypeFieldContainer,
                 siteFieldContainer, childSiteFieldContainer, unitFieldContainer,
                 wostatusFieldContainer, workTypeFieldContainer, acttypeFieldContainer,
-                wbsFieldContainer, scheduleFileFieldContainer, locationFileFieldContainer
+                wbsFieldContainer, scheduleFileFieldContainer, locationFileFieldContainer,
+                frequnitFieldContainer
             ];
 
             existingFields.forEach(fieldContainer => {
@@ -797,6 +895,29 @@
                     container.appendChild(alertBox);
                     break; // หยุดการตรวจสอบเมื่อเจอข้อผิดพลาดอันแรก
                 }
+            }
+
+            let frequnitSelected = false;
+            for (let i = 0; i < frequnitRadioButtons.length; i++) {
+                if (frequnitRadioButtons[i].checked) {
+                    frequnitSelected = true;
+                    break;
+                }
+            }
+            
+            if (!frequnitSelected) {
+                event.preventDefault();
+                hasError = true;
+        
+                const alertBox = document.createElement('div');
+                alertBox.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
+                alertBox.setAttribute('role', 'alert');
+        
+                const messageText = document.createElement('span');
+                messageText.textContent = 'กรุณาเลือก Frequnit';
+                alertBox.appendChild(messageText);
+        
+                frequnitFieldContainer.appendChild(alertBox);
             }
             
             // ถ้าไม่มี error ส่งฟอร์ม

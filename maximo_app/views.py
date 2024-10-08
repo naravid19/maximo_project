@@ -78,6 +78,7 @@ def index(request):
             child_site = form.cleaned_data.get('child_site')
             year = form.cleaned_data.get('year')
             frequency = form.cleaned_data.get('frequency')
+            frequnit = form.cleaned_data.get('frequnit')
             site = form.cleaned_data.get('site')
             plant_type = form.cleaned_data.get('plant_type')
             unit = form.cleaned_data.get('unit')
@@ -90,6 +91,8 @@ def index(request):
                 logger.info(f"Year: {year}")
             if frequency:
                 logger.info(f"Frequency: {frequency}")
+            if frequnit:
+                logger.info(f"Frequnit: {frequnit}")
             if site:
                 logger.info(f"Site: {site.site_id}")
             if plant_type:
@@ -140,7 +143,6 @@ def index(request):
             pluscrevum = 0
             status = 'ACTIVE'
             pluscjprevnum = 0
-            frequnit = 'YEARS'
             route = ''
             leadtime = 7
         
@@ -166,7 +168,7 @@ def index(request):
                     two_digits_year = buddhist_year % 100
                 else:
                     raise ValueError("ปี (year) ขาดหายไป")
-
+                
                 if acttype and wbs and two_digits_year:
                     # สร้าง egprojectid และ egwbs
                     location_sanitized = location.replace('-', '')
@@ -189,8 +191,11 @@ def index(request):
             request.session['schedule_filename'] = schedule_file.name
             request.session['location_filename'] = location_file.name
             request.session['temp_dir'] = temp_dir
+            request.session['schedule_path'] = schedule_path
+            request.session['location_path'] = location_path
             
             request.session['frequency'] = frequency
+            request.session['frequnit'] = frequnit
             request.session['egmntacttype'] = egmntacttype
             request.session['egprojectid'] = egprojectid
             request.session['egwbs'] = egwbs
@@ -877,19 +882,23 @@ def index(request):
             print('1 form comment_path:',comment_path)
             print('1 form extracted_kks_counts:',extracted_kks_counts)
             print('1 form user_input_mapping:',user_input_mapping)
+            print('1 form frequnit:',frequnit)
 ############
 ############                        
         elif 'kks_mapping_submit' in request.POST:
             # Get variables
             schedule_filename = request.session.get('schedule_filename', None)
             location_filename = request.session.get('location_filename', None)
+            schedule_path = request.session.get('schedule_path', None)
+            location_path = request.session.get('location_path', None)
             comment_path = request.session.get('download_link_comment', None)
             first_plant = request.session.get('first_plant')
             child_site = request.session.get('child_site')
             temp_dir = request.session.get('temp_dir')
             most_common_plant_unit = request.session.get('most_common_plant_unit')
             # Get Dropdown
-            frequency = request.session.get('frequency')
+            frequency = request.session.get('frequency', '4')
+            frequnit = request.session.get('frequnit', 'YEARS')
             egmntacttype = request.session.get('egmntacttype')
             egprojectid = request.session.get('egprojectid')
             egwbs = request.session.get('egwbs')
@@ -948,13 +957,13 @@ def index(request):
             print('2 elif comment_path:',  comment_path)
             print('2 elif extracted_kks_counts:',extracted_kks_counts)
             print('2 elif user_input_mapping:',user_input_mapping)
+            print('2 elif frequnit:', frequnit)
 ############
 ############  
             orgid = 'EGAT'
             pluscrevum = 0
             status = 'ACTIVE'
             pluscjprevnum = 0
-            frequnit = 'YEARS'
             route = ''
             leadtime = 7
 ############
@@ -1761,6 +1770,7 @@ def index(request):
             print('location_filename:',location_filename)
             print('extracted_kks_counts:',extracted_kks_counts)
             print('user_input_mapping:',user_input_mapping) 
+            print('frequnit:', frequnit)
             print('download_link_comment:', request.session['download_link_comment'])
             print('download_link_job_plan_task:',  request.session['download_link_job_plan_task'])
             print('download_link_job_plan_labor:',  request.session['download_link_job_plan_labor'])
@@ -1787,6 +1797,8 @@ def index(request):
         # #! Clear session data after download
         # request.session.pop('schedule_filename', None)
         # request.session.pop('location_filename', None)
+        # request.session.pop('schedule_path', None)
+        # request.session.pop('location_path', None)
         # request.session.pop('extracted_kks_counts', None)
         # request.session.pop('first_plant', None)
         # request.session.pop('most_common_plant_unit', None)
@@ -1803,6 +1815,7 @@ def index(request):
         
         # #! Dropdown
         # request.session.pop('frequency', None)
+        # request.session.pop('frequnit', None)
         # request.session.pop('egmntacttype', None)
         # request.session.pop('egprojectid', None)
         # request.session.pop('egwbs', None)
@@ -1836,24 +1849,27 @@ def download_comment_file(request):
 
     # ตรวจสอบว่ามีการตั้งค่า comment_file หรือไม่
     if comment_file:
-        # ตรวจสอบว่ามีการอ้างอิงไฟล์จริงใน path ที่ถูกต้องหรือไม่
-        full_comment_file_path = os.path.abspath(comment_file)
+        # ตรวจสอบว่า path เป็น absolute และไฟล์มีอยู่จริง
+        full_comment_file_path = os.path.abspath(comment_file) if not os.path.isabs(comment_file) else comment_file
         if os.path.exists(full_comment_file_path):
             try:
                 # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
                 with open(full_comment_file_path, 'rb') as fh:
                     response = HttpResponse(fh.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                    response['Content-Disposition'] = f'attachment; filename={original_file_name}'
+                    response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
                     return response
-            except IOError:
-                # แสดงข้อผิดพลาดเมื่อไม่สามารถอ่านไฟล์ได้
-                raise Http404("Error reading file")
+            except Exception as e:
+                # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
+                messages.error(request, f"เกิดข้อผิดพลาดในการเปิดไฟล์ Comment: {str(e)}")
+                return render(request, 'maximo_app/upload.html', {})
         else:
             # แสดงข้อผิดพลาดเมื่อไม่พบไฟล์
-            raise Http404("File not found")
+            messages.error(request, "ไม่พบไฟล์ Comment ที่ต้องการดาวน์โหลด")
+            return render(request, 'maximo_app/upload.html', {})
     else:
         # แสดงข้อผิดพลาดเมื่อไม่ได้รับ path ของไฟล์จาก session
-        raise Http404("No file specified for download")
+        messages.error(request, "ไม่มีไฟล์ Comment สำหรับการดาวน์โหลด")
+        return render(request, 'maximo_app/upload.html', {})
 
 def download_job_plan_task_file(request):
     # ดึงลิงก์ไฟล์จาก session
@@ -1862,21 +1878,27 @@ def download_job_plan_task_file(request):
 
     if jp_task_file:
         # ตรวจสอบเส้นทางของไฟล์
-        full_jp_file_path = os.path.abspath(jp_task_file)
+        full_jp_file_path = os.path.abspath(jp_task_file) if not os.path.isabs(jp_task_file) else jp_task_file
         
         # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if os.path.exists(full_jp_file_path):
             try:
                 with open(full_jp_file_path, 'rb') as fh:
                     response = HttpResponse(fh.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                    response['Content-Disposition'] = f'attachment; filename={original_file_name}'
+                    response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
                     return response
-            except IOError:
-                raise Http404("Error reading file")
+            except Exception as e:
+                # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
+                messages.error(request, f"เกิดข้อผิดพลาดในการเปิดไฟล์ Job Plan Task: {str(e)}")
+                return render(request, 'maximo_app/upload.html', {})
         else:
-            raise Http404("File not found")
+            # กรณีไม่พบไฟล์
+            messages.error(request, "ไม่พบไฟล์ Job Plan Task ที่ต้องการดาวน์โหลด")
+            return render(request, 'maximo_app/upload.html', {})
     else:
-        raise Http404("No file specified for download")
+        # กรณีไม่มีการระบุไฟล์ใน session
+        messages.error(request, "ไม่มีการระบุไฟล์ Job Plan Task ให้ดาวน์โหลด")
+        return render(request, 'maximo_app/upload.html', {})
 
 def download_job_plan_labor_file(request):
     # ดึงลิงก์ไฟล์จาก session
@@ -1884,8 +1906,8 @@ def download_job_plan_labor_file(request):
     original_file_name = 'Job_Plan_Labor.xlsx'
 
     if jp_labor_file:
-        # ตรวจสอบเส้นทางไฟล์
-        full_jp_labor_file_path = os.path.abspath(jp_labor_file)
+        # ตรวจสอบเส้นทางไฟล์และแปลงเป็น absolute ถ้าไม่ใช่
+        full_jp_labor_file_path = os.path.abspath(jp_labor_file) if not os.path.isabs(jp_labor_file) else jp_labor_file
         
         # ตรวจสอบว่าไฟล์มีอยู่จริง
         if os.path.exists(full_jp_labor_file_path):
@@ -1893,14 +1915,20 @@ def download_job_plan_labor_file(request):
                 # ใช้ with block เพื่อจัดการไฟล์อย่างปลอดภัย
                 with open(full_jp_labor_file_path, 'rb') as fh:
                     response = HttpResponse(fh.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                    response['Content-Disposition'] = f'attachment; filename={original_file_name}'
+                    response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
                     return response
-            except IOError:
-                raise Http404("Error reading file")
+            except Exception as e:
+                # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
+                messages.error(request, f"เกิดข้อผิดพลาดในการเปิดไฟล์ Job Plan Labor: {str(e)}")
+                return render(request, 'maximo_app/upload.html', {})
         else:
-            raise Http404("File not found")
+            # แสดงข้อผิดพลาดเมื่อไม่พบไฟล์
+            messages.error(request, "ไม่พบไฟล์ Job Plan Labor ที่ต้องการดาวน์โหลด")
+            return render(request, 'maximo_app/upload.html', {})
     else:
-        raise Http404("No file specified for download")
+        # แสดงข้อผิดพลาดเมื่อไม่มีไฟล์ใน session
+        messages.error(request, "ไม่มีการระบุไฟล์ Job Plan Labor สำหรับดาวน์โหลด")
+        return render(request, 'maximo_app/upload.html', {})
 
 def download_pm_plan_file(request):
     # ดึงลิงก์ไฟล์จาก session
@@ -1908,23 +1936,29 @@ def download_pm_plan_file(request):
     original_file_name = 'PM_Plan.xlsx'
 
     if pm_plan_file:
-        # ตรวจสอบว่าเส้นทางของไฟล์เป็นเส้นทางสมบูรณ์
-        full_pm_plan_file_path = os.path.abspath(pm_plan_file)
+        # ตรวจสอบว่าเป็นเส้นทางสมบูรณ์หรือไม่ และแปลงเป็นเส้นทางสมบูรณ์ถ้าไม่ใช่
+        full_pm_plan_file_path = os.path.abspath(pm_plan_file) if not os.path.isabs(pm_plan_file) else pm_plan_file
         
-        # ตรวจสอบว่าไฟล์มีอยู่จริง
+        # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if os.path.exists(full_pm_plan_file_path):
             try:
                 # ใช้ with block เพื่อจัดการการเปิดไฟล์อย่างปลอดภัย
                 with open(full_pm_plan_file_path, 'rb') as fh:
                     response = HttpResponse(fh.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                    response['Content-Disposition'] = f'attachment; filename={original_file_name}'
+                    response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
                     return response
-            except IOError:
-                raise Http404("Error reading file")
+            except Exception as e:
+                # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
+                messages.error(request, f"เกิดข้อผิดพลาดในการเปิดไฟล์ PM Plan: {str(e)}")
+                return render(request, 'maximo_app/upload.html', {})
         else:
-            raise Http404("File not found")
+            # แสดงข้อผิดพลาดในกรณีที่ไม่พบไฟล์
+            messages.error(request, "ไม่พบไฟล์ PM Plan ที่ต้องการดาวน์โหลด")
+            return render(request, 'maximo_app/upload.html', {})
     else:
-        raise Http404("No file specified for download")
+        # แสดงข้อผิดพลาดเมื่อไม่มีไฟล์ใน session
+        messages.error(request, "ไม่มีการระบุไฟล์ PM Plan สำหรับดาวน์โหลด")
+        return render(request, 'maximo_app/upload.html', {})
 
 def download_template_file(request):
     # ดึงลิงก์ไฟล์จาก session
@@ -1933,91 +1967,147 @@ def download_template_file(request):
     original_file_name = f'Template-MxLoader-JP-PMPlan-({location}).xlsm'
 
     if template_file:
-        # ตรวจสอบเส้นทางของไฟล์ให้เป็นเส้นทางสมบูรณ์
-        full_template_file_path = os.path.abspath(template_file)
+        # ตรวจสอบเส้นทางของไฟล์และแปลงให้เป็นเส้นทางสมบูรณ์ถ้ายังไม่เป็น
+        full_template_file_path = os.path.abspath(template_file) if not os.path.isabs(template_file) else template_file
         
-        # ตรวจสอบว่าไฟล์มีอยู่จริง
+        # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if os.path.exists(full_template_file_path):
             try:
-                # เปิดไฟล์อย่างปลอดภัยและอ่านข้อมูล
+                # เปิดไฟล์อย่างปลอดภัยและสร้าง response
                 with open(full_template_file_path, 'rb') as fh:
                     response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel.sheet.macroEnabled.12")
-                    response['Content-Disposition'] = f'attachment; filename={original_file_name}'
+                    response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
                     return response
-            except IOError:
-                raise Http404("Error reading file")
+            except Exception as e:
+                # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
+                messages.error(request, f"เกิดข้อผิดพลาดในการเปิดไฟล์ Template-MxLoader-JP-PMPlan: {str(e)}")
+                return render(request, 'maximo_app/upload.html', {})
         else:
-            raise Http404("File not found")
+            # แสดงข้อผิดพลาดเมื่อไม่พบไฟล์
+            messages.error(request, "ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด")
+            return render(request, 'maximo_app/upload.html', {})
     else:
-        raise Http404("No file specified for download")
+        # แสดงข้อผิดพลาดเมื่อไม่มีไฟล์ใน session
+        messages.error(request, "ไม่มีการระบุไฟล์ Template-MxLoader-JP-PMPlan สำหรับดาวน์โหลด")
+        return render(request, 'maximo_app/upload.html', {})
 
 def download_original_template(request):
     try:
+        # ระบุตำแหน่งไฟล์เทมเพลตที่ต้องการดาวน์โหลด
         file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template-MxLoader-JP-PMPlan.xlsm')
         
+        # ตรวจสอบว่าไฟล์มีอยู่หรือไม่
         if not os.path.exists(file_path):
-            messages.error(request, "ไม่พบไฟล์ที่ต้องการดาวน์โหลด")
-            return redirect('index')
+            messages.error(request, "ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด")
+            return render(request, 'maximo_app/upload.html', {})
 
-        # ส่งไฟล์กลับไปให้ผู้ใช้ดาวน์โหลด
-        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel')
+        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel.sheet.macroEnabled.12')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response
 
     except Exception as e:
-        messages.error(request, f"เกิดข้อผิดพลาด: {str(e)}")
-        return redirect('index')
+        # แสดงข้อผิดพลาดเมื่อไม่สามารถดำเนินการได้
+        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์ Template-MxLoader-JP-PMPlan: {str(e)}")
+        return render(request, 'maximo_app/upload.html', {})
 
 def download_schedule(request):
     try:
+        # ระบุตำแหน่งของไฟล์ที่ต้องการดาวน์โหลด
         file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Draft Schedule.xlsx')
         
+        # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if not os.path.exists(file_path):
-            messages.error(request, "ไม่พบไฟล์ที่ต้องการดาวน์โหลด")
-            return redirect('index')
+            messages.error(request, "ไม่พบไฟล์ Draft Schedule ที่ต้องการดาวน์โหลด")
+            return render(request, 'maximo_app/upload.html', {})
 
-        # ส่งไฟล์กลับไปให้ผู้ใช้ดาวน์โหลด
-        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel')
+        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response
 
     except Exception as e:
-        messages.error(request, f"เกิดข้อผิดพลาด: {str(e)}")
-        return redirect('index')
-
-def download_example_schedule(request):
-    try:
-        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Draft Schedule (SNR-H).xlsx')
-        
-        if not os.path.exists(file_path):
-            messages.error(request, "ไม่พบไฟล์ที่ต้องการดาวน์โหลด")
-            return redirect('index')
-
-        # ส่งไฟล์กลับไปให้ผู้ใช้ดาวน์โหลด
-        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel')
-        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
-        return response
-
-    except Exception as e:
-        messages.error(request, f"เกิดข้อผิดพลาด: {str(e)}")
-        return redirect('index')
+        # แสดงข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
+        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์ Draft Schedule: {str(e)}")
+        return render(request, 'maximo_app/upload.html', {})
 
 def download_example_template(request):
     try:
+        # ระบุตำแหน่งไฟล์ที่ต้องการดาวน์โหลด
         file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template-MxLoader-JP-PMPlan-(SNR-H03).xlsm')
         
+        # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if not os.path.exists(file_path):
-            messages.error(request, "ไม่พบไฟล์ที่ต้องการดาวน์โหลด")
-            return redirect('index')
+            messages.error(request, "ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด")
+            return render(request, 'maximo_app/upload.html', {})
 
-        # ส่งไฟล์กลับไปให้ผู้ใช้ดาวน์โหลด
-        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel')
+        # ส่งไฟล์กลับไปให้ผู้ใช้ดาวน์โหลด โดยไม่ใช้ with block
+        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel.sheet.macroEnabled.12')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response
 
     except Exception as e:
-        messages.error(request, f"เกิดข้อผิดพลาด: {str(e)}")
-        return redirect('index')
+        # แสดงข้อความข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
+        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์ Template-MxLoader-JP-PMPlan: {str(e)}")
+        return render(request, 'maximo_app/upload.html', {})
+
+def download_example_schedule(request):
+    try:
+        # ระบุตำแหน่งของไฟล์ที่ต้องการดาวน์โหลด
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Draft Schedule (SNR-H).xlsx')
+        
+        # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
+        if not os.path.exists(file_path):
+            messages.error(request, "ไม่พบไฟล์ที่ต้องการดาวน์โหลด")
+            return render(request, 'maximo_app/upload.html', {})
+
+        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+        return response
+
+    except Exception as e:
+        # แสดงข้อความข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
+        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์: {str(e)}")
+        return render(request, 'maximo_app/upload.html', {})
+
+def download_user_schedule(request):
+    try:
+        # ดึง path และชื่อไฟล์จาก session
+        file_path = request.session.get('schedule_path', None)
+        file_name = request.session.get('schedule_filename', 'Final Schedule.xlsx')
+
+        # ตรวจสอบว่า path ของไฟล์มีอยู่จริงหรือไม่
+        if not file_path or not os.path.exists(file_path):
+            messages.error(request, "ไม่พบไฟล์ Final Schedule ที่ต้องการดาวน์โหลด")
+            return render(request, 'maximo_app/upload.html', {})
+
+        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = f'attachment; filename="{file_name}"'
+        return response
+
+    except Exception as e:
+        # จัดการข้อผิดพลาดอื่นๆ
+        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์ Final Schedule: {str(e)}")
+        return render(request, 'maximo_app/upload.html', {})
+
+def download_user_location(request):
+    try:
+        # ดึง path และชื่อไฟล์จาก session
+        file_path = request.session.get('location_path', None)
+        file_name = request.session.get('location_filename', 'Location.xlsx')
+
+        # ตรวจสอบว่า path ของไฟล์มีอยู่จริงหรือไม่
+        if not file_path or not os.path.exists(file_path):
+            messages.error(request, "ไม่พบไฟล์ Location ที่ต้องการดาวน์โหลด")
+            return render(request, 'maximo_app/upload.html', {})
+
+        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response['Content-Disposition'] = f'attachment; filename="{file_name}"'
+        return response
+
+    except Exception as e:
+        # จัดการข้อผิดพลาดและแสดงผลข้อความ error
+        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์ Location: {str(e)}")
+        return render(request, 'maximo_app/upload.html', {})
+
 # ---------------------------------
 # ฟังก์ชันการกรองข้อมูล (Filter Functions)
 # ---------------------------------
