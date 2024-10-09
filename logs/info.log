@@ -16000,3 +16000,143 @@ SUBWBS GROUP: BM
 [09/Oct/2024 15:57:38] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
 [09/Oct/2024 15:59:16] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
 [09/Oct/2024 15:59:18] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[09/Oct/2024 22:08:41] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[09/Oct/2024 22:09:01] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[09/Oct/2024 22:09:01] INFO [django.server:213] "GET /static/CACHE/css/output.7b4c0c219045.css HTTP/1.1" 304 0
+[09/Oct/2024 22:09:02] WARNING [django.request:248] Not Found: /favicon.ico
+[09/Oct/2024 22:09:02] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 7767
+[09/Oct/2024 22:09:07] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 200 14286
+[09/Oct/2024 22:09:08] INFO [django.server:213] "GET /download-original/ HTTP/1.1" 200 548461
+[09/Oct/2024 22:09:09] INFO [django.server:213] "GET /download-example-schedule/ HTTP/1.1" 200 207630
+[09/Oct/2024 22:09:10] INFO [django.server:213] "GET /download-example-template/ HTTP/1.1" 200 1297708
+[09/Oct/2024 22:09:14] INFO [maximo_app.views:2710] Successfully retrieved PlantType with id 2
+[09/Oct/2024 22:09:14] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[09/Oct/2024 22:09:15] INFO [maximo_app.views:2627] Successfully retrieved Site with id 2
+[09/Oct/2024 22:09:15] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[09/Oct/2024 22:09:16] INFO [maximo_app.views:2658] Successfully retrieved ChildSite with id 28
+[09/Oct/2024 22:09:16] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[09/Oct/2024 22:09:19] INFO [maximo_app.views:2833] Successfully retrieved Status with id 1
+[09/Oct/2024 22:09:19] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[09/Oct/2024 22:09:20] INFO [maximo_app.views:2684] Successfully retrieved WorkType with id 3
+[09/Oct/2024 22:09:20] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[09/Oct/2024 22:09:21] INFO [maximo_app.views:2780] Successfully retrieved ActType with id 2
+[09/Oct/2024 22:09:21] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[09/Oct/2024 22:09:22] INFO [maximo_app.views:2807] Successfully retrieved WBSCode with id 1
+[09/Oct/2024 22:09:22] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[09/Oct/2024 22:09:29] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 00
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO2
+SUBWBS GROUP: BM
+[09/Oct/2024 22:09:29] INFO [maximo_app.views:221] EGPROJECTID: O-BPKC00-67MI
+[09/Oct/2024 22:09:29] INFO [maximo_app.views:222] EGWBS: O-BPKC00-67MI-BM
+[09/Oct/2024 22:09:29] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Minor Inspection BPK-C00 2567
+[09/Oct/2024 22:09:29] INFO [maximo_app.views:224] LOCATION: BPK-C00
+[09/Oct/2024 22:09:29] INFO [maximo_app.views:252] Schedule file: Final Schedule PMN-H03 200967.xlsx
+[09/Oct/2024 22:09:29] INFO [maximo_app.views:253] Location file: Final Schedule PMN-H03 200967.xlsx
+[09/Oct/2024 22:09:29] INFO [maximo_app.views:264] Files saved successfully at: temp\62364bd0-d8ec-4bd1-95d5-a1d5aa35dcbb_Final Schedule PMN-H03 200967.xlsx and temp\1921cf7c-ef89-40b6-a487-3d3b10b0e93c_Locations PMN-H.xlsx
+[09/Oct/2024 22:09:30] INFO [maximo_app.views:326] Excel file loaded successfully.
+[09/Oct/2024 22:09:30] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[09/Oct/2024 22:09:30] INFO [maximo_app.views:412] DataFrame preparation completed successfully.
+[09/Oct/2024 22:09:34] INFO [django.server:213] "POST / HTTP/1.1" 200 62181
+[09/Oct/2024 22:10:19] INFO [maximo_app.views:1911] File saved successfully as temp\7f11de7e-5294-4dfd-a85d-89cefa0b351e_Template-MxLoader-JP-PMPlan.xlsm
+[09/Oct/2024 22:10:19] INFO [django.server:213] "POST / HTTP/1.1" 200 64362
+[09/Oct/2024 22:10:19] INFO [django.server:213] "GET /static/icon/excel.svg HTTP/1.1" 304 0
+[09/Oct/2024 22:10:22] INFO [django.server:213] "GET /download-user-schedule/ HTTP/1.1" 200 292840
+[09/Oct/2024 22:10:24] INFO [django.server:213] "GET /download-user-location/ HTTP/1.1" 200 268679
+[09/Oct/2024 22:10:25] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 276390
+[09/Oct/2024 22:10:27] INFO [django.server:213] "GET /download-job-plan-task/ HTTP/1.1" 200 57740
+[09/Oct/2024 22:10:29] INFO [django.server:213] "GET /download-job-plan-labor/ HTTP/1.1" 200 7782
+[09/Oct/2024 22:10:30] INFO [django.server:213] "GET /download-pm-plan/ HTTP/1.1" 200 66031
+[09/Oct/2024 22:10:31] INFO [django.server:213] "GET /download-template/ HTTP/1.1" 200 819679
+[09/Oct/2024 22:11:20] ERROR [maximo_app.views:2330] Template-MxLoader-JP-PMPlan file not found for download.
+[09/Oct/2024 22:11:20] INFO [django.server:213] "GET /download-template/ HTTP/1.1" 200 63899
+[09/Oct/2024 22:12:15] ERROR [maximo_app.views:2206] Job Plan Labor file not found for download.
+[09/Oct/2024 22:12:15] INFO [django.server:213] "GET /download-job-plan-labor/ HTTP/1.1" 200 63886
+[09/Oct/2024 22:12:34] ERROR [maximo_app.views:2267] PM Plan file not found for download.
+[09/Oct/2024 22:12:34] INFO [django.server:213] "GET /download-pm-plan/ HTTP/1.1" 200 63879
+[09/Oct/2024 22:12:39] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:12:39] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 63897
+[09/Oct/2024 22:12:41] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:12:41] INFO [django.server:213] "GET /download-user-location/ HTTP/1.1" 200 63895
+[09/Oct/2024 22:12:43] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:12:43] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 63897
+[09/Oct/2024 22:12:48] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:12:48] INFO [django.server:213] "GET /download-user-schedule/ HTTP/1.1" 200 63901
+[09/Oct/2024 22:12:53] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:12:53] INFO [django.server:213] "GET /download-user-location/ HTTP/1.1" 200 63895
+[09/Oct/2024 22:12:56] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:12:56] INFO [django.server:213] "GET /download-user-schedule/ HTTP/1.1" 200 63901
+[09/Oct/2024 22:12:57] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:12:57] INFO [django.server:213] "GET /download-user-location/ HTTP/1.1" 200 63895
+[09/Oct/2024 22:12:58] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:12:58] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 63897
+[09/Oct/2024 22:13:00] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:13:00] INFO [django.server:213] "GET /download-user-location/ HTTP/1.1" 200 63895
+[09/Oct/2024 22:13:03] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:13:03] INFO [django.server:213] "GET /download-user-schedule/ HTTP/1.1" 200 63901
+[09/Oct/2024 22:13:24] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:13:24] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 63897
+[09/Oct/2024 22:13:28] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:13:28] INFO [django.server:213] "GET /download-user-schedule/ HTTP/1.1" 200 63901
+[09/Oct/2024 22:13:31] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:13:31] INFO [django.server:213] "GET /download-user-location/ HTTP/1.1" 200 63895
+[09/Oct/2024 22:13:34] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:13:34] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 63897
+[09/Oct/2024 22:13:36] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:13:36] INFO [django.server:213] "GET /download-user-location/ HTTP/1.1" 200 63895
+[09/Oct/2024 22:13:37] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:13:37] INFO [django.server:213] "GET /download-user-schedule/ HTTP/1.1" 200 63901
+[09/Oct/2024 22:14:50] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[09/Oct/2024 22:14:51] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[09/Oct/2024 22:15:05] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[09/Oct/2024 22:15:06] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[09/Oct/2024 22:15:14] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:15:14] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 63879
+[09/Oct/2024 22:17:38] ERROR [maximo_app.views:2143] Job Plan Task file not found for download.
+[09/Oct/2024 22:17:38] INFO [django.server:213] "GET /download-job-plan-task/ HTTP/1.1" 200 63885
+[09/Oct/2024 22:17:40] ERROR [maximo_app.views:2206] Job Plan Labor file not found for download.
+[09/Oct/2024 22:17:40] INFO [django.server:213] "GET /download-job-plan-labor/ HTTP/1.1" 200 63886
+[09/Oct/2024 22:18:11] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[09/Oct/2024 22:18:12] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[09/Oct/2024 22:18:34] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[09/Oct/2024 22:18:35] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[09/Oct/2024 22:18:36] ERROR [maximo_app.views:2536] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:18:36] INFO [django.server:213] "GET /download-user-schedule/ HTTP/1.1" 200 63901
+[09/Oct/2024 22:18:39] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:18:39] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 63879
+[09/Oct/2024 22:18:42] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[09/Oct/2024 22:18:43] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[09/Oct/2024 22:18:44] ERROR [maximo_app.views:2536] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:18:44] INFO [django.server:213] "GET /download-user-schedule/ HTTP/1.1" 200 63901
+[09/Oct/2024 22:18:46] ERROR [maximo_app.views:2536] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:18:46] INFO [django.server:213] "GET /download-user-schedule/ HTTP/1.1" 200 63901
+[09/Oct/2024 22:18:46] ERROR [maximo_app.views:2577] Location file not found in the specified path for download.
+[09/Oct/2024 22:18:46] INFO [django.server:213] "GET /download-user-location/ HTTP/1.1" 200 63895
+[09/Oct/2024 22:18:47] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:18:47] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 63879
+[09/Oct/2024 22:18:49] ERROR [maximo_app.views:2143] Job Plan Task file not found for download.
+[09/Oct/2024 22:18:49] INFO [django.server:213] "GET /download-job-plan-task/ HTTP/1.1" 200 64014
+[09/Oct/2024 22:19:52] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[09/Oct/2024 22:19:54] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[09/Oct/2024 22:20:34] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[09/Oct/2024 22:20:35] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[09/Oct/2024 22:21:17] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[09/Oct/2024 22:21:19] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[09/Oct/2024 22:21:20] ERROR [maximo_app.views:2544] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:21:20] INFO [django.server:213] "GET /download-user-schedule/ HTTP/1.1" 200 64021
+[09/Oct/2024 22:21:21] ERROR [maximo_app.views:2544] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:21:21] INFO [django.server:213] "GET /download-user-schedule/ HTTP/1.1" 200 64021
+[09/Oct/2024 22:21:21] ERROR [maximo_app.views:2586] Location file not found in the specified path for download.
+[09/Oct/2024 22:21:21] INFO [django.server:213] "GET /download-user-location/ HTTP/1.1" 200 64015
+[09/Oct/2024 22:21:22] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:21:22] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 63999
+[09/Oct/2024 22:21:29] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:21:29] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 63999
+[09/Oct/2024 22:21:35] INFO [django.server:213] "GET / HTTP/1.1" 200 70846

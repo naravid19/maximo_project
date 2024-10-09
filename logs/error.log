@@ -7059,3 +7059,73 @@ AttributeError: 'str' object has no attribute 'wbs_code'
 [09/Oct/2024 10:32:59] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 7767
 [09/Oct/2024 11:33:18] ERROR [maximo_app.views:343] Important columns without data: TYPE
 [09/Oct/2024 11:33:18] ERROR [maximo_app.views:343] Important columns without data: TYPE
+[09/Oct/2024 22:09:02] WARNING [django.request:248] Not Found: /favicon.ico
+[09/Oct/2024 22:09:02] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 7767
+[09/Oct/2024 22:11:20] ERROR [maximo_app.views:2330] Template-MxLoader-JP-PMPlan file not found for download.
+[09/Oct/2024 22:11:20] ERROR [maximo_app.views:2330] Template-MxLoader-JP-PMPlan file not found for download.
+[09/Oct/2024 22:12:15] ERROR [maximo_app.views:2206] Job Plan Labor file not found for download.
+[09/Oct/2024 22:12:15] ERROR [maximo_app.views:2206] Job Plan Labor file not found for download.
+[09/Oct/2024 22:12:34] ERROR [maximo_app.views:2267] PM Plan file not found for download.
+[09/Oct/2024 22:12:34] ERROR [maximo_app.views:2267] PM Plan file not found for download.
+[09/Oct/2024 22:12:39] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:12:39] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:12:41] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:12:41] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:12:43] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:12:43] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:12:48] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:12:48] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:12:53] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:12:53] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:12:56] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:12:56] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:12:57] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:12:57] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:12:58] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:12:58] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:13:00] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:13:00] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:13:03] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:13:03] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:13:24] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:13:24] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:13:28] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:13:28] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:13:31] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:13:31] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:13:34] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:13:34] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:13:36] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:13:36] ERROR [maximo_app.views:2576] Location file not found in the specified path for download.
+[09/Oct/2024 22:13:37] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:13:37] ERROR [maximo_app.views:2535] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:15:14] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:15:14] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:17:38] ERROR [maximo_app.views:2143] Job Plan Task file not found for download.
+[09/Oct/2024 22:17:38] ERROR [maximo_app.views:2143] Job Plan Task file not found for download.
+[09/Oct/2024 22:17:40] ERROR [maximo_app.views:2206] Job Plan Labor file not found for download.
+[09/Oct/2024 22:17:40] ERROR [maximo_app.views:2206] Job Plan Labor file not found for download.
+[09/Oct/2024 22:18:36] ERROR [maximo_app.views:2536] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:18:36] ERROR [maximo_app.views:2536] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:18:39] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:18:39] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:18:44] ERROR [maximo_app.views:2536] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:18:44] ERROR [maximo_app.views:2536] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:18:46] ERROR [maximo_app.views:2536] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:18:46] ERROR [maximo_app.views:2536] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:18:46] ERROR [maximo_app.views:2577] Location file not found in the specified path for download.
+[09/Oct/2024 22:18:46] ERROR [maximo_app.views:2577] Location file not found in the specified path for download.
+[09/Oct/2024 22:18:47] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:18:47] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:18:49] ERROR [maximo_app.views:2143] Job Plan Task file not found for download.
+[09/Oct/2024 22:18:49] ERROR [maximo_app.views:2143] Job Plan Task file not found for download.
+[09/Oct/2024 22:21:20] ERROR [maximo_app.views:2544] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:21:20] ERROR [maximo_app.views:2544] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:21:21] ERROR [maximo_app.views:2544] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:21:21] ERROR [maximo_app.views:2544] Final Schedule file not found in the specified path for download.
+[09/Oct/2024 22:21:21] ERROR [maximo_app.views:2586] Location file not found in the specified path for download.
+[09/Oct/2024 22:21:21] ERROR [maximo_app.views:2586] Location file not found in the specified path for download.
+[09/Oct/2024 22:21:22] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:21:22] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:21:29] ERROR [maximo_app.views:2081] Comment file not found for download.
+[09/Oct/2024 22:21:29] ERROR [maximo_app.views:2081] Comment file not found for download.

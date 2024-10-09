@@ -2066,12 +2066,12 @@ def download_comment_file(request):
                 logger.error(f"Failed to open comment file for download: {str(e)}")
                 error_message = (
                     f"<div class='error-container'>"
-                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ที่ต้องการดาวน์โหลดได้<br>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ Comment ได้<br>"
                     f"<ul class='error-details'>"
                     f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                     f"<li>{str(e)}</li>"
                     f"</ul>"
-                    f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าไฟล์มีอยู่จริงและสามารถเปิดได้ปกติ  หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
                     f"</div>"
                 )
                 messages.error(request, error_message)
@@ -2081,12 +2081,13 @@ def download_comment_file(request):
             logger.error("Comment file not found for download.")
             error_message = (
                     f"<div class='error-container'>"
-                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ที่ต้องการดาวน์โหลด<br>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Comment ที่ต้องการดาวน์โหลด<br>"
                     f"<ul class='error-details'>"
-                    f"<p class='error-description'>รายละเอียดข้อผิดพลาด:</p>"
+                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                     f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                    f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
                     f"</ul>"
-                    f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าไฟล์มีอยู่หรืออัปโหลดไฟล์ใหม่แล้วลองดาวน์โหลดอีกครั้ง</p>"
+                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
                     f"</div>"
                 )
             messages.error(request, error_message)
@@ -2096,17 +2097,17 @@ def download_comment_file(request):
         logger.error("Comment file path not specified in session.")
         error_message = (
                 f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีไฟล์สำหรับการดาวน์โหลด<br>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีไฟล์ Comment สำหรับการดาวน์โหลด<br>"
                 f"<ul class='error-details'>"
                 f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                 f"<li>ไม่มีการส่งข้อมูล path ของไฟล์ Comment มาจาก session</li>"
                 f"</ul>"
-                f"<p class='error-note'>คำแนะนำ: กรุณาลองดำเนินการอีกครั้ง หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
                 f"</div>"
             )
         messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
-####
+
 def download_job_plan_task_file(request):
     # ดึงลิงก์ไฟล์จาก session
     jp_task_file = request.session.get('download_link_job_plan_task', None)
@@ -2125,15 +2126,15 @@ def download_job_plan_task_file(request):
                     return response
             except Exception as e:
                 # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
-                logger.error(f"Error opening Job Plan Task file: {str(e)}")
+                logger.error(f"Failed to open Job Plan Task file for download: {str(e)}", exc_info=True)
                 error_message = (
                     f"<div class='error-container'>"
-                    f"<strong class='error-title'>ข้อผิดพลาด:</strong> ไม่สามารถเปิดไฟล์ Job Plan Task ได้<br>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ Job Plan Task ได้<br>"
                     f"<ul class='error-details'>"
-                    f"<p class='error-description'>รายละเอียดข้อผิดพลาด:</p>"
+                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                     f"<li>{str(e)}</li>"
                     f"</ul>"
-                    f"<p class='error-note'>*** โปรดตรวจสอบว่าไฟล์มีอยู่จริงและไม่เสียหาย หรือติดต่อทีมงานเพื่อขอความช่วยเหลือเพิ่มเติม ***</p>"
+                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
                     f"</div>"
                 )
                 messages.error(request, error_message)
@@ -2143,12 +2144,13 @@ def download_job_plan_task_file(request):
             logger.error("Job Plan Task file not found for download.")
             error_message = (
                 f"<div class='error-container'>"
-                f"<strong class='error-title'>ข้อผิดพลาด:</strong> ไม่พบไฟล์ Job Plan Task ที่ต้องการดาวน์โหลด<br>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Job Plan Task ที่ต้องการดาวน์โหลด<br>"
                 f"<ul class='error-details'>"
-                f"<p class='error-description'>รายละเอียดข้อผิดพลาด:</p>"
-                f"<li>ระบบไม่สามารถหาไฟล์ Job Plan Task ที่คุณต้องการดาวน์โหลดได้</li>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
                 f"</ul>"
-                f"<p class='error-note'>*** โปรดตรวจสอบว่าไฟล์มีอยู่หรืออัปโหลดไฟล์ใหม่ก่อนที่จะลองดาวน์โหลดอีกครั้ง ***</p>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
                 f"</div>"
             )
             messages.error(request, error_message)
@@ -2158,12 +2160,12 @@ def download_job_plan_task_file(request):
         logger.error("Job Plan Task file path not specified in session.")
         error_message = (
             f"<div class='error-container'>"
-            f"<strong class='error-title'>ข้อผิดพลาด:</strong> ไม่มีการระบุไฟล์ Job Plan Task ให้ดาวน์โหลด<br>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีการระบุไฟล์ Job Plan Task สำหรับการดาวน์โหลด<br>"
             f"<ul class='error-details'>"
-            f"<p class='error-description'>รายละเอียดข้อผิดพลาด:</p>"
-            f"<li>ไม่มีการส่งข้อมูล path ของไฟล์ Job Plan Task มาจาก session</li>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>ระบบไม่ได้รับข้อมูลที่อยู่ของไฟล์ Job Plan Task จาก session</li>"
             f"</ul>"
-            f"<p class='error-note'>*** โปรดลองอัปโหลดไฟล์อีกครั้งหรือติดต่อทีมงานเพื่อขอความช่วยเหลือเพิ่มเติม ***</p>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
             f"</div>"
         )
         messages.error(request, error_message)
@@ -2188,15 +2190,49 @@ def download_job_plan_labor_file(request):
                     return response
             except Exception as e:
                 # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
-                messages.error(request, f"เกิดข้อผิดพลาดในการเปิดไฟล์ Job Plan Labor: {str(e)}")
+                logger.error(f"Failed to open Job Plan Labor file for download: {str(e)}", exc_info=True)
+                error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ Job Plan Labor ได้<br>"
+                    f"<ul class='error-details'>"
+                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                    f"<li>เกิดข้อผิดพลาดระหว่างการเปิดไฟล์ กรุณาตรวจสอบว่าไฟล์มีอยู่จริงและไม่เสียหาย</li>"
+                    f"</ul>"
+                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                    f"</div>"
+                )
+                messages.error(request, error_message)
                 return render(request, 'maximo_app/upload.html', {})
         else:
             # แสดงข้อผิดพลาดเมื่อไม่พบไฟล์
-            messages.error(request, "ไม่พบไฟล์ Job Plan Labor ที่ต้องการดาวน์โหลด")
+            logger.error("Job Plan Labor file not found for download.")
+            error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Job Plan Labor ที่ต้องการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
+                f"</ul>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                f"</div>"
+            )
+            messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {})
     else:
         # แสดงข้อผิดพลาดเมื่อไม่มีไฟล์ใน session
-        messages.error(request, "ไม่มีการระบุไฟล์ Job Plan Labor สำหรับดาวน์โหลด")
+        logger.error("Job Plan Labor file path not specified in session.")
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีการระบุไฟล์ Job Plan Labor สำหรับการดาวน์โหลด<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>ระบบไม่ได้รับข้อมูลที่อยู่ของไฟล์ Job Plan Labor จาก session</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์ใหม่ หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
 
 def download_pm_plan_file(request):
@@ -2217,16 +2253,47 @@ def download_pm_plan_file(request):
                     response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
                     return response
             except Exception as e:
-                # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
-                messages.error(request, f"เกิดข้อผิดพลาดในการเปิดไฟล์ PM Plan: {str(e)}")
+                logger.error(f"Failed to open PM Plan file for download: {str(e)}", exc_info=True)
+                error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ PM Plan ได้<br>"
+                    f"<ul class='error-details'>"
+                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                    f"<li>เกิดข้อผิดพลาดระหว่างการเปิดไฟล์ กรุณาตรวจสอบว่าไฟล์มีอยู่จริงและไม่เสียหาย</li>"
+                    f"</ul>"
+                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                    f"</div>"
+                )
+                messages.error(request, error_message)
                 return render(request, 'maximo_app/upload.html', {})
         else:
-            # แสดงข้อผิดพลาดในกรณีที่ไม่พบไฟล์
-            messages.error(request, "ไม่พบไฟล์ PM Plan ที่ต้องการดาวน์โหลด")
+            logger.error("PM Plan file not found for download.")
+            error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ PM Plan ที่ต้องการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
+                f"</ul>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                f"</div>"
+            )
+            messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {})
     else:
-        # แสดงข้อผิดพลาดเมื่อไม่มีไฟล์ใน session
-        messages.error(request, "ไม่มีการระบุไฟล์ PM Plan สำหรับดาวน์โหลด")
+        logger.error("PM Plan file path not specified in session.")
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีการระบุไฟล์ PM Plan สำหรับการดาวน์โหลด<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>ระบบไม่ได้รับข้อมูลที่อยู่ของไฟล์ PM Plan จาก session</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
 
 def download_template_file(request):
@@ -2249,15 +2316,49 @@ def download_template_file(request):
                     return response
             except Exception as e:
                 # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
-                messages.error(request, f"เกิดข้อผิดพลาดในการเปิดไฟล์ Template-MxLoader-JP-PMPlan: {str(e)}")
+                logger.error(f"Failed to open Template-MxLoader-JP-PMPlan file for download: {str(e)}", exc_info=True)
+                error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ Template-MxLoader-JP-PMPlan ได้<br>"
+                    f"<ul class='error-details'>"
+                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                    f"<li>เกิดข้อผิดพลาดระหว่างการเปิดไฟล์ กรุณาตรวจสอบว่าไฟล์มีอยู่จริงและไม่เสียหาย</li>"
+                    f"</ul>"
+                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                    f"</div>"
+                )
+                messages.error(request, error_message)
                 return render(request, 'maximo_app/upload.html', {})
         else:
             # แสดงข้อผิดพลาดเมื่อไม่พบไฟล์
-            messages.error(request, "ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด")
+            logger.error("Template-MxLoader-JP-PMPlan file not found for download.")
+            error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
+                f"</ul>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                f"</div>"
+            )
+            messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {})
     else:
         # แสดงข้อผิดพลาดเมื่อไม่มีไฟล์ใน session
-        messages.error(request, "ไม่มีการระบุไฟล์ Template-MxLoader-JP-PMPlan สำหรับดาวน์โหลด")
+        logger.error("Template-MxLoader-JP-PMPlan file path not specified in session.")
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีการระบุไฟล์ Template-MxLoader-JP-PMPlan สำหรับการดาวน์โหลด<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>ระบบไม่ได้รับข้อมูลที่อยู่ของไฟล์ Template-MxLoader-JP-PMPlan จาก session</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
 
 def download_original_template(request):
@@ -2267,16 +2368,40 @@ def download_original_template(request):
         
         # ตรวจสอบว่าไฟล์มีอยู่หรือไม่
         if not os.path.exists(file_path):
-            messages.error(request, "ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด")
+            logger.error("Template-MxLoader-JP-PMPlan file not found in the specified path for download.")
+            error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
+                f"</ul>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าไฟล์มีอยู่จริง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                f"</div>"
+            )
+            messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {})
-
+        
+        # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel.sheet.macroEnabled.12')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response
 
     except Exception as e:
         # แสดงข้อผิดพลาดเมื่อไม่สามารถดำเนินการได้
-        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์ Template-MxLoader-JP-PMPlan: {str(e)}")
+        logger.error(f"Failed to download Template-MxLoader-JP-PMPlan file: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Template-MxLoader-JP-PMPlan ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
 
 def download_schedule(request):
@@ -2286,16 +2411,40 @@ def download_schedule(request):
         
         # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if not os.path.exists(file_path):
-            messages.error(request, "ไม่พบไฟล์ Draft Schedule ที่ต้องการดาวน์โหลด")
+            logger.error("Draft Schedule file not found in the specified path for download.")
+            error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Draft Schedule ที่ต้องการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
+                f"</ul>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าไฟล์มีอยู่จริง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                f"</div>"
+            )
+            messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {})
-
+        
+        # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response
 
     except Exception as e:
         # แสดงข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
-        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์ Draft Schedule: {str(e)}")
+        logger.error(f"Failed to download Draft Schedule file: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Draft Schedule ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
 
 def download_example_template(request):
@@ -2305,17 +2454,40 @@ def download_example_template(request):
         
         # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if not os.path.exists(file_path):
-            messages.error(request, "ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด")
+            logger.error("Template-MxLoader-JP-PMPlan-(SNR-H03) file not found in the specified path for download.")
+            error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
+                f"</ul>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าไฟล์มีอยู่จริง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                f"</div>"
+            )
+            messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {})
 
-        # ส่งไฟล์กลับไปให้ผู้ใช้ดาวน์โหลด โดยไม่ใช้ with block
+        # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel.sheet.macroEnabled.12')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response
 
     except Exception as e:
         # แสดงข้อความข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
-        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์ Template-MxLoader-JP-PMPlan: {str(e)}")
+        logger.error(f"Failed to download Template-MxLoader-JP-PMPlan-(SNR-H03) file: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Template-MxLoader-JP-PMPlan ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
 
 def download_example_schedule(request):
@@ -2325,16 +2497,40 @@ def download_example_schedule(request):
         
         # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if not os.path.exists(file_path):
-            messages.error(request, "ไม่พบไฟล์ที่ต้องการดาวน์โหลด")
+            logger.error("Draft Schedule (SNR-H) file not found in the specified path for download.")
+            error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Draft Schedule ที่ต้องการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
+                f"</ul>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าไฟล์มีอยู่จริง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                f"</div>"
+            )
+            messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {})
-
+        
+        # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response
 
     except Exception as e:
         # แสดงข้อความข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
-        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์: {str(e)}")
+        logger.error(f"Failed to download Draft Schedule (SNR-H) file: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Draft Schedule ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
 
 def download_user_schedule(request):
@@ -2345,7 +2541,19 @@ def download_user_schedule(request):
 
         # ตรวจสอบว่า path ของไฟล์มีอยู่จริงหรือไม่
         if not file_path or not os.path.exists(file_path):
-            messages.error(request, "ไม่พบไฟล์ Final Schedule ที่ต้องการดาวน์โหลด")
+            logger.error("Final Schedule file not found in the specified path for download.")
+            error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Final Schedule ที่ต้องการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
+                f"</ul>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าไฟล์มีอยู่จริง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                f"</div>"
+            )
+            messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {})
 
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -2353,8 +2561,18 @@ def download_user_schedule(request):
         return response
 
     except Exception as e:
-        # จัดการข้อผิดพลาดอื่นๆ
-        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์ Final Schedule: {str(e)}")
+        logger.error(f"Failed to download Final Schedule file: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Final Schedule ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
 
 def download_user_location(request):
@@ -2365,7 +2583,19 @@ def download_user_location(request):
 
         # ตรวจสอบว่า path ของไฟล์มีอยู่จริงหรือไม่
         if not file_path or not os.path.exists(file_path):
-            messages.error(request, "ไม่พบไฟล์ Location ที่ต้องการดาวน์โหลด")
+            logger.error("Location file not found in the specified path for download.")
+            error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Location ที่ต้องการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
+                f"</ul>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าไฟล์มีอยู่จริง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                f"</div>"
+            )
+            messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {})
 
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -2373,8 +2603,18 @@ def download_user_location(request):
         return response
 
     except Exception as e:
-        # จัดการข้อผิดพลาดและแสดงผลข้อความ error
-        messages.error(request, f"เกิดข้อผิดพลาดในการดาวน์โหลดไฟล์ Location: {str(e)}")
+        logger.error(f"Failed to download Location file: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Location ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
 
 # ---------------------------------
