@@ -38,6 +38,15 @@ def test(request):
 def index(request):
 ############
 ############
+    # sheet_name = 'Sheet1'
+    orgid = 'EGAT'
+    pluscrevum = 0
+    status = 'ACTIVE'
+    pluscjprevnum = 0
+    route = ''
+    
+    
+    leadtime = 7
     schedule_filename = None
     location_filename = None
     extracted_kks_counts = None
@@ -45,14 +54,43 @@ def index(request):
     error_message = ""
 ############
 ############
+    from django.utils.html import format_html
     print(request.POST)
     print(request.FILES)
     print('0 def schedule_filename:',schedule_filename)
     print('0 def location_filename:',location_filename)
     print('0 def extracted_kks_counts:',extracted_kks_counts)
     print('0 def user_input_mapping:',user_input_mapping)
+    # error_message = (
+    #     f"<div>"
+    #     f"<strong style='text-decoration: underline;'>ข้อผิดพลาด:</strong> คอลัมน์ที่จำเป็นหายไปจากไฟล์ข้อมูล<br>"
+    #     f"<ul style='padding-left: 20px; margin-top: 10px; list-style-type: disc;'>"
+    #     f"<p style='margin-left: -10px;'>ไฟล์ schedule_file ไม่มีคอลัมน์:</p>"
+    #     f"<li>test 111</li>"
+    #     f"<li>test 222</li>"
+    #     f"<li>test 333</li>"
+    #     f"</ul>"
+    #     f"<p style='margin-top: 15px; font-size: 14px;'>*** โปรดตรวจสอบและแก้ไขไฟล์ข้อมูลให้มีคอลัมน์ที่จำเป็นทั้งหมด ***</p>"
+    #     f"</div>"
+    # )
+    
+    # error_message = (
+    #     f"<div class='error-container'>"
+    #     f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถบันทึกไฟล์ได้<br>"
+    #     f"<ul class='error-details'>"
+    #     f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+    #     f"<li>กกกกก</li>"
+    #     f"</ul>"
+    #     f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบสิ่งต่อไปนี้<br>"
+    #     f"&nbsp;&nbsp;&nbsp;&nbsp;1. ตำแหน่งที่บันทึกไฟล์สามารถเข้าถึงได้<br>"
+    #     f"&nbsp;&nbsp;&nbsp;&nbsp;2. คุณมีสิทธิ์ในการบันทึกไฟล์ที่ตำแหน่งนี้<br>"
+    #     f"&nbsp;&nbsp;&nbsp;&nbsp;3. มีพื้นที่เพียงพอสำหรับบันทึกไฟล์"
+    #     f"</p>"
+    #     f"</div>"
+    # )
+    # messages.error(request, error_message)
 ############
-############  
+############
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
@@ -75,39 +113,131 @@ def index(request):
             
             schedule_file = request.FILES.get('schedule_file', None)
             location_file = request.FILES.get('location_file', None)
-            child_site = form.cleaned_data.get('child_site')
             year = form.cleaned_data.get('year')
             frequency = form.cleaned_data.get('frequency')
             frequnit = form.cleaned_data.get('frequnit')
-            site = form.cleaned_data.get('site')
             plant_type = form.cleaned_data.get('plant_type')
+            site = form.cleaned_data.get('site')
+            child_site = form.cleaned_data.get('child_site')
             unit = form.cleaned_data.get('unit')
+            wostatus = form.cleaned_data.get('wostatus')
             work_type = form.cleaned_data.get('work_type')
             acttype = form.cleaned_data.get('acttype')
             wbs = form.cleaned_data.get('wbs')
-            wostatus = form.cleaned_data.get('wostatus')
             
+            log_params = []
+            log_error = []
+            
+            #? Logging
             if year:
-                logger.info(f"Year: {year}")
+                buddhist_year = int(year) + 543
+                two_digits_year = buddhist_year % 100
+                log_params.append(f"PLANT OUTAGE YEAR: {year}")
+            else:
+                log_error.append("PLANT OUTAGE YEAR")
+            
             if frequency:
-                logger.info(f"Frequency: {frequency}")
+                log_params.append(f"FREQUENCY: {frequency}")
+            else:
+                log_error.append("FREQUENCY")
+            
             if frequnit:
-                logger.info(f"Frequnit: {frequnit}")
-            if site:
-                logger.info(f"Site: {site.site_id}")
+                log_params.append(f"FREQUNIT: {frequnit}")
+            else:
+                log_error.append("FREQUNIT")
+            
             if plant_type:
-                logger.info(f"Plant Type: {plant_type.plant_code}")
+                plant_type = plant_type.plant_code
+                log_params.append(f"PLANT TYPE: {plant_type}")
+            else:
+                log_error.append("PLANT TYPE")
+            
+            if site:
+                siteid = site.site_id
+                log_params.append(f"SITE: {siteid}")
+            else:
+                log_error.append("SITE")
+            
+            if child_site:
+                child_site = child_site.site_id
+                log_params.append(f"PLANT NAME: {child_site}")
+            else:
+                log_error.append("PLANT NAME")
+            
             if unit:
-                logger.info(f"Unit: {unit.unit_code}")
-            if work_type:
-                logger.info(f"Work Type: {work_type.worktype}")
-            if acttype:
-                logger.info(f"ACTTYPE: {acttype.acttype}")
-            if wbs:
-                logger.info(f"WBS: {wbs.wbs_code}")
+                unit = unit.unit_code
+                log_params.append(f"UNIT: {unit}")
+            else:
+                log_error.append("UNIT")
+            
             if wostatus:
-                logger.info(f"Status: {wostatus.status}")
-
+                wostatus = wostatus.status
+                log_params.append(f"STATUS: {wostatus}")
+            else:
+                log_error.append("STATUS")
+            
+            if work_type:
+                worktype = work_type.worktype
+                log_params.append(f"WORK TYPE: {worktype}")
+            else:
+                log_error.append("WORK TYPE")
+            
+            if acttype:
+                egmntacttype = acttype.acttype
+                log_params.append(f"ACTTYPE: {egmntacttype}")
+            else:
+                log_error.append("ACTTYPE")
+            
+            if wbs:
+                log_params.append(f"SUBWBS GROUP: {wbs}")
+            else:
+                log_error.append("SUBWBS GROUP")
+                
+            if log_params:
+                logger.info("\n".join(log_params))
+            
+            if log_error:
+                for error in log_error:
+                    logger.error(f"'{error}' was not provided from the form.")
+                error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>ข้อผิดพลาด:</strong> ข้อมูลที่จำเป็นไม่ได้รับการระบุจากฟอร์ม<br>"
+                    f"<ul class='error-details'>"
+                    f"{''.join(f'<li>{error}</li>' for error in log_error)}"
+                    f"</ul>"
+                    f"<p class='error-note'>*** โปรดตรวจสอบและเลือกข้อมูลที่จำเป็นในฟอร์มทุกฟิลด์ที่เกี่ยวข้อง ***</p>"
+                    f"</div>"
+                )
+                messages.error(request, error_message)
+                return redirect('index')
+            
+            try:
+                location = f'{child_site}-{plant_type}{unit}' # 'SRD-H02'
+                location_sanitized = location.replace('-', '')
+                egprojectid = f"O-{location_sanitized}-{two_digits_year}{acttype.code}"  # 'O-SRDH02-67MI'
+                egwbs = f"{egprojectid}-{wbs.wbs_code}" # 'O-SRDH02-67MI-WO'
+                wbs_desc = f"{wbs.description} {acttype.description} {location} {buddhist_year}"
+                
+                logger.info(f"EGPROJECTID: {egprojectid}")
+                logger.info(f"EGWBS: {egwbs}")
+                logger.info(f"WBS DESC: {wbs_desc}")
+                logger.info(f"LOCATION: {location}") 
+            except Exception as e:
+                logger.error(f"An error occurred: {str(e)}", exc_info=True)
+                error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> เกิดข้อขัดข้องระหว่างการประมวลผลข้อมูล<br>"
+                    f"<ul class='error-details'>"
+                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                    f"<li>{str(e)}</li>"
+                    f"</ul>"
+                    f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบข้อมูลที่ป้อนและลองดำเนินการอีกครั้ง หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                    f"</div>"
+                )
+                messages.error(request, error_message)
+                return redirect('index')
+            
+            
             schedule_filename = schedule_file.name
             location_filename = location_file.name
             
@@ -119,7 +249,8 @@ def index(request):
             location_path = os.path.join(temp_dir, unique_location_name)
             comment_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Comment.xlsx")
             
-            logger.info(f"Files uploaded: Schedule file: {schedule_filename}, Location file: {schedule_filename}")
+            logger.info(f"Schedule file: {schedule_filename}")
+            logger.info(f"Location file: {schedule_filename}")
             
             try:
                 with open(schedule_path, 'wb+') as destination:
@@ -131,60 +262,26 @@ def index(request):
                         destination.write(chunk)
                         
                 logger.info(f"Files saved successfully at: {schedule_path} and {location_path}")
+            
             except IOError as e:
                 logger.error(f"Error saving files: {str(e)}")
-                return HttpResponse(f"Error saving files: {str(e)}")
-############
-############
-            # Excel
-            # sheet_name = 'Sheet1'
-            
-            orgid = 'EGAT'
-            pluscrevum = 0
-            status = 'ACTIVE'
-            pluscjprevnum = 0
-            route = ''
-            leadtime = 7
-        
-            try:
-                if acttype and plant_type and unit and work_type and wostatus:
-                    egmntacttype = acttype.acttype
-                    plant_type = plant_type.plant_code
-                    unit = unit.unit_code
-                    worktype = work_type.worktype   # 'APOO'
-                    wostatus = wostatus.status  # 'WSCH'
-                else:
-                    raise ValueError("ข้อมูลที่จำเป็นบางอย่างจาก dropdown ขาดหายไป (เช่น acttype, plant_type, unit, work_type, หรือ wostatus)")
-
-                if site and child_site:
-                    siteid = site.site_id   # 'SRD0'
-                    child_site = child_site.site_id # SRD
-                    location = f'{child_site}-{plant_type}{unit}' # 'SRD-H02'
-                else:
-                    raise ValueError("Site หรือ Child Site ขาดหายไป")
-
-                if year:
-                    buddhist_year = int(year) + 543
-                    two_digits_year = buddhist_year % 100
-                else:
-                    raise ValueError("ปี (year) ขาดหายไป")
-                
-                if acttype and wbs and two_digits_year:
-                    # สร้าง egprojectid และ egwbs
-                    location_sanitized = location.replace('-', '')
-                    egprojectid = f"O-{location_sanitized}-{two_digits_year}{acttype.code}"  # 'O-SRDH02-67MI'
-                    egwbs = f"{egprojectid}-{wbs.wbs_code}" # 'O-SRDH02-67MI-WO'
-                    wbs_desc = f"{wbs.description} {acttype.description} {location} {buddhist_year}"
-                else:
-                    raise ValueError("ข้อมูลที่จำเป็นบางอย่างจาก acttype, wbs ขาดหายไป")
-                
-                logger.info(f"EGPROJECTID: {egprojectid}")
-                logger.info(f"EGWBS: {egwbs}")
-                logger.info(f"WBS DESC: {wbs_desc}")
-                logger.info(f"Location: {location}") 
-            except Exception as e:
-                logger.critical(f"Unexpected error: {str(e)}", exc_info=True)
-                raise
+                error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถบันทึกไฟล์ได้<br>"
+                    f"<ul class='error-details'>"
+                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                    f"<li>{str(e)}</li>"
+                    f"</ul>"
+                    f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบสิ่งต่อไปนี้<br>"
+                    f"&nbsp;&nbsp;&nbsp;&nbsp;1. ตำแหน่งที่บันทึกไฟล์สามารถเข้าถึงได้<br>"
+                    f"&nbsp;&nbsp;&nbsp;&nbsp;2. คุณมีสิทธิ์ในการบันทึกไฟล์ที่ตำแหน่งนี้<br>"
+                    f"&nbsp;&nbsp;&nbsp;&nbsp;3. มีพื้นที่เพียงพอสำหรับบันทึกไฟล์<br>"
+                    f"หากยังไม่สามารถแก้ไขได้ กรุณาติดต่อทีมสนับสนุนพร้อมแจ้งข้อความข้างต้น"
+                    f"</p>"
+                    f"</div>"
+                )
+                messages.error(request, error_message)
+                return redirect('index')
 ############
 ############
             # บันทึกค่าลงเซสชัน
@@ -225,7 +322,7 @@ def index(request):
 
                 df_original = read_excel_with_error_handling(schedule_path)
                 if df_original is None:
-                        raise ValueError("Cannot proceed without a valid DataFrame.")
+                    raise ValueError("Cannot proceed without a valid DataFrame.")
                 logger.info("Excel file loaded successfully.")
                 
                 # ลบช่องว่างที่ไม่จำเป็นออกจากชื่อคอลัมน์และแปลงชื่อคอลัมน์เป็นตัวพิมพ์ใหญ่ พร้อมแทนที่ช่องว่างด้วยขีดล่าง
@@ -237,13 +334,46 @@ def index(request):
                 missing_columns = [col for col in required_columns if col not in df_original.columns]
                 if missing_columns:
                     logger.error(f"Missing required columns: {', '.join(missing_columns)}")
-                    raise ValueError(f"ข้อผิดพลาด: ไม่มีคอลัมน์ {', '.join(missing_columns)}")
+                    error_message = (
+                        f"<div class='error-container'>"
+                        f"<strong class='error-title'>พบปัญหา:</strong> คอลัมน์ที่จำเป็นไม่มีในไฟล์ข้อมูล<br>"
+                        f"<ul class='error-details'>"
+                        f"<p class='error-description'>ไฟล์ {schedule_file.name} ขาดคอลัมน์ต่อไปนี้:</p>"
+                        f"{''.join(f'<li>{col}</li>' for col in missing_columns)}"
+                        f"</ul>"
+                        f"<p class='error-note'>คำแนะนำ:"
+                        f"&nbsp;&nbsp;&nbsp;&nbsp;1. โปรดตรวจสอบว่ามีคอลัมน์ที่ระบุข้างต้นหรือไม่<br>"
+                        f"&nbsp;&nbsp;&nbsp;&nbsp;2. หากไม่มี ให้เพิ่มคอลัมน์ที่ขาดและกรอกข้อมูลให้ครบถ้วน<br>"
+                        f"&nbsp;&nbsp;&nbsp;&nbsp;3. บันทึกไฟล์และอัปโหลดใหม่อีกครั้ง"
+                        f"</p>"
+                        f"</div>"
+                    )
+                    messages.error(request, error_message)
+                    return redirect('index')
+                    # raise ValueError(f"ไฟล์ {schedule_file.name} ไม่มีคอลัมน์ {', '.join(missing_columns)}")
                 
                 # ตรวจสอบว่าคอลัมน์ที่สำคัญมีข้อมูลอย่างน้อยหนึ่งค่า
                 empty_columns = [col for col in important_columns if df_original[col].isna().all() or (df_original[col] == '').all()]
                 if empty_columns:
                     logger.error(f"Important columns without data: {', '.join(empty_columns)}")
-                    raise ValueError(f"ข้อผิดพลาด: คอลัมน์ต่อไปนี้ไม่มีข้อมูล: {', '.join(empty_columns)}")
+                    error_message = (
+                        f"<div class='error-container'>"
+                        f"<strong class='error-title'>พบปัญหา:</strong> ข้อมูลไม่ครบถ้วนในคอลัมน์สำคัญ<br>"
+                        f"<ul class='error-details'>"
+                        f"<p class='error-description'>คอลัมน์ต่อไปนี้ไม่มีข้อมูล:</p>"
+                        f"{''.join(f'<li>{col}</li>' for col in empty_columns)}"
+                        f"</ul>"
+                        f"<p class='error-note'>คำแนะนำ:</p>"
+                        f"&nbsp;&nbsp;&nbsp;&nbsp;1. ตรวจสอบคอลัมน์ที่ระบุข้างต้น<br>"
+                        f"&nbsp;&nbsp;&nbsp;&nbsp;2. เพิ่มข้อมูลที่จำเป็นลงในคอลัมน์เหล่านั้น<br>"
+                        f"&nbsp;&nbsp;&nbsp;&nbsp;3. ตรวจสอบให้แน่ใจว่าไม่มีคอลัมน์ใดว่างเปล่าทั้งหมด<br>"
+                        f"&nbsp;&nbsp;&nbsp;&nbsp;4. บันทึกไฟล์และอัปโหลดใหม่อีกครั้ง<br>"
+                        f"</p>"
+                        f"</div>"
+                    )
+                    messages.error(request, error_message)
+                    return redirect('index')
+                    # raise ValueError(f"คอลัมน์ต่อไปนี้ไม่มีข้อมูล: {', '.join(empty_columns)}")
                 
                 df_original = df_original[required_columns]
                 df_original.rename(columns={'TASK_XX': 'TASK_ORDER'}, inplace=True)
@@ -264,14 +394,20 @@ def index(request):
                             df_original[col] = df_original[col].str.strip()
                             
                 df_original_extracted = df_original
-                
-            except ValueError as ve:
-                # ข้อผิดพลาดที่เกิดจากคอลัมน์ที่ขาดหายไป
-                logger.error(f"Validation error: {str(ve)}")
-                raise
             except Exception as e:
-                logger.critical(f"Unexpected error: {str(e)}", exc_info=True)
-                raise
+                logger.error(f"An error occurred: {str(e)}", exc_info=True)
+                error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> เกิดข้อขัดข้องระหว่างการดำเนินการ<br>"
+                    f"<ul class='error-details'>"
+                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                    f"<li>{str(e)}</li>"
+                    f"</ul>"
+                    f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                    f"</div>"
+                )
+                messages.error(request, error_message)
+                return redirect('index')
             
             logger.info("DataFrame preparation completed successfully.")
             
@@ -949,7 +1085,18 @@ def index(request):
                 request.session['user_input_mapping'] = user_input_mapping
                 # นำข้อมูล user_input_mapping ไปใช้ในขั้นตอนถัดไป
             else:
-                return HttpResponse("Error: KKS counts data is missing.")
+                logger.error(f"extracted_kks_counts data is missing: {str(e)}", exc_info=True)
+                error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบข้อมูลที่จำเป็นในการประมวลผล<br>"
+                    f"<ul class='error-details'>"
+                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                    f"<li>ไม่พบข้อมูล extracted_kks_counts ที่ใช้สำหรับการดำเนินการในระบบ</li>"
+                    f"</ul>"
+                    f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบข้อมูลและลองส่งอีกครั้ง หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                    f"</div>"
+                )
+                return redirect('index')
 ############
 ############        
             print('2 elif schedule_filename:',schedule_filename)
@@ -1547,8 +1694,32 @@ def index(request):
                     
                     except KeyError as e:
                         logger.error(f"Column not found: {e}")
+                        error_message = (
+                            f"<div class='error-container'>"
+                            f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบข้อมูลที่จำเป็นสำหรับการดำเนินการ<br>"
+                            f"<ul class='error-details'>"
+                            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                            f"<li>คอลัมน์ที่ขาดหายไป: {str(e)}</li>"
+                            f"</ul>"
+                            f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าชื่อคอลัมน์ถูกต้องและครบถ้วน  หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                            f"</div>"
+                        )
+                        messages.error(request, error_message)
+                        return redirect('index')
                     except Exception as e:
                         logger.error(f"Error processing row: {e}")
+                        error_message = (
+                            f"<div class='error-container'>"
+                            f"<strong class='error-title'>พบปัญหา:</strong> เกิดข้อผิดพลาดระหว่างการประมวลผลข้อมูล<br>"
+                            f"<ul class='error-details'>"
+                            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                            f"<li>{str(e)}</li>"
+                            f"</ul>"
+                            f"<p class='error-note'>คำแนะนำ: กรุณาลองดำเนินการอีกครั้ง หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                            f"</div>"
+                        )
+                        messages.error(request, error_message)
+                        return redirect('index')
                     
                     return pd.Series([self.pmnum0, pmnum1, jpnum1, parent1])
 
@@ -1740,21 +1911,57 @@ def index(request):
                     logger.info(f"File saved successfully as {file_template_xlsm}")
 
             except Exception as e:
-                print(f"An error occurred: {e}")
-
+                logger.error(f"An error occurred: {str(e)}", exc_info=True)
+                error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> เกิดข้อผิดพลาดระหว่างการดำเนินการกับไฟล์ข้อมูล<br>"
+                    f"<ul class='error-details'>"
+                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                    f"<li>{str(e)}</li>"
+                    f"</ul>"
+                    f"<p class='error-note'>กรุณาลองดำเนินการอีกครั้ง หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                    f"</div>"
+                )
+                messages.error(request, error_message)
+                return redirect('index')
+            
             finally:
                 # ปิดไฟล์
                 try:
                     openpyxl_book.close()
                 except Exception as e:
-                    logger.error(f"Error closing the openpyxl book: {e}")
+                    logger.error(f"Failed to close the openpyxl workbook: {e}")
+                    error_message = (
+                        f"<div class='error-container'>"
+                        f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถปิดไฟล์ Excel ได้<br>"
+                        f"<ul class='error-details'>"
+                        f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                        f"<li>{str(e)}</li>"
+                        f"</ul>"
+                        f"<p class='error-note'>คำแนะนำ: กรุณาลองดำเนินการอีกครั้ง หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                        f"</div>"
+                    )
+                    messages.error(request, error_message)
+                    return redirect('index')
                 
                 try:
                     os.remove(file_template_xlsx)
                 except FileNotFoundError:
                     logger.warning(f"Temporary file {file_template_xlsx} not found for deletion.")
                 except Exception as e:
-                    logger.error(f"Error deleting temporary file: {e}")
+                    logger.error(f"Failed to delete temporary file: {e}")
+                    error_message = (
+                        f"<div class='error-container'>"
+                        f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถลบไฟล์ชั่วคราวได้<br>"
+                        f"<ul class='error-details'>"
+                        f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                        f"<li>{str(e)}</li>"
+                        f"</ul>"
+                        f"<p class='error-note'>คำแนะนำ: กรุณาลองดำเนินการอีกครั้ง หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                        f"</div>"
+                    )
+                    messages.error(request, error_message)
+                    return redirect('index')
 ############
 ############
             # บันทึกลิงก์ดาวน์โหลดลงใน session
@@ -1790,10 +1997,6 @@ def index(request):
                 'extracted_kks_counts': extracted_kks_counts,
             })
     else:
-        # เมื่อไม่มีการส่งข้อมูลผ่านแบบฟอร์ม (เช่น เมื่อผู้ใช้เข้าถึงหน้าเว็บครั้งแรกหรือรีเฟรชหน้าเว็บโดยไม่มีการส่งแบบฟอร์ม) 
-        # จะมีการสร้างอินสแตนซ์ของ UploadFileForm() ซึ่งเป็นฟอร์มที่ใช้ในการอัปโหลดไฟล์ เพื่อให้ฟอร์มแสดงในหน้าเว็บ 
-        # ผู้ใช้สามารถเห็นฟอร์มและอัปโหลดไฟล์ได้
-        
         # #! Clear session data after download
         # request.session.pop('schedule_filename', None)
         # request.session.pop('location_filename', None)
@@ -1860,17 +2063,50 @@ def download_comment_file(request):
                     return response
             except Exception as e:
                 # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
-                messages.error(request, f"เกิดข้อผิดพลาดในการเปิดไฟล์ Comment: {str(e)}")
+                logger.error(f"Failed to open comment file for download: {str(e)}")
+                error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ที่ต้องการดาวน์โหลดได้<br>"
+                    f"<ul class='error-details'>"
+                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                    f"<li>{str(e)}</li>"
+                    f"</ul>"
+                    f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าไฟล์มีอยู่จริงและสามารถเปิดได้ปกติ  หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                    f"</div>"
+                )
+                messages.error(request, error_message)
                 return render(request, 'maximo_app/upload.html', {})
         else:
             # แสดงข้อผิดพลาดเมื่อไม่พบไฟล์
-            messages.error(request, "ไม่พบไฟล์ Comment ที่ต้องการดาวน์โหลด")
+            logger.error("Comment file not found for download.")
+            error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ที่ต้องการดาวน์โหลด<br>"
+                    f"<ul class='error-details'>"
+                    f"<p class='error-description'>รายละเอียดข้อผิดพลาด:</p>"
+                    f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                    f"</ul>"
+                    f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าไฟล์มีอยู่หรืออัปโหลดไฟล์ใหม่แล้วลองดาวน์โหลดอีกครั้ง</p>"
+                    f"</div>"
+                )
+            messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {})
     else:
         # แสดงข้อผิดพลาดเมื่อไม่ได้รับ path ของไฟล์จาก session
-        messages.error(request, "ไม่มีไฟล์ Comment สำหรับการดาวน์โหลด")
+        logger.error("Comment file path not specified in session.")
+        error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีไฟล์สำหรับการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ไม่มีการส่งข้อมูล path ของไฟล์ Comment มาจาก session</li>"
+                f"</ul>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาลองดำเนินการอีกครั้ง หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+                f"</div>"
+            )
+        messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
-
+####
 def download_job_plan_task_file(request):
     # ดึงลิงก์ไฟล์จาก session
     jp_task_file = request.session.get('download_link_job_plan_task', None)
@@ -1889,15 +2125,48 @@ def download_job_plan_task_file(request):
                     return response
             except Exception as e:
                 # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
-                messages.error(request, f"เกิดข้อผิดพลาดในการเปิดไฟล์ Job Plan Task: {str(e)}")
+                logger.error(f"Error opening Job Plan Task file: {str(e)}")
+                error_message = (
+                    f"<div class='error-container'>"
+                    f"<strong class='error-title'>ข้อผิดพลาด:</strong> ไม่สามารถเปิดไฟล์ Job Plan Task ได้<br>"
+                    f"<ul class='error-details'>"
+                    f"<p class='error-description'>รายละเอียดข้อผิดพลาด:</p>"
+                    f"<li>{str(e)}</li>"
+                    f"</ul>"
+                    f"<p class='error-note'>*** โปรดตรวจสอบว่าไฟล์มีอยู่จริงและไม่เสียหาย หรือติดต่อทีมงานเพื่อขอความช่วยเหลือเพิ่มเติม ***</p>"
+                    f"</div>"
+                )
+                messages.error(request, error_message)
                 return render(request, 'maximo_app/upload.html', {})
         else:
             # กรณีไม่พบไฟล์
-            messages.error(request, "ไม่พบไฟล์ Job Plan Task ที่ต้องการดาวน์โหลด")
+            logger.error("Job Plan Task file not found for download.")
+            error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>ข้อผิดพลาด:</strong> ไม่พบไฟล์ Job Plan Task ที่ต้องการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>รายละเอียดข้อผิดพลาด:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ Job Plan Task ที่คุณต้องการดาวน์โหลดได้</li>"
+                f"</ul>"
+                f"<p class='error-note'>*** โปรดตรวจสอบว่าไฟล์มีอยู่หรืออัปโหลดไฟล์ใหม่ก่อนที่จะลองดาวน์โหลดอีกครั้ง ***</p>"
+                f"</div>"
+            )
+            messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {})
     else:
         # กรณีไม่มีการระบุไฟล์ใน session
-        messages.error(request, "ไม่มีการระบุไฟล์ Job Plan Task ให้ดาวน์โหลด")
+        logger.error("Job Plan Task file path not specified in session.")
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>ข้อผิดพลาด:</strong> ไม่มีการระบุไฟล์ Job Plan Task ให้ดาวน์โหลด<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>รายละเอียดข้อผิดพลาด:</p>"
+            f"<li>ไม่มีการส่งข้อมูล path ของไฟล์ Job Plan Task มาจาก session</li>"
+            f"</ul>"
+            f"<p class='error-note'>*** โปรดลองอัปโหลดไฟล์อีกครั้งหรือติดต่อทีมงานเพื่อขอความช่วยเหลือเพิ่มเติม ***</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
 
 def download_job_plan_labor_file(request):
@@ -2133,7 +2402,7 @@ def filter_site(request):
         logger.warning(f"Site with id {site_id} does not exist.")
         return JsonResponse({'error': 'Site not found.'}, status=404)
     except Exception as e:
-        logger.error(f"Unexpected error in filter_site: {str(e)}", exc_info=True)
+        logger.error(f"An error occurred in filter_site: {str(e)}", exc_info=True)
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
 
     child_site_list = [{
@@ -2162,7 +2431,7 @@ def filter_child_site(request):
         logger.warning(f"ChildSite with id {child_site_id} does not exist.")
         return JsonResponse({'error': 'Child Site not found.'}, status=404)
     except Exception as e:
-        logger.error(f"Unexpected error in filter_child_site: {str(e)}")
+        logger.error(f"An error occurred in filter_child_site: {str(e)}")
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
 
     return JsonResponse({
@@ -2188,7 +2457,7 @@ def filter_worktype(request):
         logger.warning(f"WorkType with id {work_type_id} does not exist.")
         return JsonResponse({'error': 'WorkType not found.'}, status=404)
     except Exception as e:
-        logger.error(f"Unexpected error in filter_worktype: {str(e)}", exc_info=True)
+        logger.error(f"An error occurred in filter_worktype: {str(e)}", exc_info=True)
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     return JsonResponse({
         'description': work_type.description
@@ -2225,7 +2494,7 @@ def filter_plant_type(request):
         logger.warning(f"PlantType with id {plant_type_id} does not exist.")
         return JsonResponse({'error': 'PlantType not found.'}, status=404)
     except Exception as e:
-        logger.error(f"Unexpected error in filter_plant_type: {str(e)}", exc_info=True)
+        logger.error(f"An error occurred in filter_plant_type: {str(e)}", exc_info=True)
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     
     # แปลงข้อมูลเป็น list เพื่อส่งกลับไปยัง frontend
@@ -2284,7 +2553,7 @@ def filter_acttype(request):
         logger.warning(f"ActType with id {acttype_id} does not exist.")
         return JsonResponse({'error': 'ActType not found.'}, status=404)
     except Exception as e:
-        logger.error(f"Unexpected error in filter_acttype: {str(e)}", exc_info=True)
+        logger.error(f"An error occurred in filter_acttype: {str(e)}", exc_info=True)
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     
     return JsonResponse({
@@ -2311,7 +2580,7 @@ def filter_wbs(request):
         logger.warning(f"WBSCode with id {wbs_id} does not exist.")
         return JsonResponse({'error': 'WBSCode not found.'}, status=404)
     except Exception as e:
-        logger.error(f"Unexpected error in filter_wbs: {e}", exc_info=True)
+        logger.error(f"An error occurred in filter_wbs: {e}", exc_info=True)
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     
     return JsonResponse({
@@ -2337,7 +2606,7 @@ def filter_wostatus(request):
         logger.warning(f"Status with id {wostatus_id} does not exist.")
         return JsonResponse({'error': 'Status not found.'}, status=404)
     except Exception as e:
-        logger.error(f"Unexpected error in filter_wostatus: {e}", exc_info=True)
+        logger.error(f"An error occurred in filter_wostatus: {e}", exc_info=True)
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     
     return JsonResponse({

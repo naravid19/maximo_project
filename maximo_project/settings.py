@@ -206,8 +206,13 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['file_info', 'file_error', 'file_warning', 'file_critical', 'file_debug', 'console'],  # ส่งข้อความการบันทึก
-            'level': 'DEBUG',   # ระดับของข้อความที่ logger จะบันทึกได้
+            'handlers': ['file_info', 'file_error', 'file_warning', 'file_critical', 'file_debug', 'console'],  # กำหนดว่าข้อความ log จะถูกจัดการอย่างไรหรือจะถูกส่งไปที่ไหน Console: แสดง log ใน terminal หรือ console ,File: บันทึก log ลงไฟล์
+            'level': 'DEBUG',   # ระดับความสำคัญของข้อความที่จะถูกบันทึก
+            'propagate': True,
+        },
+        'maximo_app': {
+            'handlers': ['file_info', 'file_error', 'file_warning', 'file_critical', 'file_debug', 'console'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     },
