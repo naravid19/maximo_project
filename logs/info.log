@@ -16319,3 +16319,139 @@ SUBWBS GROUP: BM
 [10/Oct/2024 09:19:07] INFO [django.server:213] "POST / HTTP/1.1" 200 62181
 [10/Oct/2024 09:20:32] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
 [10/Oct/2024 09:20:33] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:21:31] INFO [maximo_app.views:1911] File saved successfully as temp\ec0ce844-ebbe-41b9-972e-354917b83310_Template-MxLoader-JP-PMPlan.xlsm
+[10/Oct/2024 09:21:32] INFO [django.server:213] "POST / HTTP/1.1" 200 64362
+[10/Oct/2024 09:21:51] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 09:27:07] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 09:27:08] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 200 14286
+[10/Oct/2024 09:27:09] INFO [django.server:213] "GET /download-original/ HTTP/1.1" 200 548461
+[10/Oct/2024 09:27:10] INFO [django.server:213] "GET /download-example-schedule/ HTTP/1.1" 200 207630
+[10/Oct/2024 09:27:11] INFO [django.server:213] "GET /download-example-template/ HTTP/1.1" 200 1297708
+[10/Oct/2024 09:27:24] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:27:24] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 200 67542
+[10/Oct/2024 09:27:33] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:27:33] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 200 67542
+[10/Oct/2024 09:28:28] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 09:28:34] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:28:34] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 200 67542
+[10/Oct/2024 09:33:55] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:33:57] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:35:26] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:35:27] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:35:38] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:35:39] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:35:41] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:35:41] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 200 74431
+[10/Oct/2024 09:35:46] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 09:35:49] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:35:49] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 200 74431
+[10/Oct/2024 09:37:06] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:37:07] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:37:09] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 09:37:12] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:37:12] ERROR [maximo_app.views:2436] Failed to download Draft Schedule file: name 'context' is not defined
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2427, in download_schedule
+    return render(request, 'maximo_app/upload.html', context)
+                                                     ^^^^^^^
+NameError: name 'context' is not defined
+[10/Oct/2024 09:37:12] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 200 69930
+[10/Oct/2024 09:37:28] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:37:29] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:37:32] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 09:37:33] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:37:33] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 200 67542
+[10/Oct/2024 09:40:38] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:40:39] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:40:43] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 09:40:45] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:40:45] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 302 0
+[10/Oct/2024 09:40:45] INFO [django.server:213] "GET / HTTP/1.1" 200 73376
+[10/Oct/2024 09:40:47] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:40:47] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 302 0
+[10/Oct/2024 09:40:47] INFO [django.server:213] "GET / HTTP/1.1" 200 73376
+[10/Oct/2024 09:40:53] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:40:53] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 302 0
+[10/Oct/2024 09:40:53] INFO [django.server:213] "GET / HTTP/1.1" 200 73376
+[10/Oct/2024 09:41:49] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:41:50] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:42:12] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:42:13] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:42:17] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 09:42:18] INFO [django.server:213] "GET /download-schedule/ HTTP/1.1" 200 14286
+[10/Oct/2024 09:42:19] INFO [django.server:213] "GET /download-original/ HTTP/1.1" 200 548461
+[10/Oct/2024 09:42:20] INFO [django.server:213] "GET /download-example-schedule/ HTTP/1.1" 200 207630
+[10/Oct/2024 09:42:21] INFO [django.server:213] "GET /download-example-template/ HTTP/1.1" 200 1297708
+[10/Oct/2024 09:46:38] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:46:39] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:46:47] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:46:48] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:47:42] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:47:43] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:48:03] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:48:04] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:48:09] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:48:11] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:48:26] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:48:27] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:48:43] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:48:44] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:48:51] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:48:52] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:49:00] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:49:00] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:49:09] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:49:10] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:49:16] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:49:17] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:49:22] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:49:23] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:49:27] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:49:28] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:49:31] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:49:33] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:49:45] INFO [django.server:213] "GET / HTTP/1.1" 200 70848
+[10/Oct/2024 09:49:46] INFO [django.server:213] "GET /download-original/ HTTP/1.1" 200 548461
+[10/Oct/2024 09:49:50] INFO [django.server:213] "GET /download-example-template/ HTTP/1.1" 200 1297708
+[10/Oct/2024 09:49:59] INFO [maximo_app.views:2721] Successfully retrieved PlantType with id 1
+[10/Oct/2024 09:49:59] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[10/Oct/2024 09:50:00] INFO [maximo_app.views:2638] Successfully retrieved Site with id 2
+[10/Oct/2024 09:50:00] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 09:50:01] INFO [maximo_app.views:2669] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 09:50:01] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 09:50:04] INFO [maximo_app.views:2844] Successfully retrieved Status with id 1
+[10/Oct/2024 09:50:04] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 09:50:05] INFO [maximo_app.views:2695] Successfully retrieved WorkType with id 3
+[10/Oct/2024 09:50:05] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 09:50:06] INFO [maximo_app.views:2791] Successfully retrieved ActType with id 2
+[10/Oct/2024 09:50:06] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[10/Oct/2024 09:50:07] INFO [maximo_app.views:2818] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 09:50:07] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 09:50:12] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: T
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 10
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO2
+SUBWBS GROUP: BM
+[10/Oct/2024 09:50:12] INFO [maximo_app.views:221] EGPROJECTID: O-BPKT10-67MI
+[10/Oct/2024 09:50:12] INFO [maximo_app.views:222] EGWBS: O-BPKT10-67MI-BM
+[10/Oct/2024 09:50:12] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Minor Inspection BPK-T10 2567
+[10/Oct/2024 09:50:12] INFO [maximo_app.views:224] LOCATION: BPK-T10
+[10/Oct/2024 09:50:12] INFO [maximo_app.views:252] Schedule file: Final Schedule PMN-H03 200967.xlsx
+[10/Oct/2024 09:50:12] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 09:50:12] INFO [maximo_app.views:264] Files saved successfully at: temp\92b1bc38-be48-4365-b9a8-ebb43043e011_Final Schedule PMN-H03 200967.xlsx and temp\d7c4144a-9885-4c20-8256-80f9bcf02e3b_Locations PMN-H.xlsx
+[10/Oct/2024 09:50:13] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 09:50:13] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 09:50:13] INFO [maximo_app.views:412] DataFrame preparation completed successfully.
+[10/Oct/2024 09:50:17] INFO [django.server:213] "POST / HTTP/1.1" 200 62181
+[10/Oct/2024 09:50:51] INFO [maximo_app.views:1911] File saved successfully as temp\053c0884-34b5-4b19-848b-19a1e4d18eb0_Template MxLoader JB-PM Plan.xlsm
+[10/Oct/2024 09:50:51] INFO [django.server:213] "POST / HTTP/1.1" 200 64363
+[10/Oct/2024 09:50:59] INFO [django.server:213] "GET /download-job-plan-task/ HTTP/1.1" 200 57739
+[10/Oct/2024 09:51:02] INFO [django.server:213] "GET /download-job-plan-labor/ HTTP/1.1" 200 7782
+[10/Oct/2024 09:51:04] INFO [django.server:213] "GET /download-pm-plan/ HTTP/1.1" 200 66033
+[10/Oct/2024 09:51:06] INFO [django.server:213] "GET /download-template/ HTTP/1.1" 200 819589

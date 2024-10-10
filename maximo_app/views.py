@@ -1794,9 +1794,9 @@ def index(request):
             yellow_fill = PatternFill(start_color='FFFF00', end_color='FFFF00', fill_type='solid')
 
             # Define file paths
-            file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template-MxLoader-JP-PMPlan.xlsm')
-            file_template_xlsx = os.path.join(temp_dir, f"{uuid.uuid4()}_Template-MxLoader-JP-PMPlan_temp.xlsx")
-            file_template_xlsm = os.path.join(temp_dir, f"{uuid.uuid4()}_Template-MxLoader-JP-PMPlan.xlsm")
+            file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template MxLoader JB-PM Plan.xlsm')
+            file_template_xlsx = os.path.join(temp_dir, f"{uuid.uuid4()}_Template MxLoader JB-PM Plan_temp.xlsx")
+            file_template_xlsm = os.path.join(temp_dir, f"{uuid.uuid4()}_Template MxLoader JB-PM Plan.xlsm")
             
             sheet_jp_labor = 'JPPLAN-LABOR'
             sheet_jp_task = 'JPPLAN-TASK'
@@ -2300,7 +2300,7 @@ def download_template_file(request):
     # ดึงลิงก์ไฟล์จาก session
     template_file = request.session.get('download_link_template', None)
     location = request.session.get('location', 'BLANK')
-    original_file_name = f'Template-MxLoader-JP-PMPlan-({location}).xlsm'
+    original_file_name = f'Template MxLoader JB-PM Plan ({location}).xlsm'
 
     if template_file:
         # ตรวจสอบเส้นทางของไฟล์และแปลงให้เป็นเส้นทางสมบูรณ์ถ้ายังไม่เป็น
@@ -2316,10 +2316,10 @@ def download_template_file(request):
                     return response
             except Exception as e:
                 # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
-                logger.error(f"Failed to open Template-MxLoader-JP-PMPlan file for download: {str(e)}", exc_info=True)
+                logger.error(f"Failed to open Template MxLoader JB-PM Plan file for download: {str(e)}", exc_info=True)
                 error_message = (
                     f"<div class='error-container'>"
-                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ Template-MxLoader-JP-PMPlan ได้<br>"
+                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ Template MxLoader JB-PM Plan ได้<br>"
                     f"<ul class='error-details'>"
                     f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                     f"<li>เกิดข้อผิดพลาดระหว่างการเปิดไฟล์ กรุณาตรวจสอบว่าไฟล์มีอยู่จริงและไม่เสียหาย</li>"
@@ -2331,10 +2331,10 @@ def download_template_file(request):
                 return render(request, 'maximo_app/upload.html', {})
         else:
             # แสดงข้อผิดพลาดเมื่อไม่พบไฟล์
-            logger.error("Template-MxLoader-JP-PMPlan file not found for download.")
+            logger.error("Template MxLoader JB-PM Plan file not found for download.")
             error_message = (
                 f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด<br>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template MxLoader JB-PM Plan ที่ต้องการดาวน์โหลด<br>"
                 f"<ul class='error-details'>"
                 f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                 f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
@@ -2347,13 +2347,13 @@ def download_template_file(request):
             return render(request, 'maximo_app/upload.html', {})
     else:
         # แสดงข้อผิดพลาดเมื่อไม่มีไฟล์ใน session
-        logger.error("Template-MxLoader-JP-PMPlan file path not specified in session.")
+        logger.error("Template MxLoader JB-PM Plan file path not specified in session.")
         error_message = (
             f"<div class='error-container'>"
-            f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีการระบุไฟล์ Template-MxLoader-JP-PMPlan สำหรับการดาวน์โหลด<br>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีการระบุไฟล์ Template MxLoader JB-PM Plan สำหรับการดาวน์โหลด<br>"
             f"<ul class='error-details'>"
             f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-            f"<li>ระบบไม่ได้รับข้อมูลที่อยู่ของไฟล์ Template-MxLoader-JP-PMPlan จาก session</li>"
+            f"<li>ระบบไม่ได้รับข้อมูลที่อยู่ของไฟล์ Template MxLoader JB-PM Plan จาก session</li>"
             f"</ul>"
             f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
             f"</div>"
@@ -2364,14 +2364,14 @@ def download_template_file(request):
 def download_original_template(request):
     try:
         # ระบุตำแหน่งไฟล์เทมเพลตที่ต้องการดาวน์โหลด
-        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template-MxLoader-JP-PMPlan.xlsm')
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template MxLoader JB-PM Plan.xlsm')
         
         # ตรวจสอบว่าไฟล์มีอยู่หรือไม่
         if not os.path.exists(file_path):
-            logger.error("Template-MxLoader-JP-PMPlan file not found in the specified path for download.")
+            logger.error("Template MxLoader JB-PM Plan file not found in the specified path for download.")
             error_message = (
                 f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด<br>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template MxLoader JB-PM Plan ที่ต้องการดาวน์โหลด<br>"
                 f"<ul class='error-details'>"
                 f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                 f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
@@ -2390,10 +2390,10 @@ def download_original_template(request):
 
     except Exception as e:
         # แสดงข้อผิดพลาดเมื่อไม่สามารถดำเนินการได้
-        logger.error(f"Failed to download Template-MxLoader-JP-PMPlan file: {str(e)}", exc_info=True)
+        logger.error(f"Failed to download Template MxLoader JB-PM Plan file: {str(e)}", exc_info=True)
         error_message = (
             f"<div class='error-container'>"
-            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Template-MxLoader-JP-PMPlan ได้<br>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Template MxLoader JB-PM Plan ได้<br>"
             f"<ul class='error-details'>"
             f"<p class='error-description'>สาเหตุของปัญหา:</p>"
             f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"
@@ -2407,14 +2407,14 @@ def download_original_template(request):
 def download_schedule(request):
     try:
         # ระบุตำแหน่งของไฟล์ที่ต้องการดาวน์โหลด
-        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Draft Schedule.xlsx')
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Final Schedule.xlsx')
         
         # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if not os.path.exists(file_path):
-            logger.error("Draft Schedule file not found in the specified path for download.")
+            logger.error("Final Schedule file not found in the specified path for download.")
             error_message = (
                 f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Draft Schedule ที่ต้องการดาวน์โหลด<br>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Final Schedule ที่ต้องการดาวน์โหลด<br>"
                 f"<ul class='error-details'>"
                 f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                 f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
@@ -2424,7 +2424,7 @@ def download_schedule(request):
                 f"</div>"
             )
             messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {})
+            return redirect('index')
         
         # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -2433,10 +2433,10 @@ def download_schedule(request):
 
     except Exception as e:
         # แสดงข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
-        logger.error(f"Failed to download Draft Schedule file: {str(e)}", exc_info=True)
+        logger.error(f"Failed to download Final Schedule file: {str(e)}", exc_info=True)
         error_message = (
             f"<div class='error-container'>"
-            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Draft Schedule ได้<br>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Final Schedule ได้<br>"
             f"<ul class='error-details'>"
             f"<p class='error-description'>สาเหตุของปัญหา:</p>"
             f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"
@@ -2445,19 +2445,19 @@ def download_schedule(request):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+        return redirect('index')
 
 def download_example_template(request):
     try:
         # ระบุตำแหน่งไฟล์ที่ต้องการดาวน์โหลด
-        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template-MxLoader-JP-PMPlan-(SNR-H03).xlsm')
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template MxLoader JB-PM Plan (SNR-H03).xlsm')
         
         # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if not os.path.exists(file_path):
-            logger.error("Template-MxLoader-JP-PMPlan-(SNR-H03) file not found in the specified path for download.")
+            logger.error("Template MxLoader JB-PM Plan (SNR-H03) file not found in the specified path for download.")
             error_message = (
                 f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template-MxLoader-JP-PMPlan ที่ต้องการดาวน์โหลด<br>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template MxLoader JB-PM Plan ที่ต้องการดาวน์โหลด<br>"
                 f"<ul class='error-details'>"
                 f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                 f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
@@ -2476,10 +2476,10 @@ def download_example_template(request):
 
     except Exception as e:
         # แสดงข้อความข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
-        logger.error(f"Failed to download Template-MxLoader-JP-PMPlan-(SNR-H03) file: {str(e)}", exc_info=True)
+        logger.error(f"Failed to download Template MxLoader JB-PM Plan (SNR-H03) file: {str(e)}", exc_info=True)
         error_message = (
             f"<div class='error-container'>"
-            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Template-MxLoader-JP-PMPlan ได้<br>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Template MxLoader JB-PM Plan ได้<br>"
             f"<ul class='error-details'>"
             f"<p class='error-description'>สาเหตุของปัญหา:</p>"
             f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"
@@ -2493,14 +2493,14 @@ def download_example_template(request):
 def download_example_schedule(request):
     try:
         # ระบุตำแหน่งของไฟล์ที่ต้องการดาวน์โหลด
-        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Draft Schedule (SNR-H).xlsx')
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Final Schedule (SNR-H).xlsx')
         
         # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if not os.path.exists(file_path):
-            logger.error("Draft Schedule (SNR-H) file not found in the specified path for download.")
+            logger.error("Final Schedule (SNR-H) file not found in the specified path for download.")
             error_message = (
                 f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Draft Schedule ที่ต้องการดาวน์โหลด<br>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Final Schedule ที่ต้องการดาวน์โหลด<br>"
                 f"<ul class='error-details'>"
                 f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                 f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
@@ -2519,10 +2519,10 @@ def download_example_schedule(request):
 
     except Exception as e:
         # แสดงข้อความข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
-        logger.error(f"Failed to download Draft Schedule (SNR-H) file: {str(e)}", exc_info=True)
+        logger.error(f"Failed to download Final Schedule (SNR-H) file: {str(e)}", exc_info=True)
         error_message = (
             f"<div class='error-container'>"
-            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Draft Schedule ได้<br>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Final Schedule ได้<br>"
             f"<ul class='error-details'>"
             f"<p class='error-description'>สาเหตุของปัญหา:</p>"
             f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"

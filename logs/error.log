@@ -7137,3 +7137,35 @@ AttributeError: 'str' object has no attribute 'wbs_code'
 [10/Oct/2024 08:58:50] WARNING [django.server:213] "GET /filter-site/?site_id=7 HTTP/1.1" 400 33
 [10/Oct/2024 08:59:36] WARNING [django.request:248] Bad Request: /filter-site/
 [10/Oct/2024 08:59:36] WARNING [django.server:213] "GET /filter-site/?site_id=1 HTTP/1.1" 400 56
+[10/Oct/2024 09:27:24] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:27:24] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:27:33] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:27:33] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:28:34] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:28:34] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:35:41] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:35:41] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:35:49] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:35:49] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:37:12] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:37:12] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:37:12] ERROR [maximo_app.views:2436] Failed to download Draft Schedule file: name 'context' is not defined
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2427, in download_schedule
+    return render(request, 'maximo_app/upload.html', context)
+                                                     ^^^^^^^
+NameError: name 'context' is not defined
+[10/Oct/2024 09:37:12] ERROR [maximo_app.views:2436] Failed to download Draft Schedule file: name 'context' is not defined
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2427, in download_schedule
+    return render(request, 'maximo_app/upload.html', context)
+                                                     ^^^^^^^
+NameError: name 'context' is not defined
+[10/Oct/2024 09:37:33] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:37:33] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:40:45] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:40:45] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:40:47] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:40:47] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:40:53] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 09:40:53] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
