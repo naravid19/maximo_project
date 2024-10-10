@@ -26,6 +26,7 @@ import time
 import uuid
 import xlwings as xw
 
+# ตั้งค่า stdout ให้ใช้การเข้ารหัสแบบ utf-8
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 logging.basicConfig(
     level=logging.INFO,
@@ -997,18 +998,15 @@ def index(request):
                 missing_info = ', '.join([f"{col}: {count} รายการ" for col, count in zip(missing_columns, missing_counts)])
                 logger.error(f"Missing data detected in columns: {missing_info}", exc_info=True)
                 error_messages.append(f"พบข้อมูลที่ขาดหายในคอลัมน์ต่อไปนี้: {missing_info} กรุณาตรวจสอบและเพิ่มข้อมูลที่ขาดหายเพื่อให้ดำเนินการต่อได้")
-                return render(request, 'maximo_app/upload.html', {
-                    'error_messages': error_messages,
-                    'schedule_filename': schedule_filename,
-                    'location_filename': location_filename,
-                })
-            
-            
             # ตรวจสอบข้อมูลที่ไม่ถูกต้อง
+            
             if invalid_columns:
                 invalid_info = ', '.join([f"{col}: {count} รายการ" for col, count in zip(invalid_columns, invalid_counts)])
+                logger.error(f"Invalid data detected in columns: {invalid_info}", exc_info=True)
                 error_messages.append(f"พบข้อมูลที่ไม่ถูกต้องในคอลัมน์ต่อไปนี้: {invalid_info} กรุณาตรวจสอบและแก้ไขข้อมูลที่ไม่ถูกต้องเพื่อดำเนินการต่อ")
-                # ส่งข้อความแจ้งเตือนไปยังหน้า upload.html
+            
+            # ส่งข้อความแจ้งเตือนไปยังหน้า upload.html
+            if error_messages:
                 return render(request, 'maximo_app/upload.html', {
                     'error_messages': error_messages,
                     'schedule_filename': schedule_filename,

@@ -7399,3 +7399,15 @@ UnboundLocalError: cannot access local variable 'error_message' where it is not 
 NoneType: None
 [10/Oct/2024 14:32:03] ERROR [maximo_app.views:998] Missing data detected in columns: KKS: 10 รายการ, EQUIPMENT: 10 รายการ
 NoneType: None
+[10/Oct/2024 14:40:53] ERROR [maximo_app.views:999] Missing data detected in columns: KKS: 10 รายการ, EQUIPMENT: 10 รายการ
+NoneType: None
+[10/Oct/2024 14:40:53] ERROR [maximo_app.views:999] Missing data detected in columns: KKS: 10 รายการ, EQUIPMENT: 10 รายการ
+NoneType: None
+[10/Oct/2024 14:48:20] ERROR [maximo_app.views:999] Missing data detected in columns: KKS: 10 รายการ, EQUIPMENT: 10 รายการ
+NoneType: None
+[10/Oct/2024 14:48:20] ERROR [maximo_app.views:999] Missing data detected in columns: KKS: 10 รายการ, EQUIPMENT: 10 รายการ
+NoneType: None
+[10/Oct/2024 14:48:20] ERROR [maximo_app.views:1005] Invalid data detected in columns: DURATION_(HR.): 9 รายการ
+NoneType: None
+[10/Oct/2024 14:48:20] ERROR [maximo_app.views:1005] Invalid data detected in columns: DURATION_(HR.): 9 รายการ
+NoneType: None
