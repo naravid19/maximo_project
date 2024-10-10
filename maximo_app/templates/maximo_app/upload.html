@@ -636,7 +636,24 @@
         </div>
 
     {% else %}
-
+    
+        {% if error_messages %}
+            <div class="flex p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg shadow-md sm:text-xs md:text-sm lg:text-base xl:text-lg 2xl:text-xl bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-600" role="alert">
+                <svg class="flex-shrink-0 inline w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                </svg>
+                <span class="sr-only">Danger</span>
+                <div class="flex-1">
+                    <span class="text-base font-semibold sm:text-base md:text-lg lg:text-lg xl:text-lg 2xl:text-xl">ข้อมูลไม่สมบูรณ์:</span>
+                    <ul class="mt-2 ml-4 space-y-1 text-sm list-disc list-inside sm:text-sm md:text-base lg:text-base xl:text-base 2xl:text-lg">
+                        {% for message in error_messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+        
         <div class="container relative px-6 pt-[1.375rem] pb-4 max-w-screen-sm mx-auto my-4 bg-white rounded-md shadow-sm">
             <div class="absolute top-0 left-0 w-full h-2 bg-[rgb(63,81,181)] rounded-t-md"></div>
         
@@ -759,15 +776,7 @@
     
     {% endif %}
 
-    {% if error_message %}
-
-        <div class="alert alert-danger">
-            <p>{{ error_message }}</p>
-        </div>
-
-    {% endif %}
-
-    {% if not error_message %}
+    {% if not error_messages %}
 
         {% if extracted_kks_counts is not None and extracted_kks_counts|length > 0 %}
 

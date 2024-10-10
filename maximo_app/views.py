@@ -16,13 +16,24 @@ from openpyxl import load_workbook
 from openpyxl.styles import Border, Side, PatternFill, Alignment
 from openpyxl.styles import Font
 import logging
+import io
 import os
 import pandas as pd
 import re
 import shutil
+import sys
 import time
 import uuid
 import xlwings as xw
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+logging.basicConfig(
+    level=logging.INFO,
+    handlers=[
+        logging.StreamHandler(sys.stdout),  # แสดงผลในคอนโซลด้วย utf-8
+        logging.FileHandler("logfile.log", encoding="utf-8"),  # บันทึกลงไฟล์ด้วย utf-8
+    ]
+)
 
 logger = logging.getLogger(__name__)
 
@@ -51,7 +62,7 @@ def index(request):
     location_filename = None
     extracted_kks_counts = None
     user_input_mapping = {}
-    error_message = ""
+    error_messages = []
 ############
 ############
     from django.utils.html import format_html
@@ -918,56 +929,88 @@ def index(request):
             response_new_na = df_original_copy['RESPONSE'].isin([''])
             response_craft_na = df_original_copy['RESPONSE_CRAFT'].isin([''])
 
-            missing_columns = []
             # ตรวจสอบเงื่อนไขแต่ละคอลัมน์และเก็บชื่อคอลัมน์ที่ข้อมูลขาดหาย
+            missing_columns = []
+            missing_counts = []
+            
             if ((task_not_xx) & (kks_new_na)).any():
                 missing_columns.append('KKS')
+                missing_counts.append(((task_not_xx) & (kks_new_na)).sum())
             if ((task_not_xx) & (equip_new_na)).any():
                 missing_columns.append('EQUIPMENT')
+                missing_counts.append(((task_not_xx) & (equip_new_na)).sum())
             if ((task_not_xx) & (task_order_new_na)).any():
                 missing_columns.append('TASK_ORDER')
+                missing_counts.append(((task_not_xx) & (task_order_new_na)).sum())
             if ((task_not_xx) & (task_new_na)).any():
                 missing_columns.append('TASK')
+                missing_counts.append(((task_not_xx) & (task_new_na)).sum())
             if ((task_not_xx) & (start_date_na)).any():
                 missing_columns.append('START_DATE')
+                missing_counts.append(((task_not_xx) & (start_date_na)).sum())
             if ((task_not_xx) & (finish_date_na)).any():
                 missing_columns.append('FINISH_DATE')
+                missing_counts.append(((task_not_xx) & (finish_date_na)).sum())
             if ((task_not_xx) & (ptw_na)).any():
                 missing_columns.append('PTW')
+                missing_counts.append(((task_not_xx) & (ptw_na)).sum())
             if ((task_not_xx) & (response_new_na)).any():
                 missing_columns.append('RESPONSE')
+                missing_counts.append(((task_not_xx) & (response_new_na)).sum())
             if ((task_not_xx) & (response_craft_na)).any():
                 missing_columns.append('RESPONSE_CRAFT')
+                missing_counts.append(((task_not_xx) & (response_craft_na)).sum())
             if (task_no_skill_rate).any():
                 missing_columns.append('SKILL RATE')
+                missing_counts.append(task_no_skill_rate.sum())
             if (task_no_type).any():
                 missing_columns.append('TYPE')
+                missing_counts.append(task_no_type.sum())
 
-            invalid_columns = []
             # ตรวจสอบเงื่อนไขแต่ละคอลัมน์และเก็บชื่อคอลัมน์ที่ข้อมูลไม่ถูกต้อง
+            invalid_columns = []
+            invalid_counts = []
+
             if ((~cond_duration | non_negative) & task_order_not_xx).any():
                 invalid_columns.append('DURATION_(HR.)')
-            if (~task_order_valid & (df_original_check['TASK_ORDER']!= -1)).any():
+                invalid_counts.append(((~cond_duration | non_negative) & task_order_not_xx).sum())
+            if (~task_order_valid & (df_original_check['TASK_ORDER'] != -1)).any():
                 invalid_columns.append('TASK_ORDER')
+                invalid_counts.append((~task_order_valid & (df_original_check['TASK_ORDER'] != -1)).sum())
             if (cond_start_date_new).any():
                 invalid_columns.append('START_DATE')
+                invalid_counts.append(cond_start_date_new.sum())
             if (cond_finish_date_new).any():
                 invalid_columns.append('FINISH_DATE')
+                invalid_counts.append(cond_finish_date_new.sum())
             if ((task_order) & (invalid_skill_rate)).any():
                 invalid_columns.append('SKILL RATE')
+                invalid_counts.append(((task_order) & (invalid_skill_rate)).sum())
             if ((task_type) & (~valid_type)).any():
                 invalid_columns.append('TYPE')
+                invalid_counts.append(((task_type) & (~valid_type)).sum())
             
-            # การตรวจสอบข้อมูล
-            if missing_columns or invalid_columns:
-                if missing_columns:
-                    error_message += f"พบข้อมูลขาดหายในคอลัมน์: {', '.join(missing_columns)} "
-                if invalid_columns:
-                    error_message += f"พบข้อมูลที่ไม่ถูกต้องในคอลัมน์: {', '.join(invalid_columns)}"
-                
+            error_messages = []
+            
+            # ตรวจสอบข้อมูลขาดหาย
+            if missing_columns:
+                missing_info = ', '.join([f"{col}: {count} รายการ" for col, count in zip(missing_columns, missing_counts)])
+                logger.error(f"Missing data detected in columns: {missing_info}", exc_info=True)
+                error_messages.append(f"พบข้อมูลที่ขาดหายในคอลัมน์ต่อไปนี้: {missing_info} กรุณาตรวจสอบและเพิ่มข้อมูลที่ขาดหายเพื่อให้ดำเนินการต่อได้")
+                return render(request, 'maximo_app/upload.html', {
+                    'error_messages': error_messages,
+                    'schedule_filename': schedule_filename,
+                    'location_filename': location_filename,
+                })
+            
+            
+            # ตรวจสอบข้อมูลที่ไม่ถูกต้อง
+            if invalid_columns:
+                invalid_info = ', '.join([f"{col}: {count} รายการ" for col, count in zip(invalid_columns, invalid_counts)])
+                error_messages.append(f"พบข้อมูลที่ไม่ถูกต้องในคอลัมน์ต่อไปนี้: {invalid_info} กรุณาตรวจสอบและแก้ไขข้อมูลที่ไม่ถูกต้องเพื่อดำเนินการต่อ")
                 # ส่งข้อความแจ้งเตือนไปยังหน้า upload.html
                 return render(request, 'maximo_app/upload.html', {
-                    'error_message': error_message,
+                    'error_messages': error_messages,
                     'schedule_filename': schedule_filename,
                     'location_filename': location_filename,
                 })
@@ -1994,7 +2037,7 @@ def index(request):
             
             return render(request, 'maximo_app/upload.html', {
                 'form': form,
-                'error_message': error_message,
+                'error_messages': error_messages,
                 'schedule_filename': schedule_filename,
                 'location_filename': location_filename,
                 'extracted_kks_counts': extracted_kks_counts,
@@ -2037,7 +2080,7 @@ def index(request):
     
     return render(request, 'maximo_app/upload.html', {
         'form': form,
-        'error_message': error_message,
+        'error_messages': error_messages,
         'schedule_filename': schedule_filename,
         'location_filename': location_filename,
         'extracted_kks_counts': extracted_kks_counts,

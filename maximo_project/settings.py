@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 from logging.handlers import RotatingFileHandler
 from concurrent_log_handler import ConcurrentRotatingFileHandler
 
@@ -165,6 +166,7 @@ LOGGING = {
             'formatter': 'verbose_default',
             'maxBytes': 10 * 1024 * 1024,
             'backupCount': 10,
+            'encoding': 'utf-8',
         },
         'file_warning': {
             'level': 'WARNING',
@@ -173,6 +175,7 @@ LOGGING = {
             'formatter': 'verbose_default',
             'maxBytes': 10 * 1024 * 1024,
             'backupCount': 10,
+            'encoding': 'utf-8',
         },
         'file_error': {
             'level': 'ERROR',
@@ -181,6 +184,8 @@ LOGGING = {
             'formatter': 'verbose_default',
             'maxBytes': 10 * 1024 * 1024,
             'backupCount': 10,
+            'encoding': 'utf-8',
+            
         },
         'file_critical': {
             'level': 'CRITICAL',
@@ -189,6 +194,7 @@ LOGGING = {
             'formatter': 'verbose_default',
             'maxBytes': 10 * 1024 * 1024,
             'backupCount': 10,
+            'encoding': 'utf-8',
         },
         'file_debug': {
             'level': 'DEBUG',
@@ -197,11 +203,13 @@ LOGGING = {
             'formatter': 'verbose_default',
             'maxBytes': 10 * 1024 * 1024,
             'backupCount': 10,
+            'encoding': 'utf-8',
         },
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
             'level': 'DEBUG',
+            'stream': sys.stdout,
         },
     },
     'loggers': {

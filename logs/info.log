@@ -16888,3 +16888,869 @@ SUBWBS GROUP: BM
 [10/Oct/2024 10:55:05] INFO [django.server:213] "GET /download-pm-plan/ HTTP/1.1" 200 66033
 [10/Oct/2024 10:55:05] INFO [django.server:213] "GET /download-template/ HTTP/1.1" 200 819635
 [10/Oct/2024 10:55:18] INFO [django.server:213] "GET / HTTP/1.1" 200 70848
+[10/Oct/2024 11:08:18] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:08:19] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:08:32] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:08:33] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:09:45] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:09:46] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:10:02] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:10:03] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:11:24] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:11:26] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:12:42] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:12:43] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:14:35] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:14:36] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:16:15] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:16:16] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:16:34] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:16:35] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:17:12] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:17:13] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:18:05] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:18:07] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:18:16] INFO [django.server:213] "GET / HTTP/1.1" 200 70848
+[10/Oct/2024 11:18:21] INFO [maximo_app.views:2749] Successfully retrieved PlantType with id 2
+[10/Oct/2024 11:18:21] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 11:18:22] INFO [maximo_app.views:2666] Successfully retrieved Site with id 3
+[10/Oct/2024 11:18:22] INFO [django.server:213] "GET /filter-site/?site_id=3 HTTP/1.1" 200 225
+[10/Oct/2024 11:18:24] INFO [maximo_app.views:2697] Successfully retrieved ChildSite with id 29
+[10/Oct/2024 11:18:24] INFO [django.server:213] "GET /filter-child-site/?child_site_id=29 HTTP/1.1" 200 91
+[10/Oct/2024 11:18:26] INFO [maximo_app.views:2872] Successfully retrieved Status with id 1
+[10/Oct/2024 11:18:26] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:18:27] INFO [maximo_app.views:2723] Successfully retrieved WorkType with id 3
+[10/Oct/2024 11:18:27] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 11:18:28] INFO [maximo_app.views:2819] Successfully retrieved ActType with id 1
+[10/Oct/2024 11:18:28] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 11:18:29] INFO [maximo_app.views:2846] Successfully retrieved WBSCode with id 2
+[10/Oct/2024 11:18:29] INFO [django.server:213] "GET /filter-wbs/?wbs_id=2 HTTP/1.1" 200 30
+[10/Oct/2024 11:18:34] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 2
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: CHN0
+PLANT NAME: CHN
+UNIT: 51
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO1
+SUBWBS GROUP: SU
+[10/Oct/2024 11:18:34] INFO [maximo_app.views:221] EGPROJECTID: O-CHNC51-67YI
+[10/Oct/2024 11:18:34] INFO [maximo_app.views:222] EGWBS: O-CHNC51-67YI-SU
+[10/Oct/2024 11:18:34] INFO [maximo_app.views:223] WBS DESC: WBS Support Hot Gas Path Inspection CHN-C51 2567
+[10/Oct/2024 11:18:34] INFO [maximo_app.views:224] LOCATION: CHN-C51
+[10/Oct/2024 11:18:34] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 11:18:34] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 11:18:34] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 11:18:34] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 11:18:39] INFO [django.server:213] "POST / HTTP/1.1" 200 62200
+[10/Oct/2024 11:19:49] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:19:50] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:20:08] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:20:09] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:20:45] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:20:46] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:21:03] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:21:05] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:21:16] INFO [django.server:213] "GET / HTTP/1.1" 200 70848
+[10/Oct/2024 11:21:22] INFO [maximo_app.views:2749] Successfully retrieved PlantType with id 3
+[10/Oct/2024 11:21:22] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=3 HTTP/1.1" 200 2823
+[10/Oct/2024 11:21:22] INFO [maximo_app.views:2666] Successfully retrieved Site with id 1
+[10/Oct/2024 11:21:22] INFO [django.server:213] "GET /filter-site/?site_id=1 HTTP/1.1" 200 1847
+[10/Oct/2024 11:21:24] INFO [maximo_app.views:2697] Successfully retrieved ChildSite with id 4
+[10/Oct/2024 11:21:24] INFO [django.server:213] "GET /filter-child-site/?child_site_id=4 HTTP/1.1" 200 145
+[10/Oct/2024 11:21:28] INFO [maximo_app.views:2872] Successfully retrieved Status with id 1
+[10/Oct/2024 11:21:28] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:21:28] INFO [maximo_app.views:2723] Successfully retrieved WorkType with id 3
+[10/Oct/2024 11:21:28] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 11:21:30] INFO [maximo_app.views:2819] Successfully retrieved ActType with id 2
+[10/Oct/2024 11:21:30] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[10/Oct/2024 11:21:31] INFO [maximo_app.views:2846] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 11:21:31] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:21:36] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2025
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: H
+SITE: BMB0
+PLANT NAME: BY
+UNIT: 01
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO2
+SUBWBS GROUP: BM
+[10/Oct/2024 11:21:36] INFO [maximo_app.views:221] EGPROJECTID: O-BYH01-68MI
+[10/Oct/2024 11:21:36] INFO [maximo_app.views:222] EGWBS: O-BYH01-68MI-BM
+[10/Oct/2024 11:21:36] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Minor Inspection BY-H01 2568
+[10/Oct/2024 11:21:36] INFO [maximo_app.views:224] LOCATION: BY-H01
+[10/Oct/2024 11:21:36] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 11:21:36] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 11:21:36] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 11:21:36] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 11:21:41] INFO [django.server:213] "POST / HTTP/1.1" 200 62197
+[10/Oct/2024 11:22:45] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:22:46] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:22:47] INFO [django.server:213] "GET / HTTP/1.1" 200 70848
+[10/Oct/2024 11:22:51] INFO [maximo_app.views:2749] Successfully retrieved PlantType with id 2
+[10/Oct/2024 11:22:51] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 11:22:53] INFO [maximo_app.views:2666] Successfully retrieved Site with id 3
+[10/Oct/2024 11:22:53] INFO [django.server:213] "GET /filter-site/?site_id=3 HTTP/1.1" 200 225
+[10/Oct/2024 11:22:53] INFO [maximo_app.views:2697] Successfully retrieved ChildSite with id 29
+[10/Oct/2024 11:22:53] INFO [django.server:213] "GET /filter-child-site/?child_site_id=29 HTTP/1.1" 200 91
+[10/Oct/2024 11:22:56] INFO [maximo_app.views:2872] Successfully retrieved Status with id 2
+[10/Oct/2024 11:22:56] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=2 HTTP/1.1" 200 38
+[10/Oct/2024 11:22:57] INFO [maximo_app.views:2723] Successfully retrieved WorkType with id 3
+[10/Oct/2024 11:22:57] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 11:22:57] INFO [maximo_app.views:2819] Successfully retrieved ActType with id 1
+[10/Oct/2024 11:22:57] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 11:22:58] INFO [maximo_app.views:2846] Successfully retrieved WBSCode with id 2
+[10/Oct/2024 11:22:58] INFO [django.server:213] "GET /filter-wbs/?wbs_id=2 HTTP/1.1" 200 30
+[10/Oct/2024 11:23:04] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: CHN0
+PLANT NAME: CHN
+UNIT: 50
+STATUS: WAPPR
+WORK TYPE: APAO
+ACTTYPE: AO1
+SUBWBS GROUP: SU
+[10/Oct/2024 11:23:04] INFO [maximo_app.views:221] EGPROJECTID: O-CHNC50-67YI
+[10/Oct/2024 11:23:04] INFO [maximo_app.views:222] EGWBS: O-CHNC50-67YI-SU
+[10/Oct/2024 11:23:04] INFO [maximo_app.views:223] WBS DESC: WBS Support Hot Gas Path Inspection CHN-C50 2567
+[10/Oct/2024 11:23:04] INFO [maximo_app.views:224] LOCATION: CHN-C50
+[10/Oct/2024 11:23:04] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 11:23:04] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 11:23:04] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 11:23:04] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 11:23:08] INFO [django.server:213] "POST / HTTP/1.1" 200 58625
+[10/Oct/2024 11:25:08] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:25:09] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:25:51] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:25:52] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:25:54] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2064, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:25:54] ERROR [django.server:213] "GET / HTTP/1.1" 500 76671
+[10/Oct/2024 11:25:57] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2064, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:25:57] ERROR [django.server:213] "GET / HTTP/1.1" 500 76808
+[10/Oct/2024 11:27:37] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:27:39] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:27:47] INFO [django.server:213] "GET / HTTP/1.1" 200 70848
+[10/Oct/2024 11:27:52] INFO [maximo_app.views:2749] Successfully retrieved PlantType with id 2
+[10/Oct/2024 11:27:52] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 11:27:53] INFO [maximo_app.views:2666] Successfully retrieved Site with id 2
+[10/Oct/2024 11:27:53] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 11:27:54] INFO [maximo_app.views:2697] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 11:27:54] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 11:27:57] INFO [maximo_app.views:2872] Successfully retrieved Status with id 1
+[10/Oct/2024 11:27:57] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:27:58] INFO [maximo_app.views:2723] Successfully retrieved WorkType with id 5
+[10/Oct/2024 11:27:58] INFO [django.server:213] "GET /filter-work-type/?work_type_id=5 HTTP/1.1" 200 39
+[10/Oct/2024 11:27:59] INFO [maximo_app.views:2819] Successfully retrieved ActType with id 2
+[10/Oct/2024 11:27:59] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[10/Oct/2024 11:28:02] INFO [maximo_app.views:2846] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 11:28:02] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:28:07] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 50
+STATUS: WSCH
+WORK TYPE: APOO
+ACTTYPE: AO2
+SUBWBS GROUP: BM
+[10/Oct/2024 11:28:07] INFO [maximo_app.views:221] EGPROJECTID: O-BPKC50-67MI
+[10/Oct/2024 11:28:07] INFO [maximo_app.views:222] EGWBS: O-BPKC50-67MI-BM
+[10/Oct/2024 11:28:07] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Minor Inspection BPK-C50 2567
+[10/Oct/2024 11:28:07] INFO [maximo_app.views:224] LOCATION: BPK-C50
+[10/Oct/2024 11:28:07] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 11:28:07] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 11:28:07] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 11:28:07] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 11:28:12] INFO [django.server:213] "POST / HTTP/1.1" 200 62200
+[10/Oct/2024 11:28:52] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:28:53] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:29:03] INFO [django.server:213] "GET / HTTP/1.1" 200 70848
+[10/Oct/2024 11:29:07] INFO [maximo_app.views:2753] Successfully retrieved PlantType with id 1
+[10/Oct/2024 11:29:07] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[10/Oct/2024 11:29:11] INFO [maximo_app.views:2670] Successfully retrieved Site with id 2
+[10/Oct/2024 11:29:11] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 11:29:12] INFO [maximo_app.views:2701] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 11:29:12] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 11:29:14] INFO [maximo_app.views:2876] Successfully retrieved Status with id 1
+[10/Oct/2024 11:29:14] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:29:15] INFO [maximo_app.views:2727] Successfully retrieved WorkType with id 3
+[10/Oct/2024 11:29:15] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 11:29:16] INFO [maximo_app.views:2823] Successfully retrieved ActType with id 2
+[10/Oct/2024 11:29:16] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[10/Oct/2024 11:29:17] INFO [maximo_app.views:2850] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 11:29:17] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:29:23] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2025
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: T
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 52
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO2
+SUBWBS GROUP: BM
+[10/Oct/2024 11:29:23] INFO [maximo_app.views:221] EGPROJECTID: O-BPKT52-68MI
+[10/Oct/2024 11:29:23] INFO [maximo_app.views:222] EGWBS: O-BPKT52-68MI-BM
+[10/Oct/2024 11:29:23] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Minor Inspection BPK-T52 2568
+[10/Oct/2024 11:29:23] INFO [maximo_app.views:224] LOCATION: BPK-T52
+[10/Oct/2024 11:29:23] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 11:29:23] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 11:29:23] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 11:29:23] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 11:29:28] INFO [django.server:213] "POST / HTTP/1.1" 200 58625
+[10/Oct/2024 11:31:07] INFO [django.server:213] "GET / HTTP/1.1" 200 70848
+[10/Oct/2024 11:31:11] INFO [maximo_app.views:2753] Successfully retrieved PlantType with id 1
+[10/Oct/2024 11:31:11] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[10/Oct/2024 11:31:12] INFO [maximo_app.views:2670] Successfully retrieved Site with id 2
+[10/Oct/2024 11:31:12] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 11:31:14] INFO [maximo_app.views:2701] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 11:31:14] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 11:31:16] INFO [maximo_app.views:2876] Successfully retrieved Status with id 2
+[10/Oct/2024 11:31:16] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=2 HTTP/1.1" 200 38
+[10/Oct/2024 11:31:17] INFO [maximo_app.views:2727] Successfully retrieved WorkType with id 5
+[10/Oct/2024 11:31:17] INFO [django.server:213] "GET /filter-work-type/?work_type_id=5 HTTP/1.1" 200 39
+[10/Oct/2024 11:31:18] INFO [maximo_app.views:2823] Successfully retrieved ActType with id 1
+[10/Oct/2024 11:31:18] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 11:31:19] INFO [maximo_app.views:2850] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 11:31:19] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:31:31] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: T
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 51
+STATUS: WAPPR
+WORK TYPE: APOO
+ACTTYPE: AO1
+SUBWBS GROUP: BM
+[10/Oct/2024 11:31:31] INFO [maximo_app.views:221] EGPROJECTID: O-BPKT51-67YI
+[10/Oct/2024 11:31:31] INFO [maximo_app.views:222] EGWBS: O-BPKT51-67YI-BM
+[10/Oct/2024 11:31:31] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Hot Gas Path Inspection BPK-T51 2567
+[10/Oct/2024 11:31:31] INFO [maximo_app.views:224] LOCATION: BPK-T51
+[10/Oct/2024 11:31:31] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 11:31:32] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 11:31:32] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 11:31:32] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 11:31:36] INFO [django.server:213] "POST / HTTP/1.1" 200 58649
+[10/Oct/2024 11:35:47] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:35:48] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:35:49] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2068, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:35:49] ERROR [django.server:213] "GET / HTTP/1.1" 500 76671
+[10/Oct/2024 11:35:52] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2068, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:35:52] ERROR [django.server:213] "GET / HTTP/1.1" 500 76808
+[10/Oct/2024 11:36:11] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:36:13] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:36:14] INFO [django.server:213] "GET / HTTP/1.1" 200 70842
+[10/Oct/2024 11:37:16] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 11:37:17] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 11:37:19] INFO [django.server:213] "GET / HTTP/1.1" 200 70842
+[10/Oct/2024 11:42:13] INFO [django.server:213] "GET / HTTP/1.1" 200 70842
+[10/Oct/2024 11:42:25] INFO [maximo_app.views:2754] Successfully retrieved PlantType with id 2
+[10/Oct/2024 11:42:25] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 11:42:27] INFO [maximo_app.views:2671] Successfully retrieved Site with id 2
+[10/Oct/2024 11:42:27] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 11:42:27] INFO [maximo_app.views:2702] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 11:42:27] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 11:42:30] INFO [maximo_app.views:2877] Successfully retrieved Status with id 1
+[10/Oct/2024 11:42:30] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:42:30] INFO [maximo_app.views:2728] Successfully retrieved WorkType with id 3
+[10/Oct/2024 11:42:30] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 11:42:31] INFO [maximo_app.views:2824] Successfully retrieved ActType with id 2
+[10/Oct/2024 11:42:31] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[10/Oct/2024 11:42:32] INFO [maximo_app.views:2851] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 11:42:32] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:42:37] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 2
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 51
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO2
+SUBWBS GROUP: BM
+[10/Oct/2024 11:42:37] INFO [maximo_app.views:221] EGPROJECTID: O-BPKC51-67MI
+[10/Oct/2024 11:42:37] INFO [maximo_app.views:222] EGWBS: O-BPKC51-67MI-BM
+[10/Oct/2024 11:42:37] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Minor Inspection BPK-C51 2567
+[10/Oct/2024 11:42:37] INFO [maximo_app.views:224] LOCATION: BPK-C51
+[10/Oct/2024 11:42:37] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 11:42:37] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 11:42:37] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 11:42:37] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 11:42:42] INFO [django.server:213] "POST / HTTP/1.1" 200 59403
+[10/Oct/2024 11:45:25] INFO [django.server:213] "GET / HTTP/1.1" 200 70842
+[10/Oct/2024 11:45:25] INFO [django.server:213] "GET /static/CACHE/css/output.7894d4a8cc77.css HTTP/1.1" 200 33395
+[10/Oct/2024 11:45:28] INFO [maximo_app.views:2754] Successfully retrieved PlantType with id 2
+[10/Oct/2024 11:45:28] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 11:45:30] INFO [maximo_app.views:2671] Successfully retrieved Site with id 2
+[10/Oct/2024 11:45:30] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 11:45:31] INFO [maximo_app.views:2702] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 11:45:31] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 11:45:33] INFO [maximo_app.views:2877] Successfully retrieved Status with id 1
+[10/Oct/2024 11:45:33] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:45:34] INFO [maximo_app.views:2728] Successfully retrieved WorkType with id 3
+[10/Oct/2024 11:45:34] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 11:45:34] INFO [maximo_app.views:2824] Successfully retrieved ActType with id 1
+[10/Oct/2024 11:45:34] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 11:45:36] INFO [maximo_app.views:2851] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 11:45:36] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:45:41] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 52
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO1
+SUBWBS GROUP: BM
+[10/Oct/2024 11:45:41] INFO [maximo_app.views:221] EGPROJECTID: O-BPKC52-67YI
+[10/Oct/2024 11:45:41] INFO [maximo_app.views:222] EGWBS: O-BPKC52-67YI-BM
+[10/Oct/2024 11:45:41] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Hot Gas Path Inspection BPK-C52 2567
+[10/Oct/2024 11:45:41] INFO [maximo_app.views:224] LOCATION: BPK-C52
+[10/Oct/2024 11:45:41] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 11:45:41] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 11:45:41] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 11:45:41] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 11:45:46] INFO [django.server:213] "POST / HTTP/1.1" 200 59401
+[10/Oct/2024 11:45:46] INFO [django.server:213] "GET /static/CACHE/css/output.7894d4a8cc77.css HTTP/1.1" 304 0
+[10/Oct/2024 11:47:21] INFO [django.server:213] "GET / HTTP/1.1" 200 70842
+[10/Oct/2024 11:47:21] INFO [django.server:213] "GET /static/CACHE/css/output.7894d4a8cc77.css HTTP/1.1" 304 0
+[10/Oct/2024 11:47:36] INFO [maximo_app.views:2754] Successfully retrieved PlantType with id 2
+[10/Oct/2024 11:47:36] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 11:47:37] INFO [maximo_app.views:2671] Successfully retrieved Site with id 2
+[10/Oct/2024 11:47:37] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 11:47:38] INFO [maximo_app.views:2702] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 11:47:38] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 11:47:40] INFO [maximo_app.views:2877] Successfully retrieved Status with id 1
+[10/Oct/2024 11:47:40] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:47:41] INFO [maximo_app.views:2728] Successfully retrieved WorkType with id 3
+[10/Oct/2024 11:47:41] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 11:47:42] INFO [maximo_app.views:2824] Successfully retrieved ActType with id 8
+[10/Oct/2024 11:47:42] INFO [django.server:213] "GET /filter-act-type/?acttype_id=8 HTTP/1.1" 200 50
+[10/Oct/2024 11:47:43] INFO [maximo_app.views:2851] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 11:47:43] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:47:51] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 10
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO8
+SUBWBS GROUP: BM
+[10/Oct/2024 11:47:51] INFO [maximo_app.views:221] EGPROJECTID: O-BPKC10-67BI
+[10/Oct/2024 11:47:51] INFO [maximo_app.views:222] EGWBS: O-BPKC10-67BI-BM
+[10/Oct/2024 11:47:51] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Boiler Inspection BPK-C10 2567
+[10/Oct/2024 11:47:51] INFO [maximo_app.views:224] LOCATION: BPK-C10
+[10/Oct/2024 11:47:51] INFO [maximo_app.views:252] Schedule file: Final Schedule PMN-H03 200967.xlsx
+[10/Oct/2024 11:47:51] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 11:47:51] INFO [maximo_app.views:264] Files saved successfully at: temp\a6389f43-b592-4895-be49-373662627d7a_Final Schedule PMN-H03 200967.xlsx and temp\f2e2ec5e-1774-4570-ac5a-de36147fb9b9_Locations PMN-H.xlsx
+[10/Oct/2024 11:47:51] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 11:47:51] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 11:47:51] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 11:47:55] INFO [django.server:213] "POST / HTTP/1.1" 200 62197
+[10/Oct/2024 11:47:55] INFO [django.server:213] "GET /static/CACHE/css/output.7894d4a8cc77.css HTTP/1.1" 304 0
+[10/Oct/2024 11:48:33] INFO [maximo_app.views:1944] File saved successfully as temp\5bac1722-d60e-4956-8e43-6873c68f5454_Template MxLoader JB-PM Plan.xlsm
+[10/Oct/2024 11:48:34] INFO [django.server:213] "POST / HTTP/1.1" 200 64379
+[10/Oct/2024 11:48:34] INFO [django.server:213] "GET /static/CACHE/css/output.7894d4a8cc77.css HTTP/1.1" 304 0
+[10/Oct/2024 11:48:48] INFO [django.server:213] "GET /download-job-plan-task/ HTTP/1.1" 200 57739
+[10/Oct/2024 11:48:49] INFO [django.server:213] "GET /download-job-plan-labor/ HTTP/1.1" 200 7782
+[10/Oct/2024 11:48:50] INFO [django.server:213] "GET /download-pm-plan/ HTTP/1.1" 200 66043
+[10/Oct/2024 11:48:51] INFO [django.server:213] "GET /download-template/ HTTP/1.1" 200 819592
+[10/Oct/2024 11:50:18] INFO [django.server:213] "GET / HTTP/1.1" 200 70842
+[10/Oct/2024 11:50:18] INFO [django.server:213] "GET /static/CACHE/css/output.7894d4a8cc77.css HTTP/1.1" 304 0
+[10/Oct/2024 11:54:07] INFO [maximo_app.views:2754] Successfully retrieved PlantType with id 2
+[10/Oct/2024 11:54:07] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 11:54:09] INFO [maximo_app.views:2671] Successfully retrieved Site with id 2
+[10/Oct/2024 11:54:09] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 11:54:10] INFO [maximo_app.views:2702] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 11:54:10] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 11:54:12] INFO [maximo_app.views:2877] Successfully retrieved Status with id 1
+[10/Oct/2024 11:54:12] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:54:14] INFO [maximo_app.views:2728] Successfully retrieved WorkType with id 3
+[10/Oct/2024 11:54:14] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 11:54:15] INFO [maximo_app.views:2824] Successfully retrieved ActType with id 1
+[10/Oct/2024 11:54:15] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 11:54:16] INFO [maximo_app.views:2851] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 11:54:16] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 11:54:22] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 51
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO1
+SUBWBS GROUP: BM
+[10/Oct/2024 11:54:22] INFO [maximo_app.views:221] EGPROJECTID: O-BPKC51-67YI
+[10/Oct/2024 11:54:22] INFO [maximo_app.views:222] EGWBS: O-BPKC51-67YI-BM
+[10/Oct/2024 11:54:22] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Hot Gas Path Inspection BPK-C51 2567
+[10/Oct/2024 11:54:22] INFO [maximo_app.views:224] LOCATION: BPK-C51
+[10/Oct/2024 11:54:22] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 11:54:22] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 11:54:22] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 11:54:22] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 11:54:26] INFO [django.server:213] "POST / HTTP/1.1" 200 59449
+[10/Oct/2024 11:54:26] INFO [django.server:213] "GET /static/CACHE/css/output.7894d4a8cc77.css HTTP/1.1" 304 0
+[10/Oct/2024 13:10:11] INFO [django.server:213] "GET / HTTP/1.1" 200 71555
+[10/Oct/2024 13:10:11] INFO [django.server:213] "GET /static/CACHE/css/output.7894d4a8cc77.css HTTP/1.1" 304 0
+[10/Oct/2024 13:10:44] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 13:10:46] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 13:10:49] INFO [django.server:213] "GET / HTTP/1.1" 200 71552
+[10/Oct/2024 13:10:55] INFO [django.server:213] "GET / HTTP/1.1" 200 71552
+[10/Oct/2024 13:10:59] INFO [django.server:213] "GET / HTTP/1.1" 200 71552
+[10/Oct/2024 13:11:26] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 13:11:27] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 13:11:42] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 13:11:44] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 13:11:45] INFO [django.server:213] "GET / HTTP/1.1" 200 71605
+[10/Oct/2024 13:12:58] INFO [django.server:213] "GET / HTTP/1.1" 200 71696
+[10/Oct/2024 13:12:58] INFO [django.server:213] "GET /static/CACHE/css/output.3dc37f5dfa35.css HTTP/1.1" 200 33588
+[10/Oct/2024 13:14:36] INFO [django.server:213] "GET / HTTP/1.1" 200 71686
+[10/Oct/2024 13:14:36] INFO [django.server:213] "GET /static/CACHE/css/output.3dc37f5dfa35.css HTTP/1.1" 304 0
+[10/Oct/2024 13:14:56] INFO [django.server:213] "GET / HTTP/1.1" 200 71696
+[10/Oct/2024 13:14:56] INFO [django.server:213] "GET /static/CACHE/css/output.3dc37f5dfa35.css HTTP/1.1" 304 0
+[10/Oct/2024 13:16:11] INFO [django.server:213] "GET / HTTP/1.1" 200 71717
+[10/Oct/2024 13:16:12] INFO [django.server:213] "GET /static/CACHE/css/output.2266da6a241f.css HTTP/1.1" 200 33773
+[10/Oct/2024 13:16:13] INFO [django.server:213] "GET / HTTP/1.1" 200 71717
+[10/Oct/2024 13:16:13] INFO [django.server:213] "GET /static/CACHE/css/output.2266da6a241f.css HTTP/1.1" 304 0
+[10/Oct/2024 13:31:40] INFO [django.server:213] "GET /static/CACHE/css/output.2266da6a241f.css HTTP/1.1" 304 0
+[10/Oct/2024 13:32:14] INFO [django.server:213] "GET / HTTP/1.1" 200 71716
+[10/Oct/2024 13:35:59] INFO [django.server:213] "GET / HTTP/1.1" 200 71716
+[10/Oct/2024 13:35:59] INFO [django.server:213] "GET /static/CACHE/css/output.2266da6a241f.css HTTP/1.1" 304 0
+[10/Oct/2024 13:37:48] INFO [django.server:213] "GET / HTTP/1.1" 200 71706
+[10/Oct/2024 13:37:56] INFO [django.server:213] "GET / HTTP/1.1" 200 71716
+[10/Oct/2024 13:38:43] INFO [django.server:213] "GET / HTTP/1.1" 200 71934
+[10/Oct/2024 13:38:43] INFO [django.server:213] "GET /static/CACHE/css/output.f126a327e29f.css HTTP/1.1" 200 34471
+[10/Oct/2024 13:40:14] INFO [django.server:213] "GET / HTTP/1.1" 200 71934
+[10/Oct/2024 13:40:14] INFO [django.server:213] "GET /static/CACHE/css/output.f126a327e29f.css HTTP/1.1" 304 0
+[10/Oct/2024 13:40:23] INFO [django.server:213] "GET /static/CACHE/css/output.f126a327e29f.css HTTP/1.1" 304 0
+[10/Oct/2024 13:41:57] INFO [django.server:213] "GET / HTTP/1.1" 200 71934
+[10/Oct/2024 13:41:57] INFO [django.server:213] "GET /static/CACHE/css/output.f126a327e29f.css HTTP/1.1" 304 0
+[10/Oct/2024 13:42:31] INFO [django.server:213] "GET / HTTP/1.1" 200 71934
+[10/Oct/2024 13:42:31] INFO [django.server:213] "GET /static/CACHE/css/output.f126a327e29f.css HTTP/1.1" 304 0
+[10/Oct/2024 13:43:01] INFO [django.server:213] "GET /static/CACHE/css/output.f126a327e29f.css HTTP/1.1" 304 0
+[10/Oct/2024 13:44:06] INFO [django.server:213] "GET / HTTP/1.1" 200 71934
+[10/Oct/2024 13:44:06] INFO [django.server:213] "GET /static/CACHE/css/output.f126a327e29f.css HTTP/1.1" 304 0
+[10/Oct/2024 13:44:07] INFO [django.server:213] "GET / HTTP/1.1" 200 71951
+[10/Oct/2024 13:44:09] INFO [django.server:213] "GET / HTTP/1.1" 200 71951
+[10/Oct/2024 13:44:38] INFO [django.server:213] "GET / HTTP/1.1" 200 71933
+[10/Oct/2024 13:44:38] INFO [django.server:213] "GET /static/CACHE/css/output.df264473c911.css HTTP/1.1" 200 34526
+[10/Oct/2024 13:45:49] INFO [django.server:213] "GET / HTTP/1.1" 200 71935
+[10/Oct/2024 13:45:49] INFO [django.server:213] "GET /static/CACHE/css/output.1cbd340c51e1.css HTTP/1.1" 200 34573
+[10/Oct/2024 13:46:17] INFO [django.server:213] "GET /static/CACHE/css/output.1cbd340c51e1.css HTTP/1.1" 304 0
+[10/Oct/2024 13:50:29] INFO [django.server:213] "GET / HTTP/1.1" 200 71935
+[10/Oct/2024 13:50:29] INFO [django.server:213] "GET /static/CACHE/css/output.1cbd340c51e1.css HTTP/1.1" 304 0
+[10/Oct/2024 13:52:36] INFO [django.server:213] "GET / HTTP/1.1" 200 71933
+[10/Oct/2024 13:52:36] INFO [django.server:213] "GET /static/CACHE/css/output.1cbd340c51e1.css HTTP/1.1" 304 0
+[10/Oct/2024 13:53:39] INFO [django.server:213] "GET / HTTP/1.1" 200 71937
+[10/Oct/2024 13:53:39] INFO [django.server:213] "GET /static/CACHE/css/output.5d4ee2375f0e.css HTTP/1.1" 200 34622
+[10/Oct/2024 13:55:25] INFO [django.server:213] "GET / HTTP/1.1" 200 71935
+[10/Oct/2024 13:55:25] INFO [django.server:213] "GET /static/CACHE/css/output.5d4ee2375f0e.css HTTP/1.1" 304 0
+[10/Oct/2024 13:55:37] INFO [django.server:213] "GET / HTTP/1.1" 200 71935
+[10/Oct/2024 13:55:37] INFO [django.server:213] "GET /static/CACHE/css/output.a60085deebe3.css HTTP/1.1" 200 34677
+[10/Oct/2024 13:56:09] INFO [django.server:213] "GET /static/CACHE/css/output.a60085deebe3.css HTTP/1.1" 304 0
+[10/Oct/2024 13:56:09] INFO [django.server:213] "GET / HTTP/1.1" 200 71935
+[10/Oct/2024 13:57:05] INFO [django.server:213] "GET / HTTP/1.1" 200 71937
+[10/Oct/2024 13:57:05] INFO [django.server:213] "GET /static/CACHE/css/output.d5776bef0261.css HTTP/1.1" 200 34726
+[10/Oct/2024 13:58:28] INFO [django.server:213] "GET /static/CACHE/css/output.d5776bef0261.css HTTP/1.1" 304 0
+[10/Oct/2024 13:58:42] INFO [django.server:213] "GET / HTTP/1.1" 200 71937
+[10/Oct/2024 13:58:42] INFO [django.server:213] "GET /static/CACHE/css/output.d5776bef0261.css HTTP/1.1" 304 0
+[10/Oct/2024 13:58:51] INFO [django.server:213] "GET / HTTP/1.1" 200 71937
+[10/Oct/2024 13:58:51] INFO [django.server:213] "GET /static/CACHE/css/output.d5776bef0261.css HTTP/1.1" 304 0
+[10/Oct/2024 13:59:02] INFO [django.server:213] "GET / HTTP/1.1" 200 71937
+[10/Oct/2024 13:59:02] INFO [django.server:213] "GET /static/CACHE/css/output.8fd59a57276f.css HTTP/1.1" 200 34773
+[10/Oct/2024 13:59:10] INFO [django.server:213] "GET /static/CACHE/css/output.8fd59a57276f.css HTTP/1.1" 304 0
+[10/Oct/2024 14:02:48] INFO [django.server:213] "GET / HTTP/1.1" 200 71937
+[10/Oct/2024 14:02:48] INFO [django.server:213] "GET /static/CACHE/css/output.c6292b9c4112.css HTTP/1.1" 200 34869
+[10/Oct/2024 14:02:52] INFO [django.server:213] "GET /static/CACHE/css/output.c6292b9c4112.css HTTP/1.1" 304 0
+[10/Oct/2024 14:04:05] INFO [django.server:213] "GET / HTTP/1.1" 200 71937
+[10/Oct/2024 14:04:05] INFO [django.server:213] "GET /static/CACHE/css/output.b446deac3e7a.css HTTP/1.1" 200 34921
+[10/Oct/2024 14:04:55] INFO [django.server:213] "GET / HTTP/1.1" 200 71937
+[10/Oct/2024 14:04:55] INFO [django.server:213] "GET /static/CACHE/css/output.b446deac3e7a.css HTTP/1.1" 304 0
+[10/Oct/2024 14:05:19] INFO [django.server:213] "GET / HTTP/1.1" 200 70826
+[10/Oct/2024 14:05:19] INFO [django.server:213] "GET /static/CACHE/css/output.b446deac3e7a.css HTTP/1.1" 304 0
+[10/Oct/2024 14:05:26] INFO [maximo_app.views:2754] Successfully retrieved PlantType with id 2
+[10/Oct/2024 14:05:26] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 14:05:27] INFO [maximo_app.views:2671] Successfully retrieved Site with id 3
+[10/Oct/2024 14:05:27] INFO [django.server:213] "GET /filter-site/?site_id=3 HTTP/1.1" 200 225
+[10/Oct/2024 14:05:28] INFO [maximo_app.views:2702] Successfully retrieved ChildSite with id 29
+[10/Oct/2024 14:05:28] INFO [django.server:213] "GET /filter-child-site/?child_site_id=29 HTTP/1.1" 200 91
+[10/Oct/2024 14:05:30] INFO [maximo_app.views:2877] Successfully retrieved Status with id 2
+[10/Oct/2024 14:05:30] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=2 HTTP/1.1" 200 38
+[10/Oct/2024 14:05:31] INFO [maximo_app.views:2728] Successfully retrieved WorkType with id 3
+[10/Oct/2024 14:05:31] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 14:05:32] INFO [maximo_app.views:2824] Successfully retrieved ActType with id 1
+[10/Oct/2024 14:05:32] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 14:05:33] INFO [maximo_app.views:2851] Successfully retrieved WBSCode with id 2
+[10/Oct/2024 14:05:33] INFO [django.server:213] "GET /filter-wbs/?wbs_id=2 HTTP/1.1" 200 30
+[10/Oct/2024 14:05:39] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2025
+FREQUENCY: 2
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: CHN0
+PLANT NAME: CHN
+UNIT: 10
+STATUS: WAPPR
+WORK TYPE: APAO
+ACTTYPE: AO1
+SUBWBS GROUP: SU
+[10/Oct/2024 14:05:39] INFO [maximo_app.views:221] EGPROJECTID: O-CHNC10-68YI
+[10/Oct/2024 14:05:39] INFO [maximo_app.views:222] EGWBS: O-CHNC10-68YI-SU
+[10/Oct/2024 14:05:39] INFO [maximo_app.views:223] WBS DESC: WBS Support Hot Gas Path Inspection CHN-C10 2568
+[10/Oct/2024 14:05:39] INFO [maximo_app.views:224] LOCATION: CHN-C10
+[10/Oct/2024 14:05:39] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 14:05:39] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 14:05:39] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 14:05:39] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 14:05:43] INFO [django.server:213] "POST / HTTP/1.1" 200 59829
+[10/Oct/2024 14:05:43] INFO [django.server:213] "GET /static/CACHE/css/output.b446deac3e7a.css HTTP/1.1" 304 0
+[10/Oct/2024 14:09:18] INFO [django.server:213] "GET / HTTP/1.1" 200 70826
+[10/Oct/2024 14:09:18] INFO [django.server:213] "GET /static/CACHE/css/output.b446deac3e7a.css HTTP/1.1" 304 0
+[10/Oct/2024 14:09:22] INFO [maximo_app.views:2754] Successfully retrieved PlantType with id 1
+[10/Oct/2024 14:09:22] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[10/Oct/2024 14:09:23] INFO [maximo_app.views:2671] Successfully retrieved Site with id 2
+[10/Oct/2024 14:09:23] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 14:09:24] INFO [maximo_app.views:2702] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 14:09:24] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 14:09:26] INFO [maximo_app.views:2877] Successfully retrieved Status with id 1
+[10/Oct/2024 14:09:26] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 14:09:27] INFO [maximo_app.views:2728] Successfully retrieved WorkType with id 3
+[10/Oct/2024 14:09:27] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 14:09:28] INFO [maximo_app.views:2824] Successfully retrieved ActType with id 1
+[10/Oct/2024 14:09:28] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 14:09:29] INFO [maximo_app.views:2851] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 14:09:29] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 14:09:38] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: T
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 10
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO1
+SUBWBS GROUP: BM
+[10/Oct/2024 14:09:38] INFO [maximo_app.views:221] EGPROJECTID: O-BPKT10-67YI
+[10/Oct/2024 14:09:38] INFO [maximo_app.views:222] EGWBS: O-BPKT10-67YI-BM
+[10/Oct/2024 14:09:38] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Hot Gas Path Inspection BPK-T10 2567
+[10/Oct/2024 14:09:38] INFO [maximo_app.views:224] LOCATION: BPK-T10
+[10/Oct/2024 14:09:38] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 14:09:38] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 14:09:38] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 14:09:38] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 14:09:42] INFO [django.server:213] "POST / HTTP/1.1" 200 59893
+[10/Oct/2024 14:11:03] INFO [django.server:213] "GET / HTTP/1.1" 200 70826
+[10/Oct/2024 14:11:03] INFO [django.server:213] "GET /static/CACHE/css/output.b446deac3e7a.css HTTP/1.1" 304 0
+[10/Oct/2024 14:11:08] INFO [maximo_app.views:2754] Successfully retrieved PlantType with id 2
+[10/Oct/2024 14:11:08] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 14:11:08] INFO [maximo_app.views:2671] Successfully retrieved Site with id 3
+[10/Oct/2024 14:11:08] INFO [django.server:213] "GET /filter-site/?site_id=3 HTTP/1.1" 200 225
+[10/Oct/2024 14:11:09] INFO [maximo_app.views:2702] Successfully retrieved ChildSite with id 29
+[10/Oct/2024 14:11:09] INFO [django.server:213] "GET /filter-child-site/?child_site_id=29 HTTP/1.1" 200 91
+[10/Oct/2024 14:11:11] INFO [maximo_app.views:2877] Successfully retrieved Status with id 1
+[10/Oct/2024 14:11:11] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 14:11:12] INFO [maximo_app.views:2728] Successfully retrieved WorkType with id 3
+[10/Oct/2024 14:11:12] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 14:11:14] INFO [maximo_app.views:2824] Successfully retrieved ActType with id 1
+[10/Oct/2024 14:11:14] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 14:11:15] INFO [maximo_app.views:2851] Successfully retrieved WBSCode with id 2
+[10/Oct/2024 14:11:15] INFO [django.server:213] "GET /filter-wbs/?wbs_id=2 HTTP/1.1" 200 30
+[10/Oct/2024 14:11:21] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: CHN0
+PLANT NAME: CHN
+UNIT: 51
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO1
+SUBWBS GROUP: SU
+[10/Oct/2024 14:11:21] INFO [maximo_app.views:221] EGPROJECTID: O-CHNC51-67YI
+[10/Oct/2024 14:11:21] INFO [maximo_app.views:222] EGWBS: O-CHNC51-67YI-SU
+[10/Oct/2024 14:11:21] INFO [maximo_app.views:223] WBS DESC: WBS Support Hot Gas Path Inspection CHN-C51 2567
+[10/Oct/2024 14:11:21] INFO [maximo_app.views:224] LOCATION: CHN-C51
+[10/Oct/2024 14:11:21] INFO [maximo_app.views:252] Schedule file: Final Schedule PMN-H03 200967 - Copy.xlsx
+[10/Oct/2024 14:11:21] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 14:11:21] INFO [maximo_app.views:264] Files saved successfully at: temp\c3255a02-2018-44e3-9674-07afa30095a5_Final Schedule PMN-H03 200967 - Copy.xlsx and temp\7ddf8920-fd31-4921-a192-d9d09b628684_Locations PMN-H.xlsx
+[10/Oct/2024 14:11:21] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 14:11:21] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 14:11:21] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 14:11:25] INFO [django.server:213] "POST / HTTP/1.1" 200 59785
+[10/Oct/2024 14:12:16] INFO [django.server:213] "GET / HTTP/1.1" 200 70826
+[10/Oct/2024 14:12:16] INFO [django.server:213] "GET /static/CACHE/css/output.b446deac3e7a.css HTTP/1.1" 304 0
+[10/Oct/2024 14:12:19] INFO [maximo_app.views:2754] Successfully retrieved PlantType with id 1
+[10/Oct/2024 14:12:20] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[10/Oct/2024 14:12:21] INFO [maximo_app.views:2671] Successfully retrieved Site with id 7
+[10/Oct/2024 14:12:21] INFO [django.server:213] "GET /filter-site/?site_id=7 HTTP/1.1" 200 261
+[10/Oct/2024 14:12:22] INFO [maximo_app.views:2702] Successfully retrieved ChildSite with id 33
+[10/Oct/2024 14:12:22] INFO [django.server:213] "GET /filter-child-site/?child_site_id=33 HTTP/1.1" 200 109
+[10/Oct/2024 14:12:24] INFO [maximo_app.views:2877] Successfully retrieved Status with id 1
+[10/Oct/2024 14:12:24] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 14:12:25] INFO [maximo_app.views:2728] Successfully retrieved WorkType with id 3
+[10/Oct/2024 14:12:25] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 14:12:26] INFO [maximo_app.views:2824] Successfully retrieved ActType with id 1
+[10/Oct/2024 14:12:26] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 14:12:28] INFO [maximo_app.views:2851] Successfully retrieved WBSCode with id 2
+[10/Oct/2024 14:12:28] INFO [django.server:213] "GET /filter-wbs/?wbs_id=2 HTTP/1.1" 200 30
+[10/Oct/2024 14:12:35] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2025
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: T
+SITE: MMP0
+PLANT NAME: MMP
+UNIT: 10
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO1
+SUBWBS GROUP: SU
+[10/Oct/2024 14:12:35] INFO [maximo_app.views:221] EGPROJECTID: O-MMPT10-68YI
+[10/Oct/2024 14:12:35] INFO [maximo_app.views:222] EGWBS: O-MMPT10-68YI-SU
+[10/Oct/2024 14:12:35] INFO [maximo_app.views:223] WBS DESC: WBS Support Hot Gas Path Inspection MMP-T10 2568
+[10/Oct/2024 14:12:35] INFO [maximo_app.views:224] LOCATION: MMP-T10
+[10/Oct/2024 14:12:35] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 14:12:35] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 14:12:35] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 14:12:35] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 14:12:40] INFO [django.server:213] "POST / HTTP/1.1" 200 59893
+[10/Oct/2024 14:13:40] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:13:41] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:15:10] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:15:11] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:15:37] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:15:38] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:15:56] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:15:57] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:16:07] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:16:09] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:16:26] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:16:27] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:16:36] INFO [django.server:213] "GET / HTTP/1.1" 200 70842
+[10/Oct/2024 14:16:36] INFO [django.server:213] "GET /static/CACHE/css/output.b446deac3e7a.css HTTP/1.1" 304 0
+[10/Oct/2024 14:16:40] INFO [maximo_app.views:2756] Successfully retrieved PlantType with id 2
+[10/Oct/2024 14:16:40] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 14:16:41] INFO [maximo_app.views:2673] Successfully retrieved Site with id 2
+[10/Oct/2024 14:16:41] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 14:16:42] INFO [maximo_app.views:2704] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 14:16:42] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 14:16:44] INFO [maximo_app.views:2879] Successfully retrieved Status with id 1
+[10/Oct/2024 14:16:44] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 14:16:46] INFO [maximo_app.views:2730] Successfully retrieved WorkType with id 5
+[10/Oct/2024 14:16:46] INFO [django.server:213] "GET /filter-work-type/?work_type_id=5 HTTP/1.1" 200 39
+[10/Oct/2024 14:16:46] INFO [maximo_app.views:2826] Successfully retrieved ActType with id 2
+[10/Oct/2024 14:16:46] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[10/Oct/2024 14:16:48] INFO [maximo_app.views:2853] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 14:16:48] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 14:16:55] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2025
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 50
+STATUS: WSCH
+WORK TYPE: APOO
+ACTTYPE: AO2
+SUBWBS GROUP: BM
+[10/Oct/2024 14:16:55] INFO [maximo_app.views:221] EGPROJECTID: O-BPKC50-68MI
+[10/Oct/2024 14:16:55] INFO [maximo_app.views:222] EGWBS: O-BPKC50-68MI-BM
+[10/Oct/2024 14:16:55] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Minor Inspection BPK-C50 2568
+[10/Oct/2024 14:16:55] INFO [maximo_app.views:224] LOCATION: BPK-C50
+[10/Oct/2024 14:16:55] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 14:16:55] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 14:16:55] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 14:16:55] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 14:16:59] INFO [django.server:213] "POST / HTTP/1.1" 200 59995
+[10/Oct/2024 14:18:23] INFO [django.server:213] "GET / HTTP/1.1" 200 70842
+[10/Oct/2024 14:18:23] INFO [django.server:213] "GET /static/CACHE/css/output.b446deac3e7a.css HTTP/1.1" 304 0
+[10/Oct/2024 14:18:29] INFO [maximo_app.views:2756] Successfully retrieved PlantType with id 2
+[10/Oct/2024 14:18:29] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 14:18:30] INFO [maximo_app.views:2673] Successfully retrieved Site with id 2
+[10/Oct/2024 14:18:30] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 14:18:33] INFO [maximo_app.views:2704] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 14:18:33] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 14:18:35] INFO [maximo_app.views:2879] Successfully retrieved Status with id 1
+[10/Oct/2024 14:18:35] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 14:18:37] INFO [maximo_app.views:2730] Successfully retrieved WorkType with id 5
+[10/Oct/2024 14:18:37] INFO [django.server:213] "GET /filter-work-type/?work_type_id=5 HTTP/1.1" 200 39
+[10/Oct/2024 14:18:38] INFO [maximo_app.views:2826] Successfully retrieved ActType with id 2
+[10/Oct/2024 14:18:38] INFO [django.server:213] "GET /filter-act-type/?acttype_id=2 HTTP/1.1" 200 49
+[10/Oct/2024 14:18:39] INFO [maximo_app.views:2853] Successfully retrieved WBSCode with id 2
+[10/Oct/2024 14:18:39] INFO [django.server:213] "GET /filter-wbs/?wbs_id=2 HTTP/1.1" 200 30
+[10/Oct/2024 14:18:48] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2025
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 50
+STATUS: WSCH
+WORK TYPE: APOO
+ACTTYPE: AO2
+SUBWBS GROUP: SU
+[10/Oct/2024 14:18:48] INFO [maximo_app.views:221] EGPROJECTID: O-BPKC50-68MI
+[10/Oct/2024 14:18:48] INFO [maximo_app.views:222] EGWBS: O-BPKC50-68MI-SU
+[10/Oct/2024 14:18:48] INFO [maximo_app.views:223] WBS DESC: WBS Support Minor Inspection BPK-C50 2568
+[10/Oct/2024 14:18:48] INFO [maximo_app.views:224] LOCATION: BPK-C50
+[10/Oct/2024 14:18:48] INFO [maximo_app.views:253] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 14:18:48] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 14:18:48] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 14:18:48] INFO [maximo_app.views:413] DataFrame preparation completed successfully.
+[10/Oct/2024 14:18:52] INFO [django.server:213] "POST / HTTP/1.1" 200 58429
+[10/Oct/2024 14:21:27] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:21:29] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:21:35] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:21:36] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:21:39] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:21:41] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:25:16] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:25:17] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:25:38] INFO [django.server:213] "GET / HTTP/1.1" 200 70842
+[10/Oct/2024 14:25:38] INFO [django.server:213] "GET /static/CACHE/css/output.b446deac3e7a.css HTTP/1.1" 304 0
+[10/Oct/2024 14:25:44] INFO [maximo_app.views:2764] Successfully retrieved PlantType with id 1
+[10/Oct/2024 14:25:44] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[10/Oct/2024 14:25:45] INFO [maximo_app.views:2681] Successfully retrieved Site with id 2
+[10/Oct/2024 14:25:45] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 14:25:46] INFO [maximo_app.views:2712] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 14:25:46] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 14:25:48] INFO [maximo_app.views:2887] Successfully retrieved Status with id 2
+[10/Oct/2024 14:25:48] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=2 HTTP/1.1" 200 38
+[10/Oct/2024 14:25:50] INFO [maximo_app.views:2738] Successfully retrieved WorkType with id 5
+[10/Oct/2024 14:25:50] INFO [django.server:213] "GET /filter-work-type/?work_type_id=5 HTTP/1.1" 200 39
+[10/Oct/2024 14:25:51] INFO [maximo_app.views:2834] Successfully retrieved ActType with id 1
+[10/Oct/2024 14:25:51] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 14:25:52] INFO [maximo_app.views:2861] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 14:25:52] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 14:26:12] INFO [maximo_app.views:205] PLANT OUTAGE YEAR: 2025
+FREQUENCY: 2
+FREQUNIT: MONTHS
+PLANT TYPE: T
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 51
+STATUS: WAPPR
+WORK TYPE: APOO
+ACTTYPE: AO1
+SUBWBS GROUP: BM
+[10/Oct/2024 14:26:12] INFO [maximo_app.views:229] EGPROJECTID: O-BPKT51-68YI
+[10/Oct/2024 14:26:12] INFO [maximo_app.views:230] EGWBS: O-BPKT51-68YI-BM
+[10/Oct/2024 14:26:12] INFO [maximo_app.views:231] WBS DESC: WBS Business Management Hot Gas Path Inspection BPK-T51 2568
+[10/Oct/2024 14:26:12] INFO [maximo_app.views:232] LOCATION: BPK-T51
+[10/Oct/2024 14:26:12] INFO [maximo_app.views:261] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 14:26:12] INFO [maximo_app.views:334] Excel file loaded successfully.
+[10/Oct/2024 14:26:12] INFO [maximo_app.views:339] Column names cleaned and formatted.
+[10/Oct/2024 14:26:12] INFO [maximo_app.views:421] DataFrame preparation completed successfully.
+[10/Oct/2024 14:26:16] INFO [django.server:213] "POST / HTTP/1.1" 200 59995
+[10/Oct/2024 14:27:25] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:27:26] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:27:31] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:27:32] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:27:40] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:27:41] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:27:45] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 14:27:46] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:28:46] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_project\settings.py changed, reloading.
+[10/Oct/2024 14:31:36] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 14:31:37] INFO [django.server:213] "GET / HTTP/1.1" 200 70842
+[10/Oct/2024 14:31:37] INFO [django.server:213] "GET /static/CACHE/css/output.b446deac3e7a.css HTTP/1.1" 304 0
+[10/Oct/2024 14:31:44] INFO [maximo_app.views:2767] Successfully retrieved PlantType with id 2
+[10/Oct/2024 14:31:44] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=2 HTTP/1.1" 200 2462
+[10/Oct/2024 14:31:45] INFO [maximo_app.views:2684] Successfully retrieved Site with id 3
+[10/Oct/2024 14:31:45] INFO [django.server:213] "GET /filter-site/?site_id=3 HTTP/1.1" 200 225
+[10/Oct/2024 14:31:48] INFO [maximo_app.views:2715] Successfully retrieved ChildSite with id 29
+[10/Oct/2024 14:31:48] INFO [django.server:213] "GET /filter-child-site/?child_site_id=29 HTTP/1.1" 200 91
+[10/Oct/2024 14:31:49] INFO [maximo_app.views:2890] Successfully retrieved Status with id 1
+[10/Oct/2024 14:31:49] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 14:31:50] INFO [maximo_app.views:2741] Successfully retrieved WorkType with id 5
+[10/Oct/2024 14:31:50] INFO [django.server:213] "GET /filter-work-type/?work_type_id=5 HTTP/1.1" 200 39
+[10/Oct/2024 14:31:51] INFO [maximo_app.views:2837] Successfully retrieved ActType with id 10
+[10/Oct/2024 14:31:51] INFO [django.server:213] "GET /filter-act-type/?acttype_id=10 HTTP/1.1" 200 50
+[10/Oct/2024 14:31:53] INFO [maximo_app.views:2864] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 14:31:53] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 14:31:58] INFO [maximo_app.views:208] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: C
+SITE: CHN0
+PLANT NAME: CHN
+UNIT: 00
+STATUS: WSCH
+WORK TYPE: APOO
+ACTTYPE: AYI
+SUBWBS GROUP: BM
+[10/Oct/2024 14:31:58] INFO [maximo_app.views:232] EGPROJECTID: O-CHNC00-67YI
+[10/Oct/2024 14:31:58] INFO [maximo_app.views:233] EGWBS: O-CHNC00-67YI-BM
+[10/Oct/2024 14:31:58] INFO [maximo_app.views:234] WBS DESC: WBS Business Management Yearly Inspection CHN-C00 2567
+[10/Oct/2024 14:31:58] INFO [maximo_app.views:235] LOCATION: CHN-C00
+[10/Oct/2024 14:31:58] INFO [maximo_app.views:263] Schedule file: Final Schedule ไม่มีข้อมูลสำคัญ 2_ข้อมูลไม่ถูกต้อง.xlsx
+[10/Oct/2024 14:31:58] INFO [maximo_app.views:264] Location file: Locations PMN-H.xlsx
+[10/Oct/2024 14:31:58] INFO [maximo_app.views:275] Files saved successfully at: temp\ef89c1e4-6e9b-459f-805f-346ef9f0819a_Final Schedule ไม่มีข้อมูลสำคัญ 2_ข้อมูลไม่ถูกต้อง.xlsx and temp\075a9702-4bcd-4032-a921-bf53bde333f9_Locations PMN-H.xlsx
+[10/Oct/2024 14:31:59] INFO [maximo_app.views:337] Excel file loaded successfully.
+[10/Oct/2024 14:31:59] INFO [maximo_app.views:342] Column names cleaned and formatted.
+[10/Oct/2024 14:31:59] INFO [maximo_app.views:424] DataFrame preparation completed successfully.
+[10/Oct/2024 14:32:03] ERROR [maximo_app.views:998] Missing data detected in columns: KKS: 10 รายการ, EQUIPMENT: 10 รายการ
+NoneType: None
+[10/Oct/2024 14:32:03] INFO [django.server:213] "POST / HTTP/1.1" 200 59995

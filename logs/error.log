@@ -7291,3 +7291,111 @@ Traceback (most recent call last):
     df_original.columns = [col.upper().replace(' ', '_') for col in df_original.columns]
                            ^^^^^^^^^
 AttributeError: 'float' object has no attribute 'upper'
+[10/Oct/2024 11:25:54] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2064, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:25:54] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2064, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:25:54] ERROR [django.server:213] "GET / HTTP/1.1" 500 76671
+[10/Oct/2024 11:25:54] ERROR [django.server:213] "GET / HTTP/1.1" 500 76671
+[10/Oct/2024 11:25:57] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2064, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:25:57] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2064, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:25:57] ERROR [django.server:213] "GET / HTTP/1.1" 500 76808
+[10/Oct/2024 11:25:57] ERROR [django.server:213] "GET / HTTP/1.1" 500 76808
+[10/Oct/2024 11:35:49] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2068, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:35:49] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2068, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:35:49] ERROR [django.server:213] "GET / HTTP/1.1" 500 76671
+[10/Oct/2024 11:35:49] ERROR [django.server:213] "GET / HTTP/1.1" 500 76671
+[10/Oct/2024 11:35:52] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2068, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:35:52] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 2068, in index
+    'error_message': error_message,
+                     ^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'error_message' where it is not associated with a value
+[10/Oct/2024 11:35:52] ERROR [django.server:213] "GET / HTTP/1.1" 500 76808
+[10/Oct/2024 11:35:52] ERROR [django.server:213] "GET / HTTP/1.1" 500 76808
+[10/Oct/2024 14:32:03] ERROR [maximo_app.views:998] Missing data detected in columns: KKS: 10 รายการ, EQUIPMENT: 10 รายการ
+NoneType: None
+[10/Oct/2024 14:32:03] ERROR [maximo_app.views:998] Missing data detected in columns: KKS: 10 รายการ, EQUIPMENT: 10 รายการ
+NoneType: None
