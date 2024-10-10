@@ -320,7 +320,7 @@ def index(request):
                     'ประเภทของ_PERMIT_TO_WORK', 'TYPE'
                 ]
 
-                df_original = read_excel_with_error_handling(schedule_path)
+                df_original = read_excel_with_error_handling(request, schedule_path)
                 if df_original is None:
                     raise ValueError("Cannot proceed without a valid DataFrame.")
                 logger.info("Excel file loaded successfully.")
@@ -402,6 +402,7 @@ def index(request):
                     f"<ul class='error-details'>"
                     f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                     f"<li>{str(e)}</li>"
+                    f"<li>กรุณาตรวจสอบว่ารูปแบบของ Template Excel ถูกต้อง</li>"
                     f"</ul>"
                     f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
                     f"</div>"
@@ -1775,9 +1776,9 @@ def index(request):
             #! Create WORKORDER
             
             # ใช้ฟังก์ชันสำหรับ PMNUM
-            df_workorder1 = create_workorder(df_pm_plan3_master, 'PMNUM', orgid)
+            df_workorder1 = create_workorder(request, df_pm_plan3_master, 'PMNUM', orgid)
             # ใช้ฟังก์ชันสำหรับ PMNUM1
-            df_workorder2 = create_workorder(df_pm_plan3_master, 'PMNUM1', orgid)
+            df_workorder2 = create_workorder(request, df_pm_plan3_master, 'PMNUM1', orgid)
             
             #! Create Template-MxLoader-JP-PMPlan
             # Define the color and border style
@@ -1815,7 +1816,7 @@ def index(request):
                 basic_sheet_names = [sheet_jp_labor, sheet_jp_task, sheet_pm, sheet_wo]
                 for i in range(1, 2):
                     for sheet_name in basic_sheet_names:
-                        copy_worksheet(file_template_xlsx, sheet_name, i)
+                        copy_worksheet(request, file_template_xlsx, sheet_name, i)
                 
                 # 3. ใช้ pandas เพื่อเขียนข้อมูลลงในไฟล์ .xlsx
                 # with pd.ExcelWriter(file_template_xlsx, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
@@ -1828,6 +1829,7 @@ def index(request):
                 with pd.ExcelWriter(file_template_xlsx, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
                     # ชุดที่ 1
                     write_dataframes_to_excel(
+                        request,
                         writer, 
                         df_labor_new, lst_labor1, 
                         df_jop_plan_master, jop_plan_column1, 
@@ -1839,6 +1841,7 @@ def index(request):
                     
                     # ชุดที่ 2
                     write_dataframes_to_excel(
+                        request,
                         writer, 
                         df_labor_new, lst_labor2, 
                         df_jop_plan_master, jop_plan_column2, 
@@ -2871,14 +2874,20 @@ def custom_500(request):
 def convert_timestamp_columns_to_str(df, columns):
     for col in columns:
         if col in df.columns:
-            df[col] = df[col].astype(str)
+            try:
+                df[col] = df[col].astype(str)
+            except Exception as e:
+                logger.error(f"Failed to convert column '{col}' to string: {str(e)}", exc_info=True)
     return df
 
 # ฟังก์ชันสำหรับแปลงคอลัมน์ string กลับเป็น Timestamp
 def convert_str_columns_to_timestamp(df, columns):
     for col in columns:
         if col in df.columns:
-            df[col] = pd.to_datetime(df[col], errors='coerce')  # แปลงเป็น Timestamp
+            try:
+                df[col] = pd.to_datetime(df[col], errors='coerce')  # แปลงเป็น Timestamp
+            except Exception as e:
+                logger.error(f"Failed to convert column '{col}' to timestamp: {str(e)}", exc_info=True)
     return df
 
 def update_comment(df, condition, column_name, message):
@@ -2896,7 +2905,7 @@ def replace_or_append_comment(df, condition, comment_col, message, replace_messa
         lambda x: x.replace(replace_message, message) if replace_message in x else f"{x}, {message}"
     )
 
-def read_excel_with_error_handling(schedule_path, sheet_name=0):
+def read_excel_with_error_handling(request, schedule_path, sheet_name=0):
     try:
         # พยายามอ่านไฟล์ Excel ด้วย sheet_name ที่ระบุ
         df_original = pd.read_excel(schedule_path, 
@@ -2906,11 +2915,33 @@ def read_excel_with_error_handling(schedule_path, sheet_name=0):
         return df_original
     except ValueError as ve:
         # หาก sheet_name ไม่ถูกต้อง
-        logger.error(f"ข้อผิดพลาด: {ve}. กรุณาตรวจสอบว่าชื่อชีท '{sheet_name}' ถูกต้องหรือไม่.")
-        return None
+        logger.error(f"Invalid sheet name '{sheet_name}': {ve}")
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบชีท '{sheet_name}' ที่ระบุในไฟล์ Excel<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>ชื่อชีทที่ระบุอาจไม่ถูกต้องหรือไม่มีอยู่ในไฟล์</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบชื่อชีทและลองอีกครั้ง หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
     except Exception as e:
-        logger.error(f"ข้อผิดพลาด: {e}")
-        return None
+        logger.error(f"Failed to read Excel file '{schedule_path}': {e}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ Excel ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดระหว่างการอ่านไฟล์ กรุณาตรวจสอบว่าไฟล์มีอยู่และสามารถเปิดได้</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)        
+        return redirect('index')
 
 def convert_duration(value):
     try:
@@ -2992,36 +3023,115 @@ def replace_columns(col, replace_dict):
         logger.error(f"An error occurred: {e}")
     return col
 
-def create_workorder(df, pmnum_col, orgid):
-    # เลือกคอลัมน์ที่ต้องการจาก DataFrame
-    df_workorder = df[['SITEID', pmnum_col, 'WOSTATUS', 'NEXTDATE', 'FINISH_DATE']].copy()
-    
-    # กำหนดค่าใหม่ในคอลัมน์ต่างๆ
-    df_workorder['PARENTCHGSSTATUS'] = 0
-    df_workorder['ORGID'] = orgid
-    df_workorder['NEXTDATE'] = df_workorder['NEXTDATE'] + ' ' + '01:00:00'
-    df_workorder['FINISH_DATE'] = df_workorder['FINISH_DATE'] + ' ' + '09:00:00'
-    df_workorder['SCHEDSTART'] = df_workorder['NEXTDATE']
-    df_workorder['SCHEDFINISH'] = df_workorder['FINISH_DATE']
-    df_workorder.rename(columns={'WOSTATUS': 'STATUS', 'NEXTDATE': 'TARGSTARTDATE', 'FINISH_DATE': 'TARGCOMPDATE'}, inplace=True)
-    columns_order = ['SITEID', 'ORGID', 'STATUS', pmnum_col, 'PARENTCHGSSTATUS', 'TARGSTARTDATE', 'TARGCOMPDATE', 'SCHEDSTART', 'SCHEDFINISH']
-    df_workorder = df_workorder[columns_order]
-    
-    return df_workorder
+def create_workorder(request, df, pmnum_col, orgid):
+    try:
+        # เลือกคอลัมน์ที่ต้องการจาก DataFrame
+        df_workorder = df[['SITEID', pmnum_col, 'WOSTATUS', 'NEXTDATE', 'FINISH_DATE']].copy()
+        
+        # กำหนดค่าใหม่ในคอลัมน์ต่างๆ
+        df_workorder['PARENTCHGSSTATUS'] = 0
+        df_workorder['ORGID'] = orgid
+        df_workorder['NEXTDATE'] = df_workorder['NEXTDATE'] + ' ' + '01:00:00'
+        df_workorder['FINISH_DATE'] = df_workorder['FINISH_DATE'] + ' ' + '09:00:00'
+        df_workorder['SCHEDSTART'] = df_workorder['NEXTDATE']
+        df_workorder['SCHEDFINISH'] = df_workorder['FINISH_DATE']
+        df_workorder.rename(columns={'WOSTATUS': 'STATUS', 'NEXTDATE': 'TARGSTARTDATE', 'FINISH_DATE': 'TARGCOMPDATE'}, inplace=True)
+        columns_order = ['SITEID', 'ORGID', 'STATUS', pmnum_col, 'PARENTCHGSSTATUS', 'TARGSTARTDATE', 'TARGCOMPDATE', 'SCHEDSTART', 'SCHEDFINISH']
+        df_workorder = df_workorder[columns_order]
+        
+        return df_workorder
 
-def copy_worksheet(file_path, sheet_name, index):
-    wb = load_workbook(file_path)
-    source_sheet = wb[sheet_name]
-    new_sheet = wb.copy_worksheet(source_sheet)
-    new_sheet.title = f"{sheet_name}-{index}"
-    wb.save(file_path)
+    except Exception as e:
+        logger.error(f"Failed to create workorder DataFrame: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถสร้างข้อมูล Workorder ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดในระหว่างการสร้างข้อมูล กรุณาตรวจสอบข้อมูลอีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
 
-def write_dataframes_to_excel(writer, df_labor, lst_labor, df_jop, jop_plan_column, df_pm, pm_plan_column, df_workorder, sheet_name_labor, sheet_name_task, sheet_name_pm, sheet_name_wo, start_row, start_offset):
+def copy_worksheet(request, file_path, sheet_name, index):
+    try:
+        wb = load_workbook(file_path)
+        if sheet_name not in wb.sheetnames:
+            raise ValueError(f"Sheet name '{sheet_name}' does not exist in the workbook.")
+        source_sheet = wb[sheet_name]
+        new_sheet = wb.copy_worksheet(source_sheet)
+        new_sheet.title = f"{sheet_name}-{index}"
+        wb.save(file_path)
+    
+    except FileNotFoundError:
+        logger.error(f"Excel file '{file_path}' not found.", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Excel '{file_path}' ที่ระบุ<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>ระบบไม่สามารถหาไฟล์ที่ระบุได้ กรุณาตรวจสอบเส้นทางไฟล์และลองใหม่อีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
+
+    except ValueError as ve:
+        logger.error(f"Invalid sheet name '{sheet_name}': {ve}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบชีท '{sheet_name}' ในไฟล์ Excel ที่ระบุ<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>ชื่อชีทที่ระบุไม่ถูกต้องหรือไม่มีอยู่ในไฟล์</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบชื่อชีทและลองอีกครั้ง หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
+
+    except Exception as e:
+        logger.error(f"Failed to copy worksheet '{sheet_name}' in file '{file_path}': {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถคัดลอกชีท '{sheet_name}' ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดระหว่างการคัดลอกชีท กรุณาตรวจสอบข้อมูลและลองใหม่อีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
+
+def write_dataframes_to_excel(request, writer, df_labor, lst_labor, df_jop, jop_plan_column, df_pm, pm_plan_column, df_workorder, sheet_name_labor, sheet_name_task, sheet_name_pm, sheet_name_wo, start_row, start_offset):
     # เขียนข้อมูลจาก DataFrame ลงในชีตที่ระบุ
-    df_labor[lst_labor].to_excel(writer, sheet_name=sheet_name_labor, startrow=start_row, startcol=0, index=False, header=False)
-    df_jop[jop_plan_column].to_excel(writer, sheet_name=sheet_name_task, startrow=start_row, startcol=0, index=False, header=False)
-    df_pm[pm_plan_column].to_excel(writer, sheet_name=sheet_name_pm, startrow=start_row, startcol=0, index=False, header=False)
-    df_workorder.to_excel(writer, sheet_name=sheet_name_wo, startrow=(start_row + start_offset), startcol=1, index=False, header=False)
+    try:
+        df_labor[lst_labor].to_excel(writer, sheet_name=sheet_name_labor, startrow=start_row, startcol=0, index=False, header=False)
+        df_jop[jop_plan_column].to_excel(writer, sheet_name=sheet_name_task, startrow=start_row, startcol=0, index=False, header=False)
+        df_pm[pm_plan_column].to_excel(writer, sheet_name=sheet_name_pm, startrow=start_row, startcol=0, index=False, header=False)
+        df_workorder.to_excel(writer, sheet_name=sheet_name_wo, startrow=(start_row + start_offset), startcol=1, index=False, header=False)
+    except Exception as e:
+        logger.error(f"Failed to write dataframes to Excel: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเขียนข้อมูลลงในไฟล์ Excel ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดในระหว่างการเขียนข้อมูล กรุณาตรวจสอบข้อมูลอีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
 
 def decorate_sheet_labor(sheet, thin_border, fill_color, yellow_fill):
     # ตกแต่งชีต JPPLAN-LABOR

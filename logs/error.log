@@ -7169,3 +7169,125 @@ NameError: name 'context' is not defined
 [10/Oct/2024 09:40:47] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
 [10/Oct/2024 09:40:53] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
 [10/Oct/2024 09:40:53] ERROR [maximo_app.views:2414] Draft Schedule file not found in the specified path for download.
+[10/Oct/2024 10:24:20] ERROR [maximo_app.views:398] An error occurred: read_excel_with_error_handling() missing 1 required positional argument: 'schedule_path'
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 323, in index
+    df_original = read_excel_with_error_handling(schedule_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: read_excel_with_error_handling() missing 1 required positional argument: 'schedule_path'
+[10/Oct/2024 10:24:20] ERROR [maximo_app.views:398] An error occurred: read_excel_with_error_handling() missing 1 required positional argument: 'schedule_path'
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 323, in index
+    df_original = read_excel_with_error_handling(schedule_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: read_excel_with_error_handling() missing 1 required positional argument: 'schedule_path'
+[10/Oct/2024 10:25:00] ERROR [maximo_app.views:398] An error occurred: read_excel_with_error_handling() missing 1 required positional argument: 'schedule_path'
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 323, in index
+    df_original = read_excel_with_error_handling(schedule_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: read_excel_with_error_handling() missing 1 required positional argument: 'schedule_path'
+[10/Oct/2024 10:25:00] ERROR [maximo_app.views:398] An error occurred: read_excel_with_error_handling() missing 1 required positional argument: 'schedule_path'
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 323, in index
+    df_original = read_excel_with_error_handling(schedule_path)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: read_excel_with_error_handling() missing 1 required positional argument: 'schedule_path'
+[10/Oct/2024 10:28:59] ERROR [maximo_app.views:398] An error occurred: 'float' object has no attribute 'upper'
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 330, in index
+    df_original.columns = [col.upper().replace(' ', '_') for col in df_original.columns]
+                           ^^^^^^^^^
+AttributeError: 'float' object has no attribute 'upper'
+[10/Oct/2024 10:28:59] ERROR [maximo_app.views:398] An error occurred: 'float' object has no attribute 'upper'
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 330, in index
+    df_original.columns = [col.upper().replace(' ', '_') for col in df_original.columns]
+                           ^^^^^^^^^
+AttributeError: 'float' object has no attribute 'upper'
+[10/Oct/2024 10:32:17] ERROR [maximo_app.views:398] An error occurred: 'float' object has no attribute 'upper'
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 330, in index
+    df_original.columns = [col.upper().replace(' ', '_') for col in df_original.columns]
+                           ^^^^^^^^^
+AttributeError: 'float' object has no attribute 'upper'
+[10/Oct/2024 10:32:17] ERROR [maximo_app.views:398] An error occurred: 'float' object has no attribute 'upper'
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 330, in index
+    df_original.columns = [col.upper().replace(' ', '_') for col in df_original.columns]
+                           ^^^^^^^^^
+AttributeError: 'float' object has no attribute 'upper'
+[10/Oct/2024 10:32:17] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 191, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 234, in pandas._libs.index.IndexEngine._get_loc_duplicates
+  File "index.pyx", line 242, in pandas._libs.index.IndexEngine._maybe_get_bool_indexer
+  File "index.pyx", line 134, in pandas._libs.index._unpack_bool_indexer
+KeyError: 'KKS'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 415, in index
+    df_comment['KKS'] = df_original['KKS']
+                        ~~~~~~~~~~~^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'KKS'
+[10/Oct/2024 10:32:17] ERROR [django.request:248] Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 191, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 234, in pandas._libs.index.IndexEngine._get_loc_duplicates
+  File "index.pyx", line 242, in pandas._libs.index.IndexEngine._maybe_get_bool_indexer
+  File "index.pyx", line 134, in pandas._libs.index._unpack_bool_indexer
+KeyError: 'KKS'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 415, in index
+    df_comment['KKS'] = df_original['KKS']
+                        ~~~~~~~~~~~^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\frame.py", line 4102, in __getitem__
+    indexer = self.columns.get_loc(key)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\narav\AppData\Local\Programs\Python\Python312\Lib\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: 'KKS'
+[10/Oct/2024 10:32:17] ERROR [django.server:213] "POST / HTTP/1.1" 500 117352
+[10/Oct/2024 10:32:17] ERROR [django.server:213] "POST / HTTP/1.1" 500 117352
+[10/Oct/2024 10:32:48] ERROR [maximo_app.views:398] An error occurred: 'float' object has no attribute 'upper'
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 330, in index
+    df_original.columns = [col.upper().replace(' ', '_') for col in df_original.columns]
+                           ^^^^^^^^^
+AttributeError: 'float' object has no attribute 'upper'
+[10/Oct/2024 10:32:48] ERROR [maximo_app.views:398] An error occurred: 'float' object has no attribute 'upper'
+Traceback (most recent call last):
+  File "C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py", line 330, in index
+    df_original.columns = [col.upper().replace(' ', '_') for col in df_original.columns]
+                           ^^^^^^^^^
+AttributeError: 'float' object has no attribute 'upper'
