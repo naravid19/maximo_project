@@ -16280,3 +16280,42 @@ SUBWBS GROUP: BM
 [10/Oct/2024 09:14:47] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
 [10/Oct/2024 09:14:53] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
 [10/Oct/2024 09:14:54] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:18:44] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 09:18:50] INFO [maximo_app.views:2721] Successfully retrieved PlantType with id 1
+[10/Oct/2024 09:18:50] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[10/Oct/2024 09:18:51] INFO [maximo_app.views:2638] Successfully retrieved Site with id 2
+[10/Oct/2024 09:18:51] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 09:18:52] INFO [maximo_app.views:2669] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 09:18:52] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 09:18:54] INFO [maximo_app.views:2844] Successfully retrieved Status with id 2
+[10/Oct/2024 09:18:54] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=2 HTTP/1.1" 200 38
+[10/Oct/2024 09:18:55] INFO [maximo_app.views:2695] Successfully retrieved WorkType with id 3
+[10/Oct/2024 09:18:55] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 09:18:56] INFO [maximo_app.views:2791] Successfully retrieved ActType with id 1
+[10/Oct/2024 09:18:56] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 09:18:57] INFO [maximo_app.views:2818] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 09:18:57] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 09:19:02] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: T
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 00
+STATUS: WAPPR
+WORK TYPE: APAO
+ACTTYPE: AO1
+SUBWBS GROUP: BM
+[10/Oct/2024 09:19:02] INFO [maximo_app.views:221] EGPROJECTID: O-BPKT00-67YI
+[10/Oct/2024 09:19:02] INFO [maximo_app.views:222] EGWBS: O-BPKT00-67YI-BM
+[10/Oct/2024 09:19:02] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Hot Gas Path Inspection BPK-T00 2567
+[10/Oct/2024 09:19:02] INFO [maximo_app.views:224] LOCATION: BPK-T00
+[10/Oct/2024 09:19:02] INFO [maximo_app.views:252] Schedule file: Final Schedule PMN-H03 200967.xlsx
+[10/Oct/2024 09:19:02] INFO [maximo_app.views:253] Location file: Final Schedule PMN-H03 200967.xlsx
+[10/Oct/2024 09:19:02] INFO [maximo_app.views:264] Files saved successfully at: temp\3b7a432b-cb93-49fd-a80e-73eb39a7cd2a_Final Schedule PMN-H03 200967.xlsx and temp\11a34c31-4919-4a59-bc39-7a8afd84047d_Locations PMN-H.xlsx
+[10/Oct/2024 09:19:03] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 09:19:03] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 09:19:03] INFO [maximo_app.views:412] DataFrame preparation completed successfully.
+[10/Oct/2024 09:19:07] INFO [django.server:213] "POST / HTTP/1.1" 200 62181
+[10/Oct/2024 09:20:32] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:20:33] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader

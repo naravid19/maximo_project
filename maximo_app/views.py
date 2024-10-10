@@ -250,7 +250,7 @@ def index(request):
             comment_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Comment.xlsx")
             
             logger.info(f"Schedule file: {schedule_filename}")
-            logger.info(f"Location file: {schedule_filename}")
+            logger.info(f"Location file: {location_filename}")
             
             try:
                 with open(schedule_path, 'wb+') as destination:
