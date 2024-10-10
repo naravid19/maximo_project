@@ -7129,3 +7129,11 @@ AttributeError: 'str' object has no attribute 'wbs_code'
 [09/Oct/2024 22:21:22] ERROR [maximo_app.views:2081] Comment file not found for download.
 [09/Oct/2024 22:21:29] ERROR [maximo_app.views:2081] Comment file not found for download.
 [09/Oct/2024 22:21:29] ERROR [maximo_app.views:2081] Comment file not found for download.
+[10/Oct/2024 08:30:55] WARNING [django.request:248] Not Found: /favicon.ico
+[10/Oct/2024 08:30:55] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 7767
+[10/Oct/2024 08:58:33] WARNING [django.request:248] Bad Request: /filter-site/
+[10/Oct/2024 08:58:33] WARNING [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 400 33
+[10/Oct/2024 08:58:50] WARNING [django.request:248] Bad Request: /filter-site/
+[10/Oct/2024 08:58:50] WARNING [django.server:213] "GET /filter-site/?site_id=7 HTTP/1.1" 400 33
+[10/Oct/2024 08:59:36] WARNING [django.request:248] Bad Request: /filter-site/
+[10/Oct/2024 08:59:36] WARNING [django.server:213] "GET /filter-site/?site_id=1 HTTP/1.1" 400 56

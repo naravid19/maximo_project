@@ -16140,3 +16140,143 @@ SUBWBS GROUP: BM
 [09/Oct/2024 22:21:29] ERROR [maximo_app.views:2081] Comment file not found for download.
 [09/Oct/2024 22:21:29] INFO [django.server:213] "GET /download-comment/ HTTP/1.1" 200 63999
 [09/Oct/2024 22:21:35] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 08:30:43] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 08:30:55] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 08:30:55] INFO [django.server:213] "GET /static/CACHE/css/output.7b4c0c219045.css HTTP/1.1" 304 0
+[10/Oct/2024 08:30:55] INFO [django.server:213] "GET /static/flowbite/dist/flowbite.min.js HTTP/1.1" 304 0
+[10/Oct/2024 08:30:55] WARNING [django.request:248] Not Found: /favicon.ico
+[10/Oct/2024 08:30:55] WARNING [django.server:213] "GET /favicon.ico HTTP/1.1" 404 7767
+[10/Oct/2024 08:34:06] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 08:34:12] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 08:34:18] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 08:34:37] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 08:35:14] INFO [maximo_app.views:2721] Successfully retrieved PlantType with id 1
+[10/Oct/2024 08:35:14] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[10/Oct/2024 08:35:16] INFO [maximo_app.views:2638] Successfully retrieved Site with id 2
+[10/Oct/2024 08:35:16] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 08:35:18] INFO [maximo_app.views:2669] Successfully retrieved ChildSite with id 28
+[10/Oct/2024 08:35:18] INFO [django.server:213] "GET /filter-child-site/?child_site_id=28 HTTP/1.1" 200 109
+[10/Oct/2024 08:35:20] INFO [maximo_app.views:2844] Successfully retrieved Status with id 1
+[10/Oct/2024 08:35:20] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 08:35:21] INFO [maximo_app.views:2695] Successfully retrieved WorkType with id 3
+[10/Oct/2024 08:35:21] INFO [django.server:213] "GET /filter-work-type/?work_type_id=3 HTTP/1.1" 200 57
+[10/Oct/2024 08:35:22] INFO [maximo_app.views:2791] Successfully retrieved ActType with id 1
+[10/Oct/2024 08:35:22] INFO [django.server:213] "GET /filter-act-type/?acttype_id=1 HTTP/1.1" 200 56
+[10/Oct/2024 08:35:23] INFO [maximo_app.views:2818] Successfully retrieved WBSCode with id 1
+[10/Oct/2024 08:35:23] INFO [django.server:213] "GET /filter-wbs/?wbs_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 08:35:29] INFO [maximo_app.views:197] PLANT OUTAGE YEAR: 2024
+FREQUENCY: 1
+FREQUNIT: MONTHS
+PLANT TYPE: T
+SITE: BPK0
+PLANT NAME: BPK
+UNIT: 00
+STATUS: WSCH
+WORK TYPE: APAO
+ACTTYPE: AO1
+SUBWBS GROUP: BM
+[10/Oct/2024 08:35:29] INFO [maximo_app.views:221] EGPROJECTID: O-BPKT00-67YI
+[10/Oct/2024 08:35:29] INFO [maximo_app.views:222] EGWBS: O-BPKT00-67YI-BM
+[10/Oct/2024 08:35:29] INFO [maximo_app.views:223] WBS DESC: WBS Business Management Hot Gas Path Inspection BPK-T00 2567
+[10/Oct/2024 08:35:29] INFO [maximo_app.views:224] LOCATION: BPK-T00
+[10/Oct/2024 08:35:29] INFO [maximo_app.views:252] Schedule file: Final Schedule PMN-H03 200967.xlsx
+[10/Oct/2024 08:35:29] INFO [maximo_app.views:253] Location file: Final Schedule PMN-H03 200967.xlsx
+[10/Oct/2024 08:35:29] INFO [maximo_app.views:264] Files saved successfully at: temp\124a69c4-cbf9-4e19-a324-e8be5f02a34b_Final Schedule PMN-H03 200967.xlsx and temp\c153772f-24ae-4b32-b913-fd8a36a8fa6e_Locations PMN-H.xlsx
+[10/Oct/2024 08:35:29] INFO [maximo_app.views:326] Excel file loaded successfully.
+[10/Oct/2024 08:35:29] INFO [maximo_app.views:331] Column names cleaned and formatted.
+[10/Oct/2024 08:35:29] INFO [maximo_app.views:412] DataFrame preparation completed successfully.
+[10/Oct/2024 08:35:33] INFO [django.server:213] "POST / HTTP/1.1" 200 62181
+[10/Oct/2024 08:36:05] INFO [maximo_app.views:1911] File saved successfully as temp\441ca00a-3232-46b1-8d96-9b294ebf8ada_Template-MxLoader-JP-PMPlan.xlsm
+[10/Oct/2024 08:36:05] INFO [django.server:213] "POST / HTTP/1.1" 200 64362
+[10/Oct/2024 08:36:05] INFO [django.server:213] "GET /static/icon/excel.svg HTTP/1.1" 304 0
+[10/Oct/2024 08:36:19] INFO [django.server:213] "GET /download-job-plan-task/ HTTP/1.1" 200 57740
+[10/Oct/2024 08:36:20] INFO [django.server:213] "GET /download-job-plan-labor/ HTTP/1.1" 200 7783
+[10/Oct/2024 08:36:21] INFO [django.server:213] "GET /download-pm-plan/ HTTP/1.1" 200 66037
+[10/Oct/2024 08:36:22] INFO [django.server:213] "GET /download-template/ HTTP/1.1" 200 819633
+[10/Oct/2024 08:38:24] INFO [django.server:213] "GET /admin/ HTTP/1.1" 302 0
+[10/Oct/2024 08:38:24] INFO [django.server:213] "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4160
+[10/Oct/2024 08:38:24] INFO [django.server:213] "GET /static/admin/css/base.css HTTP/1.1" 304 0
+[10/Oct/2024 08:38:24] INFO [django.server:213] "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+[10/Oct/2024 08:38:24] INFO [django.server:213] "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+[10/Oct/2024 08:38:24] INFO [django.server:213] "GET /static/admin/css/login.css HTTP/1.1" 304 0
+[10/Oct/2024 08:38:24] INFO [django.server:213] "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+[10/Oct/2024 08:38:24] INFO [django.server:213] "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+[10/Oct/2024 08:38:24] INFO [django.server:213] "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+[10/Oct/2024 08:38:31] INFO [django.server:213] "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[10/Oct/2024 08:38:31] INFO [django.server:213] "GET /admin/ HTTP/1.1" 200 15662
+[10/Oct/2024 08:38:31] INFO [django.server:213] "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+[10/Oct/2024 08:38:31] INFO [django.server:213] "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+[10/Oct/2024 08:38:31] INFO [django.server:213] "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 304 0
+[10/Oct/2024 08:38:31] INFO [django.server:213] "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /admin/maximo_app/worktype/ HTTP/1.1" 200 18509
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/css/changelists.css HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/js/jquery.init.js HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/js/actions.js HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/js/core.js HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/js/urlify.js HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/img/search.svg HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/js/prepopulate.js HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/js/filters.js HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 304 0
+[10/Oct/2024 08:38:35] INFO [django.server:213] "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 304 0
+[10/Oct/2024 08:38:37] INFO [django.server:213] "GET /admin/maximo_app/wbscode/ HTTP/1.1" 200 16130
+[10/Oct/2024 08:38:37] INFO [django.server:213] "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[10/Oct/2024 08:44:02] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 08:45:02] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 08:58:08] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 08:58:09] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 08:58:12] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 08:58:22] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 08:58:23] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 08:58:24] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 08:58:26] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 08:58:28] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 08:58:29] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 08:58:32] INFO [maximo_app.views:2721] Successfully retrieved PlantType with id 1
+[10/Oct/2024 08:58:32] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[10/Oct/2024 08:58:33] WARNING [django.request:248] Bad Request: /filter-site/
+[10/Oct/2024 08:58:33] WARNING [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 400 33
+[10/Oct/2024 08:58:50] WARNING [django.request:248] Bad Request: /filter-site/
+[10/Oct/2024 08:58:50] WARNING [django.server:213] "GET /filter-site/?site_id=7 HTTP/1.1" 400 33
+[10/Oct/2024 08:59:11] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 08:59:12] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 08:59:13] INFO [maximo_app.views:2638] Successfully retrieved Site with id 2
+[10/Oct/2024 08:59:13] INFO [django.server:213] "GET /filter-site/?site_id=2 HTTP/1.1" 200 261
+[10/Oct/2024 08:59:29] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 08:59:30] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 08:59:31] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 08:59:36] INFO [maximo_app.views:2721] Successfully retrieved PlantType with id 3
+[10/Oct/2024 08:59:36] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=3 HTTP/1.1" 200 2823
+[10/Oct/2024 08:59:36] WARNING [django.request:248] Bad Request: /filter-site/
+[10/Oct/2024 08:59:36] WARNING [django.server:213] "GET /filter-site/?site_id=1 HTTP/1.1" 400 56
+[10/Oct/2024 09:08:33] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:08:34] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:09:10] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:09:11] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:09:13] INFO [django.server:213] "GET / HTTP/1.1" 200 70846
+[10/Oct/2024 09:09:17] INFO [maximo_app.views:2721] Successfully retrieved PlantType with id 1
+[10/Oct/2024 09:09:17] INFO [django.server:213] "GET /filter-plant-type/?plant_type_id=1 HTTP/1.1" 200 2006
+[10/Oct/2024 09:09:18] INFO [maximo_app.views:2638] Successfully retrieved Site with id 5
+[10/Oct/2024 09:09:18] INFO [django.server:213] "GET /filter-site/?site_id=5 HTTP/1.1" 200 249
+[10/Oct/2024 09:09:19] INFO [maximo_app.views:2669] Successfully retrieved ChildSite with id 31
+[10/Oct/2024 09:09:19] INFO [django.server:213] "GET /filter-child-site/?child_site_id=31 HTTP/1.1" 200 103
+[10/Oct/2024 09:09:46] INFO [maximo_app.views:2844] Successfully retrieved Status with id 1
+[10/Oct/2024 09:09:46] INFO [django.server:213] "GET /filter-wo-status/?wostatus_id=1 HTTP/1.1" 200 42
+[10/Oct/2024 09:11:38] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:11:39] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:13:26] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:13:27] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:14:13] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:14:14] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:14:20] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:14:21] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:14:41] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:14:42] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:14:46] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:14:47] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader
+[10/Oct/2024 09:14:53] INFO [django.utils.autoreload:266] C:\Users\narav\Downloads\maximo\WebConverter\maximo_project\maximo_app\views.py changed, reloading.
+[10/Oct/2024 09:14:54] INFO [django.utils.autoreload:668] Watching for file changes with StatReloader

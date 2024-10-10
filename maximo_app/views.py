@@ -2654,7 +2654,7 @@ def filter_site(request):
     return JsonResponse({
         'site_name': site.site_name,
         'child_sites': child_site_list,
-    })
+    }, status=200)
 
 @require_GET
 def filter_child_site(request):
@@ -2676,7 +2676,7 @@ def filter_child_site(request):
 
     return JsonResponse({
         'description': child_site.site_name
-    })
+    }, status=200)
 
 @require_GET
 def filter_worktype(request):
@@ -2701,7 +2701,7 @@ def filter_worktype(request):
         return JsonResponse({'error': 'An unexpected error occurred.'}, status=500)
     return JsonResponse({
         'description': work_type.description
-    })
+    }, status=200)
 
 @require_GET
 def filter_plant_type(request):
@@ -2772,7 +2772,7 @@ def filter_plant_type(request):
         'plant_type_th': plant_type.plant_type_th,
         'work_types': work_type_list,
         'units' : unit_list,
-    })
+    }, status=200)
     
 @require_GET
 def filter_acttype(request):
@@ -2799,7 +2799,7 @@ def filter_acttype(request):
     return JsonResponse({
         'description': acttype.description, 
         'code': acttype.code
-    })
+    }, status=200)
 
 @require_GET
 def filter_wbs(request):
@@ -2825,7 +2825,7 @@ def filter_wbs(request):
     
     return JsonResponse({
         'description': wbs.description
-    })
+    }, status=200)
 
 @require_GET
 def filter_wostatus(request):
@@ -2851,7 +2851,7 @@ def filter_wostatus(request):
     
     return JsonResponse({
         'description': wostatus.description
-    })
+    }, status=200)
 
 # ---------------------------------
 # ส่วนของ Custom Error Handlers
