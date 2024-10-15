@@ -18,7 +18,7 @@ from concurrent_log_handler import ConcurrentRotatingFileHandler
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-PORT = int(os.environ.get("PORT", 8000))
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -29,10 +29,13 @@ SECRET_KEY = 'django-insecure-8qr^6l&nb!g6g22xu(^6h@wb#hc$54e@qr76(@x*npdvhh#&!u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Edition settings
 ALLOWED_HOSTS = ['maximo-project.onrender.com', 'localhost', '127.0.0.1']
-
-
-# Application definition
+PORT = int(os.environ.get("PORT", 8000))
+CSRF_TRUSTED_ORIGINS = ['https://maximo-project.onrender.com']
+CSRF_COOKIE_SECURE = True   # ควรใช้กับ HTTPS เท่านั้น
+# SESSION_COOKIE_SECURE = True
+# Application definition    # DEBUG ถูกตั้งเป็น False, ควรเปิดการตั้งค่า Cookie ที่ปลอดภัย
 
 INSTALLED_APPS = [
     'django.contrib.admin',
