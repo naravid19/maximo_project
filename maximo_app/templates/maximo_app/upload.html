@@ -665,7 +665,7 @@
                 
                     <div class="flex items-center justify-between">
                         <p class="text-sm font-normal text-gray-700">
-                            <strong class="text-base">Schedule File:</strong> {{ request.session.schedule_filename }}
+                            <strong class="text-base">Final Schedule File:</strong> {{ request.session.schedule_filename }}
                         </p>
                         <a href="{% url 'download_user_schedule' %}" class="text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
                             DOWNLOAD
@@ -983,7 +983,7 @@
                 { field: workTypeField, container: workTypeFieldContainer, message: 'กรุณาเลือกประเภทของงาน' },
                 { field: acttypeField, container: acttypeFieldContainer, message: 'กรุณาเลือกประเภทของกิจกรรม' },
                 { field: wbsField, container: wbsFieldContainer, message: 'กรุณาเลือก WBS' },
-                { field: scheduleFileField, container: scheduleFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Schedule' },
+                { field: scheduleFileField, container: scheduleFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Final Schedule' },
                 { field: locationFileField, container: locationFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Location' }
             ];
 

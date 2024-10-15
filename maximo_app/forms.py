@@ -7,7 +7,7 @@ import os
 
 class UploadFileForm(forms.Form):
     schedule_file = forms.FileField(
-        label='Schedule File', 
+        label='Final Schedule File', 
         widget=forms.ClearableFileInput(attrs={'accept': '.xlsx,.xlsm'})
     )
     location_file = forms.FileField(

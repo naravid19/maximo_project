@@ -348,7 +348,7 @@ def index(request):
                     logger.error(f"Missing required columns: {', '.join(missing_columns)}")
                     error_message = (
                         f"<div class='error-container'>"
-                        f"<strong class='error-title'>พบปัญหา:</strong> คอลัมน์ที่จำเป็นไม่มีในไฟล์ข้อมูล<br>"
+                        f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบคอลัมน์ที่จำเป็น<br>"
                         f"<ul class='error-details'>"
                         f"<p class='error-description'>ไฟล์ {schedule_file.name} ขาดคอลัมน์ต่อไปนี้:</p>"
                         f"{''.join(f'<li>{col}</li>' for col in missing_columns)}"
@@ -370,14 +370,14 @@ def index(request):
                     logger.error(f"Important columns without data: {', '.join(empty_columns)}")
                     error_message = (
                         f"<div class='error-container'>"
-                        f"<strong class='error-title'>พบปัญหา:</strong> ข้อมูลไม่ครบถ้วนในคอลัมน์สำคัญ<br>"
+                        f"<strong class='error-title'>พบปัญหา: คอลัมน์ไม่มีข้อมูล</strong> <br>"
                         f"<ul class='error-details'>"
                         f"<p class='error-description'>คอลัมน์ต่อไปนี้ไม่มีข้อมูล:</p>"
                         f"{''.join(f'<li>{col}</li>' for col in empty_columns)}"
                         f"</ul>"
                         f"<p class='error-note'>คำแนะนำ:</p>"
                         f"&nbsp;&nbsp;&nbsp;&nbsp;1. ตรวจสอบคอลัมน์ที่ระบุข้างต้น<br>"
-                        f"&nbsp;&nbsp;&nbsp;&nbsp;2. เพิ่มข้อมูลที่จำเป็นลงในคอลัมน์เหล่านั้น<br>"
+                        f"&nbsp;&nbsp;&nbsp;&nbsp;2. หากไม่มีข้อมูลเลย ให้เพิ่มข้อมูลที่จำเป็นลงในคอลัมน์เหล่านั้น<br>"
                         f"&nbsp;&nbsp;&nbsp;&nbsp;3. ตรวจสอบให้แน่ใจว่าไม่มีคอลัมน์ใดว่างเปล่าทั้งหมด<br>"
                         f"&nbsp;&nbsp;&nbsp;&nbsp;4. บันทึกไฟล์และอัปโหลดใหม่อีกครั้ง<br>"
                         f"</p>"
@@ -387,7 +387,7 @@ def index(request):
                     return redirect('index')
                     # raise ValueError(f"คอลัมน์ต่อไปนี้ไม่มีข้อมูล: {', '.join(empty_columns)}")
                 
-                df_original = df_original[required_columns]
+                df_original = df_original[important_columns]
                 df_original.rename(columns={'TASK_XX': 'TASK_ORDER'}, inplace=True)
                 df_original['KKS'] = df_original['KKS'].str.upper()
                 df_original['RESPONSE'] = df_original['RESPONSE'].str.upper()
@@ -1362,9 +1362,6 @@ def index(request):
                                     ]).size()
             df_original_filter_group_pm = pd.DataFrame(data_pm).reset_index()
             df_original_filter_group_pm = df_original_filter_group_pm.drop(columns = [0])
-
-            for i,df in df_original_filter_group_pm.iloc[20:22].iterrows():
-                i,df
 
             pm_master_dict = {'PMNUM':[],
                             'SITEID':[],
