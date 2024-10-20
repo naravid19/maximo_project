@@ -338,8 +338,8 @@ def index(request):
                 logger.info("Excel file loaded successfully.")
                 
                 # ลบช่องว่างที่ไม่จำเป็นออกจากชื่อคอลัมน์และแปลงชื่อคอลัมน์เป็นตัวพิมพ์ใหญ่ พร้อมแทนที่ช่องว่างด้วยขีดล่าง
-                df_original.columns = df_original.columns.str.strip()
-                df_original.columns = [col.upper().replace(' ', '_') for col in df_original.columns]
+                df_original.columns = [col.strip().upper().replace(' ', '_') if isinstance(col, str) else col for col in df_original.columns]
+                
                 logger.info("Column names cleaned and formatted.")
                 
                 # ตรวจสอบว่าคอลัมน์ที่จำเป็นทั้งหมดมีอยู่หรือไม่
@@ -389,21 +389,14 @@ def index(request):
                 
                 df_original = df_original[important_columns]
                 df_original.rename(columns={'TASK_XX': 'TASK_ORDER'}, inplace=True)
-                df_original['KKS'] = df_original['KKS'].str.upper()
-                df_original['RESPONSE'] = df_original['RESPONSE'].str.upper()
-                df_original['RESPONSE_CRAFT'] = df_original['RESPONSE_CRAFT'].str.upper()
-                df_original['TYPE'] = df_original['TYPE'].str.upper()
+                df_original['KKS'] = df_original['KKS'].apply(lambda x: x.upper() if isinstance(x, str) else x)
+                df_original['RESPONSE'] = df_original['RESPONSE'].apply(lambda x: x.upper() if isinstance(x, str) else x)
+                df_original['RESPONSE_CRAFT'] = df_original['RESPONSE_CRAFT'].apply(lambda x: x.upper() if isinstance(x, str) else x)
+                df_original['TYPE'] = df_original['TYPE'].apply(lambda x: x.upper() if isinstance(x, str) else x)
                 
-                columns_to_strip = [
-                    'KKS', 'EQUIPMENT', 'TASK', 'RESPONSE', 
-                    'START_DATE', 'FINISH_DATE', 'RESPONSE_CRAFT', 
-                    'ประเภทของ_PERMIT_TO_WORK', 'TYPE'
-                ]
-                for col in columns_to_strip:
+                for col in important_columns:
                     if col in df_original.columns:
-                        # ตรวจสอบว่าคอลัมน์เป็นชนิดข้อมูล string ก่อนใช้ .str.strip()
-                        if df_original[col].dtype == "object":
-                            df_original[col] = df_original[col].str.strip()
+                        df_original[col] = df_original[col].apply(lambda x: x.strip() if isinstance(x, str) else x)
                             
                 df_original_extracted = df_original
             except Exception as e:
@@ -877,7 +870,7 @@ def index(request):
             comment_col = None
 
             for idx, col in enumerate(sheet.iter_cols(1, sheet.max_column), start=1):
-                if col[1].value and col[1].value.strip().upper() == "COMMENT":
+                if col[1].value and isinstance(col[1].value, str) and col[1].value.strip().upper() == "COMMENT":
                     comment_col = idx
                     break
 
