@@ -874,7 +874,12 @@ def index(request):
             # sheet = book[sheet_name]
             start_row = 3
             task_order_col = 7  # คอลัมน์เริ่มต้นสำหรับ TASK_ORDER
-            comment_col = 19    # คอลัมน์เริ่มต้นสำหรับ COMMENT
+            comment_col = None
+
+            for idx, col in enumerate(sheet.iter_cols(1, sheet.max_column), start=1):
+                if col[1].value and col[1].value.strip().upper() == "COMMENT":
+                    comment_col = idx
+                    break
 
             # เขียนข้อมูลลงใน Excel
             for i, (task_order, comment) in enumerate(zip(df_comment['TASK_ORDER'], df_comment['COMMENT']), start=start_row):

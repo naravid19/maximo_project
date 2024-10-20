@@ -3,13 +3,13 @@
 from background_task import background
 import os
 import time
-@background(schedule=900)  # 900 วินาที = 15 นาที
-# พารามิเตอร์ที่กำหนดให้ Task นี้ถูกรันหลังจาก 900 วินาที (หรือ 15 นาที) หลังจากที่มันถูกเรียกใช้ครั้งแรก
+@background(schedule=3600)
+# พารามิเตอร์ที่กำหนดให้ Task นี้ถูกรันหลังเวลาที่กำหนด
 
 def delete_old_files_task():
     now = time.time()
     temp_dir = 'temp'
-    age_limit = 15 * 60
+    age_limit = 60 * 60
 
     for filename in os.listdir(temp_dir):
         file_path = os.path.join(temp_dir, filename)
