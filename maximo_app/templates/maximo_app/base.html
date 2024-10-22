@@ -22,7 +22,7 @@
     {% endcompress %}
 
     <!-- Favicon -->
-    <link rel="icon" href="{% static 'icon/python.ico' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'icon/mms.ico' %}" type="image/x-icon">
 
     <!-- Custom inline style for font-family -->
     <style>
@@ -36,8 +36,8 @@
     <!-- Block for additional CSS styles -->
     {% block style %}{% endblock %}
   </head>
-
-  <body class="m-0 p-3 pb-15 bg-[#f0ebf8]">
+{% comment %} #dceefc, #edf2f7 {% endcomment %}
+  <body class="m-0 p-3 pb-15 bg-[#dceefc]">
     <!-- Content Block -->
     {% block content %}{% endblock %}
 

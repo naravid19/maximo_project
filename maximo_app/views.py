@@ -55,7 +55,6 @@ def index(request):
     pluscrevum = 0
     status = 'ACTIVE'
     pluscjprevnum = 0
-    route = ''
     
     
     leadtime = 7
@@ -320,7 +319,7 @@ def index(request):
             try:
                 required_columns = [
                     'KKS', 'EQUIPMENT', 'TASK_XX', 'TASK', 
-                    'RESPONSE', 'DURATION_(HR.)', 'START_DATE', 'FINISH_DATE', 
+                    'RESPONSE', 'ROUTE', 'DURATION_(HR.)', 'START_DATE', 'FINISH_DATE', 
                     'SUPERVISOR', 'FOREMAN', 'SKILL', 'RESPONSE_CRAFT', 
                     'ประเภทของ_PERMIT_TO_WORK', 'TYPE', 'COMMENT'
                 ]
@@ -332,6 +331,8 @@ def index(request):
                     'ประเภทของ_PERMIT_TO_WORK', 'TYPE'
                 ]
 
+                use_columns = important_columns + ['ROUTE']
+                
                 df_original = read_excel_with_error_handling(request, schedule_path)
                 if df_original is None:
                     raise ValueError("Cannot proceed without a valid DataFrame.")
@@ -387,18 +388,20 @@ def index(request):
                     return redirect('index')
                     # raise ValueError(f"คอลัมน์ต่อไปนี้ไม่มีข้อมูล: {', '.join(empty_columns)}")
                 
-                df_original = df_original[important_columns]
+                df_original = df_original[use_columns]
                 df_original.rename(columns={'TASK_XX': 'TASK_ORDER'}, inplace=True)
                 df_original['KKS'] = df_original['KKS'].apply(lambda x: x.upper() if isinstance(x, str) else x)
+                df_original['ROUTE'] = df_original['ROUTE'].apply(lambda x: x.upper() if isinstance(x, str) else x)
                 df_original['RESPONSE'] = df_original['RESPONSE'].apply(lambda x: x.upper() if isinstance(x, str) else x)
                 df_original['RESPONSE_CRAFT'] = df_original['RESPONSE_CRAFT'].apply(lambda x: x.upper() if isinstance(x, str) else x)
                 df_original['TYPE'] = df_original['TYPE'].apply(lambda x: x.upper() if isinstance(x, str) else x)
                 
-                for col in important_columns:
+                for col in use_columns:
                     if col in df_original.columns:
                         df_original[col] = df_original[col].apply(lambda x: x.strip() if isinstance(x, str) else x)
                             
                 df_original_extracted = df_original
+                
             except Exception as e:
                 logger.error(f"An error occurred: {str(e)}", exc_info=True)
                 error_message = (
@@ -423,17 +426,20 @@ def index(request):
 
             df_original = df_original.replace('', np.nan)
 
-            long_equipment = df_original['EQUIPMENT'].str.len()>100
+            long_equipment = df_original['EQUIPMENT'].astype(str).str.len() > 100
             update_comment(df_comment, long_equipment, 'COMMENT', 'EQUIPMENT มีความยาวมากกว่า 100 ตัวอักษร')
 
             # กรองข้อมูลตาม task_with_order และความยาวของสตริงใน TASK
             task_with_order = ((df_original['TASK_ORDER'].notna())) & ((df_original['TASK_ORDER']!='xx'))
-            long_task = df_original['TASK'].str.len() > 100
+            long_task = df_original['TASK'].astype(str).str.len() > 100
             update_comment(df_comment, long_task, 'COMMENT', 'TASK มีความยาวมากกว่า 100 ตัวอักษร')
 
             task_na = df_original['TASK'].isna()
             update_comment(df_comment, (task_with_order & task_na), 'COMMENT', 'ไม่มี TASK')
-
+            
+            route_length_exceed = df_original['ROUTE'].astype(str).str.len() > 20
+            update_comment(df_comment, route_length_exceed, 'COMMENT', 'ROUTE มีความยาวมากกว่า 20 ตัวอักษร')
+            
             # ใช้ฟังก์ชัน convert_duration กับคอลัมน์ DURATION_(HR.)
             df_original['DURATION_(HR.)'] = df_original['DURATION_(HR.)'].apply(convert_duration)
 
@@ -497,7 +503,7 @@ def index(request):
             cond_finish_date_new = df_original['FINISH_DATE'].notna() & df_original['FINISH_DATE_NEW'].isna() & (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx')
             update_comment(df_comment, cond_finish_date_new, 'COMMENT', 'FINISH_DATE ไม่ถูกต้อง')
 
-            kks_length_exceed = df_original['KKS'].str.len() > 30 
+            kks_length_exceed = df_original['KKS'].astype(str).str.len() > 30
             update_comment(df_comment, kks_length_exceed, 'COMMENT', 'KKS มีความยาวมากกว่า 30 ตัวอักษร')
 
             # หาค่า Plant Unit ที่พบมากที่สุด
@@ -545,14 +551,14 @@ def index(request):
             update_comment(df_comment, task_no_craft, 'COMMENT', 'ไม่มี RESPONSE_CRAFT')
 
             # RESPONSE_CRAFT มีความยาวเกิน 12 อักขระ
-            carft_length_exceed = df_original['RESPONSE_CRAFT'].str.len() > 12 
+            carft_length_exceed = df_original['RESPONSE_CRAFT'].astype(str).str.len() > 12
             update_comment(df_comment, carft_length_exceed, 'COMMENT', 'RESPONSE_CRAFT มีความยาวมากกว่า 12 ตัวอักษร')
 
             # ไม่มี RESPONSE
             update_comment(df_comment, task_no_response, 'COMMENT', 'ไม่มี RESPONSE')
 
             # RESPONSE มีความยาวเกิน 12 อักขระ
-            response_length_exceed = df_original['RESPONSE'].str.len() > 12 
+            response_length_exceed = df_original['RESPONSE'].astype(str).str.len() > 12 
             update_comment(df_comment, response_length_exceed, 'COMMENT', 'RESPONSE มีความยาวมากกว่า 12 ตัวอักษร')
 
             df_original_copy = df_original.copy()
@@ -670,10 +676,17 @@ def index(request):
             df_original_copy['ประเภทของ_PERMIT_TO_WORK'] = pd.Series(lst_type_work)
             df_original_copy['RESPONSE'] = pd.Series(lst_response)
             df_original_copy['RESPONSE_CRAFT'] = pd.Series(lst_RESPONSE_CRAFT)
+            
+            for idx in range(len(df_original_copy) - 1):
+                if df_original_copy.loc[idx, 'TASK_ORDER'] == 'xx' and df_original_copy.loc[idx, 'ROUTE'] != -1:
+                    next_idx = idx + 1
 
-            lst = ['KKS_NEW', 'EQUIPMENT_NEW', 'TASK_ORDER_NEW', 'TASK_NEW', 'RESPONSE',
-                'DURATION_(HR.)', 'START_DATE', 'FINISH_DATE', 'SUPERVISOR',
-                'FOREMAN', 'SKILL', 'RESPONSE_CRAFT', 'ประเภทของ_PERMIT_TO_WORK','TYPE']
+                    if df_original_copy.loc[next_idx, 'TASK_ORDER'] != 'xx' and df_original_copy.loc[next_idx, 'ROUTE'] == -1:
+                        df_original_copy.loc[next_idx, 'ROUTE'] = df_original_copy.loc[idx, 'ROUTE']
+
+            lst = ['KKS_NEW', 'EQUIPMENT_NEW', 'ROUTE', 'TASK_ORDER_NEW', 'TASK_NEW',
+                    'RESPONSE', 'DURATION_(HR.)', 'START_DATE', 'FINISH_DATE', 'SUPERVISOR',
+                    'FOREMAN', 'SKILL', 'RESPONSE_CRAFT', 'ประเภทของ_PERMIT_TO_WORK','TYPE']
             df_original_newcol = df_original_copy.loc[:,lst].copy()
             main_system = df_original_newcol['KKS_NEW'].str[0:6]
             sub_system =  df_original_newcol['KKS_NEW'].str[0:8]
@@ -751,7 +764,7 @@ def index(request):
             update_comment(df_comment, task_no_ptw, 'COMMENT', 'ไม่มี ประเภทของ_PERMIT_TO_WORK')
 
             # ประเภทของ_PERMIT_TO_WORK ความยาวเกิน 250 อักขระ
-            ptw_length_exceed = df_original['ประเภทของ_PERMIT_TO_WORK'].str.len() > 250
+            ptw_length_exceed = df_original['ประเภทของ_PERMIT_TO_WORK'].astype(str).str.len() > 250
             update_comment(df_comment, ptw_length_exceed, 'COMMENT', 'ประเภทของ_PERMIT_TO_WORK มีความยาวมากกว่า 250 ตัวอักษร')
 
             # TYPE
@@ -781,7 +794,7 @@ def index(request):
             update_comment(df_comment, (duration_notna_cond & task_missing_cond), 'COMMENT', 'ไม่มี TASK_ORDER')
 
             # TASK_ORDER ยาวเกิน 12 อักขระ
-            task_order_length_exceed = df_original_check['TASK_ORDER_NEW'].str.len() > 12
+            task_order_length_exceed = df_original_check['TASK_ORDER_NEW'].astype(str).str.len() > 12
             update_comment(df_comment, (task_order_length_exceed & (df_original_check['TASK_ORDER']!= -1)), 'COMMENT', 'TASK_ORDER มีความยาวมากกว่า 12 ตัวอักษร')
 
 
@@ -1023,6 +1036,7 @@ def index(request):
             timestamp_columns_2 = ['START_DATE_NEW', 'FINISH_DATE_NEW']
             
             # Timestamp to String
+            df_original = convert_timestamp_columns_to_str(df_original, timestamp_columns_1)
             df_original = convert_timestamp_columns_to_str(df_original, timestamp_columns_2)
             df_original_copy = convert_timestamp_columns_to_str(df_original_copy, timestamp_columns_1)
             df_original_copy = convert_timestamp_columns_to_str(df_original_copy, timestamp_columns_2)
@@ -1111,6 +1125,7 @@ def index(request):
 
             timestamp_columns_1 = ['START_DATE', 'FINISH_DATE']
             timestamp_columns_2 = ['START_DATE_NEW', 'FINISH_DATE_NEW']
+            df_original = convert_str_columns_to_timestamp(df_original, timestamp_columns_1)
             df_original = convert_str_columns_to_timestamp(df_original, timestamp_columns_2)
             df_original_copy = convert_str_columns_to_timestamp(df_original_copy, timestamp_columns_1)
             df_original_copy = convert_str_columns_to_timestamp(df_original_copy, timestamp_columns_2)
@@ -1151,7 +1166,6 @@ def index(request):
             pluscrevum = 0
             status = 'ACTIVE'
             pluscjprevnum = 0
-            route = ''
             leadtime = 7
 ############
 ############
@@ -1253,20 +1267,20 @@ def index(request):
             df_jop_plan_master['JOB_NUM'] = 'JP'+'-'+df_jop_plan_master['JOB_NUM']
 
             df_jop_plan_master['COMMENT'] = ''
-            job_plan_cond1 = df_jop_plan_master['JOB_NUM'].str.len()>30
+            job_plan_cond1 = df_jop_plan_master['JOB_NUM'].astype(str).str.len()>30
             # comment_empty_or_na = (df_jop_plan_master['COMMENT'] == '') | (df_jop_plan_master['COMMENT'].isna())
             # df_jop_plan_master.loc[job_plan_cond1 & comment_empty_or_na, 'COMMENT'] = 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร'
             # df_jop_plan_master.loc[job_plan_cond1 & ~comment_empty_or_na, 'COMMENT'] += ', JPNUM มีความยาวมากกว่า 30 ตัวอักษร'
             update_comment(df_jop_plan_master, job_plan_cond1, 'COMMENT', 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร')
 
 
-            job_plan_cond2 = df_jop_plan_master['EQUIPMENT'].str.len()>100
+            job_plan_cond2 = df_jop_plan_master['EQUIPMENT'].astype(str).str.len()>100
             # comment_empty_or_na = (df_jop_plan_master['COMMENT'] == '') | (df_jop_plan_master['COMMENT'].isna())
             # df_jop_plan_master.loc[job_plan_cond2 & comment_empty_or_na, 'COMMENT'] = 'DESCRIPTION มีความยาวมากกว่า 100 ตัวอักษร'
             # df_jop_plan_master.loc[job_plan_cond2 & ~comment_empty_or_na, 'COMMENT'] += ', DESCRIPTION มีความยาวมากกว่า 100 ตัวอักษร'
             update_comment(df_jop_plan_master, job_plan_cond2, 'COMMENT', 'DESCRIPTION มีความยาวมากกว่า 100 ตัวอักษร')
 
-            job_plan_cond3 = df_jop_plan_master['TASK_NEW'].str.len()>100
+            job_plan_cond3 = df_jop_plan_master['TASK_NEW'].astype(str).str.len()>100
             # comment_empty_or_na = (df_jop_plan_master['COMMENT'] == '') | (df_jop_plan_master['COMMENT'].isna())
             # df_jop_plan_master.loc[job_plan_cond3 & comment_empty_or_na, 'COMMENT'] = 'JOBTASK มีความยาวมากกว่า 100 ตัวอักษร'
             # df_jop_plan_master.loc[job_plan_cond3 & ~comment_empty_or_na, 'COMMENT'] += ', JOBTASK มีความยาวมากกว่า 100 ตัวอักษร'
@@ -1343,7 +1357,7 @@ def index(request):
                 'LABORHRS','QUANTITY','GROUP','MOD', 'COMMENT']
 
             df_labor_new['COMMENT'] = ''
-            job_plan_cond1 = df_labor_new['JOB_NUM'].str.len()>30
+            job_plan_cond1 = df_labor_new['JOB_NUM'].astype(str).str.len()>30
             # comment_empty_or_na = (df_labor_new['COMMENT'] == '') | (df_labor_new['COMMENT'].isna())
             # df_labor_new.loc[job_plan_cond1 & comment_empty_or_na, 'COMMENT'] = 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร'
             # df_labor_new.loc[job_plan_cond1 & ~comment_empty_or_na, 'COMMENT'] += ', JPNUM มีความยาวมากกว่า 30 ตัวอักษร'
@@ -1354,6 +1368,7 @@ def index(request):
 
 
             #! Create PM PLAN
+            df_original_filter['ROUTE'] = df_original_filter['ROUTE'].replace(-1, np.nan)
             data_pm = df_original_filter.groupby(['GROUP_LEVEL_1','GROUP_LEVEL_3','KKS_NEW','MAIN_SYSTEM','SUB_SYSTEM',
                                         'EQUIPMENT','MAIN_SYSTEM_DESC','SUB_SYSTEM_DESC','KKS_NEW_DESC','EQUIPMENT_NEW',
                                         'UNIT_TYPE','TYPE'
@@ -1413,7 +1428,9 @@ def index(request):
                 loc = first_plant+df['KKS_NEW']
                 pm_master_dict['LOCATION'].append(loc)
                 #####ROUTE
-                pm_master_dict['ROUTE'] = route
+                route_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['ROUTE'].dropna().drop_duplicates().to_list()
+                route = '//'.join(map(str, route_lst))
+                pm_master_dict['ROUTE'].append(route)
                 #####LEADTIME
                 pm_master_dict['LEADTIME']= leadtime
                 #####PMCOUNTER
@@ -1563,7 +1580,7 @@ def index(request):
                                                                                 row['PTW'])
                 pm_parent_dict['STATUS'] = status
                 pm_parent_dict['LOCATION'] = location
-                pm_parent_dict['ROUTE'] = route
+                pm_parent_dict['ROUTE'] = ''
                 pm_parent_dict['LEADTIME'] = leadtime
                 pm_parent_dict['PMCOUNTER'] =''
                 pm_parent_dict['WORKTYPE'] = worktype
@@ -1683,7 +1700,7 @@ def index(request):
             df_pm_plan3_master['FINISH TIME'] = df_pm_plan3_master['FINISH TIME'].astype('str')
 
             df_pm_plan3_master['COMMENT'] = ''
-            pm_plan_cond0 = df_pm_plan3_master['PMNUM'].str.len()>30
+            pm_plan_cond0 = df_pm_plan3_master['PMNUM'].astype(str).str.len()>30
             # comment_empty_or_na = (df_pm_plan3_master['COMMENT'] == '') | (df_pm_plan3_master['COMMENT'].isna())
             # df_pm_plan3_master.loc[pm_plan_cond0 & comment_empty_or_na, 'COMMENT'] = 'PMNUM มีความยาวมากกว่า 30 ตัวอักษร'
             # df_pm_plan3_master.loc[pm_plan_cond0 & ~comment_empty_or_na, 'COMMENT'] += ', PMNUM มีความยาวมากกว่า 30 ตัวอักษร'
@@ -1771,15 +1788,15 @@ def index(request):
             df_labor_new['JOB_NUM1'] = df_jop_plan_master['JOB_NUM'].map(jpnum_map)
 
             df_pm_plan3_master['COMMENT1'] = ''
-            pm_plan_cond1 = df_pm_plan3_master['PMNUM1'].str.len()>30
+            pm_plan_cond1 = df_pm_plan3_master['PMNUM1'].astype(str).str.len()>30
             update_comment(df_pm_plan3_master, pm_plan_cond1, 'COMMENT1', 'PMNUM มีความยาวมากกว่า 30 ตัวอักษร')
 
             df_jop_plan_master['COMMENT1'] = ''
-            job_plan_cond1 = df_jop_plan_master['JOB_NUM1'].str.len()>30
+            job_plan_cond1 = df_jop_plan_master['JOB_NUM1'].astype(str).str.len()>30
             update_comment(df_jop_plan_master, job_plan_cond1, 'COMMENT1', 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร')
 
             df_labor_new['COMMENT1'] = ''
-            job_plan_cond1 = df_labor_new['JOB_NUM1'].str.len()>30
+            job_plan_cond1 = df_labor_new['JOB_NUM1'].astype(str).str.len()>30
             update_comment(df_labor_new, job_plan_cond1, 'COMMENT1', 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร')
             
             pm_plan_column1 = ['PMNUM', 'SITEID', 'DESCRIPTION', 'STATUS', 'LOCATION', 'WORKTYPE',

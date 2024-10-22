@@ -30,10 +30,10 @@ SECRET_KEY = 'django-insecure-8qr^6l&nb!g6g22xu(^6h@wb#hc$54e@qr76(@x*npdvhh#&!u
 DEBUG = True
 
 # Edition settings
-ALLOWED_HOSTS = ['maximo-project.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 PORT = int(os.environ.get("PORT", 8000))
-CSRF_TRUSTED_ORIGINS = ['https://maximo-project.onrender.com']
-CSRF_COOKIE_SECURE = True   # ควรใช้กับ HTTPS เท่านั้น
+# CSRF_TRUSTED_ORIGINS = ['https://maximo-project.onrender.com']
+# CSRF_COOKIE_SECURE = True   # ควรใช้กับ HTTPS เท่านั้น
 # SESSION_COOKIE_SECURE = True
 # Application definition    # DEBUG ถูกตั้งเป็น False, ควรเปิดการตั้งค่า Cookie ที่ปลอดภัย
 
