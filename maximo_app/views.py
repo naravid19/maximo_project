@@ -43,10 +43,6 @@ logger = logging.getLogger(__name__)
 # ---------------------------------
 # ฟังก์ชันพื้นฐาน
 # ---------------------------------
-
-def test(request):
-    return render(request, 'maximo_app/usebase.html')
-
 def index(request):
 ############
 ############
@@ -55,9 +51,9 @@ def index(request):
     pluscrevum = 0
     status = 'ACTIVE'
     pluscjprevnum = 0
-    
-    
+    frequnit = 'YEARS'
     leadtime = 7
+    
     schedule_filename = None
     location_filename = None
     extracted_kks_counts = None
@@ -126,7 +122,6 @@ def index(request):
             location_file = request.FILES.get('location_file', None)
             year = form.cleaned_data.get('year')
             frequency = form.cleaned_data.get('frequency')
-            frequnit = form.cleaned_data.get('frequnit')
             plant_type = form.cleaned_data.get('plant_type')
             site = form.cleaned_data.get('site')
             child_site = form.cleaned_data.get('child_site')
@@ -151,11 +146,6 @@ def index(request):
                 log_params.append(f"FREQUENCY: {frequency}")
             else:
                 log_error.append("FREQUENCY")
-            
-            if frequnit:
-                log_params.append(f"FREQUNIT: {frequnit}")
-            else:
-                log_error.append("FREQUNIT")
             
             if plant_type:
                 plant_type = plant_type.plant_code
@@ -303,7 +293,6 @@ def index(request):
             request.session['location_path'] = location_path
             
             request.session['frequency'] = frequency
-            request.session['frequnit'] = frequnit
             request.session['egmntacttype'] = egmntacttype
             request.session['egprojectid'] = egprojectid
             request.session['egwbs'] = egwbs
@@ -1072,7 +1061,6 @@ def index(request):
             print('1 form comment_path:',comment_path)
             print('1 form extracted_kks_counts:',extracted_kks_counts)
             print('1 form user_input_mapping:',user_input_mapping)
-            print('1 form frequnit:',frequnit)
 ############
 ############                        
         elif 'kks_mapping_submit' in request.POST:
@@ -1088,7 +1076,6 @@ def index(request):
             most_common_plant_unit = request.session.get('most_common_plant_unit')
             # Get Dropdown
             frequency = request.session.get('frequency', '4')
-            frequnit = request.session.get('frequnit', 'YEARS')
             egmntacttype = request.session.get('egmntacttype')
             egprojectid = request.session.get('egprojectid')
             egwbs = request.session.get('egwbs')
@@ -1159,13 +1146,13 @@ def index(request):
             print('2 elif comment_path:',  comment_path)
             print('2 elif extracted_kks_counts:',extracted_kks_counts)
             print('2 elif user_input_mapping:',user_input_mapping)
-            print('2 elif frequnit:', frequnit)
 ############
 ############  
             orgid = 'EGAT'
             pluscrevum = 0
             status = 'ACTIVE'
             pluscjprevnum = 0
+            frequnit = 'YEARS'
             leadtime = 7
 ############
 ############
@@ -2033,7 +2020,6 @@ def index(request):
             print('location_filename:',location_filename)
             print('extracted_kks_counts:',extracted_kks_counts)
             print('user_input_mapping:',user_input_mapping) 
-            print('frequnit:', frequnit)
             print('download_link_comment:', request.session['download_link_comment'])
             print('download_link_job_plan_task:',  request.session['download_link_job_plan_task'])
             print('download_link_job_plan_labor:',  request.session['download_link_job_plan_labor'])
@@ -2074,7 +2060,6 @@ def index(request):
         
         # #! Dropdown
         # request.session.pop('frequency', None)
-        # request.session.pop('frequnit', None)
         # request.session.pop('egmntacttype', None)
         # request.session.pop('egprojectid', None)
         # request.session.pop('egwbs', None)

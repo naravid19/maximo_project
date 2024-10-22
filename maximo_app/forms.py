@@ -41,12 +41,6 @@ class UploadFileForm(forms.Form):
         required=True,
     )
     
-    frequnit = forms.ChoiceField(
-        choices=[('YEARS', 'Years'), ('MONTHS', 'Months')],
-        label="FREQUENCY UNIT",
-        required=True,
-    )
-    
     plant_type = forms.ModelChoiceField(
         queryset=PlantType.objects.all(), 
         label='PLANT TYPE', 
@@ -198,7 +192,6 @@ class UploadFileForm(forms.Form):
         required_fields = {
             'year': 'PLANT OUTAGE YEAR',
             'frequency': 'FREQUENCY',
-            'frequnit': 'FREQUENCY UNIT',
             'plant_type': 'PLANT TYPE',
             'site': 'SITE',
             'child_site': 'PLANT NAME',
