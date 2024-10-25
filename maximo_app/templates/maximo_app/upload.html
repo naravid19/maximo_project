@@ -168,6 +168,9 @@
 {% endblock %}
 
 {% block content %}
+
+{{ form.errors }}
+
     {% if messages %}
         {% for message in messages %}
         
@@ -545,6 +548,60 @@
                     <p id="wbs_description" class="mt-1 text-sm text-gray-500"></p>
                 </div>
                 
+                <!-- Checkbox สำหรับเลือก Grouping -->
+                <div class="sm:col-span-3">
+                    <label for="grouping_options" class="block text-base font-medium leading-6 text-gray-900">
+                        Grouping
+                        {% if form.fields.selected_order.required %}
+                            <span class="text-base font-normal text-red-600" style="position: relative; top: 1px;">*</span>
+                        {% endif %}
+                    </label>
+                    <div class="flex flex-wrap mt-2">
+                        <div class="flex items-center me-4">
+                            <input id="inline-checkbox" name="grouping_options" type="checkbox" value="no_arrange" onclick="toggleCheckboxes(this)"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="inline-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">No arrange group</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-2-checkbox" name="grouping_options" type="checkbox" value="EGCRAFT"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="inline-2-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Craft</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-3-checkbox" name="grouping_options" type="checkbox" value="PTW"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="inline-3-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Permit Type</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-4-checkbox" name="grouping_options" type="checkbox" value="NEXTDATE"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="inline-4-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Start Date</label>
+                        </div>
+                        <div class="flex items-center me-4">
+                            <input id="inline-5-checkbox" name="grouping_options" type="checkbox" value="SYSTEM"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="inline-5-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">System</label>
+                        </div>
+                    </div>
+                    <!-- Hidden input สำหรับเก็บลำดับการเลือก -->
+                    <input type="hidden" id="selected_order_input" name="selected_order" value="{{ selected_order|join:',' }}">
+                    
+                    {% if form.selected_order.errors %}
+                        <div class="flex items-center p-4 mt-2 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
+                            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                            </svg>
+                            <span class="sr-only">Info</span>
+                            <div>
+                                <span class="font-medium">Error:</span> 
+                                {% for error in form.selected_order.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
                 <!-- ฟิลด์สำหรับอัปโหลดไฟล์ Schedule -->
                 <div class="sm:col-span-3">
                     <label for="schedule_file" class="block mb-2 text-sm font-medium text-gray-900">{{ form.schedule_file.label_tag }}</label>
@@ -890,6 +947,7 @@
 
 {% block script %}
 <!-- ตกเเต่ง -->
+
     <script>
         function validateUploadForm(event) {
             // ดึงข้อมูลฟอร์ม
@@ -907,6 +965,7 @@
             const wbsField = document.getElementById('id_wbs'); // Dropdown WBS
             const scheduleFileField = document.getElementById('id_schedule_file');  // Input File Schedule
             const locationFileField = document.getElementById('id_location_file');  // Input File Location
+            const groupingOptionsField = document.querySelectorAll('input[name="grouping_options"]:checked');   // Grouping Options
             
             const yearFieldContainer = yearField.closest('.sm\\:col-span-3'); // ค้นหาส่วนที่จะแสดง alert ของ Year
             const frequencyFieldContainer = frequencyField.closest('.sm\\:col-span-3');
@@ -920,13 +979,15 @@
             const wbsFieldContainer = wbsField.closest('.sm\\:col-span-3');
             const scheduleFileFieldContainer = scheduleFileField.closest('.sm\\:col-span-3');
             const locationFileFieldContainer = locationFileField.closest('.sm\\:col-span-3');
+            const groupingOptionsFieldContainer = document.querySelector('input[name="grouping_options"]').closest('.flex.flex-wrap');
             
             // ลบ Alert เก่าถ้ามีอยู่ในแต่ละ Field
             const existingFields = [
                 yearFieldContainer, frequencyFieldContainer, plantTypeFieldContainer,
                 siteFieldContainer, childSiteFieldContainer, unitFieldContainer,
                 wostatusFieldContainer, workTypeFieldContainer, acttypeFieldContainer,
-                wbsFieldContainer, scheduleFileFieldContainer, locationFileFieldContainer
+                wbsFieldContainer, scheduleFileFieldContainer, locationFileFieldContainer,
+                groupingOptionsFieldContainer
             ];
 
             existingFields.forEach(fieldContainer => {
@@ -954,6 +1015,23 @@
                 { field: locationFileField, container: locationFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Location' }
             ];
 
+            // ตรวจสอบ grouping_options ว่ามีการเลือกหรือไม่
+            if (groupingOptionsField.length === 0) {
+                event.preventDefault();
+                hasError = true;
+
+                const alertBox = document.createElement('div');
+                alertBox.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
+                alertBox.setAttribute('role', 'alert');
+
+                const messageText = document.createElement('span');
+                messageText.textContent = 'กรุณาเลือกตัวเลือก Grouping อย่างน้อยหนึ่งตัวเลือก';
+                alertBox.appendChild(messageText);
+
+                groupingOptionsFieldContainer.appendChild(alertBox);
+            }
+            
+            
             for (let i = 0; i < fieldsToValidate.length; i++) {
                 const { field, container, message } = fieldsToValidate[i];
                 if (field.value === '') {
@@ -999,13 +1077,77 @@
             form.submit();
         }
     </script>
-<!--############################-->
 
-
-
-
-
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let selectedOrder = document.getElementById('selected_order_input').value.split(',').filter(Boolean);
+            const noArrangeCheckbox = document.querySelector('input[name="grouping_options"][value="no_arrange"]');
+            const noArrangeLabel = noArrangeCheckbox.nextElementSibling;
+    
+            // ฟังก์ชันสำหรับจัดการ checkbox ที่ถูกเลือก
+            document.querySelectorAll('input[name="grouping_options"]').forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    if (checkbox.checked) {
+                        // เพิ่ม checkbox ที่ถูกเลือกเข้าในลิสต์
+                        selectedOrder.push(checkbox.value);
+    
+                        // ถ้าตัวเลือกที่เลือกไม่ใช่ 'no_arrange' ให้ปิดการทำงานของ 'no_arrange'
+                        if (checkbox.value !== 'no_arrange') {
+                            noArrangeCheckbox.disabled = true;
+                            noArrangeCheckbox.checked = false;
+                            noArrangeLabel.classList.add('text-gray-400');
+                            noArrangeLabel.classList.remove('text-gray-900');
+                        }
+                    } else {
+                        // ลบ checkbox ที่ไม่ได้ถูกเลือกออกจากลิสต์
+                        const index = selectedOrder.indexOf(checkbox.value);
+                        if (index > -1) {
+                            selectedOrder.splice(index, 1);
+                        }
+    
+                        // ถ้าไม่มี checkbox อื่นถูกเลือกเลย ให้เปิดการทำงานของ 'no_arrange'
+                        if (selectedOrder.length === 0) {
+                            noArrangeCheckbox.disabled = false;
+                            noArrangeLabel.classList.remove('text-gray-400');
+                            noArrangeLabel.classList.add('text-gray-900');
+                        }
+                    }
+                    // อัปเดต hidden input
+                    document.getElementById('selected_order_input').value = selectedOrder.join(',');
+                });
+            });
+        });
+    
+        // ฟังก์ชันสำหรับ 'no_arrange' ที่จะยกเลิกการเลือก checkbox อื่นๆ
+        function toggleCheckboxes(checkbox) {
+            const otherCheckboxes = document.querySelectorAll('input[name="grouping_options"]:not([value="no_arrange"])');
+            let selectedOrder = document.getElementById('selected_order_input').value.split(',').filter(Boolean);
+    
+            if (checkbox.checked) {
+                otherCheckboxes.forEach(function (box) {
+                    box.disabled = true;
+                    if (box.checked) {
+                        const index = selectedOrder.indexOf(box.value);
+                        if (index > -1) {
+                            selectedOrder.splice(index, 1);
+                        }
+                        box.checked = false;
+                    }
+                    box.nextElementSibling.classList.add('text-gray-400');
+                    box.nextElementSibling.classList.remove('text-gray-900');
+                });
+            } else {
+                otherCheckboxes.forEach(function (box) {
+                    box.disabled = false;
+                    box.nextElementSibling.classList.remove('text-gray-400');
+                    box.nextElementSibling.classList.add('text-gray-900');
+                });
+            }
+            // อัปเดต hidden input
+            document.getElementById('selected_order_input').value = selectedOrder.join(',');
+        }
+    </script>
+    
 
 <!-- AJAX for updating ACTTYPE -->
     <script>

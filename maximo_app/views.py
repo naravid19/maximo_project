@@ -43,59 +43,30 @@ logger = logging.getLogger(__name__)
 # ---------------------------------
 # ฟังก์ชันพื้นฐาน
 # ---------------------------------
+orgid = 'EGAT'
+pluscrevum = 0
+status = 'ACTIVE'
+pluscjprevnum = 0
+frequnit = 'YEARS'
+leadtime = 7
 def index(request):
 ############
 ############
     # sheet_name = 'Sheet1'
-    orgid = 'EGAT'
-    pluscrevum = 0
-    status = 'ACTIVE'
-    pluscjprevnum = 0
-    frequnit = 'YEARS'
-    leadtime = 7
-    
     schedule_filename = None
     location_filename = None
     extracted_kks_counts = None
     user_input_mapping = {}
     error_messages = []
+    selected_order = []
 ############
 ############
-    from django.utils.html import format_html
-    print(request.POST)
-    print(request.FILES)
-    print('0 def schedule_filename:',schedule_filename)
-    print('0 def location_filename:',location_filename)
-    print('0 def extracted_kks_counts:',extracted_kks_counts)
-    print('0 def user_input_mapping:',user_input_mapping)
-    # error_message = (
-    #     f"<div>"
-    #     f"<strong style='text-decoration: underline;'>ข้อผิดพลาด:</strong> คอลัมน์ที่จำเป็นหายไปจากไฟล์ข้อมูล<br>"
-    #     f"<ul style='padding-left: 20px; margin-top: 10px; list-style-type: disc;'>"
-    #     f"<p style='margin-left: -10px;'>ไฟล์ schedule_file ไม่มีคอลัมน์:</p>"
-    #     f"<li>test 111</li>"
-    #     f"<li>test 222</li>"
-    #     f"<li>test 333</li>"
-    #     f"</ul>"
-    #     f"<p style='margin-top: 15px; font-size: 14px;'>*** โปรดตรวจสอบและแก้ไขไฟล์ข้อมูลให้มีคอลัมน์ที่จำเป็นทั้งหมด ***</p>"
-    #     f"</div>"
-    # )
-    
-    # error_message = (
-    #     f"<div class='error-container'>"
-    #     f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถบันทึกไฟล์ได้<br>"
-    #     f"<ul class='error-details'>"
-    #     f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-    #     f"<li>กกกกก</li>"
-    #     f"</ul>"
-    #     f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบสิ่งต่อไปนี้<br>"
-    #     f"&nbsp;&nbsp;&nbsp;&nbsp;1. ตำแหน่งที่บันทึกไฟล์สามารถเข้าถึงได้<br>"
-    #     f"&nbsp;&nbsp;&nbsp;&nbsp;2. คุณมีสิทธิ์ในการบันทึกไฟล์ที่ตำแหน่งนี้<br>"
-    #     f"&nbsp;&nbsp;&nbsp;&nbsp;3. มีพื้นที่เพียงพอสำหรับบันทึกไฟล์"
-    #     f"</p>"
-    #     f"</div>"
-    # )
-    # messages.error(request, error_message)
+    logger.info(f"POST: {request.POST}")
+    logger.info(f"FILES: {request.FILES}")
+    logger.info(f"0 def schedule_filename: {schedule_filename}")
+    logger.info(f"0 def location_filename: {location_filename}")
+    logger.info(f"0 def extracted_kks_counts: {extracted_kks_counts}")
+    logger.info(f"0 def user_input_mapping: {user_input_mapping}")
 ############
 ############
     if request.method == 'POST':
@@ -103,10 +74,10 @@ def index(request):
         if form.is_valid():
             ############
             ############
-            print('1 form schedule_filename:',schedule_filename)
-            print('1 form location_filename:',location_filename)
-            print('1 form extracted_kks_counts:',extracted_kks_counts)
-            print('1 form user_input_mapping:',user_input_mapping)
+            logger.info(f'1 form schedule_filename: {schedule_filename}')
+            logger.info(f'1 form location_filename: {location_filename}')
+            logger.info(f'1 form extracted_kks_counts: {extracted_kks_counts}')
+            logger.info(f'1 form user_input_mapping: {user_input_mapping}')
             ############
             ############
             # ตรวจสอบและสร้างโฟลเดอร์ temp
@@ -130,11 +101,18 @@ def index(request):
             work_type = form.cleaned_data.get('work_type')
             acttype = form.cleaned_data.get('acttype')
             wbs = form.cleaned_data.get('wbs')
-            
+            selected_order = form.cleaned_data.get('selected_order', [])
+
             log_params = []
             log_error = []
             
             #? Logging
+            if not schedule_file:
+                log_error.append(f"Schedule file")
+            
+            if not location_file:
+                log_error.append(f"Location file")
+            
             if year:
                 buddhist_year = int(year) + 543
                 two_digits_year = buddhist_year % 100
@@ -193,7 +171,14 @@ def index(request):
                 log_params.append(f"SUBWBS GROUP: {wbs}")
             else:
                 log_error.append("SUBWBS GROUP")
-                
+            
+            if selected_order:
+                if isinstance(selected_order, str):
+                    selected_order = [selected_order]
+                log_params.append(f"GROUPING: {selected_order}")
+            else:
+                log_error.append("GROUPING")
+            
             if log_params:
                 logger.info("\n".join(log_params))
             
@@ -237,7 +222,6 @@ def index(request):
                 )
                 messages.error(request, error_message)
                 return redirect('index')
-            
             
             schedule_filename = schedule_file.name
             location_filename = location_file.name
@@ -302,7 +286,7 @@ def index(request):
             request.session['wbs_desc'] = wbs_desc
             request.session['worktype'] = worktype
             request.session['wostatus'] = wostatus
-
+            request.session['grouping_options'] = selected_order
 ############
 ############
             try:
@@ -1008,9 +992,11 @@ def index(request):
             # ส่งข้อความแจ้งเตือนไปยังหน้า upload.html
             if error_messages:
                 return render(request, 'maximo_app/upload.html', {
+                    'form': form,
                     'error_messages': error_messages,
                     'schedule_filename': schedule_filename,
                     'location_filename': location_filename,
+                    'selected_order': selected_order,
                 })
             #! END RECHECK
 ############
@@ -1038,29 +1024,16 @@ def index(request):
             request.session['df_comment'] = df_comment.to_dict(orient='index')
             request.session['extracted_kks_counts'] = extracted_kks_counts.to_dict()
             
-            # Save Series
-            # task_no_skill_rate: DataFrame, ใช้ orient='index'
-            # request.session['task_no_skill_rate'] = task_no_skill_rate.to_dict()
-            # request.session['task_no_type'] = task_no_type.to_dict()
-            # request.session['cond_duration'] = cond_duration.to_dict()
-            # request.session['non_negative'] = non_negative.to_dict()
-            # request.session['task_order_valid'] = task_order_valid.to_dict()
-            # request.session['cond_start_date_new'] = cond_start_date_new.to_dict()
-            # request.session['cond_finish_date_new'] = cond_finish_date_new.to_dict()
-            # request.session['invalid_skill_rate'] = invalid_skill_rate.to_dict()
-            # request.session['task_type'] = task_type.to_dict()
-            # request.session['valid_type'] = valid_type.to_dict()
-            
             # Save variables
             request.session['first_plant'] = first_plant
             request.session['most_common_plant_unit'] = most_common_plant_unit
 ############
 ############        
-            print('1 form schedule_filename:',schedule_filename)
-            print('1 form location_filename:',location_filename)
-            print('1 form comment_path:',comment_path)
-            print('1 form extracted_kks_counts:',extracted_kks_counts)
-            print('1 form user_input_mapping:',user_input_mapping)
+            logger.info(f'1 form schedule_filename: {schedule_filename}')
+            logger.info(f'1 form location_filename: {location_filename}')
+            logger.info(f'1 form comment_path: {comment_path}')
+            logger.info(f'1 form extracted_kks_counts: {extracted_kks_counts}')
+            logger.info(f'1 form user_input_mapping: {user_input_mapping}')
 ############
 ############                        
         elif 'kks_mapping_submit' in request.POST:
@@ -1084,6 +1057,7 @@ def index(request):
             wbs_desc = request.session.get('wbs_desc')
             worktype = request.session.get('worktype')
             wostatus = request.session.get('wostatus')
+            grouping_options = request.session.get('grouping_options')
             
             # Get DataFrames
             extracted_kks_counts = pd.DataFrame.from_dict(request.session.get('extracted_kks_counts', {}), orient='index')
@@ -1141,21 +1115,13 @@ def index(request):
                 return redirect('index')
 ############
 ############        
-            print('2 elif schedule_filename:',schedule_filename)
-            print('2 elif location_filename:',location_filename)
-            print('2 elif comment_path:',  comment_path)
-            print('2 elif extracted_kks_counts:',extracted_kks_counts)
-            print('2 elif user_input_mapping:',user_input_mapping)
+            logger.info(f'2 elif schedule_filename: {schedule_filename}')
+            logger.info(f'2 elif location_filename: {location_filename}')
+            logger.info(f'2 elif comment_path: {comment_path}')
+            logger.info(f'2 elif extracted_kks_counts: {extracted_kks_counts}')
+            logger.info(f'2 elif user_input_mapping: {user_input_mapping}')
 ############
 ############  
-            orgid = 'EGAT'
-            pluscrevum = 0
-            status = 'ACTIVE'
-            pluscjprevnum = 0
-            frequnit = 'YEARS'
-            leadtime = 7
-############
-############
             #! Creat JOB PLAN TASK
 
             # user_input_mapping = {}
@@ -1184,8 +1150,10 @@ def index(request):
             df_original_filter['GROUP_LEVEL_2'] = df_original_filter['GROUP_LEVEL_2'].astype(str)
             df_original_filter['TYPE'] = df_original_filter['TYPE'].astype(str)
             df_original_filter['UNIT_TYPE'] = df_original_filter['UNIT_TYPE'].astype(str)
-            df_original_filter['GROUP_LEVEL_3'] = df_original_filter['GROUP_LEVEL_2']+'-'+df_original_filter['TYPE']+'-'+df_original_filter['UNIT_TYPE']
-
+            df_original_filter['GROUP_LEVEL_3'] = np.where(
+                worktype == 'APAO', 
+                df_original_filter['GROUP_LEVEL_2'] + '-' + df_original_filter['TYPE'] + '-' + df_original_filter['UNIT_TYPE'] + '-AD', 
+                df_original_filter['GROUP_LEVEL_2'] + '-' + df_original_filter['TYPE'] + '-' + df_original_filter['UNIT_TYPE'])
             common_indices = df_original_copy.index.intersection(df_original_filter.index)
             df_original_copy.loc[common_indices, ['GROUP_LEVEL_1', 'GROUP_LEVEL_2','GROUP_LEVEL_3']] = df_original_filter.loc[common_indices, ['GROUP_LEVEL_1', 'GROUP_LEVEL_2','GROUP_LEVEL_3']]
             common_indices1 = df_original.index.intersection(df_original_filter.index)
@@ -1281,6 +1249,7 @@ def index(request):
             df_jop_plan_master_labor = df_jop_plan_master.copy()
             df_jop_plan_master_labor['GROUP_LEVEL_1'] = df_jop_plan_master_labor['JOB_NUM'].str.extract(r'JP-(\d+)-')
             df_jop_plan_master_labor['GROUP_LEVEL_1'] = df_jop_plan_master_labor['GROUP_LEVEL_1'].astype('int32')
+            df_jop_plan_master_labor['GROUP_LEVEL_1'] = df_jop_plan_master_labor['GROUP_LEVEL_1'] / 10
             df_jop_plan_master_labor[['JOB_NUM','DURATION_TOTAL','GROUP_LEVEL_1']]
 
             df_group_level_1 = pd.DataFrame()
@@ -1355,293 +1324,59 @@ def index(request):
 
 
             #! Create PM PLAN
-            df_original_filter['ROUTE'] = df_original_filter['ROUTE'].replace(-1, np.nan)
-            data_pm = df_original_filter.groupby(['GROUP_LEVEL_1','GROUP_LEVEL_3','KKS_NEW','MAIN_SYSTEM','SUB_SYSTEM',
-                                        'EQUIPMENT','MAIN_SYSTEM_DESC','SUB_SYSTEM_DESC','KKS_NEW_DESC','EQUIPMENT_NEW',
-                                        'UNIT_TYPE','TYPE'
-                                    ]).size()
-            df_original_filter_group_pm = pd.DataFrame(data_pm).reset_index()
-            df_original_filter_group_pm = df_original_filter_group_pm.drop(columns = [0])
-
-            pm_master_dict = {'PMNUM':[],
-                            'SITEID':[],
-                            'DESCRIPTION':[],
-                            'STATUS':[],
-                            'LOCATION':[],
-                            'ROUTE':[],
-                            'LEADTIME':[],
-                            'PMCOUNTER':[],
-                            'WORKTYPE':[],
-                            'EGMNTACTTYPE':[],
-                            'WOSTATUS':[],
-                            'EGCRAFT':[],
-                            'RESPONSED BY':[],
-                            'PTW':[],
-                            'LOTO':[],
-                            'EGPROJECTID':[],
-                            'EGWBS':[],
-                            'FREQUENCY':[],
-                            'FREQUNIT':[],
-                            'NEXTDATE':[],
-                            'TARGSTARTTIME':[],
-                            'FINISH_DATE':[],
-                            'FINISH TIME':[],
-                            'PARENT':[],
-                            'JPNUM':[],
-                            'MAIN_SYSTEM':[],
-                            'SUB_SYSTEM':[],
-                            'EQUIPMENT':[],
-                            'MAIN_SYSTEM_DESC':[],
-                            'SUB_SYSTEM_DESC':[],
-                            'KKS_NEW_DESC':[],
-                            'UNIT_TYPE':[],
-                            'TYPE':[],
-                            }
-            ############################
-            for row_index,df in  df_original_filter_group_pm.iterrows():
-                #row_index
-                ####PM Number
-                df_group_temp = df_original_filter.copy()
-                PMNUM = 'PO'+'-'+df['GROUP_LEVEL_3']
-                pm_master_dict['PMNUM'].append(PMNUM)
-                #####Site ID
-                pm_master_dict['SITEID'] = siteid
-                #####DESCRIPTION
-                desc = df['EQUIPMENT_NEW']
-                pm_master_dict['DESCRIPTION'].append(desc)
-                #####STATUS
-                pm_master_dict['STATUS'] = status
-                #####LOCATION
-                loc = first_plant+df['KKS_NEW']
-                pm_master_dict['LOCATION'].append(loc)
-                #####ROUTE
-                route_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['ROUTE'].dropna().drop_duplicates().to_list()
-                route = '//'.join(map(str, route_lst))
-                pm_master_dict['ROUTE'].append(route)
-                #####LEADTIME
-                pm_master_dict['LEADTIME']= leadtime
-                #####PMCOUNTER
-                pm_master_dict['PMCOUNTER']= ''
-                #####WORKTYPE
-                pm_master_dict['WORKTYPE']= worktype
-                #####EGMNTACTTYPE
-                pm_master_dict['EGMNTACTTYPE']= egmntacttype
-                #####WOSTATUS
-                pm_master_dict['WOSTATUS'] = wostatus
-                ######EGCRAFT
-                carft_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['RESPONSE_CRAFT'].drop_duplicates().to_list()
-                carft = '//'.join(carft_lst)
-                pm_master_dict['EGCRAFT'].append(carft)
-                ######RESPONSED BY
-                response_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['RESPONSE'].drop_duplicates().to_list()
-                response = '//'.join(response_lst)
-                pm_master_dict['RESPONSED BY'].append(response)
-                ######PTW
-                ptw_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['ประเภทของ_PERMIT_TO_WORK'].drop_duplicates().to_list()
-                ptw = '//'.join(ptw_lst)
-                pm_master_dict['PTW'].append(ptw)
-                ######LOTO
-                pm_master_dict['LOTO']= ''
-                ######EGPROJECTID
-                pm_master_dict['EGPROJECTID'] = egprojectid
-                ######EGWBS
-                pm_master_dict['EGWBS']= egwbs
-                ######FREQUENCY
-                pm_master_dict['FREQUENCY']= frequency
-                ######FREQUNIT
-                pm_master_dict['FREQUNIT']= frequnit
-                ######NEXTDATE
-                next_date = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['START_DATE'].min()
-                pm_master_dict['NEXTDATE'].append(next_date.date())
-                ######TARGSTARTTIME
-                time_start = datetime.time(8,0)
-                pm_master_dict['TARGSTARTTIME'] = time_start
-                #######FINISH_DATE
-                last_date = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['FINISH_DATE'].max()
-                pm_master_dict['FINISH_DATE'].append(last_date.date())
-                #######FINISH TIME
-                time_end = datetime.time(16,0)
-                pm_master_dict['FINISH TIME'] = time_end
-                #######PARENT
-                pm_master_dict['PARENT']=''
-                #######JPNUM
-                JPNUM = 'JP'+'-'+df['GROUP_LEVEL_3']
-                pm_master_dict['JPNUM'].append(JPNUM)
-                #######main_system
-                main_system = df['MAIN_SYSTEM']
-                pm_master_dict['MAIN_SYSTEM'].append(main_system)
-                #######sub_system
-                sub_system = df['SUB_SYSTEM']
-                pm_master_dict['SUB_SYSTEM'].append(sub_system)
-                #######equipment
-                equipment = df['EQUIPMENT']
-                pm_master_dict['EQUIPMENT'].append(equipment)
-                #######main_system_desc
-                main_system_desc = df['MAIN_SYSTEM_DESC']
-                pm_master_dict['MAIN_SYSTEM_DESC'].append(main_system_desc)
-                #######sub_system_desc
-                sub_system_desc = df['SUB_SYSTEM_DESC']
-                pm_master_dict['SUB_SYSTEM_DESC'].append(sub_system_desc)
-                #######kks_new_desc
-                kks_new_desc = df['KKS_NEW_DESC']
-                pm_master_dict['KKS_NEW_DESC'].append(kks_new_desc)
-                #######unit_type
-                unit_type = df['UNIT_TYPE']
-                pm_master_dict['UNIT_TYPE'].append(unit_type)
-                #######carft_desc
-                TYPE = df['TYPE']
-                pm_master_dict['TYPE'].append(TYPE)
-
-            pm_master_df = pd.DataFrame(pm_master_dict)
+            # 'MAIN_SYSTEM','MAIN_SYSTEM_DESC','EGCRAFT','PTW'
+            logger.info(f"Grouping Options1 : {grouping_options}")
             
-            # pm_master_df1['PTW'] = pm_master_df['PTW'].apply(clean_ptw_column)
-            pm_master_df['PTW'] = pm_master_df['PTW'].apply(clean_ptw_column)
-            #? END Clean
+            group_columns = grouping_options
             
-            pm_master_df[['SUB_SYSTEM','SUB_SYSTEM_DESC','KKS_NEW_DESC','EQUIPMENT','UNIT_TYPE','TYPE']].drop_duplicates().sort_values(by=['TYPE','UNIT_TYPE'],ascending=False)
+            if 'SYSTEM' in group_columns:
+                # หาตำแหน่งของ 'SYSTEM'
+                index = group_columns.index('SYSTEM')
+                # แทนที่ 'SYSTEM' ด้วย 'MAIN_SYSTEM' และ 'MAIN_SYSTEM_DESC' ในตำแหน่งเดิม
+                group_columns[index:index+1] = ['MAIN_SYSTEM', 'MAIN_SYSTEM_DESC']
+            
+            logger.info(f"Grouping Options2 : {group_columns}")
+            
+            group_base = ['UNIT_TYPE', 'TYPE']
 
-            df_yy = pm_master_df.groupby(['MAIN_SYSTEM','MAIN_SYSTEM_DESC','EGCRAFT','PTW','UNIT_TYPE','TYPE']).size().sort_index(level=[5,4,3],ascending=False)
-            df_yyy = df_yy.reset_index()
-            df_yyy.rename(columns={0: "count"}, inplace=True)
+            all_group_columns = group_columns + group_base
+            pm_master_df = create_pm_plan(request, df_original_filter, siteid,
+                                            first_plant, worktype, egmntacttype,
+                                            wostatus, egprojectid, egwbs, frequency)
+            
+            logger.info(f"ALL GROUP : {all_group_columns}")
+            
+            # option = '2'    # (No_Group)
+            # group_columns = ['MAIN_SYSTEM', 'MAIN_SYSTEM_DESC', 'EGCRAFT', 'PTW', 'UNIT_TYPE', 'TYPE']
+            if 'no_arrange' in group_columns:
+                pm_master_df['MOD'] = 1
+                pm_master_df['GROUP'] = ''
+                df_pm_plan3 = pm_master_df.copy()
 
-            df_yyy_cont_more = df_yyy[df_yyy['count']>1].reset_index(drop=True).copy()
-            df_yyy_cont_less = df_yyy[df_yyy['count']<=1].reset_index(drop=True).copy()
+            else:
+                df_yy = pm_master_df.groupby(all_group_columns).size()
+                level_to_sort = [all_group_columns.index('TYPE'), all_group_columns.index('UNIT_TYPE')]
+                df_yy = df_yy.sort_index(level=level_to_sort, ascending=False)
+                df_yyy = df_yy.reset_index(name='count')
 
-            df_pm_plan3_more = pd.DataFrame()
-            loop_num = 0
-            for index,row in df_yyy_cont_more.iterrows():
-                loop_num +=1 
-                #################
-                group = pm_master_df[(pm_master_df['MAIN_SYSTEM']==row['MAIN_SYSTEM']) &
-                                    (pm_master_df['MAIN_SYSTEM_DESC']==row['MAIN_SYSTEM_DESC']) &
-                                    (pm_master_df['EGCRAFT']==row['EGCRAFT'])&
-                                    (pm_master_df['PTW']==row['PTW'])&
-                                    (pm_master_df['UNIT_TYPE']==row['UNIT_TYPE']) &
-                                    (pm_master_df['TYPE']==row['TYPE'])]
-                #group
-                                    
-                ###################
-                ###################
-                pm_parent_dict = {
-                            'PMNUM':[],
-                            'SITEID':[],
-                            'DESCRIPTION':[],
-                            'STATUS':[],
-                            'LOCATION':[],
-                            'ROUTE':[],
-                            'LEADTIME':[],
-                            'PMCOUNTER':[],
-                            'WORKTYPE':[],
-                            'EGMNTACTTYPE':[],
-                            'WOSTATUS':[],
-                            'EGCRAFT':[],
-                            'RESPONSED BY':[],
-                            'PTW':[],
-                            'LOTO':[],
-                            'EGPROJECTID':[],
-                            'EGWBS':[],
-                            'FREQUENCY':[],
-                            'FREQUNIT':[],
-                            'NEXTDATE':[],
-                            'TARGSTARTTIME':[],
-                            'FINISH_DATE':[],
-                            'FINISH TIME':[],
-                            'PARENT':[],
-                            'JPNUM':[],
-                            'MAIN_SYSTEM':[],
-            #               'SUB_SYSTEM':[],
-            #               'EQUIPMENT':[],
-                            'MAIN_SYSTEM_DESC':[],
-            #               'SUB_SYSTEM_DESC':[],
-                            'UNIT_TYPE':[],
-                            'TYPE':[]
-                            }
-                if loop_num < 10:
-                    pm_parent_dict['PMNUM'] = 'Group-0{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
+                # pm_master_df[['SUB_SYSTEM','SUB_SYSTEM_DESC','KKS_NEW_DESC','EQUIPMENT','UNIT_TYPE','TYPE']].drop_duplicates().sort_values(by=['TYPE','UNIT_TYPE'],ascending=False)
+                # df_yy = pm_master_df.groupby(['MAIN_SYSTEM','MAIN_SYSTEM_DESC','EGCRAFT','PTW','UNIT_TYPE','TYPE']).size().sort_index(level=[5,4,3],ascending=False)
+                # df_yyy = df_yy.reset_index()
+                # df_yyy.rename(columns={0: "count"}, inplace=True)
+
+                df_yyy_cont_more = df_yyy[df_yyy['count']>1].reset_index(drop=True).copy()
+                df_yyy_cont_less = df_yyy[df_yyy['count']<=1].reset_index(drop=True).copy()
+                
+                if not df_yyy_cont_more.empty:
+                    df_pm_plan3 = group_pm_plan(request, pm_master_df, all_group_columns,
+                                                    df_yyy_cont_more, df_yyy_cont_less, siteid,
+                                                    group_columns, location, worktype, egmntacttype,
+                                                    wostatus, egprojectid, egwbs, frequency)
                 else:
-                    pm_parent_dict['PMNUM'] = 'Group-{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
-                    
-                pm_parent_dict['SITEID'] = siteid
-                pm_parent_dict['DESCRIPTION'] = '{},{},{}'.format(row['MAIN_SYSTEM_DESC'],
-                                                                                row['EGCRAFT'],
-                                                                                row['PTW'])
-                pm_parent_dict['STATUS'] = status
-                pm_parent_dict['LOCATION'] = location
-                pm_parent_dict['ROUTE'] = ''
-                pm_parent_dict['LEADTIME'] = leadtime
-                pm_parent_dict['PMCOUNTER'] =''
-                pm_parent_dict['WORKTYPE'] = worktype
-                pm_parent_dict['EGMNTACTTYPE'] = egmntacttype
-                pm_parent_dict['WOSTATUS'] = wostatus
-                pm_parent_dict['EGCRAFT'] = '_'.join(group['EGCRAFT'].drop_duplicates().to_list())
-                pm_parent_dict['RESPONSED BY'] = '_'.join(group['RESPONSED BY'].drop_duplicates().to_list())
-                pm_parent_dict['PTW'] = '_'.join(group['PTW'].drop_duplicates().to_list())
-                pm_parent_dict['LOTO'] = ''
-                pm_parent_dict['EGPROJECTID'] = egprojectid
-                pm_parent_dict['EGWBS']  = egwbs
-                pm_parent_dict['FREQUENCY'] = frequency
-                pm_parent_dict['FREQUNIT'] = frequnit
-                pm_parent_dict['NEXTDATE'] = group['NEXTDATE'].min()
-                pm_parent_dict['TARGSTARTTIME'] = group['TARGSTARTTIME'].min()
-                pm_parent_dict['FINISH_DATE'] = group['FINISH_DATE'].max()
-                pm_parent_dict['FINISH TIME'] = group['FINISH TIME'].max()
-                pm_parent_dict['PARENT'] = ''
-                pm_parent_dict['JPNUM'] = ''
-                pm_parent_dict['MAIN_SYSTEM'] =row['MAIN_SYSTEM']
-            #     pm_parent_dict['SUB_SYSTEM'] =row['SUB_SYSTEM']
-            #     pm_parent_dict['EQUIPMENT'] =row['EQUIPMENT']
-                pm_parent_dict['MAIN_SYSTEM_DESC'] =row['MAIN_SYSTEM_DESC']
-            #     pm_parent_dict['SUB_SYSTEM_DESC'] =row['SUB_SYSTEM_DESC']
-                pm_parent_dict['UNIT_TYPE'] =row['UNIT_TYPE']
-                pm_parent_dict['TYPE'] =row['TYPE']
-                ##################
-                parent_df = pd.DataFrame(pm_parent_dict,index=np.arange(1))
-                if loop_num < 10:
-                    group.loc[:,'PARENT'] = 'Group-0{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
-                else:
-                    group.loc[:,'PARENT'] = 'Group-{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
-                    
-                #group
-                #############################
-                parent = pd.concat([parent_df, group])
-                parent.loc[:,'GROUP'] = loop_num
-                df_pm_plan3_more = pd.concat([df_pm_plan3_more,parent])
+                    pm_master_df['MOD'] = 1
+                    pm_master_df['GROUP'] = ''
+                    df_pm_plan3 = pm_master_df.copy()
 
-            df_pm_plan3_less = pd.DataFrame()
-            loop_num = 0
-            #df_xx = pm_master_df[['MAIN_SYSTEM','MAIN_SYSTEM_DESC','EGCRAFT','PTW','UNIT_TYPE','TYPE']].drop_duplicates().sort_values(by=['TYPE','UNIT_TYPE'],ascending=False)
-            for index,row in df_yyy_cont_less.iterrows():
-                loop_num +=1 
-                #print(row['system_eq'])
-                #################
-                group = pm_master_df[(pm_master_df['MAIN_SYSTEM']==row['MAIN_SYSTEM']) &
-                                    (pm_master_df['MAIN_SYSTEM_DESC']==row['MAIN_SYSTEM_DESC']) &
-                                    (pm_master_df['EGCRAFT']==row['EGCRAFT'])&
-                                    (pm_master_df['PTW']==row['PTW'])&
-                                    (pm_master_df['UNIT_TYPE']==row['UNIT_TYPE']) &
-                                    (pm_master_df['TYPE']==row['TYPE'])]
-                df_pm_plan3_less = pd.concat([df_pm_plan3_less, group])
-
-            df_pm_plan3_more_ME = df_pm_plan3_more[df_pm_plan3_more['TYPE']=='ME']
-            df_pm_plan3_more_EE = df_pm_plan3_more[df_pm_plan3_more['TYPE']=='EE']
-            df_pm_plan3_more_CV = df_pm_plan3_more[df_pm_plan3_more['TYPE']=='CV']
-            df_pm_plan3_more_IC = df_pm_plan3_more[df_pm_plan3_more['TYPE']=='IC']
-
-            df_pm_plan3_less_ME = df_pm_plan3_less[df_pm_plan3_less['TYPE']=='ME']
-            df_pm_plan3_less_EE = df_pm_plan3_less[df_pm_plan3_less['TYPE']=='EE']
-            df_pm_plan3_less_CV = df_pm_plan3_less[df_pm_plan3_less['TYPE']=='CV']
-            df_pm_plan3_less_IC = df_pm_plan3_less[df_pm_plan3_less['TYPE']=='IC']
-
-            lst_group  = [df_pm_plan3_more_ME,df_pm_plan3_more_EE,df_pm_plan3_more_CV,df_pm_plan3_more_IC]
-            lst_no_group = [df_pm_plan3_less_ME,df_pm_plan3_less_EE, df_pm_plan3_less_CV,df_pm_plan3_less_IC]
-
-            df_pm_plan3_test = pd.DataFrame()
-            for i in range(len(lst_group)):
-                df_pm_plan3_test = pd.concat([df_pm_plan3_test,lst_group[i]])
-                df_pm_plan3_test = pd.concat([df_pm_plan3_test,lst_no_group[i]])
-
-            df_pm_plan3_test['MOD'] = df_pm_plan3_test['GROUP']%2
-            df_pm_plan3 = df_pm_plan3_test.copy()
 
             df_pm_plan3['PARENTCHGSSTATUS']=''
             df_pm_plan3['WOSEQUENCE']=''
@@ -1694,9 +1429,8 @@ def index(request):
             update_comment(df_pm_plan3_master, pm_plan_cond0, 'COMMENT', 'PMNUM มีความยาวมากกว่า 30 ตัวอักษร')
 
             # Log ใช้ในการทำ Scheduler
-            display_text_cond1 = df_pm_plan3_master['PARENT'] == ''
-            display_text = ', '.join(df_pm_plan3_master[display_text_cond1]['PMNUM'].astype(str).tolist())
-            print(display_text)
+            # display_text_cond1 = df_pm_plan3_master['PARENT'] == ''
+            # display_text = ', '.join(df_pm_plan3_master[display_text_cond1]['PMNUM'].astype(str).tolist())
 
             #! Create PM_Plan.xlsx
             df_pm_plan3_master.to_excel(pm_plan_path, index=False)
@@ -1711,25 +1445,33 @@ def index(request):
                 
                 def create_pmnum(self, row):
                     self.primary_counter += 10
-                    
                     try:
                         if row['PARENTCHGSSTATUS'] == 0 and (row['JPNUM'] == '' or pd.isna(row['JPNUM'])):
                             self.secondary_counter += 1
                             self.sub_counter = 0
-                            self.pmnum0 = f"MI-{location}-{str(self.primary_counter).zfill(5)}-{row['TYPE']}{str(self.secondary_counter).zfill(2)}-{str(self.sub_counter).zfill(2)}"
+                            if worktype == 'APAO':
+                                self.pmnum0 = f"MI-{location}-AD-{str(self.primary_counter).zfill(5)}-{row['TYPE']}{str(self.secondary_counter).zfill(2)}-{str(self.sub_counter).zfill(2)}"
+                            else:
+                                self.pmnum0 = f"MI-{location}-{str(self.primary_counter).zfill(5)}-{row['TYPE']}{str(self.secondary_counter).zfill(2)}-{str(self.sub_counter).zfill(2)}"
                             pmnum1 = self.pmnum0
                             jpnum1 = ''
                             parent1 = ''
                         
                         elif row['PARENTCHGSSTATUS'] == 1 and pd.notna(row['JPNUM']):
                             self.sub_counter += 1
-                            pmnum1 = f"MI-{location}-{str(self.primary_counter).zfill(5)}-{row['TYPE']}{str(self.secondary_counter).zfill(2)}-{str(self.sub_counter).zfill(2)}"
+                            if worktype == 'APAO':
+                                pmnum1 = f"MI-{location}-AD-{str(self.primary_counter).zfill(5)}-{row['TYPE']}{str(self.secondary_counter).zfill(2)}-{str(self.sub_counter).zfill(2)}"
+                            else:
+                                pmnum1 = f"MI-{location}-{str(self.primary_counter).zfill(5)}-{row['TYPE']}{str(self.secondary_counter).zfill(2)}-{str(self.sub_counter).zfill(2)}"
                             jpnum1 = f"JP-{pmnum1}"
                             parent1 = self.pmnum0
                         
                         else:
                             self.secondary_counter += 1
-                            pmnum1 = f"MI-{location}-{str(self.primary_counter).zfill(5)}-{row['TYPE']}{str(self.secondary_counter).zfill(2)}"
+                            if worktype == 'APAO':
+                                pmnum1 = f"MI-{location}-AD-{str(self.primary_counter).zfill(5)}-{row['TYPE']}{str(self.secondary_counter).zfill(2)}"
+                            else:
+                                pmnum1 = f"MI-{location}-{str(self.primary_counter).zfill(5)}-{row['TYPE']}{str(self.secondary_counter).zfill(2)}"
                             jpnum1 = f"JP-{pmnum1}"
                             parent1 = ''
                     
@@ -1772,7 +1514,7 @@ def index(request):
             
             jpnum_map = df_pm_plan3_master.set_index('JPNUM')['JPNUM1'].to_dict()
             df_jop_plan_master['JOB_NUM1'] = df_jop_plan_master['JOB_NUM'].map(jpnum_map)
-            df_labor_new['JOB_NUM1'] = df_jop_plan_master['JOB_NUM'].map(jpnum_map)
+            df_labor_new['JOB_NUM1'] = df_labor_new['JOB_NUM'].map(jpnum_map)
 
             df_pm_plan3_master['COMMENT1'] = ''
             pm_plan_cond1 = df_pm_plan3_master['PMNUM1'].astype(str).str.len()>30
@@ -2015,60 +1757,35 @@ def index(request):
             request.session['download_link_template'] = file_template_xlsm
             
             #! Check session
-            print('form: ',form)
-            print('schedule_filename:',schedule_filename)
-            print('location_filename:',location_filename)
-            print('extracted_kks_counts:',extracted_kks_counts)
-            print('user_input_mapping:',user_input_mapping) 
-            print('download_link_comment:', request.session['download_link_comment'])
-            print('download_link_job_plan_task:',  request.session['download_link_job_plan_task'])
-            print('download_link_job_plan_labor:',  request.session['download_link_job_plan_labor'])
-            print('download_link_pm_plan:',  request.session['download_link_pm_plan'])
-            print('download_link_template:',  request.session['download_link_template'])
-        else:
-            # ถ้าฟอร์มไม่ถูกต้อง ให้แสดงฟอร์มพร้อมกับข้อมูลเดิม
-            schedule_filename = request.session.get('schedule_filename', None)
-            location_filename = request.session.get('location_filename', None)
-            extracted_kks_counts = request.session.get('extracted_kks_counts', None)
-            
-            return render(request, 'maximo_app/upload.html', {
-                'form': form,
-                'error_messages': error_messages,
-                'schedule_filename': schedule_filename,
-                'location_filename': location_filename,
-                'extracted_kks_counts': extracted_kks_counts,
-            })
-    else:
-        # #! Clear session data after download
-        # request.session.pop('schedule_filename', None)
-        # request.session.pop('location_filename', None)
-        # request.session.pop('schedule_path', None)
-        # request.session.pop('location_path', None)
-        # request.session.pop('extracted_kks_counts', None)
-        # request.session.pop('first_plant', None)
-        # request.session.pop('most_common_plant_unit', None)
-        # request.session.pop('df_original', None)
-        # request.session.pop('df_original_copy', None)
-        # request.session.pop('df_original_newcol', None)
-        # request.session.pop('df_comment', None)
-        # request.session.pop('user_input_mapping', None)
-        # request.session.pop('download_link_comment', None)
-        # request.session.pop('download_link_job_plan_task', None)
-        # request.session.pop('download_link_job_plan_labor', None)
-        # request.session.pop('download_link_pm_plan', None)
-        # request.session.pop('download_link_template', None)
+            logger.info(f'form: {form}')
+            logger.info(f'schedule_filename: {schedule_filename}')
+            logger.info(f'location_filename: {location_filename}')
+            logger.info(f'extracted_kks_counts: {extracted_kks_counts}')
+            logger.info(f'user_input_mapping: {user_input_mapping}')
+            logger.info(f'download_link_comment: {request.session["download_link_comment"]}')
+            logger.info(f'download_link_job_plan_task: {request.session["download_link_job_plan_task"]}')
+            logger.info(f'download_link_job_plan_labor: {request.session["download_link_job_plan_labor"]}')
+            logger.info(f'download_link_pm_plan: {request.session["download_link_pm_plan"]}')
+            logger.info(f'download_link_template: {request.session["download_link_template"]}')
         
-        # #! Dropdown
-        # request.session.pop('frequency', None)
-        # request.session.pop('egmntacttype', None)
-        # request.session.pop('egprojectid', None)
-        # request.session.pop('egwbs', None)
-        # request.session.pop('location', None)
-        # request.session.pop('siteid', None)
-        # request.session.pop('wbs_desc', None)
-        # request.session.pop('worktype', None)
-        # request.session.pop('wostatus', None)
-        # request.session.pop('child_site', None)
+        else:
+            logger.error(f"Form errors: {str(form.errors)}")
+            error_message = "พบข้อผิดพลาดในการกรอกฟอร์ม กรุณาตรวจสอบและกรอกข้อมูลให้ครบถ้วน"
+            messages.error(request, error_message)
+            return render(request, 'maximo_app/upload.html', {'form': form})
+    else:
+        # keys_to_clear = [
+        #     'schedule_filename', 'location_filename', 'schedule_path', 'location_path', 
+        #     'extracted_kks_counts', 'first_plant', 'most_common_plant_unit', 'df_original',
+        #     'df_original_copy', 'df_original_newcol', 'df_comment', 'user_input_mapping', 
+        #     'download_link_comment', 'download_link_job_plan_task', 'download_link_job_plan_labor', 
+        #     'download_link_pm_plan', 'download_link_template', 'frequency', 'egmntacttype', 
+        #     'egprojectid', 'egwbs', 'location', 'siteid', 'wbs_desc', 'worktype', 'wostatus', 
+        #     'grouping_options', 'child_site'
+        # ]
+
+        # for key in keys_to_clear:
+        #     request.session.pop(key, None)  # ลบข้อมูล session ที่ระบุออกไป
         
         request.session.clear()
         form = UploadFileForm()
@@ -2080,6 +1797,7 @@ def index(request):
         'location_filename': location_filename,
         'extracted_kks_counts': extracted_kks_counts,
         'user_input_mapping' : user_input_mapping,
+        'selected_order': selected_order,
     })
 
 # ---------------------------------
@@ -3052,6 +2770,358 @@ def clean_ptw_column(ptw_value):
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         return ptw_value
+
+def create_pm_plan(request, df_original_filter, siteid,
+                    first_plant, worktype, egmntacttype,
+                    wostatus, egprojectid, egwbs, frequency):
+    try:
+        df_original_filter['ROUTE'] = df_original_filter['ROUTE'].replace(-1, np.nan)
+        data_pm = df_original_filter.groupby(['GROUP_LEVEL_1','GROUP_LEVEL_3','KKS_NEW','MAIN_SYSTEM','SUB_SYSTEM',
+                                    'EQUIPMENT','MAIN_SYSTEM_DESC','SUB_SYSTEM_DESC','KKS_NEW_DESC','EQUIPMENT_NEW',
+                                    'UNIT_TYPE','TYPE'
+                                ]).size()
+        df_original_filter_group_pm = pd.DataFrame(data_pm).reset_index()
+        df_original_filter_group_pm = df_original_filter_group_pm.drop(columns = [0])
+        pm_master_dict = {'PMNUM':[],
+                        'SITEID':[],
+                        'DESCRIPTION':[],
+                        'STATUS':[],
+                        'LOCATION':[],
+                        'ROUTE':[],
+                        'LEADTIME':[],
+                        'PMCOUNTER':[],
+                        'WORKTYPE':[],
+                        'EGMNTACTTYPE':[],
+                        'WOSTATUS':[],
+                        'EGCRAFT':[],
+                        'RESPONSED BY':[],
+                        'PTW':[],
+                        'LOTO':[],
+                        'EGPROJECTID':[],
+                        'EGWBS':[],
+                        'FREQUENCY':[],
+                        'FREQUNIT':[],
+                        'NEXTDATE':[],
+                        'TARGSTARTTIME':[],
+                        'FINISH_DATE':[],
+                        'FINISH TIME':[],
+                        'PARENT':[],
+                        'JPNUM':[],
+                        'MAIN_SYSTEM':[],
+                        'SUB_SYSTEM':[],
+                        'EQUIPMENT':[],
+                        'MAIN_SYSTEM_DESC':[],
+                        'SUB_SYSTEM_DESC':[],
+                        'KKS_NEW_DESC':[],
+                        'UNIT_TYPE':[],
+                        'TYPE':[],
+            }
+        ############################
+        for row_index,df in  df_original_filter_group_pm.iterrows():
+            #row_index
+            ####PM Number
+            df_group_temp = df_original_filter.copy()
+            PMNUM = 'PO'+'-'+df['GROUP_LEVEL_3']
+            pm_master_dict['PMNUM'].append(PMNUM)
+            #####Site ID
+            pm_master_dict['SITEID'] = siteid
+            #####DESCRIPTION
+            desc = df['EQUIPMENT_NEW']
+            pm_master_dict['DESCRIPTION'].append(desc)
+            #####STATUS
+            pm_master_dict['STATUS'] = status
+            #####LOCATION
+            loc = first_plant+df['KKS_NEW']
+            pm_master_dict['LOCATION'].append(loc)
+            #####ROUTE
+            
+            #########!
+            route_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['ROUTE'].dropna().drop_duplicates().to_list()
+            route = '//'.join(map(str, route_lst))
+            pm_master_dict['ROUTE'].append(route)
+            
+            #####LEADTIME
+            pm_master_dict['LEADTIME']= leadtime
+            #####PMCOUNTER
+            pm_master_dict['PMCOUNTER']= ''
+            #####WORKTYPE
+            pm_master_dict['WORKTYPE']= worktype
+            #####EGMNTACTTYPE
+            pm_master_dict['EGMNTACTTYPE']= egmntacttype
+            #####WOSTATUS
+            pm_master_dict['WOSTATUS'] = wostatus
+            ######EGCRAFT
+            carft_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['RESPONSE_CRAFT'].drop_duplicates().to_list()
+            carft = '//'.join(carft_lst)
+            pm_master_dict['EGCRAFT'].append(carft)
+            ######RESPONSED BY
+            response_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['RESPONSE'].drop_duplicates().to_list()
+            response = '//'.join(response_lst)
+            pm_master_dict['RESPONSED BY'].append(response)
+            ######PTW
+            ptw_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['ประเภทของ_PERMIT_TO_WORK'].drop_duplicates().to_list()
+            ptw = '//'.join(ptw_lst)
+            pm_master_dict['PTW'].append(ptw)
+            ######LOTO
+            pm_master_dict['LOTO']= ''
+            ######EGPROJECTID
+            pm_master_dict['EGPROJECTID'] = egprojectid
+            ######EGWBS
+            pm_master_dict['EGWBS']= egwbs
+            ######FREQUENCY
+            pm_master_dict['FREQUENCY']= frequency
+            ######FREQUNIT
+            pm_master_dict['FREQUNIT']= frequnit
+            ######NEXTDATE
+            next_date = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['START_DATE'].min()
+            pm_master_dict['NEXTDATE'].append(next_date.date())
+            ######TARGSTARTTIME
+            time_start = datetime.time(8,0)
+            pm_master_dict['TARGSTARTTIME'] = time_start
+            #######FINISH_DATE
+            last_date = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['FINISH_DATE'].max()
+            pm_master_dict['FINISH_DATE'].append(last_date.date())
+            #######FINISH TIME
+            time_end = datetime.time(16,0)
+            pm_master_dict['FINISH TIME'] = time_end
+            #######PARENT
+            pm_master_dict['PARENT']=''
+            #######JPNUM
+            JPNUM = 'JP'+'-'+df['GROUP_LEVEL_3']
+            pm_master_dict['JPNUM'].append(JPNUM)
+            #######main_system
+            main_system = df['MAIN_SYSTEM']
+            pm_master_dict['MAIN_SYSTEM'].append(main_system)
+            #######sub_system
+            sub_system = df['SUB_SYSTEM']
+            pm_master_dict['SUB_SYSTEM'].append(sub_system)
+            #######equipment
+            equipment = df['EQUIPMENT']
+            pm_master_dict['EQUIPMENT'].append(equipment)
+            #######main_system_desc
+            main_system_desc = df['MAIN_SYSTEM_DESC']
+            pm_master_dict['MAIN_SYSTEM_DESC'].append(main_system_desc)
+            #######sub_system_desc
+            sub_system_desc = df['SUB_SYSTEM_DESC']
+            pm_master_dict['SUB_SYSTEM_DESC'].append(sub_system_desc)
+            #######kks_new_desc
+            kks_new_desc = df['KKS_NEW_DESC']
+            pm_master_dict['KKS_NEW_DESC'].append(kks_new_desc)
+            #######unit_type
+            unit_type = df['UNIT_TYPE']
+            pm_master_dict['UNIT_TYPE'].append(unit_type)
+            #######carft_desc
+            TYPE = df['TYPE']
+            pm_master_dict['TYPE'].append(TYPE)
+
+        pm_master_df = pd.DataFrame(pm_master_dict)
+        #? Clean '//'
+        pm_master_df['PTW'] = pm_master_df['PTW'].apply(clean_ptw_column)
+        return pm_master_df
+    except Exception as e:
+        logger.error(f"An error occurred: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถสร้าง PM Plan ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>{str(e)}</li>"
+            f"<li>เกิดข้อผิดพลาดในระหว่างการสร้าง PM Plan กรุณาตรวจสอบข้อมูลอีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
+
+def generate_pmnum(loop_num, type, unit_type, worktype):
+    if worktype == 'APAO':
+        return f'Group-{loop_num:02d}-{type}-{unit_type}-AD'
+    else:
+        return f'Group-{loop_num:02d}-{type}-{unit_type}'
+
+def generate_description(*args):
+    return ', '.join(map(str, args))
+
+def group_pm_plan(request, pm_master_df, all_group_columns,
+                    df_yyy_cont_more, df_yyy_cont_less, siteid,
+                    group_columns, location, worktype, egmntacttype,
+                    wostatus, egprojectid, egwbs, frequency):
+    try:
+        #? PM PLAN MORE
+        df_pm_plan3_more = pd.DataFrame()
+        loop_num = 0
+        for index,row in df_yyy_cont_more.iterrows():
+            loop_num +=1 
+            #################
+            # group = pm_master_df[(pm_master_df['MAIN_SYSTEM']==row['MAIN_SYSTEM']) &
+            #                     (pm_master_df['MAIN_SYSTEM_DESC']==row['MAIN_SYSTEM_DESC']) &
+            #                     (pm_master_df['EGCRAFT']==row['EGCRAFT'])&
+            #                     (pm_master_df['PTW']==row['PTW'])&
+            #                     (pm_master_df['UNIT_TYPE']==row['UNIT_TYPE']) &
+            #                     (pm_master_df['TYPE']==row['TYPE'])]
+            
+            filter_condition = np.ones(len(pm_master_df), dtype=bool)
+            for col in all_group_columns:
+                filter_condition &= (pm_master_df[col] == row[col])
+                
+            group = pm_master_df[filter_condition]
+
+            ###################
+            ###################
+            pm_parent_dict = {
+                        'PMNUM':[],
+                        'SITEID':[],
+                        'DESCRIPTION':[],
+                        'STATUS':[],
+                        'LOCATION':[],
+                        'ROUTE':[],
+                        'LEADTIME':[],
+                        'PMCOUNTER':[],
+                        'WORKTYPE':[],
+                        'EGMNTACTTYPE':[],
+                        'WOSTATUS':[],
+                        'EGCRAFT':[],
+                        'RESPONSED BY':[],
+                        'PTW':[],
+                        'LOTO':[],
+                        'EGPROJECTID':[],
+                        'EGWBS':[],
+                        'FREQUENCY':[],
+                        'FREQUNIT':[],
+                        'NEXTDATE':[],
+                        'TARGSTARTTIME':[],
+                        'FINISH_DATE':[],
+                        'FINISH TIME':[],
+                        'PARENT':[],
+                        'JPNUM':[],
+                        # 'MAIN_SYSTEM':[],
+        #               'SUB_SYSTEM':[],
+        #               'EQUIPMENT':[],
+                        # 'MAIN_SYSTEM_DESC':[],
+        #               'SUB_SYSTEM_DESC':[],
+                        'UNIT_TYPE':[],
+                        'TYPE':[]
+                        }
+            # if loop_num < 10:
+            #     pm_parent_dict['PMNUM'] = 'Group-0{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
+            # else:
+            #     pm_parent_dict['PMNUM'] = 'Group-{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
+            pm_parent_dict['PMNUM'] = generate_pmnum(loop_num, row['TYPE'], row['UNIT_TYPE'], worktype)
+            
+            pm_parent_dict['SITEID'] = siteid
+            
+            # pm_parent_dict['DESCRIPTION'] = '{},{},{}'.format(row['MAIN_SYSTEM_DESC'], row['EGCRAFT'], row['PTW'])
+            pm_parent_dict['DESCRIPTION'] = generate_description(*(row[col] for col in group_columns))
+            
+            pm_parent_dict['STATUS'] = status
+            pm_parent_dict['LOCATION'] = location
+            pm_parent_dict['ROUTE'] = ''
+            pm_parent_dict['LEADTIME'] = leadtime
+            pm_parent_dict['PMCOUNTER'] =''
+            pm_parent_dict['WORKTYPE'] = worktype
+            pm_parent_dict['EGMNTACTTYPE'] = egmntacttype
+            pm_parent_dict['WOSTATUS'] = wostatus
+            pm_parent_dict['EGCRAFT'] = '_'.join(group['EGCRAFT'].dropna().drop_duplicates().to_list())
+            pm_parent_dict['RESPONSED BY'] = '_'.join(group['RESPONSED BY'].dropna().drop_duplicates().to_list())
+            pm_parent_dict['PTW'] = '_'.join(group['PTW'].dropna().drop_duplicates().to_list())
+            pm_parent_dict['LOTO'] = ''
+            pm_parent_dict['EGPROJECTID'] = egprojectid
+            pm_parent_dict['EGWBS']  = egwbs
+            pm_parent_dict['FREQUENCY'] = frequency
+            pm_parent_dict['FREQUNIT'] = frequnit
+            pm_parent_dict['NEXTDATE'] = group['NEXTDATE'].min() if not group['NEXTDATE'].isnull().all() else None
+            pm_parent_dict['TARGSTARTTIME'] = group['TARGSTARTTIME'].min() 
+            pm_parent_dict['FINISH_DATE'] = group['FINISH_DATE'].max() if not group['FINISH_DATE'].isnull().all() else None
+            pm_parent_dict['FINISH TIME'] = group['FINISH TIME'].max()
+            pm_parent_dict['PARENT'] = ''
+            pm_parent_dict['JPNUM'] = ''
+            # pm_parent_dict['MAIN_SYSTEM'] =row['MAIN_SYSTEM']
+            # pm_parent_dict['SUB_SYSTEM'] =row['SUB_SYSTEM']
+            # pm_parent_dict['EQUIPMENT'] =row['EQUIPMENT']
+            # pm_parent_dict['MAIN_SYSTEM_DESC'] =row['MAIN_SYSTEM_DESC']
+            # pm_parent_dict['SUB_SYSTEM_DESC'] =row['SUB_SYSTEM_DESC']
+            pm_parent_dict['UNIT_TYPE'] =row['UNIT_TYPE']
+            pm_parent_dict['TYPE'] =row['TYPE']
+            ##################
+            # parent_df = pd.DataFrame(pm_parent_dict,index=np.arange(1))
+            parent_df = pd.DataFrame([pm_parent_dict])
+            # if loop_num < 10:
+            #     group.loc[:,'PARENT'] = 'Group-0{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
+            # else:
+            #     group.loc[:,'PARENT'] = 'Group-{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
+            group.loc[:, 'PARENT'] = generate_pmnum(loop_num, row['TYPE'], row['UNIT_TYPE'], worktype)
+            
+            #group
+            #############################
+            parent = pd.concat([parent_df, group])
+            parent.loc[:,'GROUP'] = loop_num
+            df_pm_plan3_more = pd.concat([df_pm_plan3_more,parent])
+        
+        #? PM PLAN LESS
+        df_pm_plan3_less = pd.DataFrame()
+        loop_num = 0
+        #df_xx = pm_master_df[['MAIN_SYSTEM','MAIN_SYSTEM_DESC','EGCRAFT','PTW','UNIT_TYPE','TYPE']].drop_duplicates().sort_values(by=['TYPE','UNIT_TYPE'],ascending=False)
+        for index,row in df_yyy_cont_less.iterrows():
+            loop_num +=1 
+            filter_condition = np.ones(len(pm_master_df), dtype=bool)
+            for col in all_group_columns:
+                filter_condition &= (pm_master_df[col] == row[col])
+                    
+            group = pm_master_df[filter_condition]
+            
+            df_pm_plan3_less = pd.concat([df_pm_plan3_less, group])
+
+        df_pm_plan3_more_ME = df_pm_plan3_more[df_pm_plan3_more['TYPE'] == 'ME']
+        df_pm_plan3_more_EE = df_pm_plan3_more[df_pm_plan3_more['TYPE'] == 'EE']
+        df_pm_plan3_more_CV = df_pm_plan3_more[df_pm_plan3_more['TYPE'] == 'CV']
+        df_pm_plan3_more_IC = df_pm_plan3_more[df_pm_plan3_more['TYPE'] == 'IC']
+
+        df_pm_plan3_less_ME = df_pm_plan3_less[df_pm_plan3_less['TYPE'] == 'ME']
+        df_pm_plan3_less_EE = df_pm_plan3_less[df_pm_plan3_less['TYPE'] == 'EE']
+        df_pm_plan3_less_CV = df_pm_plan3_less[df_pm_plan3_less['TYPE'] == 'CV']
+        df_pm_plan3_less_IC = df_pm_plan3_less[df_pm_plan3_less['TYPE'] == 'IC']
+
+        lst_group  = [df_pm_plan3_more_ME,df_pm_plan3_more_EE,df_pm_plan3_more_CV,df_pm_plan3_more_IC]
+        lst_no_group = [df_pm_plan3_less_ME,df_pm_plan3_less_EE, df_pm_plan3_less_CV,df_pm_plan3_less_IC]
+
+        df_pm_plan3_test = pd.DataFrame()
+        for i in range(len(lst_group)):
+            df_pm_plan3_test = pd.concat([df_pm_plan3_test,lst_group[i]])
+            df_pm_plan3_test = pd.concat([df_pm_plan3_test,lst_no_group[i]])
+
+        df_pm_plan3_test['MOD'] = df_pm_plan3_test['GROUP']%2
+        df_pm_plan3 = df_pm_plan3_test.copy()
+        return df_pm_plan3
+    except KeyError as e:
+        logger.error(f"Key error: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบข้อมูลที่จำเป็นสำหรับการดำเนินการ<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>{str(e)}</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าชื่อคอลัมน์ถูกต้องและครบถ้วน  หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
+    except Exception as e:
+        logger.error(f"An error occurred: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถจัดกลุ่ม PM Plan ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>{str(e)}</li>"
+            f"<li>เกิดข้อผิดพลาดในระหว่างการจัดกลุ่มข้อมูล กรุณาตรวจสอบข้อมูลอีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
 
 def replace_columns(col, replace_dict):
     try:

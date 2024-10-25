@@ -5,14 +5,24 @@ from django.core.exceptions import ValidationError
 from maximo_app.models import Site, ChildSite, PlantType, Unit, WorkType, ActType, WBSCode, Status
 import os
 
+GROUP_CHOICES = [
+    ('no_arrange', 'No arrange group'),
+    ('EGCRAFT', 'Craft'),
+    ('PTW', 'Permit Type'),
+    ('NEXTDATE', 'Start Date'),
+    ('SYSTEM', 'System'),
+]
+
 class UploadFileForm(forms.Form):
     schedule_file = forms.FileField(
         label='Final Schedule File', 
-        widget=forms.ClearableFileInput(attrs={'accept': '.xlsx,.xlsm'})
+        widget=forms.ClearableFileInput(attrs={'accept': '.xlsx,.xlsm'}),
+        required=True
     )
     location_file = forms.FileField(
         label='Location File', 
-        widget=forms.ClearableFileInput(attrs={'accept': '.xlsx,.xlsm'})
+        widget=forms.ClearableFileInput(attrs={'accept': '.xlsx,.xlsm'}),
+        required=True
     )
     
     # Dropdown สำหรับเลือกปี
@@ -96,7 +106,9 @@ class UploadFileForm(forms.Form):
         required=True, 
         empty_label="เลือก"
     )
-
+    
+    selected_order = forms.CharField(required=True, widget=forms.HiddenInput())
+    
     def __init__(self, *args, **kwargs):
         super(UploadFileForm, self).__init__(*args, **kwargs)
         self.fields['plant_type'].queryset = PlantType.objects.all()
@@ -155,11 +167,25 @@ class UploadFileForm(forms.Form):
                 # กำหนดให้ queryset เป็น none ถ้ามีข้อผิดพลาด
                 self.fields['child_site'].queryset = ChildSite.objects.none()
     
+    def clean_selected_order(self):
+        selected_order = self.cleaned_data.get('selected_order', '')
+
+        # แปลง selected_order ให้เป็น list หากเป็น string
+        if isinstance(selected_order, str):
+            selected_order_list = [item.strip() for item in selected_order.split(',') if item.strip()]
+        else:
+            selected_order_list = selected_order  # กรณีที่ selected_order เป็น list อยู่แล้ว
+
+        valid_choices = [choice[0] for choice in GROUP_CHOICES]
+        for option in selected_order_list:
+            if option not in valid_choices:
+                self.add_error('selected_order', f"{option} is not a valid choice.")
+        
+        return selected_order_list
+
     def clean(self):
         cleaned_data = super().clean()
-        schedule_file = cleaned_data.get('schedule_file')
-        location_file = cleaned_data.get('location_file')
-        
+        cleaned_data['selected_order'] = self.clean_selected_order()
         required_file_fields = ['schedule_file', 'location_file']
         
         for field in required_file_fields:
@@ -174,19 +200,14 @@ class UploadFileForm(forms.Form):
         allowed_extensions = ['.xlsx', '.xlsm']
         
         # ตรวจสอบประเภทของ schedule_file
-        if schedule_file:
-            content_type = schedule_file.content_type
-            ext = os.path.splitext(schedule_file.name)[1].lower()  # ตรวจสอบนามสกุลไฟล์
-            if content_type not in allowed_mime_types or ext not in allowed_extensions:
-                self.add_error('schedule_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
-                # ฟังก์ชัน add_error จะเพิ่มข้อความข้อผิดพลาดให้กับฟิลด์ที่ไม่ผ่านการตรวจสอบ ข้อผิดพลาดนี้จะถูกแสดงในฟอร์มเมื่อผู้ใช้ทำการส่งฟอร์ม
-        
-        # ตรวจสอบประเภทของ location_file         
-        if location_file:
-            content_type = location_file.content_type
-            ext = os.path.splitext(location_file.name)[1].lower()
-            if content_type not in allowed_mime_types or ext not in allowed_extensions:
-                self.add_error('location_file', 'เฉพาะไฟล์ .xlsx และ .xlsm เท่านั้น')
+        for file_field in ['schedule_file', 'location_file']:
+            file = cleaned_data.get(file_field)
+            if file:
+                content_type = file.content_type
+                ext = os.path.splitext(file.name)[1].lower()
+                if content_type not in allowed_mime_types or ext not in allowed_extensions:
+                    self.add_error(file_field, f'เฉพาะไฟล์ {", ".join(allowed_extensions)} เท่านั้น')
+                    # ฟังก์ชัน add_error จะเพิ่มข้อความข้อผิดพลาดให้กับฟิลด์ที่ไม่ผ่านการตรวจสอบ ข้อผิดพลาดนี้จะถูกแสดงในฟอร์มเมื่อผู้ใช้ทำการส่งฟอร์ม
         
         # ตรวจสอบว่าฟิลด์ที่จำเป็นถูกเลือกหรือไม่
         required_fields = {
@@ -204,7 +225,7 @@ class UploadFileForm(forms.Form):
         }
 
         for field, field_label in required_fields.items():
-            if not cleaned_data.get(field):
-                self.add_error(field, f'{field_label} ว่าง')
+            if not cleaned_data.get(field) or cleaned_data.get(field) == '':
+                self.add_error(field, f'Please select a value for {field_label}.')
         
         return cleaned_data
