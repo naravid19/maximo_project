@@ -107,6 +107,12 @@ class UploadFileForm(forms.Form):
         empty_label="เลือก"
     )
     
+    wbs_other = forms.CharField(
+        label='Other WBS',
+        required=False,
+        widget=forms.TextInput(attrs={'id': 'other_wbs', 'disabled': 'true'}),
+    )
+    
     selected_order = forms.CharField(required=True, widget=forms.HiddenInput())
     
     def __init__(self, *args, **kwargs):
@@ -174,20 +180,22 @@ class UploadFileForm(forms.Form):
         if isinstance(selected_order, str):
             selected_order_list = [item.strip() for item in selected_order.split(',') if item.strip()]
         else:
-            selected_order_list = selected_order  # กรณีที่ selected_order เป็น list อยู่แล้ว
+            selected_order_list = selected_order
 
         valid_choices = [choice[0] for choice in GROUP_CHOICES]
         for option in selected_order_list:
             if option not in valid_choices:
-                self.add_error('selected_order', f"{option} is not a valid choice.")
+                self.add_error('selected_order', f'"{option}" ไม่ใช่ตัวเลือกที่ถูกต้อง')
         
         return selected_order_list
 
     def clean(self):
         cleaned_data = super().clean()
+        wbs = cleaned_data.get('wbs')
+        wbs_other = cleaned_data.get('wbs_other')
         cleaned_data['selected_order'] = self.clean_selected_order()
-        required_file_fields = ['schedule_file', 'location_file']
         
+        required_file_fields = ['schedule_file', 'location_file']
         for field in required_file_fields:
             if not cleaned_data.get(field):
                 self.add_error(field, f'{field.upper()} ไม่มีไฟล์')
@@ -223,9 +231,11 @@ class UploadFileForm(forms.Form):
             'wbs': 'SUBWBS GROUP',
             
         }
-
         for field, field_label in required_fields.items():
-            if not cleaned_data.get(field) or cleaned_data.get(field) == '':
-                self.add_error(field, f'Please select a value for {field_label}.')
+            if not cleaned_data.get(field):
+                self.add_error(field, f'กรุณาเลือก {field_label}')
+        
+        if wbs and wbs.wbs_code == 'อื่นๆ' and not wbs_other:
+            self.add_error('wbs_other', 'กรุณากรอกข้อมูลในฟิลด์ "Other WBS" เนื่องจากคุณเลือก "อื่นๆ"')
         
         return cleaned_data

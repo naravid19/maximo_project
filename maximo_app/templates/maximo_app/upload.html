@@ -548,6 +548,71 @@
                     <p id="wbs_description" class="mt-1 text-sm text-gray-500"></p>
                 </div>
                 
+                <div class="sm:col-span-3">
+                    <div class="flex items-center space-x-4 ">
+                        <label for="wbs_other" class="block text-base font-medium leading-6 text-gray-900">
+                            {{ form.wbs_other.label }}:
+                            {% if form.wbs_other.field.required %}
+                                <span class="text-base font-normal text-red-600" style="position: relative; top: 1px;">*</span>
+                            {% endif %}
+                        </label>
+                        <div class="relative flex items-center flex-1" id="other_wbs_container">
+                            <!-- สัญญาณที่มุมขวาบนของ input -->
+                            <span id="other_wbs_signal" class="absolute hidden w-3 h-3 bg-green-500 rounded-full shadow-md top-3 right-3"></span>
+                            <input type="text" id="other_wbs" name="wbs_other" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 dark:border-gray-600 appearance-none dark:text-white dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" disabled />
+                            <label id="label_other_wbs" for="other_wbs" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">รายละเอียดอื่นๆ</label>
+                            
+                            {% if form.wbs_other.errors %}
+                            <div class="flex items-center p-4 mt-2 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
+                                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                </svg>
+                                <span class="sr-only">Error</span>
+                                <div>
+                                    <span class="font-medium">Error:</span>
+                                    {% for error in form.wbs_other.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const wbsField = document.getElementById('id_wbs');
+                        const otherWbsInput = document.getElementById('other_wbs');
+                        const labelOtherWbs = document.getElementById('label_other_wbs');
+                        const otherWbsSignal = document.getElementById('other_wbs_signal');  // สัญญาณสีเขียว
+                    
+                        function toggleOtherWbsField() {
+                            if (wbsField.value === '6') {
+                                otherWbsInput.disabled = false; // เปิดการใช้งานฟิลด์เมื่อเลือก "other"
+                                otherWbsInput.placeholder = '';
+                                otherWbsInput.style.borderBottomColor = '#16a34a';  // เปลี่ยนสีขอบของ input เป็นสีเขียว
+                                labelOtherWbs.style.color = '#16a34a';  // เปลี่ยนสีข้อความ label เป็นสีเขียว
+                                otherWbsSignal.classList.remove('hidden');  // แสดงสัญญาณ
+                            } else {
+                                otherWbsInput.disabled = true;
+                                otherWbsInput.placeholder = '';
+                                otherWbsInput.style.borderBottomColor = '';  // รีเซ็ตสีขอบกลับเป็นค่าเริ่มต้น
+                                otherWbsInput.value = '';  // ล้างค่าที่กรอก
+                                labelOtherWbs.style.color = '';  // รีเซ็ตสี label กลับเป็นค่าเริ่มต้น
+                                otherWbsSignal.classList.add('hidden');  // ซ่อนสัญญาณ
+                            }
+                        }
+                    
+                        // ตรวจสอบสถานะเริ่มต้น
+                        toggleOtherWbsField();
+                    
+                        // ตรวจสอบการเปลี่ยนแปลงในฟิลด์ `wbs`
+                        wbsField.addEventListener('change', toggleOtherWbsField);
+                    });
+                    
+                </script>
+                
+                
                 <!-- Checkbox สำหรับเลือก Grouping -->
                 <div class="sm:col-span-3">
                     <label for="grouping_options" class="block text-base font-medium leading-6 text-gray-900">
@@ -947,27 +1012,58 @@
 
 {% block script %}
 <!-- ตกเเต่ง -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const wbsField = document.getElementById('id_wbs');
+        const wbsOtherField = document.getElementById('other_wbs');
 
+        if (wbsField) {
+            // เมื่อมีการเปลี่ยนแปลงค่าในฟิลด์ WBS จะแสดงผลใน Console
+            wbsField.addEventListener('change', function() {
+                console.log("Selected WBS Value:", wbsField.value);
+            });
+
+            // แสดงค่าเริ่มต้นเมื่อโหลดหน้าเว็บ
+            console.log("Initial WBS Value:", wbsField.value);
+        } else {
+            console.log("WBS field not found!");
+        }
+
+        if (wbsOtherField) {
+            // เมื่อมีการเปลี่ยนแปลงค่าในฟิลด์ WBS จะแสดงผลใน Console
+            wbsOtherField.addEventListener('change', function() {
+                console.log("Selected other_wbs Value:", wbsOtherField.value);
+            });
+
+            // แสดงค่าเริ่มต้นเมื่อโหลดหน้าเว็บ
+            console.log("Initial other_wbs Value:", wbsOtherField.value);
+        } else {
+            console.log("other_wbs field not found!");
+        }
+    });
+</script>
     <script>
         function validateUploadForm(event) {
-            // ดึงข้อมูลฟอร์ม
             let form = document.getElementById('uploadForm');
             
-            const yearField = document.getElementById('id_year'); // Dropdown Year
-            const frequencyField = document.getElementById('id_frequency'); // Dropdown Frequency
-            const plantTypeField = document.getElementById('id_plant_type'); // Dropdown Plant Type
-            const siteField = document.getElementById('id_site'); // Dropdown Site
-            const childSiteField = document.getElementById('id_child_site'); // Dropdown Child Site
-            const unitField = document.getElementById('id_unit'); // Dropdown Unit
-            const wostatusField = document.getElementById('id_wostatus'); // Dropdown Wo Status
-            const workTypeField = document.getElementById('id_work_type'); // Dropdown Work Type
-            const acttypeField = document.getElementById('id_acttype'); // Dropdown Acttype
-            const wbsField = document.getElementById('id_wbs'); // Dropdown WBS
-            const scheduleFileField = document.getElementById('id_schedule_file');  // Input File Schedule
-            const locationFileField = document.getElementById('id_location_file');  // Input File Location
-            const groupingOptionsField = document.querySelectorAll('input[name="grouping_options"]:checked');   // Grouping Options
+            // ดึงข้อมูลฟิลด์ทั้งหมด
+            const yearField = document.getElementById('id_year');
+            const frequencyField = document.getElementById('id_frequency');
+            const plantTypeField = document.getElementById('id_plant_type');
+            const siteField = document.getElementById('id_site');
+            const childSiteField = document.getElementById('id_child_site');
+            const unitField = document.getElementById('id_unit');
+            const wostatusField = document.getElementById('id_wostatus');
+            const workTypeField = document.getElementById('id_work_type');
+            const acttypeField = document.getElementById('id_acttype');
+            const wbsField = document.getElementById('id_wbs');
+            const wbsOtherField = document.getElementById('other_wbs');
+            const scheduleFileField = document.getElementById('id_schedule_file');
+            const locationFileField = document.getElementById('id_location_file');
+            const groupingOptionsField = document.querySelectorAll('input[name="grouping_options"]:checked');
             
-            const yearFieldContainer = yearField.closest('.sm\\:col-span-3'); // ค้นหาส่วนที่จะแสดง alert ของ Year
+            // ดึง container ของฟิลด์สำหรับแสดง alert
+            const yearFieldContainer = yearField.closest('.sm\\:col-span-3');
             const frequencyFieldContainer = frequencyField.closest('.sm\\:col-span-3');
             const plantTypeFieldContainer = plantTypeField.closest('.sm\\:col-span-3'); 
             const siteFieldContainer = siteField.closest('.sm\\:col-span-3');
@@ -977,17 +1073,18 @@
             const workTypeFieldContainer = workTypeField.closest('.sm\\:col-span-3');
             const acttypeFieldContainer = acttypeField.closest('.sm\\:col-span-3');
             const wbsFieldContainer = wbsField.closest('.sm\\:col-span-3');
+            const wbsOtherFieldContainer = wbsOtherField.closest('.sm\\:col-span-3');
             const scheduleFileFieldContainer = scheduleFileField.closest('.sm\\:col-span-3');
             const locationFileFieldContainer = locationFileField.closest('.sm\\:col-span-3');
             const groupingOptionsFieldContainer = document.querySelector('input[name="grouping_options"]').closest('.flex.flex-wrap');
             
-            // ลบ Alert เก่าถ้ามีอยู่ในแต่ละ Field
+            // ลบ alert ที่มีอยู่แล้ว
             const existingFields = [
                 yearFieldContainer, frequencyFieldContainer, plantTypeFieldContainer,
                 siteFieldContainer, childSiteFieldContainer, unitFieldContainer,
                 wostatusFieldContainer, workTypeFieldContainer, acttypeFieldContainer,
-                wbsFieldContainer, scheduleFileFieldContainer, locationFileFieldContainer,
-                groupingOptionsFieldContainer
+                wbsFieldContainer, wbsOtherFieldContainer, scheduleFileFieldContainer,
+                locationFileFieldContainer, groupingOptionsFieldContainer
             ];
 
             existingFields.forEach(fieldContainer => {
@@ -998,8 +1095,8 @@
             });
             
             // ตรวจสอบว่าฟิลด์ปีว่างหรือไม่
-            let hasError = false; // ตัวแปรสำหรับตรวจสอบว่ามี error หรือไม่
-        
+            let hasError = false;
+            
             const fieldsToValidate = [
                 { field: yearField, container: yearFieldContainer, message: 'กรุณาเลือกปี' },
                 { field: frequencyField, container: frequencyFieldContainer, message: 'กรุณาเลือกความถี่' },
@@ -1014,66 +1111,58 @@
                 { field: scheduleFileField, container: scheduleFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Final Schedule' },
                 { field: locationFileField, container: locationFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Location' }
             ];
-
-            // ตรวจสอบ grouping_options ว่ามีการเลือกหรือไม่
-            if (groupingOptionsField.length === 0) {
-                event.preventDefault();
-                hasError = true;
-
-                const alertBox = document.createElement('div');
-                alertBox.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                alertBox.setAttribute('role', 'alert');
-
-                const messageText = document.createElement('span');
-                messageText.textContent = 'กรุณาเลือกตัวเลือก Grouping อย่างน้อยหนึ่งตัวเลือก';
-                alertBox.appendChild(messageText);
-
-                groupingOptionsFieldContainer.appendChild(alertBox);
-            }
             
-            
-            for (let i = 0; i < fieldsToValidate.length; i++) {
-                const { field, container, message } = fieldsToValidate[i];
+            fieldsToValidate.forEach(({ field, container, message }) => {
                 if (field.value === '') {
-                    event.preventDefault();
                     hasError = true;
-    
-                    const alertBox = document.createElement('div');
-                    alertBox.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-                    alertBox.setAttribute('role', 'alert');
-    
-                    const messageText = document.createElement('span');
-                    messageText.textContent = message;
-                    alertBox.appendChild(messageText);
-    
-                    container.appendChild(alertBox);
-                    break; // หยุดการตรวจสอบเมื่อเจอข้อผิดพลาดอันแรก
+                    event.preventDefault();
+                    showError(container, message);
                 }
+            });
+            
+            // ตรวจสอบเงื่อนไขฟิลด์ wbs "other"
+            if (wbsField.value === '6' && wbsOtherField.value === '') {
+                hasError = true;
+                event.preventDefault();
+                showError(wbsOtherFieldContainer, 'กรุณากรอกข้อมูลในฟิลด์ "Other WBS"');
             }
-
-            // ถ้าไม่มี error ส่งฟอร์ม
+            
+            // ตรวจสอบการเลือก grouping options
+            if (groupingOptionsField.length === 0) {
+                hasError = true;
+                event.preventDefault();
+                showError(groupingOptionsFieldContainer, 'กรุณาเลือกตัวเลือก Grouping อย่างน้อยหนึ่งตัวเลือก');
+            }
+            
+            // ส่งฟอร์มหากไม่มีข้อผิดพลาด
             if (!hasError) {
                 showUploadLoading(form);
             }
         }
-
+            
+        function showError(container, message) {
+            const alertBox = document.createElement('div');
+            alertBox.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
+            alertBox.setAttribute('role', 'alert');
+    
+            const messageText = document.createElement('span');
+            messageText.textContent = message;
+            alertBox.appendChild(messageText);
+    
+            container.appendChild(alertBox);
+        }
+    
         function showUploadLoading(form) {
-            let button = document.getElementById('uploadBtn');
-
-            // ปิดการใช้งานปุ่มเพื่อป้องกันการกดซ้ำ
+            const button = document.getElementById('uploadBtn');
             button.disabled = true;
-
-            // เปลี่ยนเนื้อหาของปุ่มให้แสดงไอคอนโหลดและข้อความ Loading
             button.innerHTML = `
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        <svg aria-hidden="true" role="status" class="inline w-4 h-4 text-gray-200 me-3 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
-                        </svg>
-                        Loading...
-                    </span>`;
-
-            // ส่งฟอร์มจริงเมื่อปุ่มเปลี่ยนสถานะเป็น Loading
+                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                    <svg aria-hidden="true" role="status" class="inline w-4 h-4 text-gray-200 me-3 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
+                    </svg>
+                    Loading...
+                </span>`;
             form.submit();
         }
     </script>
@@ -1154,7 +1243,7 @@
         $(document).ready(function() {
             // เมื่อผู้ใช้เลือก Plant Type
             $('#id_plant_type').change(function() {
-                var plant_type_id = $(this).val(); // ดึง plant_code ที่เลือก
+                let plant_type_id = $(this).val(); // ดึง plant_code ที่เลือก
 
                 // ปิดการใช้งาน dropdown ขณะที่รอข้อมูลจาก server
                 $('#id_acttype, #id_site, #id_child_site, #id_work_type, #id_unit').empty().append('<option value="">เลือก</option>');
@@ -1223,7 +1312,7 @@
         $(document).ready(function() {
             // ฟังก์ชันที่ถูกเรียกเมื่อผู้ใช้เลือก Site
             $('#id_site').change(function() {
-                var site_id = $(this).val();  // ดึงค่า site_id ที่ผู้ใช้เลือก
+                let site_id = $(this).val();  // ดึงค่า site_id ที่ผู้ใช้เลือก
 
                 // ปิดการใช้งาน dropdown ของ Child Site ขณะรอข้อมูลจาก server
                 $('#id_child_site').prop('disabled', true);
@@ -1270,7 +1359,7 @@
 
             // ฟังก์ชันที่ถูกเรียกเมื่อผู้ใช้เลือก Child Site
             $('#id_child_site').change(function() {
-                var child_site_id = $(this).val();  // ดึงค่า child_site_id ที่ผู้ใช้เลือก
+                let child_site_id = $(this).val();  // ดึงค่า child_site_id ที่ผู้ใช้เลือก
 
                 if (child_site_id) {
                     // ส่ง AJAX request ไปที่ server เพื่อดึงคำอธิบายของ Child Site
@@ -1299,7 +1388,7 @@
         $(document).ready(function() {
 
             $('#id_work_type').change(function() {
-                var work_type_id = $(this).val();
+                let work_type_id = $(this).val();
             
                 if(work_type_id){
                     $.ajax({
@@ -1318,7 +1407,7 @@
     <script>
         $(document).ready(function() {
             $('#id_acttype').change(function() {
-                var acttype_id = $(this).val();
+                let acttype_id = $(this).val();
 
                 if (acttype_id){
                     $.ajax({
@@ -1337,8 +1426,8 @@
     <script>
         $(document).ready(function() {
             $('#id_wbs').change(function() {
-                var wbs_id = $(this).val();
-
+                let wbs_id = $(this).val();
+                
                 if (wbs_id){
                     $.ajax({
                         url: "{% url 'filter_wbs' %}",
@@ -1356,7 +1445,7 @@
     <script>
         $(document).ready(function() {
             $('#id_wostatus').change(function() {
-                var wostatus_id = $(this).val();
+                let wostatus_id = $(this).val();
             
                 if (wostatus_id) {
                     $.ajax({

@@ -101,8 +101,8 @@ def index(request):
             work_type = form.cleaned_data.get('work_type')
             acttype = form.cleaned_data.get('acttype')
             wbs = form.cleaned_data.get('wbs')
+            wbs_other = form.cleaned_data.get('wbs_other') if wbs.wbs_code == 'อื่นๆ' else None
             selected_order = form.cleaned_data.get('selected_order', [])
-
             log_params = []
             log_error = []
             
@@ -167,8 +167,13 @@ def index(request):
             else:
                 log_error.append("ACTTYPE")
             
-            if wbs:
-                log_params.append(f"SUBWBS GROUP: {wbs}")
+            if wbs and wbs.wbs_code != 'อื่นๆ':
+                log_params.append(f"SUBWBS GROUP: {wbs.wbs_code}")
+            elif wbs.wbs_code == 'อื่นๆ':
+                if wbs_other:
+                        log_params.append(f"Other WBS: {wbs_other}")
+                else:
+                    log_error.append("Other WBS")
             else:
                 log_error.append("SUBWBS GROUP")
             
@@ -200,8 +205,17 @@ def index(request):
             try:
                 location = f'{child_site}-{plant_type}{unit}' # 'SRD-H02'
                 location_sanitized = location.replace('-', '')
-                egprojectid = f"O-{location_sanitized}-{two_digits_year}{acttype.code}"  # 'O-SRDH02-67MI'
-                egwbs = f"{egprojectid}-{wbs.wbs_code}" # 'O-SRDH02-67MI-WO'
+                
+                if wbs and wbs.wbs_code != 'อื่นๆ':
+                    egprojectid = f"O-{location_sanitized}-{two_digits_year}{acttype.code}"  # 'O-SRDH02-67MI'
+                    egwbs = f"{egprojectid}-{wbs.wbs_code}" # 'O-SRDH02-67MI-WO'
+                elif wbs.wbs_code == 'อื่นๆ' and wbs_other:
+                    egwbs = wbs_other
+                    egprojectid = wbs_other[:-3] if wbs_other and len(wbs_other) > 3 else wbs_other
+                else:
+                    egwbs = ''
+                    egprojectid = ''
+                
                 wbs_desc = f"{wbs.description} {acttype.description} {location} {buddhist_year}"
                 
                 logger.info(f"EGPROJECTID: {egprojectid}")
