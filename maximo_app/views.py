@@ -211,7 +211,7 @@ def index(request):
                     egwbs = f"{egprojectid}-{wbs.wbs_code}" # 'O-SRDH02-67MI-WO'
                 elif wbs.wbs_code == 'อื่นๆ' and wbs_other:
                     egwbs = wbs_other
-                    egprojectid = wbs_other[:-3] if wbs_other and len(wbs_other) > 3 else wbs_other
+                    egprojectid = wbs_other
                 else:
                     egwbs = ''
                     egprojectid = ''

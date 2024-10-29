@@ -299,7 +299,7 @@
                 <!-- Dropdown สำหรับเลือกความถี่ -->
                 <div class="sm:col-span-3">
                     <label for="frequency" class="block text-base font-medium leading-6 text-gray-900">
-                        {{ form.frequency.label }}
+                        {{ form.frequency.label }} (Years)
                         {% if form.frequency.field.required %}
                             <span class="text-base font-normal text-red-600" style="position: relative; top: 1px;">*</span>
                         {% endif %}
@@ -560,7 +560,7 @@
                             <!-- สัญญาณที่มุมขวาบนของ input -->
                             <span id="other_wbs_signal" class="absolute hidden w-3 h-3 bg-green-500 rounded-full shadow-md top-3 right-3"></span>
                             <input type="text" id="other_wbs" name="wbs_other" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 dark:border-gray-600 appearance-none dark:text-white dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" disabled />
-                            <label id="label_other_wbs" for="other_wbs" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">รายละเอียดอื่นๆ</label>
+                            <label id="label_other_wbs" for="other_wbs" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">กรุณากรอกชื่อ SUBWBS ที่สร้างไว้บนระบบ MMS เช่น O-CHNC21-67CI-LTSA</label>
                             
                             {% if form.wbs_other.errors %}
                             <div class="flex items-center p-4 mt-2 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
@@ -1098,16 +1098,16 @@
             let hasError = false;
             
             const fieldsToValidate = [
-                { field: yearField, container: yearFieldContainer, message: 'กรุณาเลือกปี' },
+                { field: yearField, container: yearFieldContainer, message: 'กรุณาเลือกปี ค.ศ.' },
                 { field: frequencyField, container: frequencyFieldContainer, message: 'กรุณาเลือกความถี่' },
-                { field: plantTypeField, container: plantTypeFieldContainer, message: 'กรุณาเลือกประเภทของโรงงานไฟฟ้า' },
-                { field: siteField, container: siteFieldContainer, message: 'กรุณาเลือกโรงไฟฟ้า' },
-                { field: childSiteField, container: childSiteFieldContainer, message: 'กรุณาเลือกชื่อย่อโรงไฟฟ้า' },
-                { field: unitField, container: unitFieldContainer, message: 'กรุณาเลือกลำดับโรงไฟฟ้า' },
-                { field: wostatusField, container: wostatusFieldContainer, message: 'กรุณาเลือกสถานะใบสั่งงาน' },
-                { field: workTypeField, container: workTypeFieldContainer, message: 'กรุณาเลือกประเภทของงาน' },
-                { field: acttypeField, container: acttypeFieldContainer, message: 'กรุณาเลือกประเภทของกิจกรรม' },
-                { field: wbsField, container: wbsFieldContainer, message: 'กรุณาเลือก WBS' },
+                { field: plantTypeField, container: plantTypeFieldContainer, message: 'กรุณาเลือกประเภทของโรงไฟฟ้า' },
+                { field: siteField, container: siteFieldContainer, message: 'กรุณาเลือกสังกัดโรงไฟฟ้า' },
+                { field: childSiteField, container: childSiteFieldContainer, message: 'กรุณาเลือกชื่อโรงไฟฟ้า' },
+                { field: unitField, container: unitFieldContainer, message: 'กรุณาเลือกหมายเลขเครื่องกำเนิดไฟฟ้า' },
+                { field: wostatusField, container: wostatusFieldContainer, message: 'กรุณาเลือกสถานะใบงาน' },
+                { field: workTypeField, container: workTypeFieldContainer, message: 'กรุณาเลือกประเภทของใบงาน' },
+                { field: acttypeField, container: acttypeFieldContainer, message: 'กรุณาเลือกประเภทของกิจกรรมงาน' },
+                { field: wbsField, container: wbsFieldContainer, message: 'กรุณาเลือก SUBWBS' },
                 { field: scheduleFileField, container: scheduleFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Final Schedule' },
                 { field: locationFileField, container: locationFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Location' }
             ];
