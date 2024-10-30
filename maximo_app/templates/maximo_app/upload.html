@@ -579,12 +579,48 @@
                         </div>
                     </div>
                 </div>
+                
+                <div class="sm:col-span-3">
+                    <div class="flex items-center space-x-4 ">
+                        <label for="projectid_other" class="block text-base font-medium leading-6 text-gray-900">
+                            {{ form.projectid_other.label }}:
+                            {% if form.projectid_other.field.required %}
+                                <span class="text-base font-normal text-red-600" style="position: relative; top: 1px;">*</span>
+                            {% endif %}
+                        </label>
+                        <div class="relative flex items-center flex-1" id="other_projectid_container">
+                            <span id="other_projectid_signal" class="absolute hidden w-3 h-3 bg-green-500 rounded-full shadow-md top-3 right-3"></span>
+                            <input type="text" id="other_projectid" name="projectid_other" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 dark:border-gray-600 appearance-none dark:text-white dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" disabled />
+                            <label id="label_other_projectid" for="other_projectid" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">กรุณากรอกชื่อ PROJECTID ที่สร้างไว้บนระบบ MMS เช่น O-CHNC21-67CI</label>
+                            
+                            {% if form.projectid_other.errors %}
+                            <div class="flex items-center p-4 mt-2 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
+                                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                </svg>
+                                <span class="sr-only">Error</span>
+                                <div>
+                                    <span class="font-medium">Error:</span>
+                                    {% for error in form.projectid_other.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         const wbsField = document.getElementById('id_wbs');
                         const otherWbsInput = document.getElementById('other_wbs');
                         const labelOtherWbs = document.getElementById('label_other_wbs');
                         const otherWbsSignal = document.getElementById('other_wbs_signal');  // สัญญาณสีเขียว
+
+                        const otherProjectIdInput = document.getElementById('other_projectid');
+                        const labelOtherProjectId = document.getElementById('label_other_projectid');
+                        const otherProjectIdSignal = document.getElementById('other_projectid_signal');
                     
                         function toggleOtherWbsField() {
                             if (wbsField.value === '6') {
@@ -593,6 +629,12 @@
                                 otherWbsInput.style.borderBottomColor = '#16a34a';  // เปลี่ยนสีขอบของ input เป็นสีเขียว
                                 labelOtherWbs.style.color = '#16a34a';  // เปลี่ยนสีข้อความ label เป็นสีเขียว
                                 otherWbsSignal.classList.remove('hidden');  // แสดงสัญญาณ
+
+                                otherProjectIdInput.disabled = false;
+                                otherProjectIdInput.placeholder = '';
+                                otherProjectIdInput.style.borderBottomColor = '#16a34a';
+                                labelOtherProjectId.style.color = '#16a34a';
+                                otherProjectIdSignal.classList.remove('hidden');
                             } else {
                                 otherWbsInput.disabled = true;
                                 otherWbsInput.placeholder = '';
@@ -600,6 +642,13 @@
                                 otherWbsInput.value = '';  // ล้างค่าที่กรอก
                                 labelOtherWbs.style.color = '';  // รีเซ็ตสี label กลับเป็นค่าเริ่มต้น
                                 otherWbsSignal.classList.add('hidden');  // ซ่อนสัญญาณ
+
+                                otherProjectIdInput.disabled = true;
+                                otherProjectIdInput.placeholder = '';
+                                otherProjectIdInput.style.borderBottomColor = '';
+                                otherProjectIdInput.value = '';
+                                labelOtherProjectId.style.color = '';
+                                otherProjectIdSignal.classList.add('hidden');
                             }
                         }
                     
@@ -1058,6 +1107,7 @@
             const acttypeField = document.getElementById('id_acttype');
             const wbsField = document.getElementById('id_wbs');
             const wbsOtherField = document.getElementById('other_wbs');
+            const projectidOtherField = document.getElementById('other_projectid');
             const scheduleFileField = document.getElementById('id_schedule_file');
             const locationFileField = document.getElementById('id_location_file');
             const groupingOptionsField = document.querySelectorAll('input[name="grouping_options"]:checked');
@@ -1074,6 +1124,7 @@
             const acttypeFieldContainer = acttypeField.closest('.sm\\:col-span-3');
             const wbsFieldContainer = wbsField.closest('.sm\\:col-span-3');
             const wbsOtherFieldContainer = wbsOtherField.closest('.sm\\:col-span-3');
+            const projectidOtherFieldContainer = projectidOtherField.closest('.sm\\:col-span-3');
             const scheduleFileFieldContainer = scheduleFileField.closest('.sm\\:col-span-3');
             const locationFileFieldContainer = locationFileField.closest('.sm\\:col-span-3');
             const groupingOptionsFieldContainer = document.querySelector('input[name="grouping_options"]').closest('.flex.flex-wrap');
@@ -1083,8 +1134,8 @@
                 yearFieldContainer, frequencyFieldContainer, plantTypeFieldContainer,
                 siteFieldContainer, childSiteFieldContainer, unitFieldContainer,
                 wostatusFieldContainer, workTypeFieldContainer, acttypeFieldContainer,
-                wbsFieldContainer, wbsOtherFieldContainer, scheduleFileFieldContainer,
-                locationFileFieldContainer, groupingOptionsFieldContainer
+                wbsFieldContainer, wbsOtherFieldContainer, projectidOtherFieldContainer,
+                scheduleFileFieldContainer, locationFileFieldContainer, groupingOptionsFieldContainer
             ];
 
             existingFields.forEach(fieldContainer => {
@@ -1121,10 +1172,17 @@
             });
             
             // ตรวจสอบเงื่อนไขฟิลด์ wbs "other"
-            if (wbsField.value === '6' && wbsOtherField.value === '') {
-                hasError = true;
-                event.preventDefault();
-                showError(wbsOtherFieldContainer, 'กรุณากรอกข้อมูลในฟิลด์ "Other WBS"');
+            if (wbsField.value === '6') {
+                if (wbsOtherField.value === '') {
+                    hasError = true;
+                    event.preventDefault();
+                    showError(wbsOtherFieldContainer, 'กรุณากรอกข้อมูลในฟิลด์ "Other WBS"');
+                }
+                if (projectidOtherField.value === '') {
+                    hasError = true;
+                    event.preventDefault();
+                    showError(projectidOtherFieldContainer, 'กรุณากรอกข้อมูลในฟิลด์ "Other PROJECTID"');
+                }
             }
             
             // ตรวจสอบการเลือก grouping options

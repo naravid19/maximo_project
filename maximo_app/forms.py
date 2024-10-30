@@ -112,6 +112,11 @@ class UploadFileForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={'id': 'other_wbs', 'disabled': 'true'}),
     )
+    projectid_other = forms.CharField(
+        label='Other PROJECTID',
+        required=False,
+        widget=forms.TextInput(attrs={'id': 'other_projectid', 'disabled': 'true'}),
+    )
     
     selected_order = forms.CharField(required=True, widget=forms.HiddenInput())
     
@@ -193,6 +198,7 @@ class UploadFileForm(forms.Form):
         cleaned_data = super().clean()
         wbs = cleaned_data.get('wbs')
         wbs_other = cleaned_data.get('wbs_other')
+        projectid_other = cleaned_data.get('projectid_other')
         cleaned_data['selected_order'] = self.clean_selected_order()
         
         required_file_fields = ['schedule_file', 'location_file']
@@ -235,7 +241,10 @@ class UploadFileForm(forms.Form):
             if not cleaned_data.get(field):
                 self.add_error(field, f'กรุณาเลือก {field_label}')
         
-        if wbs and wbs.wbs_code == 'อื่นๆ' and not wbs_other:
-            self.add_error('wbs_other', 'กรุณากรอกข้อมูลในฟิลด์ "Other WBS" เนื่องจากคุณเลือก "อื่นๆ"')
+        if wbs and wbs.wbs_code == 'อื่นๆ':
+            if not wbs_other:
+                self.add_error('wbs_other', 'กรุณากรอกข้อมูลในฟิลด์ "Other WBS" เนื่องจากคุณเลือก "อื่นๆ"')
+            if not projectid_other:
+                self.add_error('projectid_other', 'กรุณากรอกข้อมูลในฟิลด์ "Other PROJECTID" เนื่องจากคุณเลือก "อื่นๆ"')
         
         return cleaned_data

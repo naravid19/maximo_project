@@ -102,6 +102,7 @@ def index(request):
             acttype = form.cleaned_data.get('acttype')
             wbs = form.cleaned_data.get('wbs')
             wbs_other = form.cleaned_data.get('wbs_other') if wbs.wbs_code == 'อื่นๆ' else None
+            projectid_other = form.cleaned_data.get('projectid_other') if wbs.wbs_code == 'อื่นๆ' else None
             selected_order = form.cleaned_data.get('selected_order', [])
             log_params = []
             log_error = []
@@ -211,7 +212,7 @@ def index(request):
                     egwbs = f"{egprojectid}-{wbs.wbs_code}" # 'O-SRDH02-67MI-WO'
                 elif wbs.wbs_code == 'อื่นๆ' and wbs_other:
                     egwbs = wbs_other
-                    egprojectid = wbs_other
+                    egprojectid = projectid_other
                 else:
                     egwbs = ''
                     egprojectid = ''
