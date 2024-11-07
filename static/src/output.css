@@ -1080,6 +1080,14 @@ input[type="range"]::-ms-fill-lower {
   margin-top: 2px;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.ml-6 {
+  margin-left: 1.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1269,6 +1277,12 @@ input[type="range"]::-ms-fill-lower {
   --tw-space-y-reverse: 0;
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 
 .overflow-hidden {
@@ -1567,6 +1581,11 @@ input[type="range"]::-ms-fill-lower {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .font-bold {

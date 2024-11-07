@@ -266,7 +266,7 @@
     
 
         <div class="container relative px-6 pt-[1.375rem] pb-4 max-w-screen-sm mx-auto my-4 bg-white rounded-md shadow-sm">
-            <form id="uploadForm" novalidate method="post" enctype="multipart/form-data" class="space-y-6">
+            <form id="uploadForm" novalidate method="post" enctype="multipart/form-data" class="space-y-6" onsubmit="validateUploadForm(event)">
                 {% csrf_token %}
 
                 <!-- Dropdown สำหรับเลือกปี -->
@@ -492,16 +492,14 @@
                 
                 <!-- Dropdown สำหรับเลือก ACTTYPE -->
                 <div class="sm:col-span-3">
-                    <label for="acttype" class="block text-base font-medium leading-6 text-gray-900">
+                    <label for="{{ form.acttype.id_for_label }}" class="block text-base font-medium leading-6 text-gray-900">
                         {{ form.acttype.label }}
                         {% if form.acttype.field.required %}
                             <span class="text-base font-normal text-red-600" style="position: relative; top: 1px;">*</span>
                         {% endif %}
                     </label>
                     <div class="mt-2">
-                        <select id="id_acttype" name="acttype" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                            <option value="">เลือก</option>
-                        </select>
+                        {{ form.acttype|add_class:"block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" }}
                     </div>
                     {% if form.acttype.errors %}
                     <div class="flex items-center p-4 mt-2 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
@@ -548,7 +546,40 @@
                     <p id="wbs_description" class="mt-1 text-sm text-gray-500"></p>
                 </div>
                 
-                <div class="sm:col-span-3">
+                <!-- ฟิลด์สำหรับ Project ID Other -->
+                <div class="hidden sm:col-span-3" id="other_projectid_outer_container">
+                    <div class="flex items-center space-x-4 ">
+                        <label for="projectid_other" class="block text-base font-medium leading-6 text-gray-900">
+                            {{ form.projectid_other.label }}:
+                            {% if form.projectid_other.field.required %}
+                                <span class="text-base font-normal text-red-600" style="position: relative; top: 1px;">*</span>
+                            {% endif %}
+                        </label>
+                        <div class="relative flex items-center flex-1" id="other_projectid_inner_container">
+                            <span id="other_projectid_signal" class="absolute hidden w-3 h-3 bg-green-500 rounded-full shadow-md top-3 right-3"></span>
+                            <input type="text" id="other_projectid" name="projectid_other" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 dark:border-gray-600 appearance-none dark:text-white dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" disabled />
+                            <label id="label_other_projectid" for="other_projectid" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">กรุณากรอกชื่อ PROJECTID ที่สร้างไว้บนระบบ MMS เช่น O-CHNC21-67CI</label>
+                            
+                            {% if form.projectid_other.errors %}
+                            <div class="flex items-center p-4 mt-2 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
+                                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                </svg>
+                                <span class="sr-only">Error</span>
+                                <div>
+                                    <span class="font-medium">Error:</span>
+                                    {% for error in form.projectid_other.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ฟิลด์สำหรับ WBS Other -->
+                <div class="hidden sm:col-span-3" id="other_wbs_outer_container">
                     <div class="flex items-center space-x-4 ">
                         <label for="wbs_other" class="block text-base font-medium leading-6 text-gray-900">
                             {{ form.wbs_other.label }}:
@@ -556,7 +587,7 @@
                                 <span class="text-base font-normal text-red-600" style="position: relative; top: 1px;">*</span>
                             {% endif %}
                         </label>
-                        <div class="relative flex items-center flex-1" id="other_wbs_container">
+                        <div class="relative flex items-center flex-1" id="other_wbs_inner_container">
                             <!-- สัญญาณที่มุมขวาบนของ input -->
                             <span id="other_wbs_signal" class="absolute hidden w-3 h-3 bg-green-500 rounded-full shadow-md top-3 right-3"></span>
                             <input type="text" id="other_wbs" name="wbs_other" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 dark:border-gray-600 appearance-none dark:text-white dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" disabled />
@@ -580,48 +611,19 @@
                     </div>
                 </div>
                 
-                <div class="sm:col-span-3">
-                    <div class="flex items-center space-x-4 ">
-                        <label for="projectid_other" class="block text-base font-medium leading-6 text-gray-900">
-                            {{ form.projectid_other.label }}:
-                            {% if form.projectid_other.field.required %}
-                                <span class="text-base font-normal text-red-600" style="position: relative; top: 1px;">*</span>
-                            {% endif %}
-                        </label>
-                        <div class="relative flex items-center flex-1" id="other_projectid_container">
-                            <span id="other_projectid_signal" class="absolute hidden w-3 h-3 bg-green-500 rounded-full shadow-md top-3 right-3"></span>
-                            <input type="text" id="other_projectid" name="projectid_other" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 dark:border-gray-600 appearance-none dark:text-white dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer" placeholder="" disabled />
-                            <label id="label_other_projectid" for="other_projectid" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-green-600 peer-focus:dark:text-green-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">กรุณากรอกชื่อ PROJECTID ที่สร้างไว้บนระบบ MMS เช่น O-CHNC21-67CI</label>
-                            
-                            {% if form.projectid_other.errors %}
-                            <div class="flex items-center p-4 mt-2 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
-                                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                                </svg>
-                                <span class="sr-only">Error</span>
-                                <div>
-                                    <span class="font-medium">Error:</span>
-                                    {% for error in form.projectid_other.errors %}
-                                        {{ error }}
-                                    {% endfor %}
-                                </div>
-                            </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-
                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         const wbsField = document.getElementById('id_wbs');
                         const otherWbsInput = document.getElementById('other_wbs');
                         const labelOtherWbs = document.getElementById('label_other_wbs');
-                        const otherWbsSignal = document.getElementById('other_wbs_signal');  // สัญญาณสีเขียว
+                        const otherWbsSignal = document.getElementById('other_wbs_signal');
+                        const otherWbsOuterContainer = document.getElementById('other_wbs_outer_container');
 
                         const otherProjectIdInput = document.getElementById('other_projectid');
                         const labelOtherProjectId = document.getElementById('label_other_projectid');
                         const otherProjectIdSignal = document.getElementById('other_projectid_signal');
-                    
+                        const otherProjectIdOuterContainer = document.getElementById('other_projectid_outer_container');
+
                         function toggleOtherWbsField() {
                             if (wbsField.value === '6') {
                                 otherWbsInput.disabled = false; // เปิดการใช้งานฟิลด์เมื่อเลือก "other"
@@ -629,12 +631,14 @@
                                 otherWbsInput.style.borderBottomColor = '#16a34a';  // เปลี่ยนสีขอบของ input เป็นสีเขียว
                                 labelOtherWbs.style.color = '#16a34a';  // เปลี่ยนสีข้อความ label เป็นสีเขียว
                                 otherWbsSignal.classList.remove('hidden');  // แสดงสัญญาณ
+                                otherWbsOuterContainer.classList.remove('hidden');
 
                                 otherProjectIdInput.disabled = false;
                                 otherProjectIdInput.placeholder = '';
                                 otherProjectIdInput.style.borderBottomColor = '#16a34a';
                                 labelOtherProjectId.style.color = '#16a34a';
                                 otherProjectIdSignal.classList.remove('hidden');
+                                otherProjectIdOuterContainer.classList.remove('hidden');
                             } else {
                                 otherWbsInput.disabled = true;
                                 otherWbsInput.placeholder = '';
@@ -642,6 +646,7 @@
                                 otherWbsInput.value = '';  // ล้างค่าที่กรอก
                                 labelOtherWbs.style.color = '';  // รีเซ็ตสี label กลับเป็นค่าเริ่มต้น
                                 otherWbsSignal.classList.add('hidden');  // ซ่อนสัญญาณ
+                                otherWbsOuterContainer.classList.add('hidden');
 
                                 otherProjectIdInput.disabled = true;
                                 otherProjectIdInput.placeholder = '';
@@ -649,6 +654,7 @@
                                 otherProjectIdInput.value = '';
                                 labelOtherProjectId.style.color = '';
                                 otherProjectIdSignal.classList.add('hidden');
+                                otherProjectIdOuterContainer.classList.add('hidden');
                             }
                         }
                     
@@ -661,8 +667,6 @@
                     
                 </script>
                 
-                
-                <!-- Checkbox สำหรับเลือก Grouping -->
                 <div class="sm:col-span-3">
                     <label for="grouping_options" class="block text-base font-medium leading-6 text-gray-900">
                         Grouping
@@ -670,52 +674,121 @@
                             <span class="text-base font-normal text-red-600" style="position: relative; top: 1px;">*</span>
                         {% endif %}
                     </label>
-                    <div class="flex flex-wrap mt-2">
+                
+                    <!-- No arrange group Checkbox -->
+                    <div class="flex items-center mt-2">
+                        <input id="no-arrange-checkbox" name="grouping_options" type="checkbox" value="no_arrange" onclick="handleCheckboxSelection(this)"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="no-arrange-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">No arrange group</label>
+                    </div>
+                
+                    <!-- Arrange group Checkbox -->
+                    <div class="flex items-center mt-2">
+                        <input id="arrange-group-checkbox" type="checkbox" onclick="toggleArrangeOptions(this)"
+                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="arrange-group-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Arrange group</label>
+                    </div>
+                    <p id="helper-checkbox-text" class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-300">
+                        กรุณาเลือกเงื่อนไขการจัดกลุ่ม Work Order อย่างน้อยหนึ่งตัวเลือก
+                    </p>
+                
+                    <!-- Arrange group child checkboxes (ซ่อนเริ่มต้น) -->
+                    <div id="arrange-options" class="hidden mt-2 ml-6">
                         <div class="flex items-center me-4">
-                            <input id="inline-checkbox" name="grouping_options" type="checkbox" value="no_arrange" onclick="toggleCheckboxes(this)"
+                            <input id="system-checkbox" name="grouping_options" type="checkbox" value="SYSTEM" onclick="handleCheckboxSelection(this)"
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="inline-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">No arrange group</label>
+                            <label for="system-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">System</label>
                         </div>
                         <div class="flex items-center me-4">
-                            <input id="inline-2-checkbox" name="grouping_options" type="checkbox" value="EGCRAFT"
+                            <input id="craft-checkbox" name="grouping_options" type="checkbox" value="EGCRAFT" onclick="handleCheckboxSelection(this)"
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="inline-2-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Craft</label>
+                            <label for="craft-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Craft</label>
                         </div>
                         <div class="flex items-center me-4">
-                            <input id="inline-3-checkbox" name="grouping_options" type="checkbox" value="PTW"
+                            <input id="permit-checkbox" name="grouping_options" type="checkbox" value="PTW" onclick="handleCheckboxSelection(this)"
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="inline-3-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Permit Type</label>
+                            <label for="permit-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Permit Type</label>
                         </div>
                         <div class="flex items-center me-4">
-                            <input id="inline-4-checkbox" name="grouping_options" type="checkbox" value="NEXTDATE"
+                            <input id="start-date-checkbox" name="grouping_options" type="checkbox" value="NEXTDATE" onclick="handleCheckboxSelection(this)"
                                 class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="inline-4-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Start Date</label>
-                        </div>
-                        <div class="flex items-center me-4">
-                            <input id="inline-5-checkbox" name="grouping_options" type="checkbox" value="SYSTEM"
-                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="inline-5-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">System</label>
+                            <label for="start-date-checkbox" class="text-sm font-medium text-gray-900 ms-2 dark:text-gray-300">Start Date</label>
                         </div>
                     </div>
+                
                     <!-- Hidden input สำหรับเก็บลำดับการเลือก -->
                     <input type="hidden" id="selected_order_input" name="selected_order" value="{{ selected_order|join:',' }}">
-                    
+                
                     {% if form.selected_order.errors %}
-                        <div class="flex items-center p-4 mt-2 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
-                            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                            </svg>
-                            <span class="sr-only">Info</span>
-                            <div>
-                                <span class="font-medium">Error:</span> 
-                                {% for error in form.selected_order.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </div>
+                    <div class="flex items-center p-4 mt-2 text-sm text-red-800 border border-red-300 rounded-lg bg-red-50" role="alert">
+                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                        </svg>
+                        <span class="sr-only">Info</span>
+                        <div>
+                            <span class="font-medium">Error:</span> 
+                            {% for error in form.selected_order.errors %}
+                                {{ error }}
+                            {% endfor %}
                         </div>
+                    </div>
                     {% endif %}
                 </div>
-
+                
+                <script>
+                    // Array เพื่อเก็บลำดับการเลือก
+                    const selectedOrder = [];
+                
+                    function toggleArrangeOptions(checkbox) {
+                        const noArrangeCheckbox = document.getElementById('no-arrange-checkbox');
+                        const arrangeOptions = document.getElementById('arrange-options');
+                
+                        if (checkbox.checked) {
+                            arrangeOptions.classList.remove('hidden');
+                            noArrangeCheckbox.checked = false;
+                            const index = selectedOrder.indexOf('no_arrange');
+                            if (index > -1) selectedOrder.splice(index, 1);
+                        } else {
+                            arrangeOptions.classList.add('hidden');
+                            document.querySelectorAll('#arrange-options input[type="checkbox"]').forEach(childCheckbox => {
+                                childCheckbox.checked = false;
+                                const index = selectedOrder.indexOf(childCheckbox.value);
+                                if (index > -1) selectedOrder.splice(index, 1);
+                            });
+                        }
+                        updateSelectedOrder();
+                    }
+                
+                    function handleCheckboxSelection(checkbox) {
+                        if (checkbox.checked) {
+                            if (!selectedOrder.includes(checkbox.value)) {
+                                selectedOrder.push(checkbox.value);
+                            }
+                    
+                            if (checkbox.value === 'no_arrange') {
+                                document.getElementById('arrange-group-checkbox').checked = false;
+                                document.getElementById('arrange-options').classList.add('hidden');
+                                document.querySelectorAll('#arrange-options input[type="checkbox"]').forEach(childCheckbox => {
+                                    if (childCheckbox.checked) {
+                                        childCheckbox.checked = false;
+                                        const index = selectedOrder.indexOf(childCheckbox.value);
+                                        if (index > -1) selectedOrder.splice(index, 1);
+                                    }
+                                });
+                            }
+                        } else {
+                            const index = selectedOrder.indexOf(checkbox.value);
+                            if (index > -1) selectedOrder.splice(index, 1);
+                        }
+                        updateSelectedOrder();
+                    }
+                
+                    function updateSelectedOrder() {
+                        document.getElementById('selected_order_input').value = selectedOrder.join(',');
+                    }
+                </script>
+                
+                
                 <!-- ฟิลด์สำหรับอัปโหลดไฟล์ Schedule -->
                 <div class="sm:col-span-3">
                     <label for="schedule_file" class="block mb-2 text-sm font-medium text-gray-900">{{ form.schedule_file.label_tag }}</label>
@@ -765,7 +838,7 @@
                 </div>
 
                 <!-- ปุ่ม Submit -->
-                <button id="uploadBtn" type="submit" name="upload_files" onclick="validateUploadForm(event)" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
+                <button id="uploadBtn" type="submit" name="upload_files" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
                     <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 inline-flex items-center">
                         Upload Files
                     </span>
@@ -922,7 +995,7 @@
         {% if extracted_kks_counts is not None and extracted_kks_counts|length > 0 %}
 
             <div class="container relative px-6 pt-[1.375rem] pb-4 max-w-screen-sm mx-auto my-4 bg-white rounded-md shadow-sm">
-                <form id="mappingForm" method="post">
+                <form id="mappingForm" method="post" onsubmit="showLoading()">
                     {% csrf_token %}
                     <h1 class="mb-6 text-2xl font-semibold text-gray-800">Provide KKS Mappings</h1>
                     <ul>
@@ -956,15 +1029,13 @@
             
                     {% if not user_input_mapping %}
 
-                    <button id="mappingBtn" name="kks_mapping_submit" value="submit" type="submit" 
-                        class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
-                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 inline-flex items-center">
-                            Submit Mappings
-                        </span>
-                    </button>
-                    
+                    <button id="mappingBtn" name="kks_mapping_submit" value="submit" type="submit"
+                    class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 inline-flex items-center">
+                        Submit Mappings
+                    </span>
+                </button>
                     {% endif %}
-
                 </form>
             </div>
 
@@ -972,6 +1043,26 @@
 
     {% endif %}
     
+    <script>
+        function showLoading() {
+            const form = document.getElementById("mappingForm");
+            const submitButton = document.getElementById('mappingBtn');
+
+            if (form.checkValidity()){
+                //submitButton.disabled = true;
+                submitButton.innerHTML = `
+                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 inline-flex items-center">
+                        <svg aria-hidden="true" role="status" class="inline w-4 h-4 text-gray-200 me-3 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
+                        </svg>
+                        Loading...
+                    </span>
+                `;
+            }
+        }
+    </script>
+
     {% if 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}
         <div class="container relative max-w-screen-sm mx-auto my-4 bg-[#f0ebf8] rounded-md shadow-sm mb-16">
             <details open class="mt-4 bg-white border border-gray-200 rounded">
@@ -1062,239 +1153,116 @@
 {% block script %}
 <!-- ตกเเต่ง -->
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    function validateUploadForm(event) {
+        event.preventDefault(); // ป้องกันการส่งฟอร์มทันที
+
+        let form = document.getElementById('uploadForm');
+        let hasError = false;
+
+        // ลบข้อความแจ้งเตือนทั้งหมดก่อนการตรวจสอบ
+        clearAllErrors();
+
+        const yearField = document.getElementById('id_year');
+        const frequencyField = document.getElementById('id_frequency');
+        const plantTypeField = document.getElementById('id_plant_type');
+        const siteField = document.getElementById('id_site');
+        const childSiteField = document.getElementById('id_child_site');
+        const unitField = document.getElementById('id_unit');
+        const wostatusField = document.getElementById('id_wostatus');
+        const workTypeField = document.getElementById('id_work_type');
+        const acttypeField = document.getElementById('id_acttype');
         const wbsField = document.getElementById('id_wbs');
         const wbsOtherField = document.getElementById('other_wbs');
+        const projectidOtherField = document.getElementById('other_projectid');
+        const scheduleFileField = document.getElementById('id_schedule_file');
+        const locationFileField = document.getElementById('id_location_file');
+        const selectedOrderField = document.getElementById('selected_order_input');
 
-        if (wbsField) {
-            // เมื่อมีการเปลี่ยนแปลงค่าในฟิลด์ WBS จะแสดงผลใน Console
-            wbsField.addEventListener('change', function() {
-                console.log("Selected WBS Value:", wbsField.value);
-            });
+        const fieldsToValidate = [
+            { field: yearField, message: 'กรุณาเลือกปี ค.ศ.' },
+            { field: frequencyField, message: 'กรุณาเลือกความถี่' },
+            { field: plantTypeField, message: 'กรุณาเลือกประเภทของโรงไฟฟ้า' },
+            { field: siteField, message: 'กรุณาเลือกสังกัดโรงไฟฟ้า' },
+            { field: childSiteField, message: 'กรุณาเลือกชื่อโรงไฟฟ้า' },
+            { field: unitField, message: 'กรุณาเลือกหมายเลขเครื่องกำเนิดไฟฟ้า' },
+            { field: wostatusField, message: 'กรุณาเลือกสถานะใบงาน' },
+            { field: workTypeField, message: 'กรุณาเลือกประเภทของใบงาน' },
+            { field: acttypeField, message: 'กรุณาเลือกประเภทของกิจกรรมงาน' },
+            { field: wbsField, message: 'กรุณาเลือก SUBWBS' },
+            { field: scheduleFileField, message: 'กรุณาอัปโหลดไฟล์ Final Schedule' },
+            { field: locationFileField, message: 'กรุณาอัปโหลดไฟล์ Location' }
+        ];
 
-            // แสดงค่าเริ่มต้นเมื่อโหลดหน้าเว็บ
-            console.log("Initial WBS Value:", wbsField.value);
-        } else {
-            console.log("WBS field not found!");
-        }
-
-        if (wbsOtherField) {
-            // เมื่อมีการเปลี่ยนแปลงค่าในฟิลด์ WBS จะแสดงผลใน Console
-            wbsOtherField.addEventListener('change', function() {
-                console.log("Selected other_wbs Value:", wbsOtherField.value);
-            });
-
-            // แสดงค่าเริ่มต้นเมื่อโหลดหน้าเว็บ
-            console.log("Initial other_wbs Value:", wbsOtherField.value);
-        } else {
-            console.log("other_wbs field not found!");
-        }
-    });
-</script>
-    <script>
-        function validateUploadForm(event) {
-            let form = document.getElementById('uploadForm');
-            
-            // ดึงข้อมูลฟิลด์ทั้งหมด
-            const yearField = document.getElementById('id_year');
-            const frequencyField = document.getElementById('id_frequency');
-            const plantTypeField = document.getElementById('id_plant_type');
-            const siteField = document.getElementById('id_site');
-            const childSiteField = document.getElementById('id_child_site');
-            const unitField = document.getElementById('id_unit');
-            const wostatusField = document.getElementById('id_wostatus');
-            const workTypeField = document.getElementById('id_work_type');
-            const acttypeField = document.getElementById('id_acttype');
-            const wbsField = document.getElementById('id_wbs');
-            const wbsOtherField = document.getElementById('other_wbs');
-            const projectidOtherField = document.getElementById('other_projectid');
-            const scheduleFileField = document.getElementById('id_schedule_file');
-            const locationFileField = document.getElementById('id_location_file');
-            const groupingOptionsField = document.querySelectorAll('input[name="grouping_options"]:checked');
-            
-            // ดึง container ของฟิลด์สำหรับแสดง alert
-            const yearFieldContainer = yearField.closest('.sm\\:col-span-3');
-            const frequencyFieldContainer = frequencyField.closest('.sm\\:col-span-3');
-            const plantTypeFieldContainer = plantTypeField.closest('.sm\\:col-span-3'); 
-            const siteFieldContainer = siteField.closest('.sm\\:col-span-3');
-            const childSiteFieldContainer = childSiteField.closest('.sm\\:col-span-3');
-            const unitFieldContainer = unitField.closest('.sm\\:col-span-3'); 
-            const wostatusFieldContainer = wostatusField.closest('.sm\\:col-span-3');
-            const workTypeFieldContainer = workTypeField.closest('.sm\\:col-span-3');
-            const acttypeFieldContainer = acttypeField.closest('.sm\\:col-span-3');
-            const wbsFieldContainer = wbsField.closest('.sm\\:col-span-3');
-            const wbsOtherFieldContainer = wbsOtherField.closest('.sm\\:col-span-3');
-            const projectidOtherFieldContainer = projectidOtherField.closest('.sm\\:col-span-3');
-            const scheduleFileFieldContainer = scheduleFileField.closest('.sm\\:col-span-3');
-            const locationFileFieldContainer = locationFileField.closest('.sm\\:col-span-3');
-            const groupingOptionsFieldContainer = document.querySelector('input[name="grouping_options"]').closest('.flex.flex-wrap');
-            
-            // ลบ alert ที่มีอยู่แล้ว
-            const existingFields = [
-                yearFieldContainer, frequencyFieldContainer, plantTypeFieldContainer,
-                siteFieldContainer, childSiteFieldContainer, unitFieldContainer,
-                wostatusFieldContainer, workTypeFieldContainer, acttypeFieldContainer,
-                wbsFieldContainer, wbsOtherFieldContainer, projectidOtherFieldContainer,
-                scheduleFileFieldContainer, locationFileFieldContainer, groupingOptionsFieldContainer
-            ];
-
-            existingFields.forEach(fieldContainer => {
-                const existingAlert = fieldContainer.querySelector('.custom-alert');
-                if (existingAlert) {
-                    existingAlert.remove();
-                }
-            });
-            
-            // ตรวจสอบว่าฟิลด์ปีว่างหรือไม่
-            let hasError = false;
-            
-            const fieldsToValidate = [
-                { field: yearField, container: yearFieldContainer, message: 'กรุณาเลือกปี ค.ศ.' },
-                { field: frequencyField, container: frequencyFieldContainer, message: 'กรุณาเลือกความถี่' },
-                { field: plantTypeField, container: plantTypeFieldContainer, message: 'กรุณาเลือกประเภทของโรงไฟฟ้า' },
-                { field: siteField, container: siteFieldContainer, message: 'กรุณาเลือกสังกัดโรงไฟฟ้า' },
-                { field: childSiteField, container: childSiteFieldContainer, message: 'กรุณาเลือกชื่อโรงไฟฟ้า' },
-                { field: unitField, container: unitFieldContainer, message: 'กรุณาเลือกหมายเลขเครื่องกำเนิดไฟฟ้า' },
-                { field: wostatusField, container: wostatusFieldContainer, message: 'กรุณาเลือกสถานะใบงาน' },
-                { field: workTypeField, container: workTypeFieldContainer, message: 'กรุณาเลือกประเภทของใบงาน' },
-                { field: acttypeField, container: acttypeFieldContainer, message: 'กรุณาเลือกประเภทของกิจกรรมงาน' },
-                { field: wbsField, container: wbsFieldContainer, message: 'กรุณาเลือก SUBWBS' },
-                { field: scheduleFileField, container: scheduleFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Final Schedule' },
-                { field: locationFileField, container: locationFileFieldContainer, message: 'กรุณาอัปโหลดไฟล์ Location' }
-            ];
-            
-            fieldsToValidate.forEach(({ field, container, message }) => {
-                if (field.value === '') {
-                    hasError = true;
-                    event.preventDefault();
-                    showError(container, message);
-                }
-            });
-            
-            // ตรวจสอบเงื่อนไขฟิลด์ wbs "other"
-            if (wbsField.value === '6') {
-                if (wbsOtherField.value === '') {
-                    hasError = true;
-                    event.preventDefault();
-                    showError(wbsOtherFieldContainer, 'กรุณากรอกข้อมูลในฟิลด์ "Other WBS"');
-                }
-                if (projectidOtherField.value === '') {
-                    hasError = true;
-                    event.preventDefault();
-                    showError(projectidOtherFieldContainer, 'กรุณากรอกข้อมูลในฟิลด์ "Other PROJECTID"');
-                }
-            }
-            
-            // ตรวจสอบการเลือก grouping options
-            if (groupingOptionsField.length === 0) {
+        // ตรวจสอบฟิลด์ต่างๆ
+        fieldsToValidate.forEach(({ field, message }) => {
+            if (field.value === '') {
                 hasError = true;
-                event.preventDefault();
-                showError(groupingOptionsFieldContainer, 'กรุณาเลือกตัวเลือก Grouping อย่างน้อยหนึ่งตัวเลือก');
+                showError(field.closest('.sm\\:col-span-3'), message);
             }
-            
-            // ส่งฟอร์มหากไม่มีข้อผิดพลาด
-            if (!hasError) {
-                showUploadLoading(form);
-            }
-        }
-            
-        function showError(container, message) {
-            const alertBox = document.createElement('div');
-            alertBox.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-            alertBox.setAttribute('role', 'alert');
-    
-            const messageText = document.createElement('span');
-            messageText.textContent = message;
-            alertBox.appendChild(messageText);
-    
-            container.appendChild(alertBox);
-        }
-    
-        function showUploadLoading(form) {
-            const button = document.getElementById('uploadBtn');
-            button.disabled = true;
-            button.innerHTML = `
-                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                    <svg aria-hidden="true" role="status" class="inline w-4 h-4 text-gray-200 me-3 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
-                    </svg>
-                    Loading...
-                </span>`;
-            form.submit();
-        }
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let selectedOrder = document.getElementById('selected_order_input').value.split(',').filter(Boolean);
-            const noArrangeCheckbox = document.querySelector('input[name="grouping_options"][value="no_arrange"]');
-            const noArrangeLabel = noArrangeCheckbox.nextElementSibling;
-    
-            // ฟังก์ชันสำหรับจัดการ checkbox ที่ถูกเลือก
-            document.querySelectorAll('input[name="grouping_options"]').forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    if (checkbox.checked) {
-                        // เพิ่ม checkbox ที่ถูกเลือกเข้าในลิสต์
-                        selectedOrder.push(checkbox.value);
-    
-                        // ถ้าตัวเลือกที่เลือกไม่ใช่ 'no_arrange' ให้ปิดการทำงานของ 'no_arrange'
-                        if (checkbox.value !== 'no_arrange') {
-                            noArrangeCheckbox.disabled = true;
-                            noArrangeCheckbox.checked = false;
-                            noArrangeLabel.classList.add('text-gray-400');
-                            noArrangeLabel.classList.remove('text-gray-900');
-                        }
-                    } else {
-                        // ลบ checkbox ที่ไม่ได้ถูกเลือกออกจากลิสต์
-                        const index = selectedOrder.indexOf(checkbox.value);
-                        if (index > -1) {
-                            selectedOrder.splice(index, 1);
-                        }
-    
-                        // ถ้าไม่มี checkbox อื่นถูกเลือกเลย ให้เปิดการทำงานของ 'no_arrange'
-                        if (selectedOrder.length === 0) {
-                            noArrangeCheckbox.disabled = false;
-                            noArrangeLabel.classList.remove('text-gray-400');
-                            noArrangeLabel.classList.add('text-gray-900');
-                        }
-                    }
-                    // อัปเดต hidden input
-                    document.getElementById('selected_order_input').value = selectedOrder.join(',');
-                });
-            });
         });
-    
-        // ฟังก์ชันสำหรับ 'no_arrange' ที่จะยกเลิกการเลือก checkbox อื่นๆ
-        function toggleCheckboxes(checkbox) {
-            const otherCheckboxes = document.querySelectorAll('input[name="grouping_options"]:not([value="no_arrange"])');
-            let selectedOrder = document.getElementById('selected_order_input').value.split(',').filter(Boolean);
-    
-            if (checkbox.checked) {
-                otherCheckboxes.forEach(function (box) {
-                    box.disabled = true;
-                    if (box.checked) {
-                        const index = selectedOrder.indexOf(box.value);
-                        if (index > -1) {
-                            selectedOrder.splice(index, 1);
-                        }
-                        box.checked = false;
-                    }
-                    box.nextElementSibling.classList.add('text-gray-400');
-                    box.nextElementSibling.classList.remove('text-gray-900');
-                });
-            } else {
-                otherCheckboxes.forEach(function (box) {
-                    box.disabled = false;
-                    box.nextElementSibling.classList.remove('text-gray-400');
-                    box.nextElementSibling.classList.add('text-gray-900');
-                });
+
+        // ตรวจสอบฟิลด์ wbs และ projectid "other"
+        if (wbsField.value === '6') {
+            if (wbsOtherField.value === '') {
+                hasError = true;
+                showError(wbsOtherField.closest('.sm\\:col-span-3'), 'กรุณากรอกข้อมูลในฟิลด์ "Other WBS"');
             }
-            // อัปเดต hidden input
-            document.getElementById('selected_order_input').value = selectedOrder.join(',');
+            if (projectidOtherField.value === '') {
+                hasError = true;
+                showError(projectidOtherField.closest('.sm\\:col-span-3'), 'กรุณากรอกข้อมูลในฟิลด์ "Other PROJECTID"');
+            }
         }
-    </script>
-    
+
+        // ตรวจสอบ selected_order
+        if (!selectedOrderField.value.trim()) {
+            hasError = true;
+            const container = document.getElementById('helper-checkbox-text').parentElement; // ใช้ parentElement แทน closest()
+            showError(container, 'กรุณาเลือกตัวเลือก Grouping อย่างน้อยหนึ่งตัวเลือก');
+        }
+
+        // ส่งฟอร์มถ้าไม่มีข้อผิดพลาด
+        if (!hasError) {
+            showUploadLoading(form);
+        }
+    }
+
+    function showError(container, message) {
+        // ตรวจสอบว่ามีข้อความแจ้งเตือนอยู่แล้วหรือไม่
+        if (container.querySelector('.custom-alert')) {
+            return; // ถ้ามีอยู่แล้วให้ return ออกไป ไม่ต้องเพิ่มข้อความซ้ำ
+        }
+
+        const alertBox = document.createElement('div');
+        alertBox.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
+        alertBox.setAttribute('role', 'alert');
+
+        const messageText = document.createElement('span');
+        messageText.textContent = message;
+        alertBox.appendChild(messageText);
+
+        container.appendChild(alertBox);
+    }
+
+    function clearAllErrors() {
+        // ลบข้อความแจ้งเตือนทั้งหมดในฟอร์ม
+        document.querySelectorAll('.custom-alert').forEach(alert => alert.remove());
+    }
+
+    function showUploadLoading(form) {
+        const button = document.getElementById('uploadBtn');
+        button.disabled = true;
+        button.innerHTML = `
+            <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                <svg aria-hidden="true" role="status" class="inline w-4 h-4 text-gray-200 me-3 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                    <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
+                </svg>
+                Loading...
+            </span>`;
+        form.submit();
+    }
+</script>
+
 
 <!-- AJAX for updating ACTTYPE -->
     <script>

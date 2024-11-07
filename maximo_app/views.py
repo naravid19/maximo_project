@@ -146,6 +146,8 @@ def index(request):
             
             if unit:
                 unit = unit.unit_code
+                if plant_type == 'PV' and unit.isdigit():
+                    unit = str(int(unit))
                 log_params.append(f"UNIT: {unit}")
             else:
                 log_error.append("UNIT")
@@ -312,14 +314,14 @@ def index(request):
                     'ประเภทของ_PERMIT_TO_WORK', 'TYPE', 'COMMENT'
                 ]
                 
-                important_columns = [
+                important_columns = ['TASK_XX']
+                
+                use_columns = [
                     'KKS', 'EQUIPMENT', 'TASK_XX', 'TASK', 
-                    'RESPONSE', 'DURATION_(HR.)', 'START_DATE', 'FINISH_DATE', 
+                    'RESPONSE', 'ROUTE', 'DURATION_(HR.)', 'START_DATE', 'FINISH_DATE', 
                     'SUPERVISOR', 'FOREMAN', 'SKILL', 'RESPONSE_CRAFT', 
                     'ประเภทของ_PERMIT_TO_WORK', 'TYPE'
                 ]
-
-                use_columns = important_columns + ['ROUTE']
                 
                 df_original = read_excel_with_error_handling(request, schedule_path)
                 if df_original is None:
@@ -1789,20 +1791,20 @@ def index(request):
             messages.error(request, error_message)
             return render(request, 'maximo_app/upload.html', {'form': form})
     else:
-        # keys_to_clear = [
-        #     'schedule_filename', 'location_filename', 'schedule_path', 'location_path', 
-        #     'extracted_kks_counts', 'first_plant', 'most_common_plant_unit', 'df_original',
-        #     'df_original_copy', 'df_original_newcol', 'df_comment', 'user_input_mapping', 
-        #     'download_link_comment', 'download_link_job_plan_task', 'download_link_job_plan_labor', 
-        #     'download_link_pm_plan', 'download_link_template', 'frequency', 'egmntacttype', 
-        #     'egprojectid', 'egwbs', 'location', 'siteid', 'wbs_desc', 'worktype', 'wostatus', 
-        #     'grouping_options', 'child_site'
-        # ]
+        keys_to_clear = [
+            'schedule_filename', 'location_filename', 'temp_dir', 'schedule_path', 'location_path', 
+            'extracted_kks_counts', 'first_plant', 'most_common_plant_unit', 'df_original',
+            'df_original_copy', 'df_original_newcol', 'df_comment', 'user_input_mapping', 
+            'download_link_comment', 'download_link_job_plan_task', 'download_link_job_plan_labor', 
+            'download_link_pm_plan', 'download_link_template', 'frequency', 'egmntacttype', 
+            'egprojectid', 'egwbs', 'location', 'siteid', 'wbs_desc', 'worktype', 'wostatus', 
+            'grouping_options', 'child_site', 
+        ]
 
-        # for key in keys_to_clear:
-        #     request.session.pop(key, None)  # ลบข้อมูล session ที่ระบุออกไป
+        for key in keys_to_clear:
+            request.session.pop(key, None)
         
-        request.session.clear()
+        # request.session.clear()
         form = UploadFileForm()
     
     return render(request, 'maximo_app/upload.html', {
