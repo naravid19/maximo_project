@@ -1,30 +1,35 @@
 # path : maximo_project/maximo_app/views.py
 
-from .forms import UploadFileForm
-from background_task import background
-from django.conf import settings
-from django.contrib import messages
-from django.http import FileResponse, HttpResponse, Http404, JsonResponse
-from django.shortcuts import render, HttpResponse, Http404, redirect
-from django.views.decorators.http import require_GET
-from django.urls import reverse
-from maximo_app.models import Site, ChildSite, PlantType, Unit, WorkType, ActType, WBSCode, Status
-
+# Standard Library Imports
 import datetime
-import numpy as np
-from openpyxl import load_workbook
-from openpyxl.styles import Border, Side, PatternFill, Alignment
-from openpyxl.styles import Font
-import logging
 import io
+import logging
 import os
-import pandas as pd
 import re
+import regex
 import shutil
 import sys
 import time
 import uuid
+import warnings
+
+# Third-Party Imports
+import numpy as np
+import pandas as pd
 import xlwings as xw
+from background_task import background
+from django.conf import settings
+from django.contrib import messages
+from django.http import FileResponse, HttpResponse, Http404, JsonResponse
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_GET
+from django.urls import reverse
+from openpyxl import load_workbook
+from openpyxl.styles import Border, Side, PatternFill, Alignment, Font
+
+# Local Imports
+from .forms import UploadFileForm
+from maximo_app.models import Site, ChildSite, PlantType, Unit, WorkType, ActType, WBSCode, Status
 
 # ตั้งค่า stdout ให้ใช้การเข้ารหัสแบบ utf-8
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -380,6 +385,7 @@ def index(request):
                 
                 df_original = df_original[use_columns]
                 df_original.rename(columns={'TASK_XX': 'TASK_ORDER'}, inplace=True)
+                use_columns = [col.replace('TASK_XX', 'TASK_ORDER') for col in use_columns]
                 df_original['KKS'] = df_original['KKS'].apply(lambda x: x.upper() if isinstance(x, str) else x)
                 df_original['ROUTE'] = df_original['ROUTE'].apply(lambda x: x.upper() if isinstance(x, str) else x)
                 df_original['RESPONSE'] = df_original['RESPONSE'].apply(lambda x: x.upper() if isinstance(x, str) else x)
@@ -460,10 +466,10 @@ def index(request):
             task_order_not_xx = df_original['TASK_ORDER'] != 'xx'
             update_comment(df_comment, ((~cond_duration | non_negative) & task_order_not_xx), 'COMMENT', 'DURATION_(HR.) ไม่ถูกต้อง')
 
-            cond_start_date = df_original['START_DATE'].apply(lambda x: isinstance(x, str) and re.search("[a-zA-Z]", x) is not None and not is_date(x))
+            cond_start_date = df_original['START_DATE'].apply(lambda x: isinstance(x, str) and regex.search(r"\p{L}", x) is not None and not is_date(x))
             update_comment(df_comment, cond_start_date, 'COMMENT', 'START_DATE มีตัวอักษร')
 
-            cond_finish_date = df_original['FINISH_DATE'].apply(lambda x: isinstance(x, str) and re.search("[a-zA-Z]", x) is not None and not is_date(x))
+            cond_finish_date = df_original['FINISH_DATE'].apply(lambda x: isinstance(x, str) and regex.search(r"\p{L}", x) is not None and not is_date(x))
             update_comment(df_comment, cond_finish_date, 'COMMENT', 'FINISH_DATE มีตัวอักษร')
             
             
@@ -512,8 +518,8 @@ def index(request):
             # cond1 = (df_original['TASK_ORDER']==10) & ((df_original['DURATION (HR.)'].isna())|(df_original['START DATE_new'].isna())|(df_original['FINISH DATE_new'].isna()))
             # cond2 = (df_original['TASK_ORDER']==10) & ((df_original['SUPERVISOR'].isna())&(df_original['FOREMAN'].isna())&(df_original['SKILL'].isna())&(df_original['RESPONSE CRAFT'].isna()))
             # cond3 = (df_original['TASK_ORDER']==10) & (df_original['SUPERVISOR'].isna())&(df_original['FOREMAN'].isna())&(df_original['SKILL'].isna())
-            task_no_start_date = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['START_DATE_NEW'].isna())
-            task_no_finish_date = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['FINISH_DATE_NEW'].isna())
+            task_no_start_date = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['START_DATE_NEW'].isna()) & (df_original['START_DATE'].isna())
+            task_no_finish_date = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['FINISH_DATE_NEW'].isna()) & (df_original['FINISH_DATE'].isna())
             task_no_skill_rate = (df_original['TASK_ORDER'] == 10) & ((df_original['SUPERVISOR'].isna()) & (df_original['FOREMAN'].isna()) & (df_original['SKILL'].isna()))
             task_no_craft = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['RESPONSE_CRAFT'].isna())
             task_no_response = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['RESPONSE'].isna())
@@ -525,7 +531,7 @@ def index(request):
             update_comment(df_comment, task_no_finish_date, 'COMMENT', 'ไม่มี FINISH_DATE')
 
             # df_original.loc[cond3, 'COMMENT'= 'ไม่มี skill rate'
-            update_comment(df_comment, task_no_skill_rate, 'COMMENT', 'ไม่มี SKILL RATE (ต้องมี)')
+            update_comment(df_comment, task_no_skill_rate, 'COMMENT', 'ไม่มี SKILL RATE (จำเป็นต้องกรอก)')
 
 
             task_order = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx')
@@ -686,7 +692,6 @@ def index(request):
             df_original_newcol['SUB_SYSTEM'] = sub_system
             df_original_newcol['EQUIPMENT'] = equipment
 
-            import warnings
             warnings.simplefilter("ignore")
             kks_read = pd.read_excel(location_path, 
                                 sheet_name=0,header = 0,
@@ -759,7 +764,7 @@ def index(request):
 
             # TYPE
             task_no_type = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['TYPE'].isna())
-            update_comment(df_comment, task_no_type, 'COMMENT', 'ไม่มี TYPE (ต้องมี)')
+            update_comment(df_comment, task_no_type, 'COMMENT', 'ไม่มี TYPE (จำเป็นต้องกรอก)')
 
             # TYPE ไม่ถูกต้อง
             task_type = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['TYPE'].notna())
@@ -800,58 +805,58 @@ def index(request):
 
             task_not_xx = df_original_copy['TASK_ORDER'] != 'xx'
             # comment_empty_or_na = (df_comment['COMMENT'] == '') | (df_comment['COMMENT'].isna())
-            # df_comment.loc[task_not_xx & kks_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี KKS (ต้องมี)'
+            # df_comment.loc[task_not_xx & kks_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี KKS (จำเป็นต้องกรอก)'
             # # df_comment.loc[task_not_xx & kks_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี KKS'
             # df_comment.loc[task_not_xx & kks_new_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & kks_new_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี KKS', 'ไม่มี KKS (ต้องมี)') if 'ไม่มี KKS' in x else f"{x}, ไม่มี KKS (ต้องมี)")
-            replace_or_append_comment(df_comment, (task_not_xx & kks_new_na), 'COMMENT', 'ไม่มี KKS (ต้องมี)', replace_message='ไม่มี KKS')
+            #     lambda x: x.replace('ไม่มี KKS', 'ไม่มี KKS (จำเป็นต้องกรอก)') if 'ไม่มี KKS' in x else f"{x}, ไม่มี KKS (จำเป็นต้องกรอก)")
+            replace_or_append_comment(df_comment, (task_not_xx & kks_new_na), 'COMMENT', 'ไม่มี KKS (จำเป็นต้องกรอก)', replace_message='ไม่มี KKS')
 
-            # df_comment.loc[task_not_xx & equip_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี EQUIPMENT (ต้องมี)'
-            # df_comment.loc[task_not_xx & equip_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี EQUIPMENT (ต้องมี)'
-            update_comment(df_comment, (task_not_xx & equip_new_na), 'COMMENT', 'ไม่มี EQUIPMENT (ต้องมี)')
+            # df_comment.loc[task_not_xx & equip_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี EQUIPMENT (จำเป็นต้องกรอก)'
+            # df_comment.loc[task_not_xx & equip_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี EQUIPMENT (จำเป็นต้องกรอก)'
+            update_comment(df_comment, (task_not_xx & equip_new_na), 'COMMENT', 'ไม่มี EQUIPMENT (จำเป็นต้องกรอก)')
 
 
-            # df_comment.loc[task_not_xx & task_order_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี TASK_ORDER (ต้องมี)'
-            # df_comment.loc[task_not_xx & task_order_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี TASK_ORDER (ต้องมี)'
-            update_comment(df_comment, (task_not_xx & task_order_new_na), 'COMMENT', 'ไม่มี TASK_ORDER (ต้องมี)')
+            # df_comment.loc[task_not_xx & task_order_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี TASK_ORDER (จำเป็นต้องกรอก)'
+            # df_comment.loc[task_not_xx & task_order_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี TASK_ORDER (จำเป็นต้องกรอก)'
+            replace_or_append_comment(df_comment, (task_not_xx & task_order_new_na), 'COMMENT', 'ไม่มี TASK_ORDER (จำเป็นต้องกรอก)', replace_message='ไม่มี TASK_ORDER')
 
-            # df_comment.loc[task_not_xx & task_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี TASK (ต้องมี)'
-            # # df_comment.loc[task_not_xx & task_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี TASK (ต้องมี)'
+            # df_comment.loc[task_not_xx & task_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี TASK (จำเป็นต้องกรอก)'
+            # # df_comment.loc[task_not_xx & task_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี TASK (จำเป็นต้องกรอก)'
             # df_comment.loc[task_not_xx & task_new_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & task_new_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี TASK', 'ไม่มี TASK (ต้องมี)') if 'ไม่มี TASK' in x else f"{x}, ไม่มี TASK (ต้องมี)")
-            replace_or_append_comment(df_comment, (task_not_xx & task_new_na), 'COMMENT', 'ไม่มี TASK (ต้องมี)', replace_message='ไม่มี TASK')
+            #     lambda x: x.replace('ไม่มี TASK', 'ไม่มี TASK (จำเป็นต้องกรอก)') if 'ไม่มี TASK' in x else f"{x}, ไม่มี TASK (จำเป็นต้องกรอก)")
+            replace_or_append_comment(df_comment, (task_not_xx & task_new_na), 'COMMENT', 'ไม่มี TASK (จำเป็นต้องกรอก)', replace_message='ไม่มี TASK')
 
-            # df_comment.loc[task_not_xx & start_date_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี START_DATE (ต้องมี)'
-            # # df_comment.loc[task_not_xx & start_date_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี START_DATE (ต้องมี)'
+            # df_comment.loc[task_not_xx & start_date_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี START_DATE (จำเป็นต้องกรอก)'
+            # # df_comment.loc[task_not_xx & start_date_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี START_DATE (จำเป็นต้องกรอก)'
             # df_comment.loc[task_not_xx & start_date_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & start_date_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี START_DATE', 'ไม่มี START_DATE (ต้องมี)') if 'ไม่มี START_DATE' in x else f"{x}, ไม่มี START_DATE (ต้องมี)")
-            replace_or_append_comment(df_comment, (task_not_xx & start_date_na), 'COMMENT', 'ไม่มี START_DATE (ต้องมี)', replace_message='ไม่มี START_DATE')
+            #     lambda x: x.replace('ไม่มี START_DATE', 'ไม่มี START_DATE (จำเป็นต้องกรอก)') if 'ไม่มี START_DATE' in x else f"{x}, ไม่มี START_DATE (จำเป็นต้องกรอก)")
+            replace_or_append_comment(df_comment, (task_not_xx & start_date_na), 'COMMENT', 'ไม่มี START_DATE (จำเป็นต้องกรอก)', replace_message='ไม่มี START_DATE')
 
 
-            # df_comment.loc[task_not_xx & finish_date_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี FINISH_DATE (ต้องมี)'
-            # # df_comment.loc[task_not_xx & finish_date_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี FINISH_DATE (ต้องมี)'
+            # df_comment.loc[task_not_xx & finish_date_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี FINISH_DATE (จำเป็นต้องกรอก)'
+            # # df_comment.loc[task_not_xx & finish_date_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี FINISH_DATE (จำเป็นต้องกรอก)'
             # df_comment.loc[task_not_xx & finish_date_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & finish_date_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี FINISH_DATE', 'ไม่มี FINISH_DATE (ต้องมี)') if 'ไม่มี FINISH_DATE' in x else f"{x}, ไม่มี FINISH_DATE (ต้องมี)")
-            replace_or_append_comment(df_comment, (task_not_xx & finish_date_na), 'COMMENT', 'ไม่มี FINISH_DATE (ต้องมี)', replace_message='ไม่มี FINISH_DATE')
+            #     lambda x: x.replace('ไม่มี FINISH_DATE', 'ไม่มี FINISH_DATE (จำเป็นต้องกรอก)') if 'ไม่มี FINISH_DATE' in x else f"{x}, ไม่มี FINISH_DATE (จำเป็นต้องกรอก)")
+            replace_or_append_comment(df_comment, (task_not_xx & finish_date_na), 'COMMENT', 'ไม่มี FINISH_DATE (จำเป็นต้องกรอก)', replace_message='ไม่มี FINISH_DATE')
 
 
-            # df_comment.loc[task_not_xx & ptw_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี ประเภทของ_PERMIT_TO_WORK (ต้องมี)'
-            # # df_comment.loc[task_not_xx & ptw_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี ประเภทของ_PERMIT_TO_WORK (ต้องมี)'
+            # df_comment.loc[task_not_xx & ptw_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี ประเภทของ_PERMIT_TO_WORK (จำเป็นต้องกรอก)'
+            # # df_comment.loc[task_not_xx & ptw_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี ประเภทของ_PERMIT_TO_WORK (จำเป็นต้องกรอก)'
             # df_comment.loc[task_not_xx & ptw_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & ptw_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี ประเภทของ_PERMIT_TO_WORK', 'ไม่มี ประเภทของ_PERMIT_TO_WORK (ต้องมี)') if 'ไม่มี ประเภทของ_PERMIT_TO_WORK' in x else f"{x}, ไม่มี ประเภทของ_PERMIT_TO_WORK (ต้องมี)")
-            replace_or_append_comment(df_comment, (task_not_xx & ptw_na), 'COMMENT', 'ไม่มี ประเภทของ_PERMIT_TO_WORK (ต้องมี)', replace_message='ไม่มี ประเภทของ_PERMIT_TO_WORK')
+            #     lambda x: x.replace('ไม่มี ประเภทของ_PERMIT_TO_WORK', 'ไม่มี ประเภทของ_PERMIT_TO_WORK (จำเป็นต้องกรอก)') if 'ไม่มี ประเภทของ_PERMIT_TO_WORK' in x else f"{x}, ไม่มี ประเภทของ_PERMIT_TO_WORK (จำเป็นต้องกรอก)")
+            replace_or_append_comment(df_comment, (task_not_xx & ptw_na), 'COMMENT', 'ไม่มี ประเภทของ_PERMIT_TO_WORK (จำเป็นต้องกรอก)', replace_message='ไม่มี ประเภทของ_PERMIT_TO_WORK')
 
-            # df_comment.loc[task_not_xx & response_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี RESPONSE (ต้องมี)'
+            # df_comment.loc[task_not_xx & response_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี RESPONSE (จำเป็นต้องกรอก)'
             # # df_comment.loc[task_not_xx & response_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี RESPONSE'
             # df_comment.loc[task_not_xx & response_new_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & response_new_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี RESPONSE', 'ไม่มี RESPONSE (ต้องมี)') if 'ไม่มี RESPONSE' in x else f"{x}, ไม่มี RESPONSE (ต้องมี)")
-            replace_or_append_comment(df_comment, (task_not_xx & response_new_na), 'COMMENT', 'ไม่มี RESPONSE (ต้องมี)', replace_message='ไม่มี RESPONSE')
+            #     lambda x: x.replace('ไม่มี RESPONSE', 'ไม่มี RESPONSE (จำเป็นต้องกรอก)') if 'ไม่มี RESPONSE' in x else f"{x}, ไม่มี RESPONSE (จำเป็นต้องกรอก)")
+            replace_or_append_comment(df_comment, (task_not_xx & response_new_na), 'COMMENT', 'ไม่มี RESPONSE (จำเป็นต้องกรอก)', replace_message='ไม่มี RESPONSE')
 
-            # df_comment.loc[task_not_xx & response_craft_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี RESPONSE_CRAFT (ต้องมี)'
-            # # df_comment.loc[task_not_xx & response_craft_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี RESPONSE_CRAFT (ต้องมี)'
+            # df_comment.loc[task_not_xx & response_craft_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี RESPONSE_CRAFT (จำเป็นต้องกรอก)'
+            # # df_comment.loc[task_not_xx & response_craft_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี RESPONSE_CRAFT (จำเป็นต้องกรอก)'
             # df_comment.loc[task_not_xx & response_craft_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & response_craft_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี RESPONSE_CRAFT', 'ไม่มี RESPONSE_CRAFT (ต้องมี)') if 'ไม่มี RESPONSE_CRAFT' in x else f"{x}, ไม่มี RESPONSE_CRAFT (ต้องมี)")
-            replace_or_append_comment(df_comment, (task_not_xx & response_craft_na), 'COMMENT', 'ไม่มี RESPONSE_CRAFT (ต้องมี)', replace_message='ไม่มี RESPONSE_CRAFT')
+            #     lambda x: x.replace('ไม่มี RESPONSE_CRAFT', 'ไม่มี RESPONSE_CRAFT (จำเป็นต้องกรอก)') if 'ไม่มี RESPONSE_CRAFT' in x else f"{x}, ไม่มี RESPONSE_CRAFT (จำเป็นต้องกรอก)")
+            replace_or_append_comment(df_comment, (task_not_xx & response_craft_na), 'COMMENT', 'ไม่มี RESPONSE_CRAFT (จำเป็นต้องกรอก)', replace_message='ไม่มี RESPONSE_CRAFT')
 
             # ลบคอมมาและช่องว่างที่ไม่จำเป็นออกจาก COMMENT (ถ้ามี)
             df_comment['COMMENT'] = df_comment['COMMENT'].str.strip(', ')
@@ -890,7 +895,7 @@ def index(request):
                 comment_cell.value = comment
                 
                 if comment_cell.value:
-                    if "(ต้องมี)" in comment_cell.value or "ไม่ถูกต้อง" in comment_cell.value:
+                    if "(จำเป็นต้องกรอก)" in comment_cell.value or "ไม่ถูกต้อง" in comment_cell.value:
                         comment_cell.fill = red_fill
                     else:
                         comment_cell.fill = yellow_fill
@@ -1821,321 +1826,102 @@ def index(request):
 # ฟังก์ชันการจัดการการดาวน์โหลด (Download Functions)
 # ---------------------------------
 
-def download_comment_file(request):
-    # ดึง path ของไฟล์จาก session
-    comment_file = request.session.get('download_link_comment', None)
-    original_file_name = 'Comment.xlsx'
-
-    # ตรวจสอบว่ามีการตั้งค่า comment_file หรือไม่
-    if comment_file:
-        # ตรวจสอบว่า path เป็น absolute และไฟล์มีอยู่จริง
-        full_comment_file_path = os.path.abspath(comment_file) if not os.path.isabs(comment_file) else comment_file
-        if os.path.exists(full_comment_file_path):
-            try:
-                # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
-                with open(full_comment_file_path, 'rb') as fh:
-                    response = HttpResponse(fh.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                    response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
-                    return response
-            except Exception as e:
-                # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
-                logger.error(f"Failed to open comment file for download: {str(e)}")
-                error_message = (
-                    f"<div class='error-container'>"
-                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ Comment ได้<br>"
-                    f"<ul class='error-details'>"
-                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                    f"<li>{str(e)}</li>"
-                    f"</ul>"
-                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-                    f"</div>"
-                )
-                messages.error(request, error_message)
-                return render(request, 'maximo_app/upload.html', {})
-        else:
-            # แสดงข้อผิดพลาดเมื่อไม่พบไฟล์
-            logger.error("Comment file not found for download.")
-            error_message = (
-                    f"<div class='error-container'>"
-                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Comment ที่ต้องการดาวน์โหลด<br>"
-                    f"<ul class='error-details'>"
-                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                    f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
-                    f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
-                    f"</ul>"
-                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-                    f"</div>"
-                )
-            messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {})
-    else:
-        # แสดงข้อผิดพลาดเมื่อไม่ได้รับ path ของไฟล์จาก session
-        logger.error("Comment file path not specified in session.")
+def generic_download(request, session_key, original_file_name, content_type, template=False):
+    file_path = request.session.get(session_key, None)
+    
+    if not file_path:
+        logger.error(f"File path for session key '{session_key}' not specified.")
         error_message = (
-                f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีไฟล์ Comment สำหรับการดาวน์โหลด<br>"
-                f"<ul class='error-details'>"
-                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                f"<li>ไม่มีการส่งข้อมูล path ของไฟล์ Comment มาจาก session</li>"
-                f"</ul>"
-                f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-                f"</div>"
-            )
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีไฟล์ที่ต้องการดาวน์โหลด<br>"
+            f"<ul class='error-details'>"
+            f"<li>ระบบไม่ได้รับข้อมูลที่อยู่ของไฟล์จาก session</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
         messages.error(request, error_message)
         return render(request, 'maximo_app/upload.html', {})
+    
+    full_file_path = os.path.abspath(file_path) if not os.path.isabs(file_path) else file_path
+    
+    if not os.path.exists(full_file_path):
+        logger.error(f"File '{original_file_name}' not found at path '{full_file_path}'.")
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ {original_file_name} ที่ต้องการดาวน์โหลด<br>"
+            f"<ul class='error-details'>"
+            f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+            f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return render(request, 'maximo_app/upload.html', {})
+    
+    try:
+        with open(full_file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type=content_type)
+            response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
+            return response
+    except Exception as e:
+        logger.error(f"Failed to open file '{original_file_name}' for download: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ {original_file_name} ได้<br>"
+            f"<ul class='error-details'>"
+            f"<li>เกิดข้อผิดพลาดระหว่างการเปิดไฟล์</li>"
+            f"<li>กรุณาตรวจสอบว่าไฟล์มีอยู่จริงและไม่เสียหาย</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return render(request, 'maximo_app/upload.html', {})
+
+def download_comment_file(request):
+    return generic_download(
+        request=request,
+        session_key='download_link_comment',
+        original_file_name='Comment.xlsx',
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
 def download_job_plan_task_file(request):
-    # ดึงลิงก์ไฟล์จาก session
-    jp_task_file = request.session.get('download_link_job_plan_task', None)
-    original_file_name = 'Job_Plan_Task.xlsx'
-
-    if jp_task_file:
-        # ตรวจสอบเส้นทางของไฟล์
-        full_jp_file_path = os.path.abspath(jp_task_file) if not os.path.isabs(jp_task_file) else jp_task_file
-        
-        # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
-        if os.path.exists(full_jp_file_path):
-            try:
-                with open(full_jp_file_path, 'rb') as fh:
-                    response = HttpResponse(fh.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                    response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
-                    return response
-            except Exception as e:
-                # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
-                logger.error(f"Failed to open Job Plan Task file for download: {str(e)}", exc_info=True)
-                error_message = (
-                    f"<div class='error-container'>"
-                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ Job Plan Task ได้<br>"
-                    f"<ul class='error-details'>"
-                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                    f"<li>{str(e)}</li>"
-                    f"</ul>"
-                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-                    f"</div>"
-                )
-                messages.error(request, error_message)
-                return render(request, 'maximo_app/upload.html', {})
-        else:
-            # กรณีไม่พบไฟล์
-            logger.error("Job Plan Task file not found for download.")
-            error_message = (
-                f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Job Plan Task ที่ต้องการดาวน์โหลด<br>"
-                f"<ul class='error-details'>"
-                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
-                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
-                f"</ul>"
-                f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-                f"</div>"
-            )
-            messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {})
-    else:
-        # กรณีไม่มีการระบุไฟล์ใน session
-        logger.error("Job Plan Task file path not specified in session.")
-        error_message = (
-            f"<div class='error-container'>"
-            f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีการระบุไฟล์ Job Plan Task สำหรับการดาวน์โหลด<br>"
-            f"<ul class='error-details'>"
-            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-            f"<li>ระบบไม่ได้รับข้อมูลที่อยู่ของไฟล์ Job Plan Task จาก session</li>"
-            f"</ul>"
-            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-            f"</div>"
-        )
-        messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+    return generic_download(
+        request=request,
+        session_key='download_link_job_plan_task',
+        original_file_name='Job_Plan_Task.xlsx',
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
 def download_job_plan_labor_file(request):
-    # ดึงลิงก์ไฟล์จาก session
-    jp_labor_file = request.session.get('download_link_job_plan_labor', None)
-    original_file_name = 'Job_Plan_Labor.xlsx'
-
-    if jp_labor_file:
-        # ตรวจสอบเส้นทางไฟล์และแปลงเป็น absolute ถ้าไม่ใช่
-        full_jp_labor_file_path = os.path.abspath(jp_labor_file) if not os.path.isabs(jp_labor_file) else jp_labor_file
-        
-        # ตรวจสอบว่าไฟล์มีอยู่จริง
-        if os.path.exists(full_jp_labor_file_path):
-            try:
-                # ใช้ with block เพื่อจัดการไฟล์อย่างปลอดภัย
-                with open(full_jp_labor_file_path, 'rb') as fh:
-                    response = HttpResponse(fh.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                    response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
-                    return response
-            except Exception as e:
-                # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
-                logger.error(f"Failed to open Job Plan Labor file for download: {str(e)}", exc_info=True)
-                error_message = (
-                    f"<div class='error-container'>"
-                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ Job Plan Labor ได้<br>"
-                    f"<ul class='error-details'>"
-                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                    f"<li>เกิดข้อผิดพลาดระหว่างการเปิดไฟล์ กรุณาตรวจสอบว่าไฟล์มีอยู่จริงและไม่เสียหาย</li>"
-                    f"</ul>"
-                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-                    f"</div>"
-                )
-                messages.error(request, error_message)
-                return render(request, 'maximo_app/upload.html', {})
-        else:
-            # แสดงข้อผิดพลาดเมื่อไม่พบไฟล์
-            logger.error("Job Plan Labor file not found for download.")
-            error_message = (
-                f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Job Plan Labor ที่ต้องการดาวน์โหลด<br>"
-                f"<ul class='error-details'>"
-                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
-                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
-                f"</ul>"
-                f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-                f"</div>"
-            )
-            messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {})
-    else:
-        # แสดงข้อผิดพลาดเมื่อไม่มีไฟล์ใน session
-        logger.error("Job Plan Labor file path not specified in session.")
-        error_message = (
-            f"<div class='error-container'>"
-            f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีการระบุไฟล์ Job Plan Labor สำหรับการดาวน์โหลด<br>"
-            f"<ul class='error-details'>"
-            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-            f"<li>ระบบไม่ได้รับข้อมูลที่อยู่ของไฟล์ Job Plan Labor จาก session</li>"
-            f"</ul>"
-            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์ใหม่ หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-            f"</div>"
-        )
-        messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+    return generic_download(
+        request=request,
+        session_key='download_link_job_plan_labor',
+        original_file_name='Job_Plan_Labor.xlsx',
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
 def download_pm_plan_file(request):
-    # ดึงลิงก์ไฟล์จาก session
-    pm_plan_file = request.session.get('download_link_pm_plan', None)
-    original_file_name = 'PM_Plan.xlsx'
-
-    if pm_plan_file:
-        # ตรวจสอบว่าเป็นเส้นทางสมบูรณ์หรือไม่ และแปลงเป็นเส้นทางสมบูรณ์ถ้าไม่ใช่
-        full_pm_plan_file_path = os.path.abspath(pm_plan_file) if not os.path.isabs(pm_plan_file) else pm_plan_file
-        
-        # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
-        if os.path.exists(full_pm_plan_file_path):
-            try:
-                # ใช้ with block เพื่อจัดการการเปิดไฟล์อย่างปลอดภัย
-                with open(full_pm_plan_file_path, 'rb') as fh:
-                    response = HttpResponse(fh.read(), content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                    response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
-                    return response
-            except Exception as e:
-                logger.error(f"Failed to open PM Plan file for download: {str(e)}", exc_info=True)
-                error_message = (
-                    f"<div class='error-container'>"
-                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ PM Plan ได้<br>"
-                    f"<ul class='error-details'>"
-                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                    f"<li>เกิดข้อผิดพลาดระหว่างการเปิดไฟล์ กรุณาตรวจสอบว่าไฟล์มีอยู่จริงและไม่เสียหาย</li>"
-                    f"</ul>"
-                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-                    f"</div>"
-                )
-                messages.error(request, error_message)
-                return render(request, 'maximo_app/upload.html', {})
-        else:
-            logger.error("PM Plan file not found for download.")
-            error_message = (
-                f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ PM Plan ที่ต้องการดาวน์โหลด<br>"
-                f"<ul class='error-details'>"
-                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
-                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
-                f"</ul>"
-                f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-                f"</div>"
-            )
-            messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {})
-    else:
-        logger.error("PM Plan file path not specified in session.")
-        error_message = (
-            f"<div class='error-container'>"
-            f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีการระบุไฟล์ PM Plan สำหรับการดาวน์โหลด<br>"
-            f"<ul class='error-details'>"
-            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-            f"<li>ระบบไม่ได้รับข้อมูลที่อยู่ของไฟล์ PM Plan จาก session</li>"
-            f"</ul>"
-            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-            f"</div>"
-        )
-        messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+    return generic_download(
+        request=request,
+        session_key='download_link_pm_plan',
+        original_file_name='PM_Plan.xlsx',
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
 
 def download_template_file(request):
-    # ดึงลิงก์ไฟล์จาก session
-    template_file = request.session.get('download_link_template', None)
     location = request.session.get('location', 'BLANK')
     original_file_name = f'Template MxLoader JB-PM Plan ({location}).xlsm'
+    return generic_download(
+        request=request,
+        session_key='download_link_template',
+        original_file_name=original_file_name,
+        content_type="application/vnd.ms-excel.sheet.macroEnabled.12"
+    )
 
-    if template_file:
-        # ตรวจสอบเส้นทางของไฟล์และแปลงให้เป็นเส้นทางสมบูรณ์ถ้ายังไม่เป็น
-        full_template_file_path = os.path.abspath(template_file) if not os.path.isabs(template_file) else template_file
-        
-        # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
-        if os.path.exists(full_template_file_path):
-            try:
-                # เปิดไฟล์อย่างปลอดภัยและสร้าง response
-                with open(full_template_file_path, 'rb') as fh:
-                    response = HttpResponse(fh.read(), content_type="application/vnd.ms-excel.sheet.macroEnabled.12")
-                    response['Content-Disposition'] = f'attachment; filename="{original_file_name}"'
-                    return response
-            except Exception as e:
-                # แสดงข้อความข้อผิดพลาดในกรณีที่ไม่สามารถเปิดไฟล์ได้
-                logger.error(f"Failed to open Template MxLoader JB-PM Plan file for download: {str(e)}", exc_info=True)
-                error_message = (
-                    f"<div class='error-container'>"
-                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถเปิดไฟล์ Template MxLoader JB-PM Plan ได้<br>"
-                    f"<ul class='error-details'>"
-                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                    f"<li>เกิดข้อผิดพลาดระหว่างการเปิดไฟล์ กรุณาตรวจสอบว่าไฟล์มีอยู่จริงและไม่เสียหาย</li>"
-                    f"</ul>"
-                    f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-                    f"</div>"
-                )
-                messages.error(request, error_message)
-                return render(request, 'maximo_app/upload.html', {})
-        else:
-            # แสดงข้อผิดพลาดเมื่อไม่พบไฟล์
-            logger.error("Template MxLoader JB-PM Plan file not found for download.")
-            error_message = (
-                f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template MxLoader JB-PM Plan ที่ต้องการดาวน์โหลด<br>"
-                f"<ul class='error-details'>"
-                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
-                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
-                f"</ul>"
-                f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-                f"</div>"
-            )
-            messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {})
-    else:
-        # แสดงข้อผิดพลาดเมื่อไม่มีไฟล์ใน session
-        logger.error("Template MxLoader JB-PM Plan file path not specified in session.")
-        error_message = (
-            f"<div class='error-container'>"
-            f"<strong class='error-title'>พบปัญหา:</strong> ไม่มีการระบุไฟล์ Template MxLoader JB-PM Plan สำหรับการดาวน์โหลด<br>"
-            f"<ul class='error-details'>"
-            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-            f"<li>ระบบไม่ได้รับข้อมูลที่อยู่ของไฟล์ Template MxLoader JB-PM Plan จาก session</li>"
-            f"</ul>"
-            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
-            f"</div>"
-        )
-        messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
 
 def download_original_template(request):
     try:
@@ -2674,9 +2460,16 @@ def replace_or_append_comment(df, condition, comment_col, message, replace_messa
     df.loc[condition & comment_empty_or_na, comment_col] = message
 
     # กรณีที่ COMMENT มีข้อความแล้ว ให้เพิ่มหรือแทนที่ข้อความ
-    df.loc[condition & ~comment_empty_or_na, comment_col] = df.loc[condition & ~comment_empty_or_na, comment_col].apply(
-        lambda x: x.replace(replace_message, message) if replace_message in x else f"{x}, {message}"
-    )
+    def update_comment_text(existing_comment):
+        # ตรวจสอบว่ามีข้อความ replace_message แบบเต็มๆ ในคอมเมนต์หรือไม่
+        if replace_message and replace_message in existing_comment.split(', '):
+            return existing_comment.replace(replace_message, message)
+        else:
+            return f"{existing_comment}, {message}"
+
+    # ใช้ฟังก์ชัน update_comment_text กับแถวที่มีข้อความแล้ว
+    df.loc[condition & ~comment_empty_or_na, comment_col] = df.loc[condition & ~comment_empty_or_na, comment_col].apply(update_comment_text)
+
 
 def read_excel_with_error_handling(request, schedule_path, sheet_name=0):
     try:
@@ -2799,40 +2592,41 @@ def create_pm_plan(request, df_original_filter, siteid,
                                 ]).size()
         df_original_filter_group_pm = pd.DataFrame(data_pm).reset_index()
         df_original_filter_group_pm = df_original_filter_group_pm.drop(columns = [0])
-        pm_master_dict = {'PMNUM':[],
-                        'SITEID':[],
-                        'DESCRIPTION':[],
-                        'STATUS':[],
-                        'LOCATION':[],
-                        'ROUTE':[],
-                        'LEADTIME':[],
-                        'PMCOUNTER':[],
-                        'WORKTYPE':[],
-                        'EGMNTACTTYPE':[],
-                        'WOSTATUS':[],
-                        'EGCRAFT':[],
-                        'RESPONSED BY':[],
-                        'PTW':[],
-                        'LOTO':[],
-                        'EGPROJECTID':[],
-                        'EGWBS':[],
-                        'FREQUENCY':[],
-                        'FREQUNIT':[],
-                        'NEXTDATE':[],
-                        'TARGSTARTTIME':[],
-                        'FINISH_DATE':[],
-                        'FINISH TIME':[],
-                        'PARENT':[],
-                        'JPNUM':[],
-                        'MAIN_SYSTEM':[],
-                        'SUB_SYSTEM':[],
-                        'EQUIPMENT':[],
-                        'MAIN_SYSTEM_DESC':[],
-                        'SUB_SYSTEM_DESC':[],
-                        'KKS_NEW_DESC':[],
-                        'UNIT_TYPE':[],
-                        'TYPE':[],
-            }
+        pm_master_dict = {
+            'PMNUM': [],
+            'SITEID': [],
+            'DESCRIPTION': [],
+            'STATUS': [],
+            'LOCATION': [],
+            'ROUTE': [],
+            'LEADTIME': [],
+            'PMCOUNTER': [],
+            'WORKTYPE': [],
+            'EGMNTACTTYPE': [],
+            'WOSTATUS': [],
+            'EGCRAFT': [],
+            'RESPONSED BY': [],
+            'PTW': [],
+            'LOTO': [],
+            'EGPROJECTID': [],
+            'EGWBS': [],
+            'FREQUENCY': [],
+            'FREQUNIT': [],
+            'NEXTDATE': [],
+            'TARGSTARTTIME': [],
+            'FINISH_DATE': [],
+            'FINISH TIME': [],
+            'PARENT': [],
+            'JPNUM': [],
+            'MAIN_SYSTEM': [],
+            'SUB_SYSTEM': [],
+            'EQUIPMENT': [],
+            'MAIN_SYSTEM_DESC': [],
+            'SUB_SYSTEM_DESC': [],
+            'KKS_NEW_DESC': [],
+            'UNIT_TYPE': [],
+            'TYPE': [],
+        }
         ############################
         for row_index,df in  df_original_filter_group_pm.iterrows():
             #row_index
