@@ -95,7 +95,7 @@ class UploadFileForm(forms.Form):
     
     acttype = forms.ModelChoiceField(
         queryset=ActType.objects.none(), 
-        label='ACTTYPE', 
+        label='MNTACT TYPE', 
         required=True, 
         empty_label="เลือก"
     )
@@ -233,7 +233,7 @@ class UploadFileForm(forms.Form):
             'unit': 'UNIT',
             'wostatus': 'STATUS',
             'work_type': 'WORK TYPE',
-            'acttype': 'ACTTYPE',
+            'acttype': 'MNTACT TYPE',
             'wbs': 'SUBWBS GROUP',
             
         }

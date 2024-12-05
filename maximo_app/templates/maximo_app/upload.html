@@ -1,166 +1,16 @@
+<!-- templates\upload.html -->
+
 {% extends 'maximo_app/base.html' %}
-{% comment %} path: maximo_project\maximo_app\templates\upload.html {% endcomment %}
+
 {% load static %}
 {% load widget_tweaks %}
+
 {% block title %}Upload Files{% endblock %}
 {% block style %}
-<style>
-    .form-container {
-        max-width: 640px;
-        margin: 12px auto;
-        background-color: #fff;
-    }
-    .form-title {
-        font-size: 1.75rem;
-        font-weight: 600;
-        margin-bottom: 1.5rem;
-    }
-
-    /* ปรับสีพื้นหลังของตัวเลือกทั้งหมด <select> */
-    select:focus {
-        background-color: #fff;
-    }
-
-    /* ปรับสีของตัวเลือกเมื่อถูกเลือก */
-    select option:checked {
-        background-color: #e5e7eb;
-    }
-    
-    /* กำหนดขนาดฟอนต์ของ dropdown*/
-    select {
-        font-size: 16px;
-        font-weight: 400;
-    }
-    
-    /* กำหนดขนาดฟอนต์ของตัวเลือก ภายใน dropdown */
-    select option {
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 32px;
-    }
-
-    .error-container {
-        padding: 15px;
-        color: #fff;
-        border-radius: 8px;
-        max-width: 100%;
-        margin: 10px auto;
-        font-family: "Bai Jamjuree", sans-serif;
-    }
-    
-    .error-title {
-        font-size: 18px;
-        font-weight: bold;
-        text-decoration: underline;
-        margin-bottom: 10px;
-    }
-    
-    .error-details {
-        list-style-type: disc;
-        margin-left: 40px;
-        margin-top: 10px;
-    }
-
-    .error-description {
-        margin-left: -20px;
-    }
-    
-    .error-note {
-        margin-top: 20px;
-        font-size: 14px;
-        color: #fff;
-    }
-    
-    /* สำหรับหน้าจอมือถือขนาดเล็ก (จนถึง 479px) */
-    @media (max-width: 479px) {
-        .error-container {
-            padding: 10px;
-            font-size: 14px;
-        }
-    
-        .error-title {
-            font-size: 16px;
-        }
-    
-        .error-details {
-            margin-left: 20px;
-        }
-    
-        .error-note {
-            font-size: 12px;
-        }
-    }
-    
-    /* สำหรับหน้าจอมือถือขนาดปกติ (480px - 767px) */
-    @media (min-width: 480px) and (max-width: 767px) {
-        .error-container {
-            padding: 10px;
-            font-size: 16px;
-        }
-    
-        .error-title {
-            font-size: 18px;
-        }
-    
-        .error-details {
-            margin-left: 30px;
-        }
-    
-        .error-note {
-            font-size: 13px;
-        }
-    }
-    
-    /* สำหรับแท็บเล็ตและหน้าจอขนาดใหญ่ขึ้น (768px ขึ้นไป) */
-    @media (min-width: 768px) {
-        .error-container {
-            max-width: 600px;
-            padding: 15px;
-        }
-    
-        .error-title {
-            font-size: 20px;
-        }
-    
-        .error-details {
-            margin-left: 40px;
-        }
-    
-        .error-note {
-            font-size: 14px;
-        }
-    }
-    {% comment %} 
-        max-width: 640px;           max-w-screen-sm
-        margin: 12px auto;          my-3 mx-auto
-        background-color: #fff;     bg-white
-        - max-w-screen-sm my-3 mx-auto bg-white
-
-        font-size: 1.75rem;         text-[1.75rem]
-        font-weight: 600;           font-semibold
-        margin-bottom: 1.5rem;      mb-6
-        - text-[1.75rem] font-semibold mb-6
-        - text-4xl font-semibold mb-6
-
-        - px-6 pt-[1.375rem] pb-4
-
-        font-light	font-weight: 300;
-        font-normal	font-weight: 400;
-        font-medium	font-weight: 500;
-
-        text-sm	    font-size: 0.875rem; /* 14px */
-                    line-height: 1.25rem; /* 20px */
-        text-base	font-size: 1rem; /* 16px */
-                    line-height: 1.5rem; /* 24px */
-        text-lg	    font-size: 1.125rem; /* 18px */
-                    line-height: 1.75rem; /* 28px */
-        
-    {% endcomment %}
-</style>
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-
     {% if messages %}
         {% for message in messages %}
         
@@ -171,7 +21,7 @@
                     </svg>
                     <span class="sr-only">Info</span>
                     <div class="text-base font-medium">
-                        {{ message|safe }} <!-- แสดงข้อความ error ที่มาจาก messages -->
+                        {{ message|safe }}
                     </div>
                     <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-transparent text-white rounded-lg focus:ring-2 focus:ring-red-300 p-1.5 hover:bg-red-500 hover:text-white inline-flex items-center justify-center h-8 w-8 dark:hover:bg-red-600" onclick="this.parentElement.remove();" aria-label="Close">
                         <span class="sr-only">Close</span>
@@ -184,13 +34,40 @@
         
         {% endfor %}
     {% endif %}
+    
+    {% if error_messages %}
+    <div class="flex p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg shadow-md sm:text-xs md:text-sm lg:text-base xl:text-lg 2xl:text-xl bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-600" role="alert">
+        <svg class="flex-shrink-0 inline w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+        </svg>
+        <span class="sr-only">Danger</span>
+        <div class="flex-1">
+            <span class="text-base font-semibold sm:text-base md:text-lg lg:text-lg xl:text-lg 2xl:text-xl">ข้อมูลไม่สมบูรณ์:</span>
+            <ul class="mt-2 ml-4 space-y-1 text-sm list-disc list-inside sm:text-sm md:text-base lg:text-base xl:text-base 2xl:text-lg">
+                {% for message in error_messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if not schedule_filename and not location_filename and not 'download_link_comment' in request.session %}
+        <div class="max-w-screen-sm p-6 mx-auto mb-8 text-center rounded-lg shadow-lg bg-blue-50">
+            <h1 class="text-xl font-extrabold leading-tight text-gray-900 sm:text-2xl md:text-3xl lg:text-4xl sm:leading-tight md:leading-tight lg:leading-tight">
+                โปรแกรมตรวจสอบและจัดทำข้อมูลงานบำรุงรักษาแบบหยุดตามวาระ (Planned Outage) สำหรับระบบ MMS (Maximo)<br>
+            </h1>
+            <div class="w-16 h-1 mx-auto mt-6 rounded sm:w-20 bg-gradient-to-r from-blue-500 to-blue-700"></div>
+            {% comment %} <p class="mt-4 text-base text-gray-700 sm:mt-6 sm:text-lg"></p> {% endcomment %}
+        </div>
+    {% endif %}
 
     <ol class="relative flex items-center justify-center max-w-screen-sm px-6 py-4 mx-auto my-4 space-x-4 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 rtl:space-x-reverse">
         <li class="flex items-center {% if not schedule_filename and not location_filename and not 'download_link_comment' in request.session or error_messages and schedule_filename and location_filename and 'download_link_comment' in request.session or not error_messages and not 'download_link_job_plan_task' in request.session and not 'download_link_job_plan_labor' in request.session and not 'download_link_pm_plan' in request.session and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}text-blue-600 dark:text-blue-500{% endif %}">
             <span class="flex items-center justify-center w-5 h-5 text-xs border {% if not schedule_filename and not location_filename and not 'download_link_comment' in request.session or error_messages and schedule_filename and location_filename and 'download_link_comment' in request.session or not error_messages and not 'download_link_job_plan_task' in request.session and not 'download_link_job_plan_labor' in request.session and not 'download_link_pm_plan' in request.session and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}border-blue-600{% else %}border-gray-500 dark:border-gray-400{% endif %} rounded-full me-2 shrink-0">
                 1
             </span>
-            <span data-tooltip-target="step-1" class="ms-2 cursor-help">อัปโหลด<span class="hidden sm:inline">ข้อมูล</span></span>
+            <span data-tooltip-target="step-1" class="ms-2 cursor-help">กรอกข้อมูล<span class="hidden sm:inline">และอัปโหลด</span></span>
             <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
             </svg>
@@ -199,25 +76,16 @@
             <span class="flex items-center justify-center w-5 h-5 text-xs border {% if error_messages and schedule_filename and location_filename and 'download_link_comment' in request.session or not error_messages and not 'download_link_job_plan_task' in request.session and not 'download_link_job_plan_labor' in request.session and not 'download_link_pm_plan' in request.session and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}border-blue-600 dark:border-blue-500{% else %}border-gray-500 dark:border-gray-400{% endif %} rounded-full me-2 shrink-0">
                 2
             </span>
-            <span data-tooltip-target="step-2" class="ms-2 cursor-help">ประมวลผล<span class="hidden sm:inline"></span></span>
-            <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
-            </svg>
-        </li>
-        <li class="flex items-center {% if not error_messages and not 'download_link_job_plan_task' in request.session and not 'download_link_job_plan_labor' in request.session and not 'download_link_pm_plan' in request.session and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}text-blue-600 dark:text-blue-500{% endif %}">
-            <span class="flex items-center justify-center w-5 h-5 text-xs border {% if not error_messages and not 'download_link_job_plan_task' in request.session and not 'download_link_job_plan_labor' in request.session and not 'download_link_pm_plan' in request.session and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}border-blue-600 dark:border-blue-500{% else %}border-gray-500 dark:border-gray-400{% endif %} rounded-full me-2 shrink-0">
-                3
-            </span>
-            <span data-tooltip-target="step-3" class="ms-2 cursor-help">จับคู่<span class="hidden sm:inline"></span></span>
+            <span data-tooltip-target="step-2" class="ms-2 cursor-help">ตรวจสอบ<span class="hidden sm:inline">และแก้ไข</span></span>
             <svg class="w-3 h-3 ms-2 sm:ms-4 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
             </svg>
         </li>
         <li class="flex items-center {% if 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}text-blue-600 dark:text-blue-500{% endif %}">
             <span class="flex items-center justify-center w-5 h-5 text-xs border {% if 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}border-blue-600 dark:border-blue-500{% else %}border-gray-500 dark:border-gray-400{% endif %} rounded-full me-2 shrink-0">
-                4
+                3
             </span>
-            <span data-tooltip-target="step-4" class="cursor-help">ดาวน์โหลด<span class="hidden sm:inline"></span></span>
+            <span data-tooltip-target="step-3" class="cursor-help">ดาวน์โหลด<span class="hidden sm:inline">ไฟล์</span></span>
         </li>
     </ol>
 
@@ -230,21 +98,12 @@
         <div class="tooltip-arrow" data-popper-arrow></div>
     </div>
     <div id="step-3" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-        กำหนด Plant Unit ว่าจะเป็น Unit หรือ Common (มีผลต่อการกำหนด Business area และการคิดค่าใช้จ่าย)
-        <div class="tooltip-arrow" data-popper-arrow></div>
-    </div>
-    <div id="step-4" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
         ดาวน์โหลดไฟล์ Job Plan Labor, Job Plan Task, PM Plan, Template MxLoader JB-PM Plan
         <div class="tooltip-arrow" data-popper-arrow></div>
     </div>
     
     {% if not schedule_filename and not location_filename and not 'download_link_comment' in request.session %}
         <div class="container relative px-6 pt-[1.375rem] pb-4 max-w-screen-sm mx-auto my-4 bg-white rounded-md shadow-sm">
-            {% comment %} <div class="absolute top-0 left-0 w-full h-2 bg-[rgb(63,81,181)] rounded-t-md"></div> {% endcomment %}
-        
-            <h1 class="mb-4 text-3xl font-medium tracking-wide text-gray-800">
-                โปรแกรมตรวจสอบและจัดทำข้อมูลงานบำรุงรักษาแบบหยุดตามวาระรูปแบบใหม่ผ่านระบบบริหารจัดการงานบำรุงรักษาด้วยคอมพิวเตอร์ 🚀
-            </h1>
             <p class="mb-4 text-base font-medium text-gray-600">FOR IBM MAXIMO</p>
         
             <!-- Content box -->
@@ -304,18 +163,22 @@
 
             <!-- Required question notice -->
             <p class="px-6 mt-3 text-sm font-normal text-red-600">
-                * ระบุว่าเป็นคำถามที่จำเป็น
+                * กรุณาระบุข้อมูลให้ครบถ้วน
             </p>
         </div>
-    
+        
 
         <div class="container relative px-6 pt-[1.375rem] pb-4 max-w-screen-sm mx-auto my-4 bg-white rounded-md shadow-sm">
+            <h1 class="mb-4 text-2xl font-medium text-gray-800">
+                กรอกข้อมูลและอัพโหลดไฟล์
+            </h1>
             <form id="uploadForm" novalidate method="post" enctype="multipart/form-data" class="space-y-6" onsubmit="validateUploadForm(event)">
                 {% csrf_token %}
 
                 <!-- Dropdown สำหรับเลือกปี -->
                 <div class="sm:col-span-3">
-                    <label for="year" class="block text-base font-medium leading-6 text-gray-900">
+                    <label for="year" class="flex items-center gap-2 text-base font-medium leading-6 text-gray-900">
+                        {% comment %} <img src="{% static 'icon/year.svg' %}" alt="Year icon" class="w-5 h-5"> {% endcomment %}
                         {{ form.year.label }}
                         {% if form.year.field.required %}
                             <span class="text-base font-normal text-red-600" style="position: relative; top: 1px;">*</span>
@@ -342,7 +205,8 @@
 
                 <!-- Dropdown สำหรับเลือกความถี่ -->
                 <div class="sm:col-span-3">
-                    <label for="frequency" class="block text-base font-medium leading-6 text-gray-900">
+                    <label for="frequency" class="flex items-center gap-2 text-base font-medium leading-6 text-gray-900">
+                        {% comment %} <img src="{% static 'icon/frequency.svg' %}" alt="Frequency icon" class="w-5 h-5"> {% endcomment %}
                         {{ form.frequency.label }} (Years)
                         {% if form.frequency.field.required %}
                             <span class="text-base font-normal text-red-600" style="position: relative; top: 1px;">*</span>
@@ -534,7 +398,7 @@
                     <p id="work_type_description" class="mt-1 text-sm text-gray-500"></p>
                 </div>
                 
-                <!-- Dropdown สำหรับเลือก ACTTYPE -->
+                <!-- Dropdown สำหรับเลือก MNTACT TYPE -->
                 <div class="sm:col-span-3">
                     <label for="{{ form.acttype.id_for_label }}" class="block text-base font-medium leading-6 text-gray-900">
                         {{ form.acttype.label }}
@@ -655,62 +519,7 @@
                     </div>
                 </div>
                 
-                <script>
-                    document.addEventListener('DOMContentLoaded', function () {
-                        const wbsField = document.getElementById('id_wbs');
-                        const otherWbsInput = document.getElementById('other_wbs');
-                        const labelOtherWbs = document.getElementById('label_other_wbs');
-                        const otherWbsSignal = document.getElementById('other_wbs_signal');
-                        const otherWbsOuterContainer = document.getElementById('other_wbs_outer_container');
-
-                        const otherProjectIdInput = document.getElementById('other_projectid');
-                        const labelOtherProjectId = document.getElementById('label_other_projectid');
-                        const otherProjectIdSignal = document.getElementById('other_projectid_signal');
-                        const otherProjectIdOuterContainer = document.getElementById('other_projectid_outer_container');
-
-                        function toggleOtherWbsField() {
-                            if (wbsField.value === '6') {
-                                otherWbsInput.disabled = false; // เปิดการใช้งานฟิลด์เมื่อเลือก "other"
-                                otherWbsInput.placeholder = '';
-                                otherWbsInput.style.borderBottomColor = '#16a34a';  // เปลี่ยนสีขอบของ input เป็นสีเขียว
-                                labelOtherWbs.style.color = '#16a34a';  // เปลี่ยนสีข้อความ label เป็นสีเขียว
-                                otherWbsSignal.classList.remove('hidden');  // แสดงสัญญาณ
-                                otherWbsOuterContainer.classList.remove('hidden');
-
-                                otherProjectIdInput.disabled = false;
-                                otherProjectIdInput.placeholder = '';
-                                otherProjectIdInput.style.borderBottomColor = '#16a34a';
-                                labelOtherProjectId.style.color = '#16a34a';
-                                otherProjectIdSignal.classList.remove('hidden');
-                                otherProjectIdOuterContainer.classList.remove('hidden');
-                            } else {
-                                otherWbsInput.disabled = true;
-                                otherWbsInput.placeholder = '';
-                                otherWbsInput.style.borderBottomColor = '';  // รีเซ็ตสีขอบกลับเป็นค่าเริ่มต้น
-                                otherWbsInput.value = '';  // ล้างค่าที่กรอก
-                                labelOtherWbs.style.color = '';  // รีเซ็ตสี label กลับเป็นค่าเริ่มต้น
-                                otherWbsSignal.classList.add('hidden');  // ซ่อนสัญญาณ
-                                otherWbsOuterContainer.classList.add('hidden');
-
-                                otherProjectIdInput.disabled = true;
-                                otherProjectIdInput.placeholder = '';
-                                otherProjectIdInput.style.borderBottomColor = '';
-                                otherProjectIdInput.value = '';
-                                labelOtherProjectId.style.color = '';
-                                otherProjectIdSignal.classList.add('hidden');
-                                otherProjectIdOuterContainer.classList.add('hidden');
-                            }
-                        }
-                    
-                        // ตรวจสอบสถานะเริ่มต้น
-                        toggleOtherWbsField();
-                    
-                        // ตรวจสอบการเปลี่ยนแปลงในฟิลด์ `wbs`
-                        wbsField.addEventListener('change', toggleOtherWbsField);
-                    });
-                    
-                </script>
-                
+                <!-- Checkbox สำหรับ Grouping -->
                 <div class="sm:col-span-3">
                     <label for="grouping_options" class="block text-base font-medium leading-6 text-gray-900">
                         Grouping
@@ -779,60 +588,6 @@
                     {% endif %}
                 </div>
                 
-                <script>
-                    // Array เพื่อเก็บลำดับการเลือก
-                    const selectedOrder = [];
-                
-                    function toggleArrangeOptions(checkbox) {
-                        const noArrangeCheckbox = document.getElementById('no-arrange-checkbox');
-                        const arrangeOptions = document.getElementById('arrange-options');
-                
-                        if (checkbox.checked) {
-                            arrangeOptions.classList.remove('hidden');
-                            noArrangeCheckbox.checked = false;
-                            const index = selectedOrder.indexOf('no_arrange');
-                            if (index > -1) selectedOrder.splice(index, 1);
-                        } else {
-                            arrangeOptions.classList.add('hidden');
-                            document.querySelectorAll('#arrange-options input[type="checkbox"]').forEach(childCheckbox => {
-                                childCheckbox.checked = false;
-                                const index = selectedOrder.indexOf(childCheckbox.value);
-                                if (index > -1) selectedOrder.splice(index, 1);
-                            });
-                        }
-                        updateSelectedOrder();
-                    }
-                
-                    function handleCheckboxSelection(checkbox) {
-                        if (checkbox.checked) {
-                            if (!selectedOrder.includes(checkbox.value)) {
-                                selectedOrder.push(checkbox.value);
-                            }
-                    
-                            if (checkbox.value === 'no_arrange') {
-                                document.getElementById('arrange-group-checkbox').checked = false;
-                                document.getElementById('arrange-options').classList.add('hidden');
-                                document.querySelectorAll('#arrange-options input[type="checkbox"]').forEach(childCheckbox => {
-                                    if (childCheckbox.checked) {
-                                        childCheckbox.checked = false;
-                                        const index = selectedOrder.indexOf(childCheckbox.value);
-                                        if (index > -1) selectedOrder.splice(index, 1);
-                                    }
-                                });
-                            }
-                        } else {
-                            const index = selectedOrder.indexOf(checkbox.value);
-                            if (index > -1) selectedOrder.splice(index, 1);
-                        }
-                        updateSelectedOrder();
-                    }
-                
-                    function updateSelectedOrder() {
-                        document.getElementById('selected_order_input').value = selectedOrder.join(',');
-                    }
-                </script>
-                
-                
                 <!-- ฟิลด์สำหรับอัปโหลดไฟล์ Schedule -->
                 <div class="sm:col-span-3">
                     <label for="schedule_file" class="block mb-2 text-sm font-medium text-gray-900">{{ form.schedule_file.label_tag }}</label>
@@ -890,78 +645,39 @@
             </form>
         </div>
 
+        <div id="loadingOverlay" class="loading-overlay loading-hidden">
+            <div class="loading-box">
+                <div role="status" class="flex justify-center mb-4">
+                    <svg aria-hidden="true" role="status" class="w-8 h-8 mb-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
+                    </svg>
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <p class="mt-2 text-lg text-gray-700">กำลังโหลด...</p>
+            </div>
+        </div>
+
     {% else %}
     
-        {% if error_messages %}
-            <div class="flex p-4 mb-4 text-sm text-red-800 border border-red-300 rounded-lg shadow-md sm:text-xs md:text-sm lg:text-base xl:text-lg 2xl:text-xl bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-600" role="alert">
-                <svg class="flex-shrink-0 inline w-4 h-4 sm:w-4 sm:h-4 md:w-5 md:h-5 lg:w-6 lg:h-6 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <span class="sr-only">Danger</span>
-                <div class="flex-1">
-                    <span class="text-base font-semibold sm:text-base md:text-lg lg:text-lg xl:text-lg 2xl:text-xl">ข้อมูลไม่สมบูรณ์:</span>
-                    <ul class="mt-2 ml-4 space-y-1 text-sm list-disc list-inside sm:text-sm md:text-base lg:text-base xl:text-base 2xl:text-lg">
-                        {% for message in error_messages %}
-                            <li>{{ message }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        {% endif %}
-        
         <div class="container relative px-6 pt-[1.375rem] pb-4 max-w-screen-sm mx-auto my-4 bg-white rounded-md shadow-sm">
-            {% comment %} <div class="absolute top-0 left-0 w-full h-2 bg-[rgb(63,81,181)] rounded-t-md"></div> {% endcomment %}
-        
-            <h1 class="mb-4 text-3xl font-medium text-left text-gray-800">ไฟล์ที่นำเข้าและคอมเมนต์</h1>
-        
-            <!-- Content Box สำหรับแสดงไฟล์ที่อัปโหลด -->
-            <div class="flex flex-col gap-3 px-6 pt-2 pb-3 mt-3 border-t border-gray-200">
-                {% if request.session.schedule_filename %}
-                
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm font-normal text-gray-700">
-                            <strong class="text-base">Final Schedule File:</strong> {{ request.session.schedule_filename }}
-                        </p>
-                        <a href="{% url 'download_user_schedule' %}" class="flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12m0 0l-3-3m3 3l3-3"/><path d="M5 20h14"/></svg>
-                            DOWNLOAD
-                        </a>
-                    </div>
-
-                {% endif %}
-                {% if request.session.location_filename %}
-
-                    <div class="flex items-center justify-between">
-                        <p class="text-sm font-normal text-gray-700">
-                            <strong class="text-base">Location File:</strong> {{ request.session.location_filename }}
-                        </p>
-                        <a href="{% url 'download_user_location' %}" class="flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12m0 0l-3-3m3 3l3-3"/><path d="M5 20h14"/></svg>
-                            DOWNLOAD
-                        </a>
-                    </div>
-
-                {% endif %}
-                
-    {% endif %}
-                
+            <h1 class="mb-4 text-3xl font-medium text-left text-gray-800">ตรวจสอบและแก้ไขข้อมูล</h1>
+            <div class="flex flex-col gap-4 px-6 pt-3 pb-4 mt-4 bg-white border border-gray-200 rounded-lg">
                 {% if 'download_link_comment' in request.session %}
-                
                     <div class="flex items-center justify-between">
-                        <p class="text-sm font-normal text-gray-700">
-                            <strong class="text-base">Comment File:</strong> Comment.xlsx
+                        <p class="text-base font-normal text-gray-700">
+                            📝 ไฟล์คอมเมนต์
                         </p>
                         <a href="{% url 'download_comment_file' %}" class="flex items-center text-sm font-medium text-indigo-600 hover:text-indigo-800 hover:underline">
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12m0 0l-3-3m3 3l3-3"/><path d="M5 20h14"/></svg>
                             DOWNLOAD
                         </a>
                     </div>
-
                 {% endif %}
-                
             </div>
         </div>
-    
+        
+    {% endif %}
 
     {% if 'download_link_comment' in request.session %}
     
@@ -992,6 +708,24 @@
                         {{ request.session.egwbs }}
                     </td>
                 </tr>
+                <!-- FREQUENCY -->
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        FREQUENCY
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.frequency }}
+                    </td>
+                </tr>
+                <!-- YEAR -->
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        YEAR
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.year }}
+                    </td>
+                </tr>
                 <!-- SITEID -->
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
@@ -1008,6 +742,15 @@
                     </th>
                     <td class="px-6 py-4">
                         {{ request.session.location }}
+                    </td>
+                </tr>
+                <!-- WOSTATUS -->
+                <tr class="border-b bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        WOSTATUS
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.wostatus }}
                     </td>
                 </tr>
                 <!-- WORKTYPE -->
@@ -1028,6 +771,33 @@
                         {{ request.session.egmntacttype }}
                     </td>
                 </tr>
+                <!-- SUBWBS GROUP -->
+                <tr class="border-b bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        SUBWBS GROUP
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.wbs }}
+                    </td>
+                </tr>
+                <!-- WBS Description -->
+                <tr class="border-b bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        WBS Description
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.wbs_desc }}
+                    </td>
+                </tr>
+                <!-- GROUPING -->
+                <tr class="border-b bg-gray-50 dark:bg-gray-700 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                        GROUPING
+                    </th>
+                    <td class="px-6 py-4">
+                        {{ request.session.grouping_text }}
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -1035,488 +805,99 @@
     {% endif %}
 
     {% if not error_messages %}
-
-        {% if extracted_kks_counts is not None and extracted_kks_counts|length > 0 %}
-
-            <div class="container relative px-6 pt-[1.375rem] pb-4 max-w-screen-sm mx-auto my-4 bg-white rounded-md shadow-sm">
-                <form id="mappingForm" method="post" onsubmit="showLoading()">
-                    {% csrf_token %}
-                    <h1 class="mb-6 text-2xl font-semibold text-gray-800">การกำหนด Plant Unit</h1>
-                    <ul>
-                        {% for kks_value, count in extracted_kks_counts.items %}
-                            <input type="hidden" name="extracted_kks_counts[{{ kks_value }}]" value="{{ count }}">
-                            
-                            {% if user_input_mapping %}
-                            
-                                {% for key, value in user_input_mapping.items %}
-                                    <div class="relative mb-4">
-                                        <input type="text" id="disabled_{{ forloop.counter }}" class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value="{{ value }}" disabled />
-                                        <label for="disabled_{{ forloop.counter }}" class="absolute text-sm text-gray-400 dark:text-gray-500 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
-                                            {{ key }}
-                                        </label>
-                                    </div>
-                                {% endfor %}
-                                
-                            {% else %}
-                            
-                            <div class="relative mb-4">
-                                <input type="text" name="{{ kks_value }}" id="{{ kks_value }}" required 
-                                        class="block rounded-t-lg px-2.5 pb-2.5 pt-5 w-full text-sm text-gray-900 bg-gray-50 dark:bg-gray-700 border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" 
-                                        placeholder=" ">
-                                <label for="{{ kks_value }}" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-4 z-10 origin-[0] start-2.5 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4">
-                                    {{ kks_value }} ({{ count }} times)
-                                </label>
-                            </div>
+        {% if 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}
+            <div class="container relative max-w-screen-sm mx-auto my-4 bg-[#f0ebf8] rounded-md shadow-sm">
+                <details open class="mt-4 bg-white border border-gray-200 rounded">
+                    <summary class="flex items-center justify-between p-4 font-bold text-white bg-[rgb(63,81,181)] rounded-t">
+                        <span class="text-lg">ดาวน์โหลด Job Plan , PM Plan Template</span>
+                    </summary>
+                    <div class="p-4 mt-3">
+                        <ul class="space-y-4">
+                            {% if 'download_link_job_plan_task' in request.session %}
+                            <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
+                                <div class="flex items-center">
+                                    <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2">
+                                    <a href="{% url 'download_job_plan_task_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
+                                        ดาวน์โหลดไฟล์ Job Plan Task
+                                    </a>
+                                </div>
+                            </li>
                             {% endif %}
-                        {% endfor %}
-                    </ul>
             
-                    {% if not user_input_mapping %}
-
-                    <button id="mappingBtn" name="kks_mapping_submit" value="submit" type="submit"
-                    class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800 disabled:opacity-50 disabled:cursor-not-allowed">
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 inline-flex items-center">
-                        ยืนยัน
-                    </span>
-                </button>
-                    {% endif %}
-                </form>
+                            {% if 'download_link_job_plan_labor' in request.session %}
+                            <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
+                                <div class="flex items-center">
+                                    <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2">
+                                    <a href="{% url 'download_job_plan_labor_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
+                                        ดาวน์โหลดไฟล์ Job Plan Labor
+                                    </a>
+                                </div>
+                            </li>
+                            {% endif %}
+            
+                            {% if 'download_link_pm_plan' in request.session %}
+                            <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
+                                <div class="flex items-center">
+                                    <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2">
+                                    <a href="{% url 'download_pm_plan_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
+                                        ดาวน์โหลดไฟล์ PM Plan
+                                    </a>
+                                </div>
+                            </li>
+                            {% endif %}
+            
+                            {% if 'download_link_template' in request.session %}
+                            <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
+                                <div class="flex items-center">
+                                    <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2">
+                                    <a href="{% url 'download_template_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
+                                        ดาวน์โหลดไฟล์ Template MxLoader JB-PM Plan
+                                    </a>
+                                </div>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </details>
             </div>
-
+            
         {% endif %}
-
-    {% endif %}
-    
-    <script>
-        function showLoading() {
-            const form = document.getElementById("mappingForm");
-            const submitButton = document.getElementById('mappingBtn');
-
-            if (form.checkValidity()){
-                document.body.style.cursor = 'progress';
-                //submitButton.disabled = true;
-                submitButton.innerHTML = `
-                    <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 inline-flex items-center">
-                        <svg aria-hidden="true" role="status" class="inline w-4 h-4 text-gray-200 me-3 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
-                        </svg>
-                        Loading...
-                    </span>
-                `;
-            }
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            document.body.style.cursor = 'default'; // คืนค่าเคอร์เซอร์เป็นปกติ
-        });
-    </script>
-
-    {% if 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}
-        <div class="container relative max-w-screen-sm mx-auto my-4 bg-[#f0ebf8] rounded-md shadow-sm">
-            <details open class="mt-4 bg-white border border-gray-200 rounded">
-                <summary class="flex items-center justify-between p-4 font-bold text-white bg-[rgb(63,81,181)] rounded-t">
-                    <span class="text-lg">ดาวน์โหลดไฟล์</span>
-                </summary>
-                <div class="p-4 mt-3">
-                    <ul class="space-y-4">
-                        {% if 'download_link_job_plan_task' in request.session %}
-                        <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
-                            <div class="flex items-center">
-                                <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2" />
-                                <a href="{% url 'download_job_plan_task_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
-                                    ดาวน์โหลดไฟล์ Job Plan Task
-                                </a>
-                            </div>
-                        </li>
-                        {% endif %}
-        
-                        {% if 'download_link_job_plan_labor' in request.session %}
-                        <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
-                            <div class="flex items-center">
-                                <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2" />
-                                <a href="{% url 'download_job_plan_labor_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
-                                    ดาวน์โหลดไฟล์ Job Plan Labor
-                                </a>
-                            </div>
-                        </li>
-                        {% endif %}
-        
-                        {% if 'download_link_pm_plan' in request.session %}
-                        <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
-                            <div class="flex items-center">
-                                <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2" />
-                                <a href="{% url 'download_pm_plan_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
-                                    ดาวน์โหลดไฟล์ PM Plan
-                                </a>
-                            </div>
-                        </li>
-                        {% endif %}
-        
-                        {% if 'download_link_template' in request.session %}
-                        <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
-                            <div class="flex items-center">
-                                <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2" />
-                                <a href="{% url 'download_template_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
-                                    ดาวน์โหลดไฟล์ Template MxLoader JB-PM Plan
-                                </a>
-                            </div>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </details>
-        </div>
-        
     {% endif %}
     
     <footer class="container relative max-w-screen-sm mx-auto my-4 bg-white rounded-lg shadow-sm dark:bg-gray-800">
-        <div class="w-full max-w-screen-xl p-4 mx-auto md:flex md:items-center md:justify-between">
-            <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-                หากพบปัญหาการใช้งาน กรุณาติดต่อแผนกระบบงานบำรุงรักษา (หรบ-ฟ.) กองวิศวกรรมบำรุงรักษา (กวบ-ฟ.) ฝ่ายบริหารจัดการสินทรัพย์ผลิตไฟฟ้า (อหฟ.) โทร. 67341 , 67348
+        <div class="flex items-center justify-center w-full max-w-screen-xl p-4 mx-auto">
+            <span class="text-sm text-center text-gray-500 dark:text-gray-400">
+                หากพบปัญหาการใช้งาน กรุณาติดต่อแผนกระบบงานบำรุงรักษา (หรบ-ฟ.)<br>
+                กองวิศวกรรมบำรุงรักษา (กวบ-ฟ.)<br>
+                ฝ่ายบริหารจัดการสินทรัพย์ผลิตไฟฟ้า (อหฟ.)<br>
+                โทร. 67341 , 67348
             </span>
         </div>
     </footer>
+{% endblock%}
 
 {% block script %}
-    <!-- ตกเเต่ง -->
     <script>
-        function validateUploadForm(event) {
-            event.preventDefault(); // ป้องกันการส่งฟอร์มทันที
-
-            let form = document.getElementById('uploadForm');
-            let hasError = false;
-
-            // ลบข้อความแจ้งเตือนทั้งหมดก่อนการตรวจสอบ
-            clearAllErrors();
-
-            const yearField = document.getElementById('id_year');
-            const frequencyField = document.getElementById('id_frequency');
-            const plantTypeField = document.getElementById('id_plant_type');
-            const siteField = document.getElementById('id_site');
-            const childSiteField = document.getElementById('id_child_site');
-            const unitField = document.getElementById('id_unit');
-            const wostatusField = document.getElementById('id_wostatus');
-            const workTypeField = document.getElementById('id_work_type');
-            const acttypeField = document.getElementById('id_acttype');
-            const wbsField = document.getElementById('id_wbs');
-            const wbsOtherField = document.getElementById('other_wbs');
-            const projectidOtherField = document.getElementById('other_projectid');
-            const scheduleFileField = document.getElementById('id_schedule_file');
-            const locationFileField = document.getElementById('id_location_file');
-            const selectedOrderField = document.getElementById('selected_order_input');
-
-            const fieldsToValidate = [
-                { field: yearField, message: 'กรุณาเลือกปี ค.ศ.' },
-                { field: frequencyField, message: 'กรุณาเลือกความถี่' },
-                { field: plantTypeField, message: 'กรุณาเลือกประเภทของโรงไฟฟ้า' },
-                { field: siteField, message: 'กรุณาเลือกสังกัดโรงไฟฟ้า' },
-                { field: childSiteField, message: 'กรุณาเลือกชื่อโรงไฟฟ้า' },
-                { field: unitField, message: 'กรุณาเลือกหมายเลขเครื่องกำเนิดไฟฟ้า' },
-                { field: wostatusField, message: 'กรุณาเลือกสถานะใบงาน' },
-                { field: workTypeField, message: 'กรุณาเลือกประเภทของใบงาน' },
-                { field: acttypeField, message: 'กรุณาเลือกประเภทของกิจกรรมงาน' },
-                { field: wbsField, message: 'กรุณาเลือก SUBWBS' },
-                { field: scheduleFileField, message: 'กรุณาอัปโหลดไฟล์ Final Schedule' },
-                { field: locationFileField, message: 'กรุณาอัปโหลดไฟล์ Location' }
-            ];
-
-            // ตรวจสอบฟิลด์ต่างๆ
-            fieldsToValidate.forEach(({ field, message }) => {
-                if (field.value === '') {
-                    hasError = true;
-                    showError(field.closest('.sm\\:col-span-3'), message);
-                }
-            });
-
-            // ตรวจสอบฟิลด์ wbs และ projectid "other"
-            if (wbsField.value === '6') {
-                if (wbsOtherField.value === '') {
-                    hasError = true;
-                    showError(wbsOtherField.closest('.sm\\:col-span-3'), 'กรุณากรอกข้อมูลในฟิลด์ "Other WBS"');
-                }
-                if (projectidOtherField.value === '') {
-                    hasError = true;
-                    showError(projectidOtherField.closest('.sm\\:col-span-3'), 'กรุณากรอกข้อมูลในฟิลด์ "Other PROJECTID"');
-                }
-            }
-
-            // ตรวจสอบ selected_order
-            if (!selectedOrderField.value.trim()) {
-                hasError = true;
-                const container = document.getElementById('helper-checkbox-text').parentElement; // ใช้ parentElement แทน closest()
-                showError(container, 'กรุณาเลือกตัวเลือก Grouping อย่างน้อยหนึ่งตัวเลือก');
-            }
-
-            // ส่งฟอร์มถ้าไม่มีข้อผิดพลาด
-            if (!hasError) {
-                showUploadLoading(form);
-            }
-        }
-
-        function showError(container, message) {
-            // ตรวจสอบว่ามีข้อความแจ้งเตือนอยู่แล้วหรือไม่
-            if (container.querySelector('.custom-alert')) {
-                return; // ถ้ามีอยู่แล้วให้ return ออกไป ไม่ต้องเพิ่มข้อความซ้ำ
-            }
-
-            const alertBox = document.createElement('div');
-            alertBox.classList.add('custom-alert', 'flex', 'items-center', 'p-4', 'mt-2', 'text-sm', 'text-red-800', 'border', 'border-red-300', 'rounded-lg', 'bg-red-50');
-            alertBox.setAttribute('role', 'alert');
-
-            const messageText = document.createElement('span');
-            messageText.textContent = message;
-            alertBox.appendChild(messageText);
-
-            container.appendChild(alertBox);
-        }
-
-        function clearAllErrors() {
-            // ลบข้อความแจ้งเตือนทั้งหมดในฟอร์ม
-            document.querySelectorAll('.custom-alert').forEach(alert => alert.remove());
-        }
-
-        function showUploadLoading(form) {
-            const button = document.getElementById('uploadBtn');
-            document.body.style.cursor = 'progress';
-            button.disabled = true;
-            button.innerHTML = `
-                <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                    <svg aria-hidden="true" role="status" class="inline w-4 h-4 text-gray-200 me-3 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"/>
-                    </svg>
-                    Loading...
-                </span>`;
-            form.submit();
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            document.body.style.cursor = 'default'; // คืนค่าเคอร์เซอร์เป็นปกติ
-        });
-    </script>
-
-
-    <!-- AJAX for updating ACTTYPE -->
-    <script>
-        $(document).ready(function() {
-            // เมื่อผู้ใช้เลือก Plant Type
-            $('#id_plant_type').change(function() {
-                let plant_type_id = $(this).val(); // ดึง plant_code ที่เลือก
-
-                // ปิดการใช้งาน dropdown ขณะที่รอข้อมูลจาก server
-                $('#id_acttype, #id_site, #id_child_site, #id_work_type, #id_unit').empty().append('<option value="">เลือก</option>');
-                $('#id_acttype, #id_site, #id_work_type, #id_unit').prop('disabled', true);
-                $('#plant_type_description, #site_description, #child_site_description, #work_type_description, #acttype_description').text('');
-                if (plant_type_id) {
-                    // ส่ง AJAX request ไปที่ server
-                    $.ajax({
-                        url: "{% url 'filter_plant_type' %}",
-                        data: {'plant_type_id': plant_type_id},    // ส่งค่า plant_code ไปยัง backend
-                        success: function (data) {
-                            // ตรวจสอบว่า server ส่งข้อมูลมาถูกต้องหรือไม่
-                            if (data) {
-                                // อัปเดตคำอธิบายของ plant_type
-                                $('#plant_type_description').text(data.plant_type_th); // แสดงคำอธิบาย plant_type
-                                
-                                // อัปเดต dropdown ACTTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
-                                $('#id_acttype').empty().append('<option value="">เลือก</option>');
-                                $.each(data.acttypes, function (index, acttype) {
-                                    $('#id_acttype').append('<option value="' + acttype.id + '">' + acttype.acttype + ' - ' + acttype.description + '</option>');
-                                });
-                                
-                                // อัปเดต dropdown SITE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
-                                $('#id_site').empty().append('<option value="">เลือก</option>');
-                                $.each(data.sites, function (index, site) {
-                                    $('#id_site').append('<option value="' + site.id + '">' + site.site_id + '</option>');
-                                });
-                                
-                                // อัปเดต dropdown WORKTYPE โดยล้างค่าที่มีอยู่และเพิ่มตัวเลือกใหม่
-                                $('#id_work_type').empty().append('<option value="">เลือก</option>');
-                                $.each(data.work_types, function(index, worktype) {
-                                    $('#id_work_type').append('<option value="' + worktype.id + '">' + worktype.worktype + ' - ' + worktype.description +'</option>');
-                                });
-
-                                // อัปเดต dropdown UNIT
-                                $('#id_unit').empty().append('<option value="">เลือก</option>');
-                                $.each(data.units, function(index, unit) {
-                                    $('#id_unit').append('<option value="' + unit.id + '">' + unit.unit_code + '</option>');
-                                });
-
-                                // เปิดใช้งาน dropdown หลังจากอัปเดตข้อมูล
-                                $('#id_acttype, #id_site, #id_work_type, #id_unit').prop('disabled', false);
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            $('#id_acttype, #id_site, #id_child_site, #id_work_type, #id_unit').empty().append('<option value="">เลือก</option>');
-                            $('#plant_type_description, #site_description, #child_site_description, #work_type_description, #acttype_description').text('');
-                            alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก server: " + error);
-
-                            // เปิดใช้งาน dropdown และตั้งค่าเป็นค่า default
-                            $('#id_acttype, #id_site, #id_work_type, #id_unit').prop('disabled', false);
-                        }
-                    });
-                } else {
-                    // ถ้าไม่เลือก Plant Type ให้แสดงค่า default
-                    $('#id_acttype, #id_site, #id_child_site, #id_work_type, #id_unit').empty().append('<option value="">เลือก</option>');
-                    $('#plant_type_description, #site_description, #child_site_description, #work_type_description, #acttype_description').text('');
-                    
-                    // เปิดใช้งาน dropdown และตั้งค่าเป็นค่า default
-                    $('#id_acttype, #id_site, #id_work_type, #id_unit').prop('disabled', false);
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            // ฟังก์ชันที่ถูกเรียกเมื่อผู้ใช้เลือก Site
-            $('#id_site').change(function() {
-                let site_id = $(this).val();  // ดึงค่า site_id ที่ผู้ใช้เลือก
-
-                // ปิดการใช้งาน dropdown ของ Child Site ขณะรอข้อมูลจาก server
-                $('#id_child_site').prop('disabled', true);
-
-                if (site_id) {
-                    $.ajax({
-                        url: "{% url 'filter_site' %}",  // URL สำหรับ view ที่ใช้กรอง SITE
-                        data: {'site_id': site_id},  // ส่ง site_id ไปที่ backend
-                        dataType: 'json',  // กำหนดประเภทข้อมูลที่คาดว่าจะได้รับเป็น JSON
-                        success: function (data) {
-                            // ตรวจสอบว่ามีข้อมูล ChildSite หรือไม่
-                            if (data.child_sites.length > 0) {
-                                // ล้างค่าที่มีอยู่ใน dropdown ของ ChildSite และเพิ่มตัวเลือกใหม่
-                                $('#id_child_site').empty().append('<option value="">เลือก</option>');
-                                $.each(data.child_sites, function(index, child_site) {
-                                    $('#id_child_site').append('<option value="' + child_site.id + '">' + child_site.site_id + '</option>');
-                                });
-                            } else {
-                                // ถ้าไม่มีข้อมูล ChildSite
-                                $('#id_child_site').empty().append('<option value="">ไม่พบข้อมูล Child Site</option>');
-                            }
-
-                            // อัปเดตคำอธิบาย site_name
-                            $('#site_description').text(data.site_name);  // แสดง site_name ใน HTML
-                            // เปิดใช้งาน dropdown ของ Child Site หลังจากอัปเดตข้อมูลเสร็จ
-                            $('#id_child_site').prop('disabled', false);
-                        },
-                        error: function(xhr, status, error) {
-                            // หากเกิดข้อผิดพลาด ให้ล้าง dropdown ของ ChildSite และแสดงข้อความเตือน
-                            $('#id_child_site').empty().append('<option value="">เลือก</option>');
-                            alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก server: " + error);
-                            // เปิดใช้งาน dropdown ของ Child Site เพื่อให้ผู้ใช้สามารถเลือกใหม่ได้
-                            $('#id_child_site').prop('disabled', false);
-                        }
-                    });
-                } else {
-                    // ถ้าไม่เลือก Site ให้ล้าง dropdown ของ ChildSite และล้างคำอธิบาย Site
-                    $('#id_child_site').empty().append('<option value="">เลือก</option>');
-                    $('#site_description').text('');
-                    $('#child_site_description').text('');
-                    $('#id_child_site').prop('disabled', false);  // เปิดใช้งาน dropdown ของ ChildSite
-                }
-            });
-
-            // ฟังก์ชันที่ถูกเรียกเมื่อผู้ใช้เลือก Child Site
-            $('#id_child_site').change(function() {
-                let child_site_id = $(this).val();  // ดึงค่า child_site_id ที่ผู้ใช้เลือก
-
-                if (child_site_id) {
-                    // ส่ง AJAX request ไปที่ server เพื่อดึงคำอธิบายของ Child Site
-                    $.ajax({
-                        url: "{% url 'filter_child_site' %}",  // URL ไปยัง view ที่จะดึงคำอธิบายของ Child Site
-                        data: {'child_site_id': child_site_id},  // ส่งค่า child_site_id ไปยัง backend
-                        dataType: 'json',  // กำหนดประเภทข้อมูลที่คาดว่าจะได้รับเป็น JSON
-                        success: function(data) {
-                            // อัปเดตคำอธิบายของ Child Site
-                            $('#child_site_description').text(data.description);  // แสดงคำอธิบายใน #child_site_description
-                        },
-                        error: function(xhr, status, error) {
-                            // หากเกิดข้อผิดพลาด ให้ล้างคำอธิบาย
-                            $('#child_site_description').text('ไม่สามารถดึงคำอธิบายได้');
-                            alert("เกิดข้อผิดพลาดในการดึงข้อมูลจาก server: " + error);
-                        }
-                    });
-                } else {
-                    // ล้างคำอธิบายเมื่อไม่มีการเลือก Child Site
-                    $('#child_site_description').text('');
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-
-            $('#id_work_type').change(function() {
-                let work_type_id = $(this).val();
+        const ajaxUrls = {
+            plantTypeUrl: "{% url 'filter_plant_type' %}",
+            actTypeUrl: "{% url 'filter_acttype' %}",
+            siteFilterUrl: "{% url 'filter_site' %}",
+            childSiteFilterUrl: "{% url 'filter_child_site' %}",
+            wbsFilterUrl: "{% url 'filter_wbs' %}",
+            workTypeUrl: "{% url 'filter_worktype' %}",
+            wostatusFilterUrl: "{% url 'filter_wostatus' %}"
             
-                if(work_type_id){
-                    $.ajax({
-                        url: "{% url 'filter_worktype' %}",
-                        data: {'work_type_id': work_type_id},
-                        success: function (data){
-                            $('#work_type_description').text(data.description);
-                        }
-                    });
-                } else {
-                    $('#work_type_description').text('');
-                }
-            });
-        });
+        };
     </script>
-    <script>
-        $(document).ready(function() {
-            $('#id_acttype').change(function() {
-                let acttype_id = $(this).val();
-
-                if (acttype_id){
-                    $.ajax({
-                        url: "{% url 'filter_acttype' %}",
-                        data: {'acttype_id': acttype_id},
-                        success: function (data) {
-                            $('#acttype_description').text(data.description + ' (' + data.code + ')');
-                        }
-                    });
-                } else {
-                    $('#acttype_description').text('');
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#id_wbs').change(function() {
-                let wbs_id = $(this).val();
-                
-                if (wbs_id){
-                    $.ajax({
-                        url: "{% url 'filter_wbs' %}",
-                        data: {'wbs_id': wbs_id},
-                        success: function (data) {
-                            $('#wbs_description').text(data.description);
-                        }
-                    });
-                } else {
-                    $('#wbs_description').text('');
-                }
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#id_wostatus').change(function() {
-                let wostatus_id = $(this).val();
-            
-                if (wostatus_id) {
-                    $.ajax({
-                        url: "{% url 'filter_wostatus' %}",
-                        data: {'wostatus_id': wostatus_id},
-                        success: function (data) {
-                            $('#wostatus_description').text(data.description);
-                        }
-                    });
-                } else {
-                    $('#wostatus_description').text('');
-                }
-            });
-        });
-    </script>
+    
+    <script src="{% static 'js/form-validation.js' %}"></script>
+    <script src="{% static 'js/upload-loading.js' %}"></script>
+    <script src="{% static 'js/ajax-plant-type.js' %}"></script>
+    <script src="{% static 'js/ajax-site.js' %}"></script>
+    <script src="{% static 'js/ajax-child-site.js' %}"></script>
+    <script src="{% static 'js/ajax-worktype.js' %}"></script>
+    <script src="{% static 'js/ajax-acttype.js' %}"></script>
+    <script src="{% static 'js/ajax-wbs.js' %}"></script>
+    <script src="{% static 'js/ajax-wostatus.js' %}"></script>
+    <script src="{% static 'js/grouping.js' %}"></script>
 {% endblock %}
-{% endblock content %}

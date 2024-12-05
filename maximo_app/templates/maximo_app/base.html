@@ -1,4 +1,8 @@
-{% load compress %} {% load static %}
+<!-- templates/base.html -->
+
+{% load compress %}
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,17 +12,17 @@
 
     <title>{% block title %}Home{% endblock %}</title>
 
-    <!-- Fonts -->
+    {% comment %} <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
       rel="stylesheet"
-    />
+    /> {% endcomment %}
 
-    <!-- Link to Tailwind CSS output file -->
+    <!-- Tailwind CSS -->
     {% compress css %}
-    <link rel="stylesheet" href="{% static 'src/output.css' %}" />
+    <link href="{% static 'src/output.css' %}" rel="stylesheet"/>
     {% endcompress %}
 
     <!-- Favicon -->
@@ -26,16 +30,64 @@
 
     <!-- Custom inline style for font-family -->
     <style>
+    @font-face {
+      font-family: 'Bai Jamjuree';
+      font-style: normal;
+      font-weight: 200; /* ExtraLight */
+      src: url("{% static 'fonts/BaiJamjuree-ExtraLight.woff2' %}") format('woff2'),
+            url("{% static 'fonts/BaiJamjuree-ExtraLight.woff' %}") format('woff');
+    }
+    @font-face {
+      font-family: 'Bai Jamjuree';
+      font-style: normal;
+      font-weight: 300; /* Light */
+      src: url("{% static 'fonts/BaiJamjuree-Light.woff2' %}") format('woff2'),
+            url("{% static 'fonts/BaiJamjuree-Light.woff' %}") format('woff');
+    }
+    @font-face {
+      font-family: 'Bai Jamjuree';
+      font-style: normal;
+      font-weight: 400; /* Regular */
+      src: url("{% static 'fonts/BaiJamjuree-Regular.woff2' %}") format('woff2'),
+            url("{% static 'fonts/BaiJamjuree-Regular.woff' %}") format('woff');
+    }
+    @font-face {
+      font-family: 'Bai Jamjuree';
+      font-style: normal;
+      font-weight: 500; /* Medium */
+      src: url("{% static 'fonts/BaiJamjuree-Medium.woff2' %}") format('woff2'),
+            url("{% static 'fonts/BaiJamjuree-Medium.woff' %}") format('woff');
+    }
+    @font-face {
+      font-family: 'Bai Jamjuree';
+      font-style: normal;
+      font-weight: 600; /* SemiBold */
+      src: url("{% static 'fonts/BaiJamjuree-SemiBold.woff2' %}") format('woff2'),
+            url("{% static 'fonts/BaiJamjuree-SemiBold.woff' %}") format('woff');
+  }
+    @font-face {
+      font-family: 'Bai Jamjuree';
+      font-style: normal;
+      font-weight: 700; /* Bold */
+      src: url("{% static 'fonts/BaiJamjuree-Bold.woff2' %}") format('woff2'),
+            url("{% static 'fonts/BaiJamjuree-Bold.woff' %}") format('woff');
+    }
+    @font-face {
+      font-family: 'Bai Jamjuree';
+      font-style: italic;
+      font-weight: 400; /* Italic */
+        src: url("{% static 'fonts/BaiJamjuree-Italic.woff2' %}") format('woff2'),
+              url("{% static 'fonts/BaiJamjuree-Italic.woff' %}") format('woff');
+    }
       body {
         font-family: "Bai Jamjuree", sans-serif;
-        {% comment %} margin: 0;
-        padding: 12px; {% endcomment %}
       }
     </style>
 
     <!-- Block for additional CSS styles -->
     {% block style %}{% endblock %}
   </head>
+
 {% comment %} #dceefc, #edf2f7 {% endcomment %}
   <body class="m-0 p-3 pb-15 bg-[#dceefc]">
     <!-- Content Block -->
@@ -45,12 +97,10 @@
     <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
 
     <!-- Flowbite JavaScript -->
-    <script src="{% static 'flowbite/dist/flowbite.min.js' %}"></script>
-    {% comment %}
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.1/dist/flowbite.min.js"></script>
-    {% endcomment %}
+    <script src="{% static 'js/flowbite.min.js' %}"></script>
+    {% comment %} <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script> {% endcomment %}
 
     <!-- Block for additional JS scripts -->
     {% block script %}{% endblock %}
-  </body>
+</body>
 </html>

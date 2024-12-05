@@ -31,6 +31,8 @@ from openpyxl.styles import Border, Side, PatternFill, Alignment, Font
 from .forms import UploadFileForm
 from maximo_app.models import Site, ChildSite, PlantType, Unit, WorkType, ActType, WBSCode, Status
 
+warnings.simplefilter("ignore")
+
 # ตั้งค่า stdout ให้ใช้การเข้ารหัสแบบ utf-8
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 logging.basicConfig(
@@ -60,8 +62,6 @@ def index(request):
     # sheet_name = 'Sheet1'
     schedule_filename = None
     location_filename = None
-    extracted_kks_counts = None
-    user_input_mapping = {}
     error_messages = []
     selected_order = []
 ############
@@ -70,8 +70,6 @@ def index(request):
     logger.info(f"FILES: {request.FILES}")
     logger.info(f"0 def schedule_filename: {schedule_filename}")
     logger.info(f"0 def location_filename: {location_filename}")
-    logger.info(f"0 def extracted_kks_counts: {extracted_kks_counts}")
-    logger.info(f"0 def user_input_mapping: {user_input_mapping}")
 ############
 ############
     if request.method == 'POST':
@@ -81,8 +79,6 @@ def index(request):
             ############
             logger.info(f'1 form schedule_filename: {schedule_filename}')
             logger.info(f'1 form location_filename: {location_filename}')
-            logger.info(f'1 form extracted_kks_counts: {extracted_kks_counts}')
-            logger.info(f'1 form user_input_mapping: {user_input_mapping}')
             ############
             ############
             # ตรวจสอบและสร้างโฟลเดอร์ temp
@@ -97,7 +93,7 @@ def index(request):
             schedule_file = request.FILES.get('schedule_file', None)
             location_file = request.FILES.get('location_file', None)
             year = form.cleaned_data.get('year')
-            frequency = form.cleaned_data.get('frequency')
+            frequency = form.cleaned_data.get('frequency', '4')
             plant_type = form.cleaned_data.get('plant_type')
             site = form.cleaned_data.get('site')
             child_site = form.cleaned_data.get('child_site')
@@ -112,7 +108,6 @@ def index(request):
             log_params = []
             log_error = []
             
-            #? Logging
             if not schedule_file:
                 log_error.append(f"Schedule file")
             
@@ -171,9 +166,9 @@ def index(request):
             
             if acttype:
                 egmntacttype = acttype.acttype
-                log_params.append(f"ACTTYPE: {egmntacttype}")
+                log_params.append(f"MNTACT TYPE: {egmntacttype}")
             else:
-                log_error.append("ACTTYPE")
+                log_error.append("MNTACT TYPE")
             
             if wbs and wbs.wbs_code != 'อื่นๆ':
                 log_params.append(f"SUBWBS GROUP: {wbs.wbs_code}")
@@ -189,6 +184,7 @@ def index(request):
                 if isinstance(selected_order, str):
                     selected_order = [selected_order]
                 log_params.append(f"GROUPING: {selected_order}")
+                grouping_text = get_grouping_text(selected_order)
             else:
                 log_error.append("GROUPING")
             
@@ -211,12 +207,12 @@ def index(request):
                 return redirect('index')
             
             try:
-                location = f'{child_site}-{plant_type}{unit}' # 'SRD-H02'
+                location = f'{child_site}-{plant_type}{unit}'
                 location_sanitized = location.replace('-', '')
                 
                 if wbs and wbs.wbs_code != 'อื่นๆ':
-                    egprojectid = f"O-{location_sanitized}-{two_digits_year}{acttype.code}"  # 'O-SRDH02-67MI'
-                    egwbs = f"{egprojectid}-{wbs.wbs_code}" # 'O-SRDH02-67MI-WO'
+                    egprojectid = f"O-{location_sanitized}-{two_digits_year}{acttype.code}"
+                    egwbs = f"{egprojectid}-{wbs.wbs_code}"
                 elif wbs.wbs_code == 'อื่นๆ' and wbs_other:
                     egwbs = wbs_other
                     egprojectid = projectid_other
@@ -226,10 +222,11 @@ def index(request):
                 
                 wbs_desc = f"{wbs.description} {acttype.description} {location} {buddhist_year}"
                 
+                logger.info(f"LOCATION: {location}") 
                 logger.info(f"EGPROJECTID: {egprojectid}")
                 logger.info(f"EGWBS: {egwbs}")
                 logger.info(f"WBS DESC: {wbs_desc}")
-                logger.info(f"LOCATION: {location}") 
+                
             except Exception as e:
                 logger.error(f"An error occurred: {str(e)}", exc_info=True)
                 error_message = (
@@ -247,8 +244,6 @@ def index(request):
             
             schedule_filename = schedule_file.name
             location_filename = location_file.name
-            
-            # สร้างชื่อไฟล์ที่ไม่ซ้ำกันโดยใช้ UUID
             unique_schedule_name = f"{uuid.uuid4()}_{schedule_file.name}"
             unique_location_name = f"{uuid.uuid4()}_{location_file.name}"
             
@@ -289,8 +284,7 @@ def index(request):
                 )
                 messages.error(request, error_message)
                 return redirect('index')
-############
-############
+
             # บันทึกค่าลงเซสชัน
             request.session['schedule_filename'] = schedule_file.name
             request.session['location_filename'] = location_file.name
@@ -298,6 +292,7 @@ def index(request):
             request.session['schedule_path'] = schedule_path
             request.session['location_path'] = location_path
             
+            request.session['year'] = year
             request.session['frequency'] = frequency
             request.session['egmntacttype'] = egmntacttype
             request.session['egprojectid'] = egprojectid
@@ -305,12 +300,13 @@ def index(request):
             request.session['location'] = location
             request.session['siteid'] = siteid
             request.session['child_site'] = child_site
+            request.session['wostatus'] = wostatus
+            request.session['wbs'] = wbs.wbs_code
             request.session['wbs_desc'] = wbs_desc
             request.session['worktype'] = worktype
             request.session['wostatus'] = wostatus
-            request.session['grouping_options'] = selected_order
-############
-############
+            request.session['grouping_text'] = grouping_text
+
             try:
                 required_columns = [
                     'KKS', 'EQUIPMENT', 'TASK_XX', 'TASK', 
@@ -327,6 +323,8 @@ def index(request):
                     'SUPERVISOR', 'FOREMAN', 'SKILL', 'RESPONSE_CRAFT', 
                     'ประเภทของ_PERMIT_TO_WORK', 'TYPE'
                 ]
+                
+                location_columns = ['Location', 'Description']
                 
                 df_original = read_excel_with_error_handling(request, schedule_path)
                 if df_original is None:
@@ -346,10 +344,10 @@ def index(request):
                         f"<div class='error-container'>"
                         f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบคอลัมน์ที่จำเป็น<br>"
                         f"<ul class='error-details'>"
-                        f"<p class='error-description'>ไฟล์ {schedule_file.name} ขาดคอลัมน์ต่อไปนี้:</p>"
+                        f"<p class='error-description'>ไฟล์ {schedule_filename} ขาดคอลัมน์ต่อไปนี้:</p>"
                         f"{''.join(f'<li>{col}</li>' for col in missing_columns)}"
                         f"</ul>"
-                        f"<p class='error-note'>คำแนะนำ:"
+                        f"<p class='error-note'>คำแนะนำ:</p>"
                         f"&nbsp;&nbsp;&nbsp;&nbsp;1. โปรดตรวจสอบว่ามีคอลัมน์ที่ระบุข้างต้นหรือไม่<br>"
                         f"&nbsp;&nbsp;&nbsp;&nbsp;2. หากไม่มี ให้เพิ่มคอลัมน์ที่ขาดและกรอกข้อมูลให้ครบถ้วน<br>"
                         f"&nbsp;&nbsp;&nbsp;&nbsp;3. บันทึกไฟล์และอัปโหลดใหม่อีกครั้ง"
@@ -358,7 +356,6 @@ def index(request):
                     )
                     messages.error(request, error_message)
                     return redirect('index')
-                    # raise ValueError(f"ไฟล์ {schedule_file.name} ไม่มีคอลัมน์ {', '.join(missing_columns)}")
                 
                 # ตรวจสอบว่าคอลัมน์ที่สำคัญมีข้อมูลอย่างน้อยหนึ่งค่า
                 empty_columns = [col for col in important_columns if df_original[col].isna().all() or (df_original[col] == '').all()]
@@ -381,7 +378,30 @@ def index(request):
                     )
                     messages.error(request, error_message)
                     return redirect('index')
-                    # raise ValueError(f"คอลัมน์ต่อไปนี้ไม่มีข้อมูล: {', '.join(empty_columns)}")
+                
+                kks_read = pd.read_excel(location_file, 
+                                        sheet_name=0,header = 0,
+                                        usecols = 'A:B',
+                                        engine="openpyxl")
+                
+                location_column_errors = [col for col in location_columns if col not in kks_read.columns]
+                if location_column_errors:
+                    logger.error(f"Missing columns in Location file: {', '.join(location_column_errors)}")
+                    error_message = (
+                        f"<div class='error-container'>"
+                        f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบคอลัมน์ที่จำเป็นในไฟล์ Location<br>"
+                        f"<ul class='error-details'>"
+                        f"<p class='error-description'>ไฟล์ {location_filename} ขาดคอลัมน์ต่อไปนี้:</p>"
+                        f"{''.join(f'<li>{col}</li>' for col in location_column_errors)}"
+                        f"</ul>"
+                        f"<p class='error-note'>คำแนะนำ:</p>"
+                        f"&nbsp;&nbsp;&nbsp;&nbsp;1. โปรดตรวจสอบว่ามีคอลัมน์ที่ระบุข้างต้นหรือไม่<br>"
+                        f"&nbsp;&nbsp;&nbsp;&nbsp;2. โปรดตรวจสอบว่าไฟล์ที่อัปโหลดเป็นไฟล์ Location<br>"
+                        f"</p>"
+                        f"</div>"
+                    )
+                    messages.error(request, error_message)
+                    return redirect('index')
                 
                 df_original = df_original[use_columns]
                 df_original.rename(columns={'TASK_XX': 'TASK_ORDER'}, inplace=True)
@@ -395,8 +415,6 @@ def index(request):
                 for col in use_columns:
                     if col in df_original.columns:
                         df_original[col] = df_original[col].apply(lambda x: x.strip() if isinstance(x, str) else x)
-                            
-                df_original_extracted = df_original
                 
             except Exception as e:
                 logger.error(f"An error occurred: {str(e)}", exc_info=True)
@@ -439,27 +457,6 @@ def index(request):
             # ใช้ฟังก์ชัน convert_duration กับคอลัมน์ DURATION_(HR.)
             df_original['DURATION_(HR.)'] = df_original['DURATION_(HR.)'].apply(convert_duration)
 
-            lst_index_duration = []
-            for i,j in zip(df_original['DURATION_(HR.)'], df_original.index) :
-                #if (type(i)!=float) and (type(i)!=int):
-                if (type(i)==str): ## if DURATION_(HR.) is a string type then show value and index
-                    i,j
-                    lst_index_duration.append(j)
-            print('##############################')
-            lst_index_start = []
-            for i,j in zip(df_original['START_DATE'], df_original.index) :
-                if (type(i)==str):
-                    if (re.search("[a-zA-Z]",i)):## if found alphabt in START_DATE then show index
-                        #i,j
-                        lst_index_start.append(j)
-            print('##############################')
-            lst_index_finish = []
-            for i,j in zip(df_original['FINISH_DATE'], df_original.index):
-                if (type(i)==str):
-                    if (re.search("[a-zA-Z]",i)):## if found alphabt in FINISH_DATE then show index
-                        #i,j
-                        lst_index_finish.append(j)
-            
             # ตรวจสอบค่า DURATION_(HR.) ว่าเป็นตัวเลขหรือไม่
             cond_duration = df_original['DURATION_(HR.)'].apply(lambda x: isinstance(x, (int, float)))
             non_negative = df_original[cond_duration]['DURATION_(HR.)'] < 0
@@ -471,26 +468,8 @@ def index(request):
 
             cond_finish_date = df_original['FINISH_DATE'].apply(lambda x: isinstance(x, str) and regex.search(r"\p{L}", x) is not None and not is_date(x))
             update_comment(df_comment, cond_finish_date, 'COMMENT', 'FINISH_DATE มีตัวอักษร')
-            
-            
-            # df_original_strat_date_1 = pd.to_datetime(df_original['START_DATE'], format='%d/%m/%Y',errors='coerce')
-            # df_original_strat_date_2 = pd.to_datetime(df_original['START_DATE'], format='%Y-%m-%d %H:%M:%S',errors='coerce')
-            # df_original_strat_date_3 = pd.to_datetime(df_original['START_DATE'], format='%d-%b-%Y', errors='coerce')
-            # df_original_strat_date_3 = df_original_strat_date_3.dt.strftime('%Y-%m-%d %H:%M:%S')
-            # df_original['START_DATE_NEW'] = df_original_strat_date_1.fillna(df_original_strat_date_2)
-            # df_original['START_DATE_NEW'] = df_original['START_DATE_NEW'].fillna(df_original_strat_date_3)
 
-            # df_original_finish_date_1 = pd.to_datetime(df_original['FINISH_DATE'], format='%d/%m/%Y',errors='coerce')
-            # df_original_finish_date_2 = pd.to_datetime(df_original['FINISH_DATE'], format='%Y-%m-%d %H:%M:%S',errors='coerce')
-            # df_original_finish_date_3 = pd.to_datetime(df_original['FINISH_DATE'], format='%d-%b-%Y', errors='coerce')
-            # df_original_finish_date_3 = df_original_finish_date_3.dt.strftime('%Y-%m-%d %H:%M:%S')
-            # df_original['FINISH_DATE_NEW'] = df_original_finish_date_1.fillna(df_original_finish_date_2)
-            # df_original['FINISH_DATE_NEW'] = df_original['FINISH_DATE_NEW'].fillna(df_original_finish_date_3)
-
-            # ใช้ฟังก์ชัน parse_dates กับ START_DATE
             df_original['START_DATE_NEW'] = parse_dates(df_original['START_DATE'])
-
-            # ใช้ฟังก์ชัน parse_dates กับ FINISH_DATE
             df_original['FINISH_DATE_NEW'] = parse_dates(df_original['FINISH_DATE'])
 
             cond_start_date_new = df_original['START_DATE'].notna() & df_original['START_DATE_NEW'].isna() & (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx')
@@ -533,7 +512,6 @@ def index(request):
             # df_original.loc[cond3, 'COMMENT'= 'ไม่มี skill rate'
             update_comment(df_comment, task_no_skill_rate, 'COMMENT', 'ไม่มี SKILL RATE (จำเป็นต้องกรอก)')
 
-
             task_order = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx')
             # ตรวจสอบว่า SUPERVISOR, FOREMAN, SKILL ถ้ามีค่า (ไม่ใช่ NaN) ต้องเป็นจำนวนเต็มบวก
             valid_supervisor = df_original['SUPERVISOR'].apply(lambda x: (pd.isna(x) or (isinstance(x, (int, float)) and x.is_integer() and x >= 0)))
@@ -564,31 +542,31 @@ def index(request):
 
             temp_kks = ''##kks
             lst_kks = []
-            ############
+
             temp_eq = ''##equipment
             lst_eq = []
-            ###############
+
             temp_task_order = ''##Task_order
             lst_task_order = []
-            ################
+
             temp_task = ''##Task
             lst_task = []
-            #################
+
             temp_start_date = ''##start_date
             lst_start_date = []
-            ##################
+
             temp_finish_date = ''##finish_date
             lst_finish_date = []
-            ##################
+
             temp_type_work = ''##PTW
             lst_type_work = []
-            #####################
+
             temp_response = ''##response
             lst_response = []
-            #####################
+
             temp_RESPONSE_CRAFT = ''##response carft
             lst_RESPONSE_CRAFT = []
-            #####################
+
             for i in (df_original_copy['KKS']):
                 if i!=-1:
                     temp_kks = i
@@ -596,7 +574,7 @@ def index(request):
                 else:
                     i=temp_kks
                     lst_kks.append(i)
-            ######################
+
             for j in (df_original_copy['EQUIPMENT']):
                 if j!=-1:
                     temp_eq = j
@@ -604,7 +582,7 @@ def index(request):
                 else:
                     j=temp_eq
                     lst_eq.append(j)
-            #######################
+
             for k in (df_original_copy['TASK_ORDER']):
                 if k!=-1:
                     temp_task_order = k
@@ -612,7 +590,7 @@ def index(request):
                 else:
                     k=temp_task_order
                     lst_task_order.append(k)
-            ######################
+
             for z in (df_original_copy['TASK']):
                 if z!=-1:
                     temp_task = z
@@ -620,7 +598,7 @@ def index(request):
                 else:
                     z=temp_task
                     lst_task.append(z)
-            ######################
+
             for xx in (df_original_copy['START_DATE_NEW']):
                 if xx!=-1:
                     temp_start_date = xx
@@ -628,7 +606,7 @@ def index(request):
                 else:
                     xx=temp_start_date
                     lst_start_date.append(xx)
-            ######################
+
             for yy in (df_original_copy['FINISH_DATE_NEW']):
                 if yy!=-1:
                     temp_finish_date = yy
@@ -636,7 +614,7 @@ def index(request):
                 else:
                     yy=temp_finish_date
                     lst_finish_date.append(yy)
-            ######################
+
             for zz in (df_original_copy['ประเภทของ_PERMIT_TO_WORK']):
                 if zz!=-1:
                     temp_type_work = zz
@@ -644,7 +622,7 @@ def index(request):
                 else:
                     zz=temp_type_work
                     lst_type_work.append(zz)
-            ######################
+
             for xy in (df_original_copy['RESPONSE']):
                 if xy!=-1:
                     temp_response = xy
@@ -652,7 +630,7 @@ def index(request):
                 else:
                     xy=temp_response
                     lst_response.append(xy)
-            ######################
+
             for xy in (df_original_copy['RESPONSE_CRAFT']):
                 if xy!=-1:
                     temp_RESPONSE_CRAFT = xy
@@ -665,8 +643,7 @@ def index(request):
             df_original_copy['EQUIPMENT_NEW'] = pd.Series(lst_eq)
             df_original_copy['TASK_ORDER_NEW'] = pd.Series(lst_task_order)
             df_original_copy['TASK_NEW']= pd.Series(lst_task)
-            ###################
-            ###################
+
             df_original_copy['START_DATE']=pd.Series(lst_start_date)
             df_original_copy['FINISH_DATE']=pd.Series(lst_finish_date)
             df_original_copy['ประเภทของ_PERMIT_TO_WORK'] = pd.Series(lst_type_work)
@@ -691,12 +668,6 @@ def index(request):
             df_original_newcol['MAIN_SYSTEM'] = main_system
             df_original_newcol['SUB_SYSTEM'] = sub_system
             df_original_newcol['EQUIPMENT'] = equipment
-
-            warnings.simplefilter("ignore")
-            kks_read = pd.read_excel(location_path, 
-                                sheet_name=0,header = 0,
-                                usecols = 'A:B',
-                                engine="openpyxl")
 
             plant_list1 = kks_read['Location'].str.split('-',expand=True)[0].value_counts().index.tolist()
             plant_regex1 = "|".join([p + "-" for p in plant_list1])
@@ -792,7 +763,7 @@ def index(request):
             task_order_length_exceed = df_original_check['TASK_ORDER_NEW'].astype(str).str.len() > 12
             update_comment(df_comment, (task_order_length_exceed & (df_original_check['TASK_ORDER']!= -1)), 'COMMENT', 'TASK_ORDER มีความยาวมากกว่า 12 ตัวอักษร')
 
-
+            task_not_xx = df_original_copy['TASK_ORDER'] != 'xx'
             kks_new_na = df_original_copy['KKS_NEW'].isin([''])
             equip_new_na = df_original_copy['EQUIPMENT_NEW'].isin([''])
             task_order_new_na = df_original_copy['TASK_ORDER_NEW'].isin([''])
@@ -802,60 +773,15 @@ def index(request):
             ptw_na = df_original_copy['ประเภทของ_PERMIT_TO_WORK'].isin([''])
             response_new_na = df_original_copy['RESPONSE'].isin([''])
             response_craft_na = df_original_copy['RESPONSE_CRAFT'].isin([''])
-
-            task_not_xx = df_original_copy['TASK_ORDER'] != 'xx'
-            # comment_empty_or_na = (df_comment['COMMENT'] == '') | (df_comment['COMMENT'].isna())
-            # df_comment.loc[task_not_xx & kks_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี KKS (จำเป็นต้องกรอก)'
-            # # df_comment.loc[task_not_xx & kks_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี KKS'
-            # df_comment.loc[task_not_xx & kks_new_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & kks_new_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี KKS', 'ไม่มี KKS (จำเป็นต้องกรอก)') if 'ไม่มี KKS' in x else f"{x}, ไม่มี KKS (จำเป็นต้องกรอก)")
+            
             replace_or_append_comment(df_comment, (task_not_xx & kks_new_na), 'COMMENT', 'ไม่มี KKS (จำเป็นต้องกรอก)', replace_message='ไม่มี KKS')
-
-            # df_comment.loc[task_not_xx & equip_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี EQUIPMENT (จำเป็นต้องกรอก)'
-            # df_comment.loc[task_not_xx & equip_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี EQUIPMENT (จำเป็นต้องกรอก)'
             update_comment(df_comment, (task_not_xx & equip_new_na), 'COMMENT', 'ไม่มี EQUIPMENT (จำเป็นต้องกรอก)')
-
-
-            # df_comment.loc[task_not_xx & task_order_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี TASK_ORDER (จำเป็นต้องกรอก)'
-            # df_comment.loc[task_not_xx & task_order_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี TASK_ORDER (จำเป็นต้องกรอก)'
             replace_or_append_comment(df_comment, (task_not_xx & task_order_new_na), 'COMMENT', 'ไม่มี TASK_ORDER (จำเป็นต้องกรอก)', replace_message='ไม่มี TASK_ORDER')
-
-            # df_comment.loc[task_not_xx & task_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี TASK (จำเป็นต้องกรอก)'
-            # # df_comment.loc[task_not_xx & task_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี TASK (จำเป็นต้องกรอก)'
-            # df_comment.loc[task_not_xx & task_new_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & task_new_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี TASK', 'ไม่มี TASK (จำเป็นต้องกรอก)') if 'ไม่มี TASK' in x else f"{x}, ไม่มี TASK (จำเป็นต้องกรอก)")
             replace_or_append_comment(df_comment, (task_not_xx & task_new_na), 'COMMENT', 'ไม่มี TASK (จำเป็นต้องกรอก)', replace_message='ไม่มี TASK')
-
-            # df_comment.loc[task_not_xx & start_date_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี START_DATE (จำเป็นต้องกรอก)'
-            # # df_comment.loc[task_not_xx & start_date_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี START_DATE (จำเป็นต้องกรอก)'
-            # df_comment.loc[task_not_xx & start_date_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & start_date_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี START_DATE', 'ไม่มี START_DATE (จำเป็นต้องกรอก)') if 'ไม่มี START_DATE' in x else f"{x}, ไม่มี START_DATE (จำเป็นต้องกรอก)")
             replace_or_append_comment(df_comment, (task_not_xx & start_date_na), 'COMMENT', 'ไม่มี START_DATE (จำเป็นต้องกรอก)', replace_message='ไม่มี START_DATE')
-
-
-            # df_comment.loc[task_not_xx & finish_date_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี FINISH_DATE (จำเป็นต้องกรอก)'
-            # # df_comment.loc[task_not_xx & finish_date_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี FINISH_DATE (จำเป็นต้องกรอก)'
-            # df_comment.loc[task_not_xx & finish_date_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & finish_date_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี FINISH_DATE', 'ไม่มี FINISH_DATE (จำเป็นต้องกรอก)') if 'ไม่มี FINISH_DATE' in x else f"{x}, ไม่มี FINISH_DATE (จำเป็นต้องกรอก)")
             replace_or_append_comment(df_comment, (task_not_xx & finish_date_na), 'COMMENT', 'ไม่มี FINISH_DATE (จำเป็นต้องกรอก)', replace_message='ไม่มี FINISH_DATE')
-
-
-            # df_comment.loc[task_not_xx & ptw_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี ประเภทของ_PERMIT_TO_WORK (จำเป็นต้องกรอก)'
-            # # df_comment.loc[task_not_xx & ptw_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี ประเภทของ_PERMIT_TO_WORK (จำเป็นต้องกรอก)'
-            # df_comment.loc[task_not_xx & ptw_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & ptw_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี ประเภทของ_PERMIT_TO_WORK', 'ไม่มี ประเภทของ_PERMIT_TO_WORK (จำเป็นต้องกรอก)') if 'ไม่มี ประเภทของ_PERMIT_TO_WORK' in x else f"{x}, ไม่มี ประเภทของ_PERMIT_TO_WORK (จำเป็นต้องกรอก)")
             replace_or_append_comment(df_comment, (task_not_xx & ptw_na), 'COMMENT', 'ไม่มี ประเภทของ_PERMIT_TO_WORK (จำเป็นต้องกรอก)', replace_message='ไม่มี ประเภทของ_PERMIT_TO_WORK')
-
-            # df_comment.loc[task_not_xx & response_new_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี RESPONSE (จำเป็นต้องกรอก)'
-            # # df_comment.loc[task_not_xx & response_new_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี RESPONSE'
-            # df_comment.loc[task_not_xx & response_new_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & response_new_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี RESPONSE', 'ไม่มี RESPONSE (จำเป็นต้องกรอก)') if 'ไม่มี RESPONSE' in x else f"{x}, ไม่มี RESPONSE (จำเป็นต้องกรอก)")
             replace_or_append_comment(df_comment, (task_not_xx & response_new_na), 'COMMENT', 'ไม่มี RESPONSE (จำเป็นต้องกรอก)', replace_message='ไม่มี RESPONSE')
-
-            # df_comment.loc[task_not_xx & response_craft_na & comment_empty_or_na, 'COMMENT'] = 'ไม่มี RESPONSE_CRAFT (จำเป็นต้องกรอก)'
-            # # df_comment.loc[task_not_xx & response_craft_na & ~comment_empty_or_na, 'COMMENT'] += ', ไม่มี RESPONSE_CRAFT (จำเป็นต้องกรอก)'
-            # df_comment.loc[task_not_xx & response_craft_na & ~comment_empty_or_na, 'COMMENT'] = df_comment.loc[task_not_xx & response_craft_na & ~comment_empty_or_na, 'COMMENT'].apply(
-            #     lambda x: x.replace('ไม่มี RESPONSE_CRAFT', 'ไม่มี RESPONSE_CRAFT (จำเป็นต้องกรอก)') if 'ไม่มี RESPONSE_CRAFT' in x else f"{x}, ไม่มี RESPONSE_CRAFT (จำเป็นต้องกรอก)")
             replace_or_append_comment(df_comment, (task_not_xx & response_craft_na), 'COMMENT', 'ไม่มี RESPONSE_CRAFT (จำเป็นต้องกรอก)', replace_message='ไม่มี RESPONSE_CRAFT')
 
             # ลบคอมมาและช่องว่างที่ไม่จำเป็นออกจาก COMMENT (ถ้ามี)
@@ -875,7 +801,7 @@ def index(request):
             # sheet = book[sheet_name]
             start_row = 3
             task_order_col = 7  # คอลัมน์เริ่มต้นสำหรับ TASK_ORDER
-            comment_col = None
+            comment_col = 19
 
             for idx, col in enumerate(sheet.iter_cols(1, sheet.max_column), start=1):
                 if col[1].value and isinstance(col[1].value, str) and col[1].value.strip().upper() == "COMMENT":
@@ -904,28 +830,9 @@ def index(request):
             request.session['download_link_comment'] = comment_path
             
             #! RECHECK
-            # ข้อมูลไม่สมบูรณ์
             task_order_not_xx = df_original['TASK_ORDER'] != 'xx'
             task_order = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx')
             task_not_xx = df_original_copy['TASK_ORDER'] != 'xx'
-            # task_no_skill_rate = (df_original['TASK_ORDER'] == 10) & ((df_original['SUPERVISOR'].isna()) & (df_original['FOREMAN'].isna()) & (df_original['SKILL'].isna()))
-            # task_no_type = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['TYPE'].isna())
-            # cond_duration = df_original['DURATION_(HR.)'].apply(lambda x: isinstance(x, (int, float)))
-            # non_negative = df_original[cond_duration]['DURATION_(HR.)'] < 0
-            # task_order_valid = df_original_check['TASK_ORDER_NEW'].apply(
-            #     lambda x: (isinstance(x, str) and (x.isdigit() or x == 'xx')) or 
-            #             (isinstance(x, (int, float)) and x.is_integer() and x >= 0)
-            # )            
-            # cond_start_date_new = df_original['START_DATE'].notna() & df_original['START_DATE_NEW'].isna() & (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx')
-            # cond_finish_date_new = df_original['FINISH_DATE'].notna() & df_original['FINISH_DATE_NEW'].isna() & (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx')
-            # valid_supervisor = df_original['SUPERVISOR'].apply(lambda x: (pd.isna(x) or (isinstance(x, (int, float)) and x.is_integer() and x >= 0)))
-            # valid_foreman = df_original['FOREMAN'].apply(lambda x: (pd.isna(x) or (isinstance(x, (int, float)) and x.is_integer() and x >= 0)))
-            # valid_skill = df_original['SKILL'].apply(lambda x: (pd.isna(x) or (isinstance(x, (int, float)) and x.is_integer() and x >= 0)))
-            # # เงื่อนไขตรวจสอบว่าค่าใน SUPERVISOR, FOREMAN, SKILL มีค่าที่ไม่ถูกต้อง (ไม่เป็นจำนวนเต็มบวก)
-            # invalid_skill_rate = ~(valid_supervisor & valid_foreman & valid_skill)
-            # task_type = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['TYPE'].notna())
-            # valid_type = (df_original['TYPE'].isin(['ME', 'EE', 'CV', 'IC']))
-            
             kks_new_na = df_original_copy['KKS_NEW'].isin([''])
             equip_new_na = df_original_copy['EQUIPMENT_NEW'].isin([''])
             task_order_new_na = df_original_copy['TASK_ORDER_NEW'].isin([''])
@@ -937,41 +844,41 @@ def index(request):
             response_craft_na = df_original_copy['RESPONSE_CRAFT'].isin([''])
 
             # ตรวจสอบเงื่อนไขแต่ละคอลัมน์และเก็บชื่อคอลัมน์ที่ข้อมูลขาดหาย
-            missing_columns = []
+            all_missing_columns = []
             missing_counts = []
             
             if ((task_not_xx) & (kks_new_na)).any():
-                missing_columns.append('KKS')
+                all_missing_columns.append('KKS')
                 missing_counts.append(((task_not_xx) & (kks_new_na)).sum())
             if ((task_not_xx) & (equip_new_na)).any():
-                missing_columns.append('EQUIPMENT')
+                all_missing_columns.append('EQUIPMENT')
                 missing_counts.append(((task_not_xx) & (equip_new_na)).sum())
             if ((task_not_xx) & (task_order_new_na)).any():
-                missing_columns.append('TASK_ORDER')
+                all_missing_columns.append('TASK_ORDER')
                 missing_counts.append(((task_not_xx) & (task_order_new_na)).sum())
             if ((task_not_xx) & (task_new_na)).any():
-                missing_columns.append('TASK')
+                all_missing_columns.append('TASK')
                 missing_counts.append(((task_not_xx) & (task_new_na)).sum())
             if ((task_not_xx) & (start_date_na)).any():
-                missing_columns.append('START_DATE')
+                all_missing_columns.append('START_DATE')
                 missing_counts.append(((task_not_xx) & (start_date_na)).sum())
             if ((task_not_xx) & (finish_date_na)).any():
-                missing_columns.append('FINISH_DATE')
+                all_missing_columns.append('FINISH_DATE')
                 missing_counts.append(((task_not_xx) & (finish_date_na)).sum())
             if ((task_not_xx) & (ptw_na)).any():
-                missing_columns.append('PTW')
+                all_missing_columns.append('PTW')
                 missing_counts.append(((task_not_xx) & (ptw_na)).sum())
             if ((task_not_xx) & (response_new_na)).any():
-                missing_columns.append('RESPONSE')
+                all_missing_columns.append('RESPONSE')
                 missing_counts.append(((task_not_xx) & (response_new_na)).sum())
             if ((task_not_xx) & (response_craft_na)).any():
-                missing_columns.append('RESPONSE_CRAFT')
+                all_missing_columns.append('RESPONSE_CRAFT')
                 missing_counts.append(((task_not_xx) & (response_craft_na)).sum())
             if (task_no_skill_rate).any():
-                missing_columns.append('SKILL RATE')
+                all_missing_columns.append('SKILL RATE')
                 missing_counts.append(task_no_skill_rate.sum())
             if (task_no_type).any():
-                missing_columns.append('TYPE')
+                all_missing_columns.append('TYPE')
                 missing_counts.append(task_no_type.sum())
 
             # ตรวจสอบเงื่อนไขแต่ละคอลัมน์และเก็บชื่อคอลัมน์ที่ข้อมูลไม่ถูกต้อง
@@ -1000,18 +907,17 @@ def index(request):
             error_messages = []
             
             # ตรวจสอบข้อมูลขาดหาย
-            if missing_columns:
-                missing_info = ', '.join([f"{col}: {count} รายการ" for col, count in zip(missing_columns, missing_counts)])
+            if all_missing_columns:
+                missing_info = ', '.join([f"{col}: {count} รายการ" for col, count in zip(all_missing_columns, missing_counts)])
                 logger.error(f"Missing data detected in columns: {missing_info}", exc_info=True)
                 error_messages.append(f"พบข้อมูลที่ขาดหายในคอลัมน์ต่อไปนี้: {missing_info} กรุณาตรวจสอบและเพิ่มข้อมูลที่ขาดหายเพื่อให้ดำเนินการต่อได้")
-            # ตรวจสอบข้อมูลที่ไม่ถูกต้อง
             
+            # ตรวจสอบข้อมูลที่ไม่ถูกต้อง
             if invalid_columns:
                 invalid_info = ', '.join([f"{col}: {count} รายการ" for col, count in zip(invalid_columns, invalid_counts)])
                 logger.error(f"Invalid data detected in columns: {invalid_info}", exc_info=True)
                 error_messages.append(f"พบข้อมูลที่ไม่ถูกต้องในคอลัมน์ต่อไปนี้: {invalid_info} กรุณาตรวจสอบและแก้ไขข้อมูลที่ไม่ถูกต้องเพื่อดำเนินการต่อ")
             
-            # ส่งข้อความแจ้งเตือนไปยังหน้า upload.html
             if error_messages:
                 return render(request, 'maximo_app/upload.html', {
                     'form': form,
@@ -1022,150 +928,51 @@ def index(request):
                 })
             #! END RECHECK
 ############
-############
-            #? extracted_kks_counts
-            df_original_newcol['UNIT'] = df_original_newcol['KKS_NEW'].str[0:3]
-            df_original_extracted['EXTRACTED_KKS'] = df_original_extracted['KKS'].str.extract(r'-(\w{3})')
-            extracted_kks_counts = df_original_extracted['EXTRACTED_KKS'].value_counts()
-############
-############
-            timestamp_columns_1 = ['START_DATE', 'FINISH_DATE']
-            timestamp_columns_2 = ['START_DATE_NEW', 'FINISH_DATE_NEW']
-            
-            # Timestamp to String
-            df_original = convert_timestamp_columns_to_str(df_original, timestamp_columns_1)
-            df_original = convert_timestamp_columns_to_str(df_original, timestamp_columns_2)
-            df_original_copy = convert_timestamp_columns_to_str(df_original_copy, timestamp_columns_1)
-            df_original_copy = convert_timestamp_columns_to_str(df_original_copy, timestamp_columns_2)
-            df_original_newcol = convert_timestamp_columns_to_str(df_original_newcol, timestamp_columns_1)
-            
-            # Save DataFrames
-            request.session['df_original'] = df_original.to_dict(orient='index')
-            request.session['df_original_copy'] = df_original_copy.to_dict(orient='index')
-            request.session['df_original_newcol'] = df_original_newcol.to_dict(orient='index')
-            request.session['df_comment'] = df_comment.to_dict(orient='index')
-            request.session['extracted_kks_counts'] = extracted_kks_counts.to_dict()
-            
-            # Save variables
-            request.session['first_plant'] = first_plant
-            request.session['most_common_plant_unit'] = most_common_plant_unit
-############
-############        
+############ 
             logger.info(f'1 form schedule_filename: {schedule_filename}')
             logger.info(f'1 form location_filename: {location_filename}')
             logger.info(f'1 form comment_path: {comment_path}')
-            logger.info(f'1 form extracted_kks_counts: {extracted_kks_counts}')
-            logger.info(f'1 form user_input_mapping: {user_input_mapping}')
 ############
 ############                        
-        elif 'kks_mapping_submit' in request.POST:
             # Get variables
-            schedule_filename = request.session.get('schedule_filename', None)
-            location_filename = request.session.get('location_filename', None)
-            schedule_path = request.session.get('schedule_path', None)
-            location_path = request.session.get('location_path', None)
-            comment_path = request.session.get('download_link_comment', None)
-            first_plant = request.session.get('first_plant')
-            child_site = request.session.get('child_site')
-            temp_dir = request.session.get('temp_dir')
-            most_common_plant_unit = request.session.get('most_common_plant_unit')
+            # schedule_filename = request.session.get('schedule_filename', None)
+            # location_filename = request.session.get('location_filename', None)
+            # schedule_path = request.session.get('schedule_path', None)
+            # location_path = request.session.get('location_path', None)
+            # comment_path = request.session.get('download_link_comment', None)
+            # child_site = request.session.get('child_site')
+            # temp_dir = request.session.get('temp_dir')
+            
             # Get Dropdown
-            frequency = request.session.get('frequency', '4')
-            egmntacttype = request.session.get('egmntacttype')
-            egprojectid = request.session.get('egprojectid')
-            egwbs = request.session.get('egwbs')
-            location = request.session.get('location')
-            siteid = request.session.get('siteid')
-            wbs_desc = request.session.get('wbs_desc')
-            worktype = request.session.get('worktype')
-            wostatus = request.session.get('wostatus')
-            grouping_options = request.session.get('grouping_options')
-            
-            # Get DataFrames
-            extracted_kks_counts = pd.DataFrame.from_dict(request.session.get('extracted_kks_counts', {}), orient='index')
-            df_original = pd.DataFrame.from_dict(request.session['df_original'], orient='index')
-            df_original_copy = pd.DataFrame.from_dict(request.session['df_original_copy'], orient='index')
-            df_original_newcol = pd.DataFrame.from_dict(request.session['df_original_newcol'], orient='index')
-            df_comment = pd.DataFrame.from_dict(request.session['df_comment'], orient='index')
-            
-            # Get Series
-            # task_no_skill_rate = pd.DataFrame.from_dict(request.session['task_no_skill_rate'], orient='index')
-            # task_no_type = pd.DataFrame.from_dict(request.session['task_no_type'], orient='index')
-            # cond_duration = pd.DataFrame.from_dict(request.session['cond_duration'], orient='index')
-            # non_negative = pd.DataFrame.from_dict(request.session['non_negative'], orient='index')
-            # task_order_valid = pd.DataFrame.from_dict(request.session['task_order_valid'], orient='index')
-            # cond_start_date_new = pd.DataFrame.from_dict(request.session['cond_start_date_new'], orient='index')
-            # cond_finish_date_new = pd.DataFrame.from_dict(request.session['cond_finish_date_new'], orient='index')
-            # invalid_skill_rate = pd.DataFrame.from_dict(request.session['invalid_skill_rate'], orient='index')
-            # task_type = pd.DataFrame.from_dict(request.session['task_type'], orient='index')
-            # valid_type = pd.DataFrame.from_dict(request.session['valid_type'], orient='index')
+            # frequency = request.session.get('frequency', '4')
+            # egmntacttype = request.session.get('egmntacttype')
+            # egprojectid = request.session.get('egprojectid')
+            # egwbs = request.session.get('egwbs')
+            # location = request.session.get('location')
+            # siteid = request.session.get('siteid')
+            # wbs_desc = request.session.get('wbs_desc')
+            # worktype = request.session.get('worktype')
+            # wostatus = request.session.get('wostatus')
             
             # Define path
             job_plan_task_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Job_Plan.xlsx")
             job_plan_labor_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Job_Plan_Labor.xlsx")
             pm_plan_path = os.path.join(temp_dir, f"{uuid.uuid4()}_PM_Plan.xlsx")
-            
-
-            timestamp_columns_1 = ['START_DATE', 'FINISH_DATE']
-            timestamp_columns_2 = ['START_DATE_NEW', 'FINISH_DATE_NEW']
-            df_original = convert_str_columns_to_timestamp(df_original, timestamp_columns_1)
-            df_original = convert_str_columns_to_timestamp(df_original, timestamp_columns_2)
-            df_original_copy = convert_str_columns_to_timestamp(df_original_copy, timestamp_columns_1)
-            df_original_copy = convert_str_columns_to_timestamp(df_original_copy, timestamp_columns_2)
-            df_original_newcol = convert_str_columns_to_timestamp(df_original_newcol, timestamp_columns_1)
-            
-            # Collect mapping data from the POST request
-            if not extracted_kks_counts.empty:
-                user_input_mapping = {}
-                for kks_value in extracted_kks_counts.index:
-                    user_value = request.POST.get(kks_value)  # รับค่าจาก text box ในฟอร์ม
-                    user_input_mapping[kks_value] = user_value  # เก็บใน dictionary
-                request.session['user_input_mapping'] = user_input_mapping
-                # นำข้อมูล user_input_mapping ไปใช้ในขั้นตอนถัดไป
-            else:
-                logger.error(f"extracted_kks_counts data is missing: {str(e)}", exc_info=True)
-                error_message = (
-                    f"<div class='error-container'>"
-                    f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบข้อมูลที่จำเป็นในการประมวลผล<br>"
-                    f"<ul class='error-details'>"
-                    f"<p class='error-description'>สาเหตุของปัญหา:</p>"
-                    f"<li>ไม่พบข้อมูล extracted_kks_counts ที่ใช้สำหรับการดำเนินการในระบบ</li>"
-                    f"</ul>"
-                    f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบข้อมูลและลองส่งอีกครั้ง หากยังพบปัญหา โปรดติดต่อทีมสนับสนุนเพื่อขอความช่วยเหลือ</p>"
-                    f"</div>"
-                )
-                return redirect('index')
 ############
 ############        
             logger.info(f'2 elif schedule_filename: {schedule_filename}')
             logger.info(f'2 elif location_filename: {location_filename}')
             logger.info(f'2 elif comment_path: {comment_path}')
-            logger.info(f'2 elif extracted_kks_counts: {extracted_kks_counts}')
-            logger.info(f'2 elif user_input_mapping: {user_input_mapping}')
 ############
 ############  
             #! Creat JOB PLAN TASK
-
-            # user_input_mapping = {}
-            # for kks_value in extracted_kks_counts.index:
-            #     user_value = input((f"Please enter the mapping for '{kks_value}': "))
-            #     user_input_mapping[kks_value] = user_value
-
-            # df_original_newcol['UNIT_TYPE']= df_original_newcol['UNIT'].map({'H00':'C0', 'H13':'C13', 'H03':'U', 'H04':'U'})
-            df_original_newcol['UNIT_TYPE'] = df_original_newcol['UNIT'].map(user_input_mapping)
-
-
+            df_original_newcol['UNIT_TYPE'] = df_original_newcol['KKS_NEW'].str[0:3]
             df_original_filter = df_original_newcol[df_original_newcol['TASK_ORDER_NEW']!='xx'].copy()
-            # for i,j in zip(df_original_filter['TASK_ORDER_NEW'], df_original_filter.index):
-            #     if (type(i)!=float) and (type(i)!=int):
-            #         i,j
             df_original_filter['TASK_ORDER_NEW'] = df_original_filter['TASK_ORDER_NEW'].astype('int32')
 
             cond1 = (df_original_filter['TASK_ORDER_NEW']==10) & (df_original_filter['TASK_ORDER_NEW'].shift(1)!=10)
-            cond2 = ((df_original_filter['TASK_ORDER_NEW']==10) & 
-            (df_original_filter['TASK_ORDER_NEW'].shift(1)==10) & (df_original_filter['DURATION_(HR.)']!=-1))
+            cond2 = ((df_original_filter['TASK_ORDER_NEW']==10) & (df_original_filter['TASK_ORDER_NEW'].shift(1)==10) & (df_original_filter['DURATION_(HR.)']!=-1))
             xx = cond1|cond2
-
             df_original_filter['GROUP_LEVEL_1'] = xx.cumsum().rename('GROUP_LEVEL_1')
             # df_original_filter['GROUP_LEVEL_2'] = df_original_filter['GROUP_LEVEL_1'].astype('str')+'-'+df_original_filter['KKS_NEW']
             df_original_filter['GROUP_LEVEL_2'] = (df_original_filter['GROUP_LEVEL_1'].astype(int) * 10).astype(str).str.zfill(5) + '-' + df_original_filter['KKS_NEW']
@@ -1174,7 +981,7 @@ def index(request):
             df_original_filter['UNIT_TYPE'] = df_original_filter['UNIT_TYPE'].astype(str)
             df_original_filter['GROUP_LEVEL_3'] = np.where(
                 worktype == 'APAO', 
-                df_original_filter['GROUP_LEVEL_2'] + '-' + df_original_filter['TYPE'] + '-' + df_original_filter['UNIT_TYPE'] + '-AD', 
+                df_original_filter['GROUP_LEVEL_2'] + '-' + df_original_filter['TYPE'] + '-' + df_original_filter['UNIT_TYPE'] + '-' + 'AD', 
                 df_original_filter['GROUP_LEVEL_2'] + '-' + df_original_filter['TYPE'] + '-' + df_original_filter['UNIT_TYPE'])
             common_indices = df_original_copy.index.intersection(df_original_filter.index)
             df_original_copy.loc[common_indices, ['GROUP_LEVEL_1', 'GROUP_LEVEL_2','GROUP_LEVEL_3']] = df_original_filter.loc[common_indices, ['GROUP_LEVEL_1', 'GROUP_LEVEL_2','GROUP_LEVEL_3']]
@@ -1204,7 +1011,6 @@ def index(request):
                 df_new = df_new.fillna(-1)
                 dict_jp_master[group_1] = df_new[lst]
 
-            dict_jp_master2 = {}
             df_jop_plan = pd.DataFrame()
             for group1,group3,eq in zip(df_original_filter_group['GROUP_LEVEL_1'],
                                         df_original_filter_group['GROUP_LEVEL_3'],
@@ -1217,7 +1023,6 @@ def index(request):
                 df_new.loc[:, 'JOB_NUM'] = [group3] * len(df_new)
                 df_new.loc[:, 'EQUIPMENT'] = [eq] * len(df_new)
                 lst2 = ['JOB_NUM','EQUIPMENT','DURATION_TOTAL','TASK_ORDER_NEW','DURATION_(HR.)','START_DATE','FINISH_DATE','TASK_NEW']
-                dict_jp_master2[group3]=df_new[lst2]
                 df_jop_plan = pd.concat([df_jop_plan,df_new[lst2]])
             df_jop_plan = df_jop_plan.reset_index(drop=True)
             df_jop_plan['GROUP_NUM'] = df_jop_plan.groupby('JOB_NUM').ngroup()+1
@@ -1272,14 +1077,11 @@ def index(request):
             df_jop_plan_master_labor['GROUP_LEVEL_1'] = df_jop_plan_master_labor['JOB_NUM'].str.extract(r'JP-(\d+)-')
             df_jop_plan_master_labor['GROUP_LEVEL_1'] = df_jop_plan_master_labor['GROUP_LEVEL_1'].astype('int32')
             df_jop_plan_master_labor['GROUP_LEVEL_1'] = df_jop_plan_master_labor['GROUP_LEVEL_1'] / 10
-            df_jop_plan_master_labor[['JOB_NUM','DURATION_TOTAL','GROUP_LEVEL_1']]
 
             df_group_level_1 = pd.DataFrame()
             for group_1 in df_original_filter_group['GROUP_LEVEL_1'].value_counts().sort_index().index:## get group 1
                 cond1 = (df_original_filter['GROUP_LEVEL_1']==group_1)
-                ############
                 work_group = df_original_filter[cond1].iloc[:,0:].reset_index(drop=True) # separate each group
-                ###########
                 cond2 = work_group['DURATION_(HR.)']!=-1 # to eliminate redundant task
                 df_new = work_group[cond2].copy()
                 df_new['DURATION_TOTAL']=df_new['DURATION_(HR.)'].sum()
@@ -1302,7 +1104,6 @@ def index(request):
                 i.sort()
                 dfxx = dfx.iloc[:, i].copy()
                 dfxx = dfxx.rename(columns={"SUPERVISOR": "L21NOM", "FOREMAN": "L22NOM", "SKILL":"L23NOM"})
-                #dfxx.iloc[0:,0:]
                 df_labor = pd.concat([df_labor,dfxx.iloc[0:1,0:]])
 
             df_labor = df_labor.reset_index(drop=True)
@@ -1320,72 +1121,56 @@ def index(request):
             df3 = pd.concat([df2,df1],axis=1)
             df3 = df3.set_index('GROUP_NUM')
             dict_new = df3.to_dict()['MAP_GROUP']
+            
             df_labor_new['GROUP']=df_labor_new['GROUP_NUM'].map(dict_new)
             df_labor_new['MOD'] = df_labor_new['GROUP']%2
-
             df_labor_new['ORGID'] = orgid
             df_labor_new['SITEID'] = siteid
             df_labor_new['PLUSCREVNUM']= pluscrevum
             df_labor_new['STATUS']= status
             df_labor_new['JPTASK']= ''
-
-            df_labor_new.columns
+            df_labor_new['COMMENT'] = ''
+            
+            job_plan_cond1 = df_labor_new['JOB_NUM'].astype(str).str.len()>30
+            update_comment(df_labor_new, job_plan_cond1, 'COMMENT', 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร')
+            
             lst_labor1 = ['JOB_NUM','ORGID','SITEID','PLUSCREVNUM', 
                 'STATUS','JPTASK', 'CRAFT','SKILLLEVEL',
                 'LABORHRS','QUANTITY','GROUP','MOD', 'COMMENT']
-
-            df_labor_new['COMMENT'] = ''
-            job_plan_cond1 = df_labor_new['JOB_NUM'].astype(str).str.len()>30
-            # comment_empty_or_na = (df_labor_new['COMMENT'] == '') | (df_labor_new['COMMENT'].isna())
-            # df_labor_new.loc[job_plan_cond1 & comment_empty_or_na, 'COMMENT'] = 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร'
-            # df_labor_new.loc[job_plan_cond1 & ~comment_empty_or_na, 'COMMENT'] += ', JPNUM มีความยาวมากกว่า 30 ตัวอักษร'
-            update_comment(df_labor_new, job_plan_cond1, 'COMMENT', 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร')
-
+            
             #! Create Job_Plan_Labor.xlsx
             df_labor_new[lst_labor1].to_excel(job_plan_labor_path, index=False)
 
 
             #! Create PM PLAN
             # 'MAIN_SYSTEM','MAIN_SYSTEM_DESC','EGCRAFT','PTW'
-            logger.info(f"Grouping Options1 : {grouping_options}")
+            logger.info(f"Grouping Options1 : {selected_order}")
             
-            group_columns = grouping_options
+            group_columns = selected_order
             
-            if 'SYSTEM' in group_columns:
-                # หาตำแหน่งของ 'SYSTEM'
-                index = group_columns.index('SYSTEM')
-                # แทนที่ 'SYSTEM' ด้วย 'MAIN_SYSTEM' และ 'MAIN_SYSTEM_DESC' ในตำแหน่งเดิม
-                group_columns[index:index+1] = ['MAIN_SYSTEM', 'MAIN_SYSTEM_DESC']
-            
-            logger.info(f"Grouping Options2 : {group_columns}")
-            
-            group_base = ['UNIT_TYPE', 'TYPE']
-
-            all_group_columns = group_columns + group_base
             pm_master_df = create_pm_plan(request, df_original_filter, siteid,
                                             first_plant, worktype, egmntacttype,
                                             wostatus, egprojectid, egwbs, frequency)
             
-            logger.info(f"ALL GROUP : {all_group_columns}")
-            
-            # option = '2'    # (No_Group)
-            # group_columns = ['MAIN_SYSTEM', 'MAIN_SYSTEM_DESC', 'EGCRAFT', 'PTW', 'UNIT_TYPE', 'TYPE']
             if 'no_arrange' in group_columns:
                 pm_master_df['MOD'] = 1
                 pm_master_df['GROUP'] = ''
                 df_pm_plan3 = pm_master_df.copy()
-
             else:
+                if 'SYSTEM' in group_columns:
+                    index = group_columns.index('SYSTEM')
+                    group_columns[index:index+1] = ['MAIN_SYSTEM', 'MAIN_SYSTEM_DESC']
+                
+                logger.info(f"Grouping Options2 : {group_columns}")
+                
+                group_base = ['UNIT_TYPE', 'TYPE']
+                all_group_columns = group_columns + group_base
+                logger.info(f"ALL GROUP : {all_group_columns}")
+                
                 df_yy = pm_master_df.groupby(all_group_columns).size()
                 level_to_sort = [all_group_columns.index('TYPE'), all_group_columns.index('UNIT_TYPE')]
                 df_yy = df_yy.sort_index(level=level_to_sort, ascending=False)
                 df_yyy = df_yy.reset_index(name='count')
-
-                # pm_master_df[['SUB_SYSTEM','SUB_SYSTEM_DESC','KKS_NEW_DESC','EQUIPMENT','UNIT_TYPE','TYPE']].drop_duplicates().sort_values(by=['TYPE','UNIT_TYPE'],ascending=False)
-                # df_yy = pm_master_df.groupby(['MAIN_SYSTEM','MAIN_SYSTEM_DESC','EGCRAFT','PTW','UNIT_TYPE','TYPE']).size().sort_index(level=[5,4,3],ascending=False)
-                # df_yyy = df_yy.reset_index()
-                # df_yyy.rename(columns={0: "count"}, inplace=True)
-
                 df_yyy_cont_more = df_yyy[df_yyy['count']>1].reset_index(drop=True).copy()
                 df_yyy_cont_less = df_yyy[df_yyy['count']<=1].reset_index(drop=True).copy()
                 
@@ -1428,16 +1213,6 @@ def index(request):
                     run_number = [i for i in range(1,len(index_child)+1)]
                     df_pm_plan3_master.loc[index_child,'WOSEQUENCE'] = run_number
 
-            for key, value in user_input_mapping.items():
-                if value.startswith('C'):
-                    # Define condition
-                    pm_plan_cond = ((df_pm_plan3_master['UNIT_TYPE'] == value)) & \
-                                    (df_pm_plan3_master['PARENT'] == '') & \
-                                    (df_pm_plan3_master['JPNUM'] == '')
-                    
-                    # Update LOCATION column
-                    df_pm_plan3_master.loc[pm_plan_cond, 'LOCATION'] = f'{child_site}-{key}'
-
             df_pm_plan3_master['NEXTDATE'] = df_pm_plan3_master['NEXTDATE'].astype('str')
             df_pm_plan3_master['FINISH_DATE'] = df_pm_plan3_master['FINISH_DATE'].astype('str')
             df_pm_plan3_master['TARGSTARTTIME'] = df_pm_plan3_master['TARGSTARTTIME'].astype('str')
@@ -1445,14 +1220,7 @@ def index(request):
 
             df_pm_plan3_master['COMMENT'] = ''
             pm_plan_cond0 = df_pm_plan3_master['PMNUM'].astype(str).str.len()>30
-            # comment_empty_or_na = (df_pm_plan3_master['COMMENT'] == '') | (df_pm_plan3_master['COMMENT'].isna())
-            # df_pm_plan3_master.loc[pm_plan_cond0 & comment_empty_or_na, 'COMMENT'] = 'PMNUM มีความยาวมากกว่า 30 ตัวอักษร'
-            # df_pm_plan3_master.loc[pm_plan_cond0 & ~comment_empty_or_na, 'COMMENT'] += ', PMNUM มีความยาวมากกว่า 30 ตัวอักษร'
             update_comment(df_pm_plan3_master, pm_plan_cond0, 'COMMENT', 'PMNUM มีความยาวมากกว่า 30 ตัวอักษร')
-
-            # Log ใช้ในการทำ Scheduler
-            # display_text_cond1 = df_pm_plan3_master['PARENT'] == ''
-            # display_text = ', '.join(df_pm_plan3_master[display_text_cond1]['PMNUM'].astype(str).tolist())
 
             #! Create PM_Plan.xlsx
             df_pm_plan3_master.to_excel(pm_plan_path, index=False)
@@ -1771,7 +1539,11 @@ def index(request):
                     return redirect('index')
 ############
 ############
-            # บันทึกลิงก์ดาวน์โหลดลงใน session
+            # Save variables
+            request.session['first_plant'] = first_plant
+            request.session['most_common_plant_unit'] = most_common_plant_unit
+            
+            # Save files
             request.session['download_link_comment'] = comment_path
             request.session['download_link_job_plan_task'] = job_plan_task_path
             request.session['download_link_job_plan_labor'] = job_plan_labor_path
@@ -1782,34 +1554,25 @@ def index(request):
             logger.info(f'form: {form}')
             logger.info(f'schedule_filename: {schedule_filename}')
             logger.info(f'location_filename: {location_filename}')
-            logger.info(f'extracted_kks_counts: {extracted_kks_counts}')
-            logger.info(f'user_input_mapping: {user_input_mapping}')
             logger.info(f'download_link_comment: {request.session["download_link_comment"]}')
             logger.info(f'download_link_job_plan_task: {request.session["download_link_job_plan_task"]}')
             logger.info(f'download_link_job_plan_labor: {request.session["download_link_job_plan_labor"]}')
             logger.info(f'download_link_pm_plan: {request.session["download_link_pm_plan"]}')
             logger.info(f'download_link_template: {request.session["download_link_template"]}')
         
-        else:
-            logger.error(f"Form errors: {str(form.errors)}")
-            error_message = "พบข้อผิดพลาดในการกรอกฟอร์ม กรุณาตรวจสอบและกรอกข้อมูลให้ครบถ้วน"
-            messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {'form': form})
     else:
         keys_to_clear = [
             'schedule_filename', 'location_filename', 'temp_dir', 'schedule_path', 'location_path', 
-            'extracted_kks_counts', 'first_plant', 'most_common_plant_unit', 'df_original',
-            'df_original_copy', 'df_original_newcol', 'df_comment', 'user_input_mapping', 
+            'first_plant', 'most_common_plant_unit',
             'download_link_comment', 'download_link_job_plan_task', 'download_link_job_plan_labor', 
-            'download_link_pm_plan', 'download_link_template', 'frequency', 'egmntacttype', 
-            'egprojectid', 'egwbs', 'location', 'siteid', 'wbs_desc', 'worktype', 'wostatus', 
-            'grouping_options', 'child_site', 
+            'download_link_pm_plan', 'download_link_template', 
+            'year', 'frequency', 'egmntacttype', 'egprojectid', 'egwbs', 'location', 'siteid', 
+            'wostatus', 'wbs', 'wbs_desc', 'worktype', 'wostatus', 'grouping_text', 'child_site', 
         ]
 
         for key in keys_to_clear:
             request.session.pop(key, None)
         
-        # request.session.clear()
         form = UploadFileForm()
     
     return render(request, 'maximo_app/upload.html', {
@@ -1817,8 +1580,6 @@ def index(request):
         'error_messages': error_messages,
         'schedule_filename': schedule_filename,
         'location_filename': location_filename,
-        'extracted_kks_counts': extracted_kks_counts,
-        'user_input_mapping' : user_input_mapping,
         'selected_order': selected_order,
     })
 
@@ -2429,6 +2190,11 @@ def custom_500(request):
 # ฟังก์ชันช่วยเหลือ (Helper Functions)
 # ---------------------------------
 
+def get_grouping_text(selected_order):
+    if 'no_arrange' in selected_order:
+        return 'ไม่มีการจัดกลุ่ม'
+    return f"จัดกลุ่มตาม {', '.join(selected_order)}"
+
 # ฟังก์ชันสำหรับแปลงคอลัมน์ที่เป็น Timestamp เป็น string
 def convert_timestamp_columns_to_str(df, columns):
     for col in columns:
@@ -2480,7 +2246,7 @@ def read_excel_with_error_handling(request, schedule_path, sheet_name=0):
                                     dtype={'START_DATE': str, 'FINISH_DATE': str})
         return df_original
     except ValueError as ve:
-        # หาก sheet_name ไม่ถูกต้อง
+        # sheet_name ไม่มีข้อมูล
         logger.error(f"Invalid sheet name '{sheet_name}': {ve}")
         error_message = (
             f"<div class='error-container'>"
@@ -2628,26 +2394,25 @@ def create_pm_plan(request, df_original_filter, siteid,
             'TYPE': [],
         }
         ############################
-        for row_index,df in  df_original_filter_group_pm.iterrows():
+        for _,row in  df_original_filter_group_pm.iterrows():
             #row_index
             ####PM Number
             df_group_temp = df_original_filter.copy()
-            PMNUM = 'PO'+'-'+df['GROUP_LEVEL_3']
+            PMNUM = 'PO'+'-'+row['GROUP_LEVEL_3']
             pm_master_dict['PMNUM'].append(PMNUM)
             #####Site ID
             pm_master_dict['SITEID'] = siteid
             #####DESCRIPTION
-            desc = df['EQUIPMENT_NEW']
+            desc = row['EQUIPMENT_NEW']
             pm_master_dict['DESCRIPTION'].append(desc)
             #####STATUS
             pm_master_dict['STATUS'] = status
             #####LOCATION
-            loc = first_plant+df['KKS_NEW']
+            loc = first_plant+row['KKS_NEW']
             pm_master_dict['LOCATION'].append(loc)
             #####ROUTE
             
-            #########!
-            route_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['ROUTE'].dropna().drop_duplicates().to_list()
+            route_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==row['GROUP_LEVEL_1']]['ROUTE'].dropna().drop_duplicates().to_list()
             route = '//'.join(map(str, route_lst))
             pm_master_dict['ROUTE'].append(route)
             
@@ -2662,15 +2427,15 @@ def create_pm_plan(request, df_original_filter, siteid,
             #####WOSTATUS
             pm_master_dict['WOSTATUS'] = wostatus
             ######EGCRAFT
-            carft_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['RESPONSE_CRAFT'].drop_duplicates().to_list()
+            carft_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==row['GROUP_LEVEL_1']]['RESPONSE_CRAFT'].dropna().drop_duplicates().to_list()
             carft = '//'.join(carft_lst)
             pm_master_dict['EGCRAFT'].append(carft)
             ######RESPONSED BY
-            response_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['RESPONSE'].drop_duplicates().to_list()
+            response_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==row['GROUP_LEVEL_1']]['RESPONSE'].dropna().drop_duplicates().to_list()
             response = '//'.join(response_lst)
             pm_master_dict['RESPONSED BY'].append(response)
             ######PTW
-            ptw_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['ประเภทของ_PERMIT_TO_WORK'].drop_duplicates().to_list()
+            ptw_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==row['GROUP_LEVEL_1']]['ประเภทของ_PERMIT_TO_WORK'].dropna().drop_duplicates().to_list()
             ptw = '//'.join(ptw_lst)
             pm_master_dict['PTW'].append(ptw)
             ######LOTO
@@ -2684,13 +2449,13 @@ def create_pm_plan(request, df_original_filter, siteid,
             ######FREQUNIT
             pm_master_dict['FREQUNIT']= frequnit
             ######NEXTDATE
-            next_date = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['START_DATE'].min()
+            next_date = df_group_temp[df_group_temp['GROUP_LEVEL_1']==row['GROUP_LEVEL_1']]['START_DATE'].min()
             pm_master_dict['NEXTDATE'].append(next_date.date())
             ######TARGSTARTTIME
             time_start = datetime.time(8,0)
             pm_master_dict['TARGSTARTTIME'] = time_start
             #######FINISH_DATE
-            last_date = df_group_temp[df_group_temp['GROUP_LEVEL_1']==df['GROUP_LEVEL_1']]['FINISH_DATE'].max()
+            last_date = df_group_temp[df_group_temp['GROUP_LEVEL_1']==row['GROUP_LEVEL_1']]['FINISH_DATE'].max()
             pm_master_dict['FINISH_DATE'].append(last_date.date())
             #######FINISH TIME
             time_end = datetime.time(16,0)
@@ -2698,31 +2463,31 @@ def create_pm_plan(request, df_original_filter, siteid,
             #######PARENT
             pm_master_dict['PARENT']=''
             #######JPNUM
-            JPNUM = 'JP'+'-'+df['GROUP_LEVEL_3']
+            JPNUM = 'JP'+'-'+row['GROUP_LEVEL_3']
             pm_master_dict['JPNUM'].append(JPNUM)
             #######main_system
-            main_system = df['MAIN_SYSTEM']
+            main_system = row['MAIN_SYSTEM']
             pm_master_dict['MAIN_SYSTEM'].append(main_system)
             #######sub_system
-            sub_system = df['SUB_SYSTEM']
+            sub_system = row['SUB_SYSTEM']
             pm_master_dict['SUB_SYSTEM'].append(sub_system)
             #######equipment
-            equipment = df['EQUIPMENT']
+            equipment = row['EQUIPMENT']
             pm_master_dict['EQUIPMENT'].append(equipment)
             #######main_system_desc
-            main_system_desc = df['MAIN_SYSTEM_DESC']
+            main_system_desc = row['MAIN_SYSTEM_DESC']
             pm_master_dict['MAIN_SYSTEM_DESC'].append(main_system_desc)
             #######sub_system_desc
-            sub_system_desc = df['SUB_SYSTEM_DESC']
+            sub_system_desc = row['SUB_SYSTEM_DESC']
             pm_master_dict['SUB_SYSTEM_DESC'].append(sub_system_desc)
             #######kks_new_desc
-            kks_new_desc = df['KKS_NEW_DESC']
+            kks_new_desc = row['KKS_NEW_DESC']
             pm_master_dict['KKS_NEW_DESC'].append(kks_new_desc)
             #######unit_type
-            unit_type = df['UNIT_TYPE']
+            unit_type = row['UNIT_TYPE']
             pm_master_dict['UNIT_TYPE'].append(unit_type)
             #######carft_desc
-            TYPE = df['TYPE']
+            TYPE = row['TYPE']
             pm_master_dict['TYPE'].append(TYPE)
 
         pm_master_df = pd.DataFrame(pm_master_dict)
@@ -2764,22 +2529,12 @@ def group_pm_plan(request, pm_master_df, all_group_columns,
         loop_num = 0
         for index,row in df_yyy_cont_more.iterrows():
             loop_num +=1 
-            #################
-            # group = pm_master_df[(pm_master_df['MAIN_SYSTEM']==row['MAIN_SYSTEM']) &
-            #                     (pm_master_df['MAIN_SYSTEM_DESC']==row['MAIN_SYSTEM_DESC']) &
-            #                     (pm_master_df['EGCRAFT']==row['EGCRAFT'])&
-            #                     (pm_master_df['PTW']==row['PTW'])&
-            #                     (pm_master_df['UNIT_TYPE']==row['UNIT_TYPE']) &
-            #                     (pm_master_df['TYPE']==row['TYPE'])]
-            
             filter_condition = np.ones(len(pm_master_df), dtype=bool)
+            
             for col in all_group_columns:
                 filter_condition &= (pm_master_df[col] == row[col])
-                
-            group = pm_master_df[filter_condition]
 
-            ###################
-            ###################
+            group = pm_master_df[filter_condition]
             pm_parent_dict = {
                         'PMNUM':[],
                         'SITEID':[],
@@ -2806,25 +2561,17 @@ def group_pm_plan(request, pm_master_df, all_group_columns,
                         'FINISH TIME':[],
                         'PARENT':[],
                         'JPNUM':[],
-                        # 'MAIN_SYSTEM':[],
-        #               'SUB_SYSTEM':[],
-        #               'EQUIPMENT':[],
-                        # 'MAIN_SYSTEM_DESC':[],
-        #               'SUB_SYSTEM_DESC':[],
+                        #'MAIN_SYSTEM':[],
+                        #'SUB_SYSTEM':[],
+                        #'EQUIPMENT':[],
+                        #'MAIN_SYSTEM_DESC':[],
+                        #'SUB_SYSTEM_DESC':[],
                         'UNIT_TYPE':[],
                         'TYPE':[]
                         }
-            # if loop_num < 10:
-            #     pm_parent_dict['PMNUM'] = 'Group-0{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
-            # else:
-            #     pm_parent_dict['PMNUM'] = 'Group-{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
             pm_parent_dict['PMNUM'] = generate_pmnum(loop_num, row['TYPE'], row['UNIT_TYPE'], worktype)
-            
             pm_parent_dict['SITEID'] = siteid
-            
-            # pm_parent_dict['DESCRIPTION'] = '{},{},{}'.format(row['MAIN_SYSTEM_DESC'], row['EGCRAFT'], row['PTW'])
             pm_parent_dict['DESCRIPTION'] = generate_description(*(row[col] for col in group_columns))
-            
             pm_parent_dict['STATUS'] = status
             pm_parent_dict['LOCATION'] = location
             pm_parent_dict['ROUTE'] = ''
@@ -2854,17 +2601,8 @@ def group_pm_plan(request, pm_master_df, all_group_columns,
             # pm_parent_dict['SUB_SYSTEM_DESC'] =row['SUB_SYSTEM_DESC']
             pm_parent_dict['UNIT_TYPE'] =row['UNIT_TYPE']
             pm_parent_dict['TYPE'] =row['TYPE']
-            ##################
-            # parent_df = pd.DataFrame(pm_parent_dict,index=np.arange(1))
             parent_df = pd.DataFrame([pm_parent_dict])
-            # if loop_num < 10:
-            #     group.loc[:,'PARENT'] = 'Group-0{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
-            # else:
-            #     group.loc[:,'PARENT'] = 'Group-{}-{}-{}-{}'.format(loop_num,row['MAIN_SYSTEM'],row['TYPE'],row['UNIT_TYPE'])
             group.loc[:, 'PARENT'] = generate_pmnum(loop_num, row['TYPE'], row['UNIT_TYPE'], worktype)
-            
-            #group
-            #############################
             parent = pd.concat([parent_df, group])
             parent.loc[:,'GROUP'] = loop_num
             df_pm_plan3_more = pd.concat([df_pm_plan3_more,parent])
@@ -2872,7 +2610,6 @@ def group_pm_plan(request, pm_master_df, all_group_columns,
         #? PM PLAN LESS
         df_pm_plan3_less = pd.DataFrame()
         loop_num = 0
-        #df_xx = pm_master_df[['MAIN_SYSTEM','MAIN_SYSTEM_DESC','EGCRAFT','PTW','UNIT_TYPE','TYPE']].drop_duplicates().sort_values(by=['TYPE','UNIT_TYPE'],ascending=False)
         for index,row in df_yyy_cont_less.iterrows():
             loop_num +=1 
             filter_condition = np.ones(len(pm_master_df), dtype=bool)
