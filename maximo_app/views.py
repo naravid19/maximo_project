@@ -62,6 +62,8 @@ def index(request):
     # sheet_name = 'Sheet1'
     schedule_filename = None
     location_filename = None
+    missing_messages = []
+    invalid_messages = []
     error_messages = []
     selected_order = []
 ############
@@ -846,81 +848,125 @@ def index(request):
             # ตรวจสอบเงื่อนไขแต่ละคอลัมน์และเก็บชื่อคอลัมน์ที่ข้อมูลขาดหาย
             all_missing_columns = []
             missing_counts = []
-            
+            missing_indices = []
+
             if ((task_not_xx) & (kks_new_na)).any():
                 all_missing_columns.append('KKS')
                 missing_counts.append(((task_not_xx) & (kks_new_na)).sum())
+                missing_indices.append((df_original_copy[(task_not_xx) & (kks_new_na)].index + 1).tolist())
+
             if ((task_not_xx) & (equip_new_na)).any():
                 all_missing_columns.append('EQUIPMENT')
                 missing_counts.append(((task_not_xx) & (equip_new_na)).sum())
+                missing_indices.append((df_original_copy[(task_not_xx) & (equip_new_na)].index + 1).tolist())
+
             if ((task_not_xx) & (task_order_new_na)).any():
                 all_missing_columns.append('TASK_ORDER')
                 missing_counts.append(((task_not_xx) & (task_order_new_na)).sum())
+                missing_indices.append((df_original_copy[(task_not_xx) & (task_order_new_na)].index + 1).tolist())
+
             if ((task_not_xx) & (task_new_na)).any():
                 all_missing_columns.append('TASK')
                 missing_counts.append(((task_not_xx) & (task_new_na)).sum())
+                missing_indices.append((df_original_copy[(task_not_xx) & (task_new_na)].index + 1).tolist())
+
             if ((task_not_xx) & (start_date_na)).any():
                 all_missing_columns.append('START_DATE')
                 missing_counts.append(((task_not_xx) & (start_date_na)).sum())
+                missing_indices.append((df_original_copy[(task_not_xx) & (start_date_na)].index + 1).tolist())
+
             if ((task_not_xx) & (finish_date_na)).any():
                 all_missing_columns.append('FINISH_DATE')
                 missing_counts.append(((task_not_xx) & (finish_date_na)).sum())
+                missing_indices.append((df_original_copy[(task_not_xx) & (finish_date_na)].index + 1).tolist())
+
             if ((task_not_xx) & (ptw_na)).any():
                 all_missing_columns.append('PTW')
                 missing_counts.append(((task_not_xx) & (ptw_na)).sum())
+                missing_indices.append((df_original_copy[(task_not_xx) & (ptw_na)].index + 1).tolist())
+
             if ((task_not_xx) & (response_new_na)).any():
                 all_missing_columns.append('RESPONSE')
                 missing_counts.append(((task_not_xx) & (response_new_na)).sum())
+                missing_indices.append((df_original_copy[(task_not_xx) & (response_new_na)].index + 1).tolist())
+
             if ((task_not_xx) & (response_craft_na)).any():
                 all_missing_columns.append('RESPONSE_CRAFT')
                 missing_counts.append(((task_not_xx) & (response_craft_na)).sum())
+                missing_indices.append((df_original_copy[(task_not_xx) & (response_craft_na)].index + 1).tolist())
+
             if (task_no_skill_rate).any():
                 all_missing_columns.append('SKILL RATE')
                 missing_counts.append(task_no_skill_rate.sum())
+                missing_indices.append((df_original_copy[task_no_skill_rate].index + 1).tolist())
+
             if (task_no_type).any():
                 all_missing_columns.append('TYPE')
                 missing_counts.append(task_no_type.sum())
+                missing_indices.append((df_original_copy[task_no_type].index + 1).tolist())
+
 
             # ตรวจสอบเงื่อนไขแต่ละคอลัมน์และเก็บชื่อคอลัมน์ที่ข้อมูลไม่ถูกต้อง
             invalid_columns = []
             invalid_counts = []
+            invalid_indices = []
 
             if ((~cond_duration | non_negative) & task_order_not_xx).any():
                 invalid_columns.append('DURATION_(HR.)')
                 invalid_counts.append(((~cond_duration | non_negative) & task_order_not_xx).sum())
+                invalid_indices.append((df_original[(~cond_duration | non_negative) & task_order_not_xx].index + 1).tolist())
+
             if (~task_order_valid & (df_original_check['TASK_ORDER'] != -1)).any():
                 invalid_columns.append('TASK_ORDER')
                 invalid_counts.append((~task_order_valid & (df_original_check['TASK_ORDER'] != -1)).sum())
+                invalid_indices.append((df_original_check[(~task_order_valid & (df_original_check['TASK_ORDER'] != -1))].index + 1).tolist())
+
             if (cond_start_date_new).any():
                 invalid_columns.append('START_DATE')
                 invalid_counts.append(cond_start_date_new.sum())
+                invalid_indices.append((df_original[cond_start_date_new].index + 1).tolist())
+
             if (cond_finish_date_new).any():
                 invalid_columns.append('FINISH_DATE')
                 invalid_counts.append(cond_finish_date_new.sum())
+                invalid_indices.append((df_original[cond_finish_date_new].index + 1).tolist())
+
             if ((task_order) & (invalid_skill_rate)).any():
                 invalid_columns.append('SKILL RATE')
                 invalid_counts.append(((task_order) & (invalid_skill_rate)).sum())
+                invalid_indices.append((df_original[(task_order) & (invalid_skill_rate)].index + 1).tolist())
+
             if ((task_type) & (~valid_type)).any():
                 invalid_columns.append('TYPE')
                 invalid_counts.append(((task_type) & (~valid_type)).sum())
-            
-            error_messages = []
-            
+                invalid_indices.append((df_original[(task_type) & (~valid_type)].index + 1).tolist())
+
+            missing_messages = []
+            invalid_messages = []
+            error_messages= []
+
             # ตรวจสอบข้อมูลขาดหาย
             if all_missing_columns:
-                missing_info = ', '.join([f"{col}: {count} รายการ" for col, count in zip(all_missing_columns, missing_counts)])
-                logger.error(f"Missing data detected in columns: {missing_info}", exc_info=True)
-                error_messages.append(f"พบข้อมูลที่ขาดหายในคอลัมน์ต่อไปนี้: {missing_info} กรุณาตรวจสอบและเพิ่มข้อมูลที่ขาดหายเพื่อให้ดำเนินการต่อได้")
-            
+                missing_messages.extend(
+                    [f"{col}: {count} รายการ {indices}"
+                    for col, count, indices in zip(all_missing_columns, missing_counts, missing_indices)]
+                )
+                logger.error(f"Missing data detected in columns: {missing_messages}", exc_info=True)
+
             # ตรวจสอบข้อมูลที่ไม่ถูกต้อง
             if invalid_columns:
-                invalid_info = ', '.join([f"{col}: {count} รายการ" for col, count in zip(invalid_columns, invalid_counts)])
-                logger.error(f"Invalid data detected in columns: {invalid_info}", exc_info=True)
-                error_messages.append(f"พบข้อมูลที่ไม่ถูกต้องในคอลัมน์ต่อไปนี้: {invalid_info} กรุณาตรวจสอบและแก้ไขข้อมูลที่ไม่ถูกต้องเพื่อดำเนินการต่อ")
+                invalid_messages.extend(
+                    [f"{col}: {count} รายการ {indices}"
+                    for col, count, indices in zip(invalid_columns, invalid_counts, invalid_indices)]
+                )
+                logger.error(f"Invalid data detected in columns: {invalid_messages}", exc_info=True)
             
-            if error_messages:
-                return render(request, 'maximo_app/upload.html', {
+
+            if missing_messages or invalid_messages:
+                return render(request, 'maximo_app/upload_form.html', {
                     'form': form,
+                    'missing_messages': missing_messages,
+                    'invalid_messages': invalid_messages,
                     'error_messages': error_messages,
                     'schedule_filename': schedule_filename,
                     'location_filename': location_filename,
@@ -1575,8 +1621,10 @@ def index(request):
         
         form = UploadFileForm()
     
-    return render(request, 'maximo_app/upload.html', {
+    return render(request, 'maximo_app/upload_form.html', {
         'form': form,
+        'missing_messages': missing_messages,
+        'invalid_messages': invalid_messages,
         'error_messages': error_messages,
         'schedule_filename': schedule_filename,
         'location_filename': location_filename,
@@ -1602,7 +1650,7 @@ def generic_download(request, session_key, original_file_name, content_type, tem
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+        return render(request, 'maximo_app/upload_form.html', {})
     
     full_file_path = os.path.abspath(file_path) if not os.path.isabs(file_path) else file_path
     
@@ -1619,7 +1667,7 @@ def generic_download(request, session_key, original_file_name, content_type, tem
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+        return render(request, 'maximo_app/upload_form.html', {})
     
     try:
         with open(full_file_path, 'rb') as fh:
@@ -1639,7 +1687,7 @@ def generic_download(request, session_key, original_file_name, content_type, tem
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+        return render(request, 'maximo_app/upload_form.html', {})
 
 def download_comment_file(request):
     return generic_download(
@@ -1704,7 +1752,7 @@ def download_original_template(request):
                 f"</div>"
             )
             messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {})
+            return render(request, 'maximo_app/upload_form.html', {})
         
         # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel.sheet.macroEnabled.12')
@@ -1725,7 +1773,7 @@ def download_original_template(request):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+        return render(request, 'maximo_app/upload_form.html', {})
 
 def download_schedule(request):
     try:
@@ -1790,7 +1838,7 @@ def download_example_template(request):
                 f"</div>"
             )
             messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {})
+            return render(request, 'maximo_app/upload_form.html', {})
 
         # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel.sheet.macroEnabled.12')
@@ -1811,7 +1859,7 @@ def download_example_template(request):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+        return render(request, 'maximo_app/upload_form.html', {})
 
 def download_example_schedule(request):
     try:
@@ -1833,7 +1881,7 @@ def download_example_schedule(request):
                 f"</div>"
             )
             messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {})
+            return render(request, 'maximo_app/upload_form.html', {})
         
         # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
@@ -1854,7 +1902,7 @@ def download_example_schedule(request):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+        return render(request, 'maximo_app/upload_form.html', {})
 
 def download_user_schedule(request):
     try:
@@ -1877,7 +1925,7 @@ def download_user_schedule(request):
                 f"</div>"
             )
             messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {})
+            return render(request, 'maximo_app/upload_form.html', {})
 
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = f'attachment; filename="{file_name}"'
@@ -1896,7 +1944,7 @@ def download_user_schedule(request):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+        return render(request, 'maximo_app/upload_form.html', {})
 
 def download_user_location(request):
     try:
@@ -1919,7 +1967,7 @@ def download_user_location(request):
                 f"</div>"
             )
             messages.error(request, error_message)
-            return render(request, 'maximo_app/upload.html', {})
+            return render(request, 'maximo_app/upload_form.html', {})
 
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = f'attachment; filename="{file_name}"'
@@ -1938,7 +1986,7 @@ def download_user_location(request):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload.html', {})
+        return render(request, 'maximo_app/upload_form.html', {})
 
 # ---------------------------------
 # ฟังก์ชันการกรองข้อมูล (Filter Functions)
