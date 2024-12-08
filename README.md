@@ -1,16 +1,14 @@
 <!-- markdownlint-disable MD030 -->
 
-<p align="center">
-  <img width="100%" src="https://source.unsplash.com/random/1200x400?technology,code" alt="Maximo Project Banner">
-</p>
+<img width="100%" src="https://github.com/user-attachments/assets/54550f9d-5f29-4d87-a573-c95b53a637b0" alt="Maximo Project Banner"> </p>
 
 # Maximo Project
 
 [![Python Version](https://img.shields.io/badge/python-3.10%2B-brightgreen)](https://www.python.org/)
-[![Node.js](https://img.shields.io/badge/node.js-14%2B-yellowgreen)](https://nodejs.org/)
+[![Node.js](https://img.shields.io/badge/node.js-22.12.0-yellowgreen)](https://nodejs.org/)
 [![Stars](https://img.shields.io/github/stars/naravid19/maximo_project?style=social)](https://github.com/naravid19/maximo_project)
 
-โปรเจกต์ที่รวมการทำงานระหว่าง **Node.js** และ **Python** โดยมี **Backend** ทำงานด้วย **Django 5.1** และ **Frontend** ใช้ **Tailwind CSS** พร้อมฟีเจอร์การตรวจสอบข้อมูล การสร้าง Template สำหรับ **MxLoader** และการจัดการ **JB-PM Plan**
+โปรเจกต์ที่รวมการทำงานระหว่าง **Node.js** และ **Python** โดยมี **Backend** ทำงานด้วย **Django 5.1** และ **Frontend** ใช้ **Tailwind CSS** และ **Flowbite** พร้อมฟีเจอร์การตรวจสอบข้อมูล การสร้าง Template สำหรับ **MxLoader** และการจัดการ **JB-PM Plan**
 
 ## 🚀 **ฟีเจอร์หลัก**
 
@@ -26,14 +24,14 @@
 - **⚙️ Backend ทำงานด้วย Django 5.1**  
   พัฒนาเว็บแอปพลิเคชันที่ปลอดภัยและมีประสิทธิภาพสูง
 
-- **🎨 Frontend ใช้ Tailwind CSS**  
-  ออกแบบ UI อย่างรวดเร็ว รองรับการทำงานบนทุกอุปกรณ์ด้วย Responsive Design
+- **🎨 Frontend ใช้ Tailwind CSS และ Flowbite**  
+  ออกแบบ UI อย่างรวดเร็วด้วย Tailwind CSS และใช้ Component สำเร็จรูปจาก Flowbite เพื่อเพิ่มความสะดวกในการพัฒนา
 
 ## 🛠️ **สิ่งที่ต้องเตรียมก่อนติดตั้ง**
 
 โปรดติดตั้งซอฟต์แวร์ต่อไปนี้ก่อนเริ่มใช้งาน:
 
-1. **Node.js** - [ดาวน์โหลด Node.js](https://nodejs.org/)  
+1. **Node.js** (เวอร์ชัน 22.12.0) - [ดาวน์โหลด Node.js](https://nodejs.org/)  
 2. **Python** (เวอร์ชัน 3.10 ขึ้นไป) - [ดาวน์โหลด Python](https://www.python.org/)
 
 ## 📦 **ขั้นตอนการติดตั้ง**
@@ -57,21 +55,33 @@ pip install -r requirements.txt
 npm install -D tailwindcss
 ```
 
-## 💻 **การรันโปรเจกต์**
-
-### รัน Backend (Django)
+### 4. ติดตั้ง Flowbite
 
 ```bash
-python manage.py runserver
+npm install flowbite
 ```
 
-### รัน Frontend (Node.js + Tailwind CSS)
+## 💻 **การคอมไพล์ CSS ด้วย Tailwind CSS**
+
+### คอมไพล์ CSS หนึ่งครั้ง
 
 ```bash
 npm run build
 ```
 
-เปิดใช้งานโปรเจกต์ที่ [http://localhost:8000](http://localhost:8000)
+### คอมไพล์ CSS แบบเรียลไทม์
+
+```bash
+npm run watch
+```
+
+## 💻 **การรัน Backend (Django)**
+
+```bash
+python manage.py runserver
+```
+
+เปิดใช้งาน Backend ได้ที่ [http://localhost:8000](http://localhost:8000)
 
 ## 📂 **โครงสร้างโปรเจกต์**
 
@@ -80,11 +90,15 @@ maximo_project/
 │-- backend/
 │   └── manage.py
 │   └── requirements.txt
+│   └── maximo_app/
+│       └── templates/
+│           └── maximo_app/
+│               └── upload_form.html
 │-- frontend/
 │   └── package.json
 │   └── tailwind.config.js
-│   └── src/
-│       └── index.html
+│-- static/
+│   └── css/
 │       └── styles.css
 └── README.md
 ```
@@ -92,7 +106,8 @@ maximo_project/
 ## 📖 **เอกสารประกอบ**
 
 - **Django Documentation**: [https://docs.djangoproject.com/](https://docs.djangoproject.com/)  
-- **Tailwind CSS Documentation**: [https://tailwindcss.com/docs](https://tailwindcss.com/docs)
+- **Tailwind CSS Documentation**: [https://tailwindcss.com/docs](https://tailwindcss.com/docs)  
+- **Flowbite Documentation**: [https://flowbite.com/docs](https://flowbite.com/docs)
 
 ## 🤝 **การมีส่วนร่วม (Contributing)**
 
