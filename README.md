@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD030 -->
 
-<img width="100%" src="https://github.com/user-attachments/assets/54550f9d-5f29-4d87-a573-c95b53a637b0" alt="Maximo Project Banner"> </p>
+<img width="100%" src="https://github.com/user-attachments/assets/26ff8e51-fc20-4d5e-bc9b-efbf75bf0d20" alt="Maximo Project Banner"> </p>
 
 # Maximo Project
 
