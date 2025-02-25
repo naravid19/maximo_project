@@ -1,19 +1,74 @@
-# Path : maximo_project\maximo_app\tasks.py
+# path : maximo_project\maximo_app\tasks.py
 
-from background_task import background
 import os
 import time
-@background(schedule=3600)
-# พารามิเตอร์ที่กำหนดให้ Task นี้ถูกรันหลังเวลาที่กำหนด
+import logging
+from background_task import background
+from django.conf import settings
 
+# ตั้งค่า Logging
+LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
+logging.basicConfig(level=logging.INFO, format=LOG_FORMAT)
+
+# ดึงค่าจาก settings
+TEMP_DIR = settings.TEMP_DIR
+AGE_LIMIT = settings.FILE_AGE_LIMIT
+
+# กำหนด path ของ lock file เพื่อป้องกันการรัน task ซ้ำ
+LOCK_FILE = os.path.join(TEMP_DIR, ".cleanup.lock")
+
+@background(schedule=3600)  # รันทุก 1 ชั่วโมง
 def delete_old_files_task():
     now = time.time()
-    temp_dir = 'temp'
-    age_limit = 60 * 60
 
-    for filename in os.listdir(temp_dir):
-        file_path = os.path.join(temp_dir, filename)
-        if os.path.isfile(file_path):
-            file_age = now - os.path.getmtime(file_path)
-            if file_age > age_limit:
-                os.remove(file_path)
+    # ตรวจสอบว่าโฟลเดอร์ TEMP_DIR มีอยู่หรือไม่
+    if not os.path.exists(TEMP_DIR):
+        logging.warning(f"Folder '{TEMP_DIR}' does not exist. Skipping cleanup.")
+        return
+
+    # ป้องกันการทำงานซ้ำด้วย lock file
+    if os.path.exists(LOCK_FILE):
+        logging.info("Another cleanup task is already running. Skipping this run.")
+        return
+
+    # สร้าง lock file
+    try:
+        with open(LOCK_FILE, "w") as lock_file:
+            lock_file.write(str(now))
+    except Exception as e:
+        logging.error(f"Error creating lock file: {e}")
+        return
+
+    try:
+        # วนลูปตรวจสอบไฟล์ใน TEMP_DIR
+        for filename in os.listdir(TEMP_DIR):
+            file_path = os.path.join(TEMP_DIR, filename)
+
+            # ตรวจสอบว่าเป็นไฟล์ (ไม่ใช่โฟลเดอร์)
+            if os.path.isfile(file_path):
+                try:
+                    file_age = now - os.path.getmtime(file_path)
+                except Exception as e:
+                    logging.error(f"Error getting modification time for {file_path}: {e}")
+                    continue
+
+                # ถ้าไฟล์มีอายุมากกว่า AGE_LIMIT ให้ลบไฟล์นั้น
+                if file_age > AGE_LIMIT:
+                    try:
+                        os.remove(file_path)
+                        logging.info(f"Deleted old file: {file_path}")
+                    except PermissionError:
+                        logging.error(f"Permission denied while deleting {file_path}")
+                    except FileNotFoundError:
+                        logging.error(f"File not found: {file_path}")
+                    except Exception as e:
+                        logging.error(f"Error deleting file {file_path}: {e}")
+    except Exception as e:
+        logging.error(f"Error during cleanup process: {e}")
+    finally:
+        # ลบ lock file เมื่อ task เสร็จสิ้น
+        try:
+            if os.path.exists(LOCK_FILE):
+                os.remove(LOCK_FILE)
+        except Exception as e:
+            logging.error(f"Error removing lock file: {e}")

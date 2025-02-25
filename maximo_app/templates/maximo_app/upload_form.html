@@ -1,4 +1,4 @@
-<!-- templates\upload.html -->
+<!-- maximo_project\maximo_app\templates\maximo_app\upload_form.html-->
 
 {% extends 'maximo_app/base.html' %}
 
@@ -90,8 +90,8 @@
     {% endif %}
 
     <ol class="relative flex items-center justify-center max-w-screen-sm px-6 py-4 mx-auto my-4 space-x-4 text-sm font-medium text-center text-gray-500 bg-white border border-gray-200 rounded-lg shadow-sm dark:text-gray-400 sm:text-base dark:bg-gray-800 dark:border-gray-700 rtl:space-x-reverse">
-        <li class="flex items-center {% if not schedule_filename and not location_filename and not 'download_link_comment' in request.session or error_messages and schedule_filename and location_filename and 'download_link_comment' in request.session or not error_messages and not 'download_link_job_plan_task' in request.session and not 'download_link_job_plan_labor' in request.session and not 'download_link_pm_plan' in request.session and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}text-blue-600 dark:text-blue-500{% endif %}">
-            <span class="flex items-center justify-center w-5 h-5 text-xs border {% if not schedule_filename and not location_filename and not 'download_link_comment' in request.session or error_messages and schedule_filename and location_filename and 'download_link_comment' in request.session or not error_messages and not 'download_link_job_plan_task' in request.session and not 'download_link_job_plan_labor' in request.session and not 'download_link_pm_plan' in request.session and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}border-blue-600{% else %}border-gray-500 dark:border-gray-400{% endif %} rounded-full me-2 shrink-0">
+        <li class="flex items-center {% if not schedule_filename and not location_filename and not 'download_link_comment' in request.session or error_messages and schedule_filename and location_filename and 'download_link_comment' in request.session or not error_messages and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_template' in request.session %}text-blue-600 dark:text-blue-500{% endif %}">
+            <span class="flex items-center justify-center w-5 h-5 text-xs border {% if not schedule_filename and not location_filename and not 'download_link_comment' in request.session or error_messages and schedule_filename and location_filename and 'download_link_comment' in request.session or not error_messages and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_template' in request.session %}border-blue-600{% else %}border-gray-500 dark:border-gray-400{% endif %} rounded-full me-2 shrink-0">
                 1
             </span>
             <span data-tooltip-target="step-1" class="ms-2 cursor-help">กรอกข้อมูล<span class="hidden sm:inline">และอัปโหลด</span></span>
@@ -99,8 +99,8 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
             </svg>
         </li>
-        <li class="flex items-center {% if error_messages and schedule_filename and location_filename and 'download_link_comment' in request.session or not error_messages and not 'download_link_job_plan_task' in request.session and not 'download_link_job_plan_labor' in request.session and not 'download_link_pm_plan' in request.session and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}text-blue-600 dark:text-blue-500{% endif %}">
-            <span class="flex items-center justify-center w-5 h-5 text-xs border {% if error_messages and schedule_filename and location_filename and 'download_link_comment' in request.session or not error_messages and not 'download_link_job_plan_task' in request.session and not 'download_link_job_plan_labor' in request.session and not 'download_link_pm_plan' in request.session and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}border-blue-600 dark:border-blue-500{% else %}border-gray-500 dark:border-gray-400{% endif %} rounded-full me-2 shrink-0">
+        <li class="flex items-center {% if error_messages and schedule_filename and location_filename and 'download_link_comment' in request.session or not error_messages and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_template' in request.session %}text-blue-600 dark:text-blue-500{% endif %}">
+            <span class="flex items-center justify-center w-5 h-5 text-xs border {% if error_messages and schedule_filename and location_filename and 'download_link_comment' in request.session or not error_messages and not 'download_link_template' in request.session and schedule_filename and location_filename and 'download_link_comment' in request.session or 'download_link_template' in request.session %}border-blue-600 dark:border-blue-500{% else %}border-gray-500 dark:border-gray-400{% endif %} rounded-full me-2 shrink-0">
                 2
             </span>
             <span data-tooltip-target="step-2" class="ms-2 cursor-help">ตรวจสอบ<span class="hidden sm:inline">และแก้ไข</span></span>
@@ -108,8 +108,8 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m7 9 4-4-4-4M1 9l4-4-4-4"/>
             </svg>
         </li>
-        <li class="flex items-center {% if 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}text-blue-600 dark:text-blue-500{% endif %}">
-            <span class="flex items-center justify-center w-5 h-5 text-xs border {% if 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}border-blue-600 dark:border-blue-500{% else %}border-gray-500 dark:border-gray-400{% endif %} rounded-full me-2 shrink-0">
+        <li class="flex items-center {% if 'download_link_template' in request.session %}text-blue-600 dark:text-blue-500{% endif %}">
+            <span class="flex items-center justify-center w-5 h-5 text-xs border {% if 'download_link_template' in request.session %}border-blue-600 dark:border-blue-500{% else %}border-gray-500 dark:border-gray-400{% endif %} rounded-full me-2 shrink-0">
                 3
             </span>
             <span data-tooltip-target="step-3" class="cursor-help">ดาวน์โหลด<span class="hidden sm:inline">ไฟล์</span></span>
@@ -197,7 +197,7 @@
 
         <div class="container relative px-6 pt-[1.375rem] pb-4 max-w-screen-sm mx-auto my-4 bg-white rounded-md shadow-sm">
             <h1 class="mb-4 text-2xl font-medium text-gray-800">
-                กรอกข้อมูลและอัพโหลดไฟล์
+                กรอกข้อมูลและอัปโหลดไฟล์
             </h1>
             <form id="uploadForm" novalidate method="post" enctype="multipart/form-data" class="space-y-6" onsubmit="validateUploadForm(event)">
                 {% csrf_token %}
@@ -666,7 +666,7 @@
                 <!-- ปุ่ม Submit -->
                 <button id="uploadBtn" type="submit" name="upload_files" class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-500 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-cyan-200 dark:focus:ring-cyan-800">
                     <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0 inline-flex items-center">
-                        อัปโหลดไฟล์
+                        ส่งข้อมูล
                     </span>
                 </button>
             </form>
@@ -832,7 +832,7 @@
     {% endif %}
 
     {% if not missing_messages %}
-        {% if 'download_link_job_plan_task' in request.session or 'download_link_job_plan_labor' in request.session or 'download_link_pm_plan' in request.session or 'download_link_template' in request.session %}
+        {% if 'download_link_template' in request.session %}
             <div class="container relative max-w-screen-sm mx-auto my-4 bg-[#f0ebf8] rounded-md shadow-sm">
                 <details open class="mt-4 bg-white border border-gray-200 rounded">
                     <summary class="flex items-center justify-between p-4 font-bold text-white bg-[rgb(63,81,181)] rounded-t">
@@ -840,46 +840,18 @@
                     </summary>
                     <div class="p-4 mt-3">
                         <ul class="space-y-4">
-                            {% if 'download_link_job_plan_task' in request.session %}
-                            <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
-                                <div class="flex items-center">
-                                    <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2">
-                                    <a href="{% url 'download_job_plan_task_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
-                                        ดาวน์โหลดไฟล์ Job Plan Task
-                                    </a>
-                                </div>
-                            </li>
-                            {% endif %}
-            
-                            {% if 'download_link_job_plan_labor' in request.session %}
-                            <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
-                                <div class="flex items-center">
-                                    <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2">
-                                    <a href="{% url 'download_job_plan_labor_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
-                                        ดาวน์โหลดไฟล์ Job Plan Labor
-                                    </a>
-                                </div>
-                            </li>
-                            {% endif %}
-            
-                            {% if 'download_link_pm_plan' in request.session %}
-                            <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
-                                <div class="flex items-center">
-                                    <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2">
-                                    <a href="{% url 'download_pm_plan_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
-                                        ดาวน์โหลดไฟล์ PM Plan
-                                    </a>
-                                </div>
-                            </li>
-                            {% endif %}
-            
                             {% if 'download_link_template' in request.session %}
                             <li class="flex items-center justify-between p-3 bg-white border rounded-lg shadow-sm">
                                 <div class="flex items-center">
                                     <img src="{% static 'icon/excel.svg' %}" alt="Excel icon" width="20" height="20" class="mr-2">
-                                    <a href="{% url 'download_template_file' %}" class="font-semibold text-blue-600 truncate hover:underline">
-                                        ดาวน์โหลดไฟล์ Template MxLoader JB-PM Plan
-                                    </a>
+                                    <div class="flex flex-col">
+                                        <a href="{% url 'download_template_file' version='8.4.2' %}" class="font-semibold text-blue-600 truncate hover:underline">
+                                            ดาวน์โหลดไฟล์ Template MxLoader JB-PM Plan
+                                        </a>
+                                        <a href="{% url 'download_template_file' version='8.1.0' %}" data-tooltip-target="tooltip-mxloader-backup" class="mt-1 text-sm text-gray-600 hover:text-blue-500 hover:underline">
+                                            <span class="mr-1">🔗</span>เวอร์ชัน 8.1.0 (ลิงก์สำรอง)
+                                        </a>
+                                    </div>
                                 </div>
                             </li>
                             {% endif %}
@@ -887,8 +859,11 @@
                     </div>
                 </details>
             </div>
-            
         {% endif %}
+        <div id="tooltip-mxloader-backup" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            ดาวน์โหลด Template MxLoader JB-PM Plan (เวอร์ชัน 8.1.0) สำหรับกรณีเวอร์ชันล่าสุดใช้งานไม่ได้
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
     {% endif %}
     
     <footer class="container relative max-w-screen-sm mx-auto my-4 bg-white rounded-lg shadow-sm dark:bg-gray-800">
@@ -927,4 +902,5 @@
     <script src="{% static 'js/ajax-wbs.js' %}"></script>
     <script src="{% static 'js/ajax-wostatus.js' %}"></script>
     <script src="{% static 'js/grouping.js' %}"></script>
+    <script src="{% static 'js/other-wbs.js' %}"></script>
 {% endblock %}

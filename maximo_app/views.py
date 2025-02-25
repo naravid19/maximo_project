@@ -57,8 +57,6 @@ pluscjprevnum = 0
 frequnit = 'YEARS'
 leadtime = 7
 def index(request):
-############
-############
     # sheet_name = 'Sheet1'
     schedule_filename = None
     location_filename = None
@@ -66,23 +64,19 @@ def index(request):
     invalid_messages = []
     error_messages = []
     selected_order = []
-############
-############
-    logger.info(f"POST: {request.POST}")
-    logger.info(f"FILES: {request.FILES}")
-    logger.info(f"0 def schedule_filename: {schedule_filename}")
-    logger.info(f"0 def location_filename: {location_filename}")
-############
-############
+
+    # logger.info(f"POST: {request.POST}")
+    # logger.info(f"FILES: {request.FILES}")
+    # logger.info(f"0 def schedule_filename: {schedule_filename}")
+    # logger.info(f"0 def location_filename: {location_filename}")
+
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            ############
-            ############
-            logger.info(f'1 form schedule_filename: {schedule_filename}')
-            logger.info(f'1 form location_filename: {location_filename}')
-            ############
-            ############
+
+            # logger.info(f'1 form schedule_filename: {schedule_filename}')
+            # logger.info(f'1 form location_filename: {location_filename}')
+
             # ตรวจสอบและสร้างโฟลเดอร์ temp
             temp_dir = 'temp'
             if not os.path.exists(temp_dir):
@@ -190,8 +184,8 @@ def index(request):
             else:
                 log_error.append("GROUPING")
             
-            if log_params:
-                logger.info("\n".join(log_params))
+            # if log_params:
+            #     logger.info("\n".join(log_params))
             
             if log_error:
                 for error in log_error:
@@ -224,10 +218,10 @@ def index(request):
                 
                 wbs_desc = f"{wbs.description} {acttype.description} {location} {buddhist_year}"
                 
-                logger.info(f"LOCATION: {location}") 
-                logger.info(f"EGPROJECTID: {egprojectid}")
-                logger.info(f"EGWBS: {egwbs}")
-                logger.info(f"WBS DESC: {wbs_desc}")
+                # logger.info(f"LOCATION: {location}") 
+                # logger.info(f"EGPROJECTID: {egprojectid}")
+                # logger.info(f"EGWBS: {egwbs}")
+                # logger.info(f"WBS DESC: {wbs_desc}")
                 
             except Exception as e:
                 logger.error(f"An error occurred: {str(e)}", exc_info=True)
@@ -253,8 +247,8 @@ def index(request):
             location_path = os.path.join(temp_dir, unique_location_name)
             comment_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Comment.xlsx")
             
-            logger.info(f"Schedule file: {schedule_filename}")
-            logger.info(f"Location file: {location_filename}")
+            # logger.info(f"Schedule file: {schedule_filename}")
+            # logger.info(f"Location file: {location_filename}")
             
             try:
                 with open(schedule_path, 'wb+') as destination:
@@ -265,7 +259,7 @@ def index(request):
                     for chunk in location_file.chunks():
                         destination.write(chunk)
                         
-                logger.info(f"Files saved successfully at: {schedule_path} and {location_path}")
+                # logger.info(f"Files saved successfully at: {schedule_path} and {location_path}")
             
             except IOError as e:
                 logger.error(f"Error saving files: {str(e)}")
@@ -331,12 +325,12 @@ def index(request):
                 df_original = read_excel_with_error_handling(request, schedule_path)
                 if df_original is None:
                     raise ValueError("Cannot proceed without a valid DataFrame.")
-                logger.info("Excel file loaded successfully.")
+                # logger.info("Excel file loaded successfully.")
                 
                 # ลบช่องว่างที่ไม่จำเป็นออกจากชื่อคอลัมน์และแปลงชื่อคอลัมน์เป็นตัวพิมพ์ใหญ่ พร้อมแทนที่ช่องว่างด้วยขีดล่าง
                 df_original.columns = [col.strip().upper().replace(' ', '_') if isinstance(col, str) else col for col in df_original.columns]
                 
-                logger.info("Column names cleaned and formatted.")
+                # logger.info("Column names cleaned and formatted.")
                 
                 # ตรวจสอบว่าคอลัมน์ที่จำเป็นทั้งหมดมีอยู่หรือไม่
                 missing_columns = [col for col in required_columns if col not in df_original.columns]
@@ -434,7 +428,7 @@ def index(request):
                 messages.error(request, error_message)
                 return redirect('index')
             
-            logger.info("DataFrame preparation completed successfully.")
+            # logger.info("DataFrame preparation completed successfully.")
             
             df_comment = pd.DataFrame()
             df_comment['KKS'] = df_original['KKS']
@@ -445,7 +439,6 @@ def index(request):
             long_equipment = df_original['EQUIPMENT'].astype(str).str.len() > 100
             update_comment(df_comment, long_equipment, 'COMMENT', 'EQUIPMENT มีความยาวมากกว่า 100 ตัวอักษร')
 
-            # กรองข้อมูลตาม task_with_order และความยาวของสตริงใน TASK
             task_with_order = ((df_original['TASK_ORDER'].notna())) & ((df_original['TASK_ORDER']!='xx'))
             long_task = df_original['TASK'].astype(str).str.len() > 100
             update_comment(df_comment, long_task, 'COMMENT', 'TASK มีความยาวมากกว่า 100 ตัวอักษร')
@@ -456,7 +449,6 @@ def index(request):
             route_length_exceed = df_original['ROUTE'].astype(str).str.len() > 20
             update_comment(df_comment, route_length_exceed, 'COMMENT', 'ROUTE มีความยาวมากกว่า 20 ตัวอักษร')
             
-            # ใช้ฟังก์ชัน convert_duration กับคอลัมน์ DURATION_(HR.)
             df_original['DURATION_(HR.)'] = df_original['DURATION_(HR.)'].apply(convert_duration)
 
             # ตรวจสอบค่า DURATION_(HR.) ว่าเป็นตัวเลขหรือไม่
@@ -492,8 +484,6 @@ def index(request):
             plant_list = df_original['KKS'].str.split('-',expand =True)[0].value_counts().index.tolist()
             plant_regex = "|".join([p + "-" for p in plant_list])
             first_plant = plant_regex.split('|')[0]
-
-            #df_original['KKS'] = df_original['KKS'].replace(r'^TTN-','', regex=True)
             df_original['KKS'] = df_original['KKS'].replace(plant_regex,'', regex=True)
 
             # cond1 = (df_original['TASK_ORDER']==10) & ((df_original['DURATION (HR.)'].isna())|(df_original['START DATE_new'].isna())|(df_original['FINISH DATE_new'].isna()))
@@ -505,13 +495,8 @@ def index(request):
             task_no_craft = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['RESPONSE_CRAFT'].isna())
             task_no_response = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['RESPONSE'].isna())
 
-            # df_original.loc[cond1, 'COMMENT'] = 'ไม่มีวันที่'
             update_comment(df_comment, task_no_start_date, 'COMMENT', 'ไม่มี START_DATE')
-
-            # df_original.loc[cond1, 'COMMENT'] = 'ไม่มีวันที่'
             update_comment(df_comment, task_no_finish_date, 'COMMENT', 'ไม่มี FINISH_DATE')
-
-            # df_original.loc[cond3, 'COMMENT'= 'ไม่มี skill rate'
             update_comment(df_comment, task_no_skill_rate, 'COMMENT', 'ไม่มี SKILL RATE (จำเป็นต้องกรอก)')
 
             task_order = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx')
@@ -795,6 +780,7 @@ def index(request):
             red_fill = PatternFill(start_color="FF0000", end_color="FF0000", fill_type="solid")
             yellow_fill = PatternFill(start_color='FFFF00', end_color='FFFF00', fill_type='solid')
             blue_fill = PatternFill(start_color='00B0F0', end_color='00B0F0', fill_type='solid')
+            no_fill = PatternFill(fill_type=None)
             center_alignment = Alignment(horizontal='center')
 
             df_comment = df_comment[['TASK_ORDER','COMMENT']]
@@ -827,7 +813,9 @@ def index(request):
                         comment_cell.fill = red_fill
                     else:
                         comment_cell.fill = yellow_fill
-
+                else:
+                    comment_cell.fill = no_fill
+            
             book.save(comment_path)
             request.session['download_link_comment'] = comment_path
             
@@ -853,58 +841,57 @@ def index(request):
             if ((task_not_xx) & (kks_new_na)).any():
                 all_missing_columns.append('KKS')
                 missing_counts.append(((task_not_xx) & (kks_new_na)).sum())
-                missing_indices.append((df_original_copy[(task_not_xx) & (kks_new_na)].index + 1).tolist())
+                missing_indices.append((df_original_copy[(task_not_xx) & (kks_new_na)].index + 3).tolist())
 
             if ((task_not_xx) & (equip_new_na)).any():
                 all_missing_columns.append('EQUIPMENT')
                 missing_counts.append(((task_not_xx) & (equip_new_na)).sum())
-                missing_indices.append((df_original_copy[(task_not_xx) & (equip_new_na)].index + 1).tolist())
+                missing_indices.append((df_original_copy[(task_not_xx) & (equip_new_na)].index + 3).tolist())
 
             if ((task_not_xx) & (task_order_new_na)).any():
                 all_missing_columns.append('TASK_ORDER')
                 missing_counts.append(((task_not_xx) & (task_order_new_na)).sum())
-                missing_indices.append((df_original_copy[(task_not_xx) & (task_order_new_na)].index + 1).tolist())
+                missing_indices.append((df_original_copy[(task_not_xx) & (task_order_new_na)].index + 3).tolist())
 
             if ((task_not_xx) & (task_new_na)).any():
                 all_missing_columns.append('TASK')
                 missing_counts.append(((task_not_xx) & (task_new_na)).sum())
-                missing_indices.append((df_original_copy[(task_not_xx) & (task_new_na)].index + 1).tolist())
+                missing_indices.append((df_original_copy[(task_not_xx) & (task_new_na)].index + 3).tolist())
 
             if ((task_not_xx) & (start_date_na)).any():
                 all_missing_columns.append('START_DATE')
                 missing_counts.append(((task_not_xx) & (start_date_na)).sum())
-                missing_indices.append((df_original_copy[(task_not_xx) & (start_date_na)].index + 1).tolist())
+                missing_indices.append((df_original_copy[(task_not_xx) & (start_date_na)].index + 3).tolist())
 
             if ((task_not_xx) & (finish_date_na)).any():
                 all_missing_columns.append('FINISH_DATE')
                 missing_counts.append(((task_not_xx) & (finish_date_na)).sum())
-                missing_indices.append((df_original_copy[(task_not_xx) & (finish_date_na)].index + 1).tolist())
+                missing_indices.append((df_original_copy[(task_not_xx) & (finish_date_na)].index + 3).tolist())
 
             if ((task_not_xx) & (ptw_na)).any():
                 all_missing_columns.append('PTW')
                 missing_counts.append(((task_not_xx) & (ptw_na)).sum())
-                missing_indices.append((df_original_copy[(task_not_xx) & (ptw_na)].index + 1).tolist())
+                missing_indices.append((df_original_copy[(task_not_xx) & (ptw_na)].index + 3).tolist())
 
             if ((task_not_xx) & (response_new_na)).any():
                 all_missing_columns.append('RESPONSE')
                 missing_counts.append(((task_not_xx) & (response_new_na)).sum())
-                missing_indices.append((df_original_copy[(task_not_xx) & (response_new_na)].index + 1).tolist())
+                missing_indices.append((df_original_copy[(task_not_xx) & (response_new_na)].index + 3).tolist())
 
             if ((task_not_xx) & (response_craft_na)).any():
                 all_missing_columns.append('RESPONSE_CRAFT')
                 missing_counts.append(((task_not_xx) & (response_craft_na)).sum())
-                missing_indices.append((df_original_copy[(task_not_xx) & (response_craft_na)].index + 1).tolist())
+                missing_indices.append((df_original_copy[(task_not_xx) & (response_craft_na)].index + 3).tolist())
 
             if (task_no_skill_rate).any():
                 all_missing_columns.append('SKILL RATE')
                 missing_counts.append(task_no_skill_rate.sum())
-                missing_indices.append((df_original_copy[task_no_skill_rate].index + 1).tolist())
+                missing_indices.append((df_original_copy[task_no_skill_rate].index + 3).tolist())
 
             if (task_no_type).any():
                 all_missing_columns.append('TYPE')
                 missing_counts.append(task_no_type.sum())
-                missing_indices.append((df_original_copy[task_no_type].index + 1).tolist())
-
+                missing_indices.append((df_original_copy[task_no_type].index + 3).tolist())
 
             # ตรวจสอบเงื่อนไขแต่ละคอลัมน์และเก็บชื่อคอลัมน์ที่ข้อมูลไม่ถูกต้อง
             invalid_columns = []
@@ -914,32 +901,32 @@ def index(request):
             if ((~cond_duration | non_negative) & task_order_not_xx).any():
                 invalid_columns.append('DURATION_(HR.)')
                 invalid_counts.append(((~cond_duration | non_negative) & task_order_not_xx).sum())
-                invalid_indices.append((df_original[(~cond_duration | non_negative) & task_order_not_xx].index + 1).tolist())
+                invalid_indices.append((df_original[(~cond_duration | non_negative) & task_order_not_xx].index + 3).tolist())
 
             if (~task_order_valid & (df_original_check['TASK_ORDER'] != -1)).any():
                 invalid_columns.append('TASK_ORDER')
                 invalid_counts.append((~task_order_valid & (df_original_check['TASK_ORDER'] != -1)).sum())
-                invalid_indices.append((df_original_check[(~task_order_valid & (df_original_check['TASK_ORDER'] != -1))].index + 1).tolist())
+                invalid_indices.append((df_original_check[(~task_order_valid & (df_original_check['TASK_ORDER'] != -1))].index + 3).tolist())
 
             if (cond_start_date_new).any():
                 invalid_columns.append('START_DATE')
                 invalid_counts.append(cond_start_date_new.sum())
-                invalid_indices.append((df_original[cond_start_date_new].index + 1).tolist())
+                invalid_indices.append((df_original[cond_start_date_new].index + 3).tolist())
 
             if (cond_finish_date_new).any():
                 invalid_columns.append('FINISH_DATE')
                 invalid_counts.append(cond_finish_date_new.sum())
-                invalid_indices.append((df_original[cond_finish_date_new].index + 1).tolist())
+                invalid_indices.append((df_original[cond_finish_date_new].index + 3).tolist())
 
             if ((task_order) & (invalid_skill_rate)).any():
                 invalid_columns.append('SKILL RATE')
                 invalid_counts.append(((task_order) & (invalid_skill_rate)).sum())
-                invalid_indices.append((df_original[(task_order) & (invalid_skill_rate)].index + 1).tolist())
+                invalid_indices.append((df_original[(task_order) & (invalid_skill_rate)].index + 3).tolist())
 
             if ((task_type) & (~valid_type)).any():
                 invalid_columns.append('TYPE')
                 invalid_counts.append(((task_type) & (~valid_type)).sum())
-                invalid_indices.append((df_original[(task_type) & (~valid_type)].index + 1).tolist())
+                invalid_indices.append((df_original[(task_type) & (~valid_type)].index + 3).tolist())
 
             missing_messages = []
             invalid_messages = []
@@ -973,46 +960,22 @@ def index(request):
                     'selected_order': selected_order,
                 })
             #! END RECHECK
-############
-############ 
-            logger.info(f'1 form schedule_filename: {schedule_filename}')
-            logger.info(f'1 form location_filename: {location_filename}')
-            logger.info(f'1 form comment_path: {comment_path}')
-############
-############                        
-            # Get variables
-            # schedule_filename = request.session.get('schedule_filename', None)
-            # location_filename = request.session.get('location_filename', None)
-            # schedule_path = request.session.get('schedule_path', None)
-            # location_path = request.session.get('location_path', None)
-            # comment_path = request.session.get('download_link_comment', None)
-            # child_site = request.session.get('child_site')
-            # temp_dir = request.session.get('temp_dir')
-            
-            # Get Dropdown
-            # frequency = request.session.get('frequency', '4')
-            # egmntacttype = request.session.get('egmntacttype')
-            # egprojectid = request.session.get('egprojectid')
-            # egwbs = request.session.get('egwbs')
-            # location = request.session.get('location')
-            # siteid = request.session.get('siteid')
-            # wbs_desc = request.session.get('wbs_desc')
-            # worktype = request.session.get('worktype')
-            # wostatus = request.session.get('wostatus')
+
+            # logger.info(f'1 form schedule_filename: {schedule_filename}')
+            # logger.info(f'1 form location_filename: {location_filename}')
+            # logger.info(f'1 form comment_path: {comment_path}')
             
             # Define path
-            job_plan_task_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Job_Plan.xlsx")
-            job_plan_labor_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Job_Plan_Labor.xlsx")
-            pm_plan_path = os.path.join(temp_dir, f"{uuid.uuid4()}_PM_Plan.xlsx")
-############
-############        
-            logger.info(f'2 elif schedule_filename: {schedule_filename}')
-            logger.info(f'2 elif location_filename: {location_filename}')
-            logger.info(f'2 elif comment_path: {comment_path}')
-############
-############  
+            # job_plan_task_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Job_Plan.xlsx")
+            # job_plan_labor_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Job_Plan_Labor.xlsx")
+            # pm_plan_path = os.path.join(temp_dir, f"{uuid.uuid4()}_PM_Plan.xlsx")
+            
+            # logger.info(f'2 elif schedule_filename: {schedule_filename}')
+            # logger.info(f'2 elif location_filename: {location_filename}')
+            # logger.info(f'2 elif comment_path: {comment_path}')
+
             #! Creat JOB PLAN TASK
-            df_original_newcol['UNIT_TYPE'] = df_original_newcol['KKS_NEW'].str[0:3]
+            df_original_newcol['UNIT'] = df_original_newcol['KKS_NEW'].str[0:3]
             df_original_filter = df_original_newcol[df_original_newcol['TASK_ORDER_NEW']!='xx'].copy()
             df_original_filter['TASK_ORDER_NEW'] = df_original_filter['TASK_ORDER_NEW'].astype('int32')
 
@@ -1024,11 +987,11 @@ def index(request):
             df_original_filter['GROUP_LEVEL_2'] = (df_original_filter['GROUP_LEVEL_1'].astype(int) * 10).astype(str).str.zfill(5) + '-' + df_original_filter['KKS_NEW']
             df_original_filter['GROUP_LEVEL_2'] = df_original_filter['GROUP_LEVEL_2'].astype(str)
             df_original_filter['TYPE'] = df_original_filter['TYPE'].astype(str)
-            df_original_filter['UNIT_TYPE'] = df_original_filter['UNIT_TYPE'].astype(str)
+            df_original_filter['UNIT'] = df_original_filter['UNIT'].astype(str)
             df_original_filter['GROUP_LEVEL_3'] = np.where(
                 worktype == 'APAO', 
-                df_original_filter['GROUP_LEVEL_2'] + '-' + df_original_filter['TYPE'] + '-' + df_original_filter['UNIT_TYPE'] + '-' + 'AD', 
-                df_original_filter['GROUP_LEVEL_2'] + '-' + df_original_filter['TYPE'] + '-' + df_original_filter['UNIT_TYPE'])
+                df_original_filter['GROUP_LEVEL_2'] + '-' + df_original_filter['TYPE'] + '-' + df_original_filter['UNIT'] + '-' + 'AD', 
+                df_original_filter['GROUP_LEVEL_2'] + '-' + df_original_filter['TYPE'] + '-' + df_original_filter['UNIT'])
             common_indices = df_original_copy.index.intersection(df_original_filter.index)
             df_original_copy.loc[common_indices, ['GROUP_LEVEL_1', 'GROUP_LEVEL_2','GROUP_LEVEL_3']] = df_original_filter.loc[common_indices, ['GROUP_LEVEL_1', 'GROUP_LEVEL_2','GROUP_LEVEL_3']]
             common_indices1 = df_original.index.intersection(df_original_filter.index)
@@ -1042,13 +1005,10 @@ def index(request):
             dict_jp_master = {}
             lst = ['GROUP_LEVEL_1','GROUP_LEVEL_3','KKS_NEW','EQUIPMENT_NEW','DURATION_TOTAL','TASK_ORDER_NEW', 'DURATION_(HR.)',
                 'START_DATE','FINISH_DATE','TASK_NEW','RESPONSE_CRAFT', 'ประเภทของ_PERMIT_TO_WORK']
-            #####################
-            # for group_1 in [4,10,22]: # for testing
+            
             for group_1 in df_original_filter_group['GROUP_LEVEL_1'].value_counts().sort_index().index:
                 cond1 = (df_original_filter['GROUP_LEVEL_1']==group_1)
-                ############
                 work_group = df_original_filter[cond1].iloc[:,0:].reset_index(drop=True) # separate each group
-                ###########
                 cond2 = work_group['DURATION_(HR.)']!=-1 # to eliminate redundant task
                 df_new = work_group[cond2].copy()
                 df_new['DURATION_TOTAL'] = df_new['DURATION_(HR.)'].sum()
@@ -1061,7 +1021,7 @@ def index(request):
             for group1,group3,eq in zip(df_original_filter_group['GROUP_LEVEL_1'],
                                         df_original_filter_group['GROUP_LEVEL_3'],
                                         df_original_filter_group['EQUIPMENT_NEW']):
-            #     group1,group2,eq
+                
                 df = dict_jp_master[group1].copy()
                 lst = ['DURATION_TOTAL','TASK_ORDER_NEW','DURATION_(HR.)','START_DATE','FINISH_DATE','TASK_NEW']
                 df_new = df[lst].copy()
@@ -1096,26 +1056,17 @@ def index(request):
 
             df_jop_plan_master['COMMENT'] = ''
             job_plan_cond1 = df_jop_plan_master['JOB_NUM'].astype(str).str.len()>30
-            # comment_empty_or_na = (df_jop_plan_master['COMMENT'] == '') | (df_jop_plan_master['COMMENT'].isna())
-            # df_jop_plan_master.loc[job_plan_cond1 & comment_empty_or_na, 'COMMENT'] = 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร'
-            # df_jop_plan_master.loc[job_plan_cond1 & ~comment_empty_or_na, 'COMMENT'] += ', JPNUM มีความยาวมากกว่า 30 ตัวอักษร'
             update_comment(df_jop_plan_master, job_plan_cond1, 'COMMENT', 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร')
 
 
             job_plan_cond2 = df_jop_plan_master['EQUIPMENT'].astype(str).str.len()>100
-            # comment_empty_or_na = (df_jop_plan_master['COMMENT'] == '') | (df_jop_plan_master['COMMENT'].isna())
-            # df_jop_plan_master.loc[job_plan_cond2 & comment_empty_or_na, 'COMMENT'] = 'DESCRIPTION มีความยาวมากกว่า 100 ตัวอักษร'
-            # df_jop_plan_master.loc[job_plan_cond2 & ~comment_empty_or_na, 'COMMENT'] += ', DESCRIPTION มีความยาวมากกว่า 100 ตัวอักษร'
             update_comment(df_jop_plan_master, job_plan_cond2, 'COMMENT', 'DESCRIPTION มีความยาวมากกว่า 100 ตัวอักษร')
 
             job_plan_cond3 = df_jop_plan_master['TASK_NEW'].astype(str).str.len()>100
-            # comment_empty_or_na = (df_jop_plan_master['COMMENT'] == '') | (df_jop_plan_master['COMMENT'].isna())
-            # df_jop_plan_master.loc[job_plan_cond3 & comment_empty_or_na, 'COMMENT'] = 'JOBTASK มีความยาวมากกว่า 100 ตัวอักษร'
-            # df_jop_plan_master.loc[job_plan_cond3 & ~comment_empty_or_na, 'COMMENT'] += ', JOBTASK มีความยาวมากกว่า 100 ตัวอักษร'
             update_comment(df_jop_plan_master, job_plan_cond3, 'COMMENT', 'JOBTASK มีความยาวมากกว่า 100 ตัวอักษร')
 
             #! Create Job_Plan_Task.xlsx
-            df_jop_plan_master.to_excel(job_plan_task_path,index=False)
+            # df_jop_plan_master.to_excel(job_plan_task_path,index=False)
 
 
             #! JOB PLAN Labor
@@ -1185,12 +1136,12 @@ def index(request):
                 'LABORHRS','QUANTITY','GROUP','MOD', 'COMMENT']
             
             #! Create Job_Plan_Labor.xlsx
-            df_labor_new[lst_labor1].to_excel(job_plan_labor_path, index=False)
+            # df_labor_new[lst_labor1].to_excel(job_plan_labor_path, index=False)
 
 
             #! Create PM PLAN
             # 'MAIN_SYSTEM','MAIN_SYSTEM_DESC','EGCRAFT','PTW'
-            logger.info(f"Grouping Options1 : {selected_order}")
+            # logger.info(f"Grouping Options1 : {selected_order}")
             
             group_columns = selected_order
             
@@ -1207,14 +1158,15 @@ def index(request):
                     index = group_columns.index('SYSTEM')
                     group_columns[index:index+1] = ['MAIN_SYSTEM', 'MAIN_SYSTEM_DESC']
                 
-                logger.info(f"Grouping Options2 : {group_columns}")
+                # logger.info(f"Grouping Options2 : {group_columns}")
                 
-                group_base = ['UNIT_TYPE', 'TYPE']
+                group_base = ['UNIT', 'TYPE']
                 all_group_columns = group_columns + group_base
-                logger.info(f"ALL GROUP : {all_group_columns}")
+                
+                # logger.info(f"ALL GROUP : {all_group_columns}")
                 
                 df_yy = pm_master_df.groupby(all_group_columns).size()
-                level_to_sort = [all_group_columns.index('TYPE'), all_group_columns.index('UNIT_TYPE')]
+                level_to_sort = [all_group_columns.index('TYPE'), all_group_columns.index('UNIT')]
                 df_yy = df_yy.sort_index(level=level_to_sort, ascending=False)
                 df_yyy = df_yy.reset_index(name='count')
                 df_yyy_cont_more = df_yyy[df_yyy['count']>1].reset_index(drop=True).copy()
@@ -1223,8 +1175,8 @@ def index(request):
                 if not df_yyy_cont_more.empty:
                     df_pm_plan3 = group_pm_plan(request, pm_master_df, all_group_columns,
                                                     df_yyy_cont_more, df_yyy_cont_less, siteid,
-                                                    group_columns, location, worktype, egmntacttype,
-                                                    wostatus, egprojectid, egwbs, frequency)
+                                                    group_columns, first_plant, location, worktype,
+                                                    egmntacttype, wostatus, egprojectid, egwbs, frequency)
                 else:
                     pm_master_df['MOD'] = 1
                     pm_master_df['GROUP'] = ''
@@ -1238,7 +1190,7 @@ def index(request):
                     'EGMNTACTTYPE','WOSTATUS','EGPROJECTID','EGWBS', 'FREQUENCY', 'FREQUNIT',
                     'JPNUM', 'ROUTE', 'NEXTDATE', 'EGCRAFT', 'RESPONSED BY', 'PTW', 'PARENTCHGSSTATUS',
                     'LEADTIME', 'TARGSTARTTIME', 'PARENT', 'PMCOUNTER', 'WOSEQUENCE',
-                    'MOD','MAIN_SYSTEM','MAIN_SYSTEM_DESC','UNIT_TYPE','TYPE', 'SUB_SYSTEM', 'EQUIPMENT', 'SUB_SYSTEM_DESC',
+                    'MOD','MAIN_SYSTEM','MAIN_SYSTEM_DESC','UNIT','TYPE', 'SUB_SYSTEM', 'EQUIPMENT', 'SUB_SYSTEM_DESC',
                     'KKS_NEW_DESC', 'GROUP', 'FINISH_DATE', 'FINISH TIME']
 
             df_pm_plan3_master = df_pm_plan3[lst_new].reset_index(drop=True)
@@ -1269,7 +1221,7 @@ def index(request):
             update_comment(df_pm_plan3_master, pm_plan_cond0, 'COMMENT', 'PMNUM มีความยาวมากกว่า 30 ตัวอักษร')
 
             #! Create PM_Plan.xlsx
-            df_pm_plan3_master.to_excel(pm_plan_path, index=False)
+            # df_pm_plan3_master.to_excel(pm_plan_path, index=False)
 
             #! TYPE 2
             class PMNumGenerator:
@@ -1342,10 +1294,7 @@ def index(request):
                     
                     return pd.Series([self.pmnum0, pmnum1, jpnum1, parent1])
 
-            # Instantiate the class
             generator = PMNumGenerator()
-
-            # Apply the function
             df_pm_plan3_master[['PMNUM1', 'PMNUM1', 'JPNUM1', 'PARENT1']] = df_pm_plan3_master.apply(generator.create_pmnum, axis=1)
             
             jpnum_map = df_pm_plan3_master.set_index('JPNUM')['JPNUM1'].to_dict()
@@ -1361,15 +1310,15 @@ def index(request):
             update_comment(df_jop_plan_master, job_plan_cond1, 'COMMENT1', 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร')
 
             df_labor_new['COMMENT1'] = ''
-            job_plan_cond1 = df_labor_new['JOB_NUM1'].astype(str).str.len()>30
-            update_comment(df_labor_new, job_plan_cond1, 'COMMENT1', 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร')
+            job_plan_cond2 = df_labor_new['JOB_NUM1'].astype(str).str.len()>30
+            update_comment(df_labor_new, job_plan_cond2, 'COMMENT1', 'JPNUM มีความยาวมากกว่า 30 ตัวอักษร')
             
             pm_plan_column1 = ['PMNUM', 'SITEID', 'DESCRIPTION', 'STATUS', 'LOCATION', 'WORKTYPE',
                                     'EGMNTACTTYPE', 'WOSTATUS', 'EGPROJECTID', 'EGWBS', 'FREQUENCY',
                                     'FREQUNIT', 'JPNUM', 'ROUTE', 'NEXTDATE', 'EGCRAFT', 'RESPONSED BY',
                                     'PTW', 'PARENTCHGSSTATUS', 'LEADTIME', 'TARGSTARTTIME', 'PARENT',
                                     'PMCOUNTER', 'WOSEQUENCE', 'MOD', 'MAIN_SYSTEM', 'MAIN_SYSTEM_DESC',
-                                    'UNIT_TYPE', 'TYPE', 'SUB_SYSTEM', 'EQUIPMENT', 'SUB_SYSTEM_DESC',
+                                    'UNIT', 'TYPE', 'SUB_SYSTEM', 'EQUIPMENT', 'SUB_SYSTEM_DESC',
                                     'KKS_NEW_DESC', 'GROUP', 'FINISH_DATE', 'FINISH TIME', 'COMMENT']
             replace_dict = {
                 'PMNUM': 'PMNUM1',
@@ -1388,7 +1337,6 @@ def index(request):
                 'COMMENT': 'COMMENT1',
             }
             jop_plan_column2 = [replace_columns(col, replace_dict) for col in jop_plan_column1]
-
             lst_labor2 = [replace_columns(col, replace_dict) for col in lst_labor1]
             
             #! Create WORKORDER
@@ -1413,9 +1361,11 @@ def index(request):
             yellow_fill = PatternFill(start_color='FFFF00', end_color='FFFF00', fill_type='solid')
 
             # Define file paths
-            file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template MxLoader JB-PM Plan.xlsm')
+            mxloader_template_v842_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template MxLoader JB-PM Plan.xlsm')
+            mxloader_template_v810_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template MxLoader JB-PM Plan v8.1.0.xlsm')
             file_template_xlsx = os.path.join(temp_dir, f"{uuid.uuid4()}_Template MxLoader JB-PM Plan_temp.xlsx")
-            file_template_xlsm = os.path.join(temp_dir, f"{uuid.uuid4()}_Template MxLoader JB-PM Plan.xlsm")
+            mxloader_template_output_v842_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Template MxLoader JB-PM Plan.xlsm")
+            mxloader_template_output_v810_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Template MxLoader JB-PM Plan v.8.1.0.xlsm")
             
             sheet_jp_labor = 'JPPLAN-LABOR'
             sheet_jp_task = 'JPPLAN-TASK'
@@ -1423,12 +1373,10 @@ def index(request):
             sheet_wo = 'WO'
             start_row = 2
 
-            # 1. ตรวจสอบว่ามีไฟล์ที่ต้องการใช้งานอยู่จริงหรือไม่
-            if not os.path.exists(file_path):
-                raise FileNotFoundError(f"The file {file_path} does not exist.")
+            if not os.path.exists(mxloader_template_v842_path):
+                raise FileNotFoundError(f"The file {mxloader_template_v842_path} does not exist.")
 
-            # 2. คัดลอกไฟล์ต้นฉบับไปยังไฟล์ใหม่ (file_template_xlsx)
-            shutil.copyfile(file_path, file_template_xlsx)
+            shutil.copyfile(mxloader_template_v842_path, file_template_xlsx)
 
             try:
                 basic_sheet_names = [sheet_jp_labor, sheet_jp_task, sheet_pm, sheet_wo]
@@ -1436,7 +1384,6 @@ def index(request):
                     for sheet_name in basic_sheet_names:
                         copy_worksheet(request, file_template_xlsx, sheet_name, i)
                 
-                # 3. ใช้ pandas เพื่อเขียนข้อมูลลงในไฟล์ .xlsx
                 # with pd.ExcelWriter(file_template_xlsx, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
                 # # เขียนข้อมูลจาก DataFrame ลงในชีตที่ระบุ
                 #     df_labor_new[lst_labor1].to_excel(writer, sheet_name=sheet_jp_labor, startrow=start_row, startcol=0, index=False, header=False)
@@ -1484,52 +1431,13 @@ def index(request):
                 # บันทึกไฟล์ตกแต่งในรูปแบบ .xlsx
                 openpyxl_book.save(file_template_xlsx)
                 
-                # 5. ใช้ xlwings คัดลอกเนื้อหาและการตกแต่งจาก .xlsx ไปยัง .xlsm
-                with xw.App(visible=False) as app:
-                    time.sleep(2)
-
-                    # เปิดไฟล์ .xlsx และ .xlsm
-                    book_xlsx = app.books.open(file_template_xlsx)
-                    book_xlsm = app.books.open(file_path)  # เปิดไฟล์ต้นฉบับ
-
-                    # ลบชีตเดิมใน .xlsm ที่ต้องการแทนที่
-                    for sheet_name in basic_sheet_names:
-                        if sheet_name in [s.name for s in book_xlsm.sheets]:
-                            book_xlsm.sheets[sheet_name].delete()
-                    
-                    # คัดลอกชีตทั้งหมดจาก .xlsx ไปยัง .xlsm
-                    for sheet_name in basic_sheet_names:
-                        sheet_xlsx = book_xlsx.sheets[sheet_name]
-                        # คัดลอกชีตจาก .xlsx ไปยัง .xlsm วางไว้หลังชีตสุดท้ายใน .xlsm
-                        sheet_xlsx.api.Copy(After=book_xlsm.sheets[-1].api)
-
-                        # ตั้งชื่อชีตใหม่ใน .xlsm
-                        new_sheet = book_xlsm.sheets[-1]  # ชีตที่ถูกคัดลอกจะเป็นชีตสุดท้าย
-                        if sheet_name in [s.name for s in book_xlsm.sheets]:
-                            new_sheet_name = f"{sheet_name}-{location}"
-                        else:
-                            new_sheet_name = sheet_name
-
-                        new_sheet.name = new_sheet_name
-                        
-                    for sheet_name in basic_sheet_names:
-                        sheet_name_with_suffix = f"{sheet_name}-1"
-                        sheet_xlsx = book_xlsx.sheets[sheet_name_with_suffix]
-                        # คัดลอกชีตจาก .xlsx ไปยัง .xlsm วางไว้หลังชีตสุดท้ายใน .xlsm
-                        sheet_xlsx.api.Copy(After=book_xlsm.sheets[-1].api)
-
-                        # ตั้งชื่อชีตใหม่ใน .xlsm
-                        new_sheet = book_xlsm.sheets[-1]  # ชีตที่ถูกคัดลอกจะเป็นชีตสุดท้าย
-                        if sheet_name_with_suffix in [s.name for s in book_xlsm.sheets]:
-                            new_sheet_name = f"{sheet_name_with_suffix}-{location}"
-                        else:
-                            new_sheet_name = sheet_name_with_suffix
-
-                        new_sheet.name = new_sheet_name
-
-                    # บันทึกไฟล์ .xlsm ที่ตกแต่งแล้ว
-                    book_xlsm.save(file_template_xlsm)
-                    logger.info(f"File saved successfully as {file_template_xlsm}")
+                copy_sheets_to_macro_file(
+                    request, file_template_xlsx, mxloader_template_v842_path, mxloader_template_output_v842_path, basic_sheet_names, location
+                    )
+                
+                copy_sheets_to_macro_file(
+                    request, file_template_xlsx, mxloader_template_v810_path, mxloader_template_output_v810_path, basic_sheet_names, location
+                    )
 
             except Exception as e:
                 logger.error(f"An error occurred: {str(e)}", exc_info=True)
@@ -1566,7 +1474,8 @@ def index(request):
                     return redirect('index')
                 
                 try:
-                    os.remove(file_template_xlsx)
+                    if os.path.exists(file_template_xlsx):
+                        os.remove(file_template_xlsx)
                 except FileNotFoundError:
                     logger.warning(f"Temporary file {file_template_xlsx} not found for deletion.")
                 except Exception as e:
@@ -1590,32 +1499,33 @@ def index(request):
             request.session['most_common_plant_unit'] = most_common_plant_unit
             
             # Save files
-            request.session['download_link_comment'] = comment_path
-            request.session['download_link_job_plan_task'] = job_plan_task_path
-            request.session['download_link_job_plan_labor'] = job_plan_labor_path
-            request.session['download_link_pm_plan'] = pm_plan_path
-            request.session['download_link_template'] = file_template_xlsm
+            # request.session['download_link_comment'] = comment_path
+            # request.session['download_link_job_plan_task'] = job_plan_task_path
+            # request.session['download_link_job_plan_labor'] = job_plan_labor_path
+            # request.session['download_link_pm_plan'] = pm_plan_path
+            request.session['download_link_template'] = {
+                '8.4.2': mxloader_template_output_v842_path,
+                '8.1.0': mxloader_template_output_v810_path,
+            }
             
             #! Check session
-            logger.info(f'form: {form}')
-            logger.info(f'schedule_filename: {schedule_filename}')
-            logger.info(f'location_filename: {location_filename}')
-            logger.info(f'download_link_comment: {request.session["download_link_comment"]}')
-            logger.info(f'download_link_job_plan_task: {request.session["download_link_job_plan_task"]}')
-            logger.info(f'download_link_job_plan_labor: {request.session["download_link_job_plan_labor"]}')
-            logger.info(f'download_link_pm_plan: {request.session["download_link_pm_plan"]}')
-            logger.info(f'download_link_template: {request.session["download_link_template"]}')
+            # logger.info(f'form: {form}')
+            # logger.info(f'schedule_filename: {schedule_filename}')
+            # logger.info(f'location_filename: {location_filename}')
+            # logger.info(f'download_link_comment: {request.session["download_link_comment"]}')
+            # logger.info(f'download_link_template: {request.session["download_link_template"]}')
         
     else:
         keys_to_clear = [
             'schedule_filename', 'location_filename', 'temp_dir', 'schedule_path', 'location_path', 
             'first_plant', 'most_common_plant_unit',
-            'download_link_comment', 'download_link_job_plan_task', 'download_link_job_plan_labor', 
-            'download_link_pm_plan', 'download_link_template', 
+            'download_link_comment', 
+            'download_link_template', 
             'year', 'frequency', 'egmntacttype', 'egprojectid', 'egwbs', 'location', 'siteid', 
             'wostatus', 'wbs', 'wbs_desc', 'worktype', 'wostatus', 'grouping_text', 'child_site', 
         ]
-
+        # 'download_link_job_plan_task', 'download_link_job_plan_labor', 'download_link_pm_plan'
+        
         for key in keys_to_clear:
             request.session.pop(key, None)
         
@@ -1635,9 +1545,11 @@ def index(request):
 # ฟังก์ชันการจัดการการดาวน์โหลด (Download Functions)
 # ---------------------------------
 
-def generic_download(request, session_key, original_file_name, content_type, template=False):
-    file_path = request.session.get(session_key, None)
-    
+def generic_download(request, session_key, original_file_name, content_type, file_path):
+    if session_key is None:
+        file_path = file_path
+    else:
+        file_path = request.session.get(session_key, None)
     if not file_path:
         logger.error(f"File path for session key '{session_key}' not specified.")
         error_message = (
@@ -1694,41 +1606,83 @@ def download_comment_file(request):
         request=request,
         session_key='download_link_comment',
         original_file_name='Comment.xlsx',
-        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        file_path=None
     )
 
-def download_job_plan_task_file(request):
-    return generic_download(
-        request=request,
-        session_key='download_link_job_plan_task',
-        original_file_name='Job_Plan_Task.xlsx',
-        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+# def download_job_plan_task_file(request):
+#     return generic_download(
+#         request=request,
+#         session_key='download_link_job_plan_task',
+#         original_file_name='Job_Plan_Task.xlsx',
+#         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+#         file_path=None
+#     )
 
-def download_job_plan_labor_file(request):
-    return generic_download(
-        request=request,
-        session_key='download_link_job_plan_labor',
-        original_file_name='Job_Plan_Labor.xlsx',
-        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+# def download_job_plan_labor_file(request):
+#     return generic_download(
+#         request=request,
+#         session_key='download_link_job_plan_labor',
+#         original_file_name='Job_Plan_Labor.xlsx',
+#         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+#         file_path=None
+#     )
 
-def download_pm_plan_file(request):
-    return generic_download(
-        request=request,
-        session_key='download_link_pm_plan',
-        original_file_name='PM_Plan.xlsx',
-        content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    )
+# def download_pm_plan_file(request):
+#     return generic_download(
+#         request=request,
+#         session_key='download_link_pm_plan',
+#         original_file_name='PM_Plan.xlsx',
+#         content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+#         file_path=None
+#     )
 
-def download_template_file(request):
+def download_template_file(request, version):
     location = request.session.get('location', 'BLANK')
-    original_file_name = f'Template MxLoader JB-PM Plan ({location}).xlsm'
+    download_links = request.session.get('download_link_template', {})
+    file_path = download_links.get(version) # ดึง file_path ตามเวอร์ชัน
+    
+    if not file_path or not isinstance(file_path, str):
+        logger.error(f"No valid download link found for version {version}.")
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template MxLoader JB-PM Plan เวอร์ชัน {version} ที่ต้องการดาวน์โหลด<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+            f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้วหรือถูกลบออก</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return render(request, 'maximo_app/upload_form.html', {})
+        
+    # กำหนด session_key และ original_file_name ตามเวอร์ชัน
+    if version == '8.4.2':
+        original_file_name = f'Template MxLoader JB-PM Plan_{location}.xlsm'
+    elif version == '8.1.0':
+        original_file_name = f'Template MxLoader JB-PM Plan v8.1.0_{location}.xlsm'
+    else:
+        logger.error(f"Invalid version specified: {version}")
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> เวอร์ชันที่ระบุ ({version}) ไม่ถูกต้อง<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เวอร์ชันที่ระบุไม่มีอยู่ในระบบ</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        return redirect('index')
+    
     return generic_download(
         request=request,
-        session_key='download_link_template',
+        session_key=None,
         original_file_name=original_file_name,
-        content_type="application/vnd.ms-excel.sheet.macroEnabled.12"
+        content_type="application/vnd.ms-excel.sheet.macroEnabled.12",
+        file_path=file_path
     )
 
 
@@ -2006,7 +1960,7 @@ def filter_site(request):
     
     try:
         site = Site.objects.get(id=site_id) # ดึงข้อมูล Site จากฐานข้อมูลโดยใช้ site_id
-        logger.info(f"Successfully retrieved Site with id {site_id}")
+        # logger.info(f"Successfully retrieved Site with id {site_id}")
         child_sites = site.child_sites.values('id', 'site_id', 'site_name')
         
     except Site.DoesNotExist:
@@ -2037,7 +1991,7 @@ def filter_child_site(request):
     
     try:
         child_site = ChildSite.objects.get(id=child_site_id)
-        logger.info(f"Successfully retrieved ChildSite with id {child_site_id}")
+        # logger.info(f"Successfully retrieved ChildSite with id {child_site_id}")
     except ChildSite.DoesNotExist:
         logger.warning(f"ChildSite with id {child_site_id} does not exist.")
         return JsonResponse({'error': 'Child Site not found.'}, status=404)
@@ -2063,7 +2017,7 @@ def filter_worktype(request):
     
     try:
         work_type = WorkType.objects.get(id=work_type_id)
-        logger.info(f"Successfully retrieved WorkType with id {work_type_id}")
+        # logger.info(f"Successfully retrieved WorkType with id {work_type_id}")
     except WorkType.DoesNotExist:
         logger.warning(f"WorkType with id {work_type_id} does not exist.")
         return JsonResponse({'error': 'WorkType not found.'}, status=404)
@@ -2089,7 +2043,8 @@ def filter_plant_type(request):
     try:
         # ดึงข้อมูล PlantType ตาม id
         plant_type = PlantType.objects.get(id=plant_type_id)
-        logger.info(f"Successfully retrieved PlantType with id {plant_type_id}")
+        # logger.info(f"Successfully retrieved PlantType with id {plant_type_id}")
+        
         # Get the ActTypes associated with the PlantType
         acttypes = plant_type.act_types.all()
         
@@ -2159,7 +2114,7 @@ def filter_acttype(request):
 
     try:
         acttype = ActType.objects.get(id=acttype_id)
-        logger.info(f"Successfully retrieved ActType with id {acttype_id}")
+        # logger.info(f"Successfully retrieved ActType with id {acttype_id}")
     except ActType.DoesNotExist:
         logger.warning(f"ActType with id {acttype_id} does not exist.")
         return JsonResponse({'error': 'ActType not found.'}, status=404)
@@ -2186,7 +2141,7 @@ def filter_wbs(request):
 
     try:
         wbs = WBSCode.objects.get(id=wbs_id)
-        logger.info(f"Successfully retrieved WBSCode with id {wbs_id}")
+        # logger.info(f"Successfully retrieved WBSCode with id {wbs_id}")
     except WBSCode.DoesNotExist:
         logger.warning(f"WBSCode with id {wbs_id} does not exist.")
         return JsonResponse({'error': 'WBSCode not found.'}, status=404)
@@ -2212,7 +2167,7 @@ def filter_wostatus(request):
 
     try:
         wostatus = Status.objects.get(id=wostatus_id)
-        logger.info(f"Successfully retrieved Status with id {wostatus_id}")
+        # logger.info(f"Successfully retrieved Status with id {wostatus_id}")
     except Status.DoesNotExist:
         logger.warning(f"Status with id {wostatus_id} does not exist.")
         return JsonResponse({'error': 'Status not found.'}, status=404)
@@ -2402,7 +2357,7 @@ def create_pm_plan(request, df_original_filter, siteid,
         df_original_filter['ROUTE'] = df_original_filter['ROUTE'].replace(-1, np.nan)
         data_pm = df_original_filter.groupby(['GROUP_LEVEL_1','GROUP_LEVEL_3','KKS_NEW','MAIN_SYSTEM','SUB_SYSTEM',
                                     'EQUIPMENT','MAIN_SYSTEM_DESC','SUB_SYSTEM_DESC','KKS_NEW_DESC','EQUIPMENT_NEW',
-                                    'UNIT_TYPE','TYPE'
+                                    'UNIT','TYPE'
                                 ]).size()
         df_original_filter_group_pm = pd.DataFrame(data_pm).reset_index()
         df_original_filter_group_pm = df_original_filter_group_pm.drop(columns = [0])
@@ -2438,7 +2393,7 @@ def create_pm_plan(request, df_original_filter, siteid,
             'MAIN_SYSTEM_DESC': [],
             'SUB_SYSTEM_DESC': [],
             'KKS_NEW_DESC': [],
-            'UNIT_TYPE': [],
+            'UNIT': [],
             'TYPE': [],
         }
         ############################
@@ -2532,8 +2487,8 @@ def create_pm_plan(request, df_original_filter, siteid,
             kks_new_desc = row['KKS_NEW_DESC']
             pm_master_dict['KKS_NEW_DESC'].append(kks_new_desc)
             #######unit_type
-            unit_type = row['UNIT_TYPE']
-            pm_master_dict['UNIT_TYPE'].append(unit_type)
+            unit_type = row['UNIT']
+            pm_master_dict['UNIT'].append(unit_type)
             #######carft_desc
             TYPE = row['TYPE']
             pm_master_dict['TYPE'].append(TYPE)
@@ -2569,8 +2524,8 @@ def generate_description(*args):
 
 def group_pm_plan(request, pm_master_df, all_group_columns,
                     df_yyy_cont_more, df_yyy_cont_less, siteid,
-                    group_columns, location, worktype, egmntacttype,
-                    wostatus, egprojectid, egwbs, frequency):
+                    group_columns, first_plant, location, worktype,
+                    egmntacttype, wostatus, egprojectid, egwbs, frequency):
     try:
         #? PM PLAN MORE
         df_pm_plan3_more = pd.DataFrame()
@@ -2614,14 +2569,19 @@ def group_pm_plan(request, pm_master_df, all_group_columns,
                         #'EQUIPMENT':[],
                         #'MAIN_SYSTEM_DESC':[],
                         #'SUB_SYSTEM_DESC':[],
-                        'UNIT_TYPE':[],
+                        'UNIT':[],
                         'TYPE':[]
                         }
-            pm_parent_dict['PMNUM'] = generate_pmnum(loop_num, row['TYPE'], row['UNIT_TYPE'], worktype)
+            pm_parent_dict['PMNUM'] = generate_pmnum(loop_num, row['TYPE'], row['UNIT'], worktype)
             pm_parent_dict['SITEID'] = siteid
             pm_parent_dict['DESCRIPTION'] = generate_description(*(row[col] for col in group_columns))
             pm_parent_dict['STATUS'] = status
-            pm_parent_dict['LOCATION'] = location
+            
+            if 'MAIN_SYSTEM' in group_columns and 'MAIN_SYSTEM_DESC' in group_columns:
+                pm_parent_dict['LOCATION'] = first_plant + row['MAIN_SYSTEM'] if pd.notna(row['MAIN_SYSTEM']) else location
+            else:
+                pm_parent_dict['LOCATION'] = first_plant + row['UNIT'] if pd.notna(row['UNIT']) else location
+            
             pm_parent_dict['ROUTE'] = ''
             pm_parent_dict['LEADTIME'] = leadtime
             pm_parent_dict['PMCOUNTER'] =''
@@ -2647,10 +2607,10 @@ def group_pm_plan(request, pm_master_df, all_group_columns,
             # pm_parent_dict['EQUIPMENT'] =row['EQUIPMENT']
             # pm_parent_dict['MAIN_SYSTEM_DESC'] =row['MAIN_SYSTEM_DESC']
             # pm_parent_dict['SUB_SYSTEM_DESC'] =row['SUB_SYSTEM_DESC']
-            pm_parent_dict['UNIT_TYPE'] =row['UNIT_TYPE']
+            pm_parent_dict['UNIT'] =row['UNIT']
             pm_parent_dict['TYPE'] =row['TYPE']
             parent_df = pd.DataFrame([pm_parent_dict])
-            group.loc[:, 'PARENT'] = generate_pmnum(loop_num, row['TYPE'], row['UNIT_TYPE'], worktype)
+            group.loc[:, 'PARENT'] = generate_pmnum(loop_num, row['TYPE'], row['UNIT'], worktype)
             parent = pd.concat([parent_df, group])
             parent.loc[:,'GROUP'] = loop_num
             df_pm_plan3_more = pd.concat([df_pm_plan3_more,parent])
@@ -2887,7 +2847,7 @@ def decorate_sheet_task(sheet, thin_border, fill_color, yellow_fill, start_row, 
 
 # ฟังก์ชันสำหรับตกแต่งชีต PM-PLAN
 def decorate_sheet_pm(sheet, thin_border, fill_color, yellow_fill, start_row, df_pm_plan3_master):
-    headers = ['MOD', 'MAIN_SYSTEM', 'MAIN_SYSTEM_DESC', 'UNIT_TYPE',
+    headers = ['MOD', 'MAIN_SYSTEM', 'MAIN_SYSTEM_DESC', 'UNIT',
             'TYPE','SUB_SYSTEM', 'EQUIPMENT', 'SUB_SYSTEM_DESC',
             'KKS_NEW_DESC', 'GROUP', 'FINISH_DATE', 'FINISH TIME', 'COMMENT']
     
@@ -2939,3 +2899,67 @@ def decorate_sheet(sheet, sheet_name, thin_border, fill_color, yellow_fill, star
         decorate_sheet_pm(sheet, thin_border, fill_color, yellow_fill, start_row, df_pm_plan3_master)
     # elif "WO" in sheet_name:
     #     decorate_sheet_wo(sheet)
+
+def copy_sheets_to_macro_file(request, file_template_xlsx, file_path, file_template_xlsm, basic_sheet_names, location):
+    try:
+        # 5. ใช้ xlwings คัดลอกเนื้อหาและการตกแต่งจาก .xlsx ไปยัง .xlsm
+        with xw.App(visible=False) as app:
+            time.sleep(2)
+
+            # เปิดไฟล์ .xlsx และ .xlsm
+            book_xlsx = app.books.open(file_template_xlsx)
+            book_xlsm = app.books.open(file_path)  # เปิดไฟล์ต้นฉบับ
+
+            # ลบชีตเดิมใน .xlsm ที่ต้องการแทนที่
+            for sheet_name in basic_sheet_names:
+                if sheet_name in [s.name for s in book_xlsm.sheets]:
+                    book_xlsm.sheets[sheet_name].delete()
+            
+            # คัดลอกชีตทั้งหมดจาก .xlsx ไปยัง .xlsm
+            for sheet_name in basic_sheet_names:
+                sheet_xlsx = book_xlsx.sheets[sheet_name]
+                # คัดลอกชีตจาก .xlsx ไปยัง .xlsm วางไว้หลังชีตสุดท้ายใน .xlsm
+                sheet_xlsx.api.Copy(After=book_xlsm.sheets[-1].api)
+
+                # ตั้งชื่อชีตใหม่ใน .xlsm
+                new_sheet = book_xlsm.sheets[-1]  # ชีตที่ถูกคัดลอกจะเป็นชีตสุดท้าย
+                if sheet_name in [s.name for s in book_xlsm.sheets]:
+                    new_sheet_name = f"{sheet_name}-{location}"
+                else:
+                    new_sheet_name = sheet_name
+
+                new_sheet.name = new_sheet_name
+                
+            for sheet_name in basic_sheet_names:
+                sheet_name_with_suffix = f"{sheet_name}-1"
+                sheet_xlsx = book_xlsx.sheets[sheet_name_with_suffix]
+                # คัดลอกชีตจาก .xlsx ไปยัง .xlsm วางไว้หลังชีตสุดท้ายใน .xlsm
+                sheet_xlsx.api.Copy(After=book_xlsm.sheets[-1].api)
+
+                # ตั้งชื่อชีตใหม่ใน .xlsm
+                new_sheet = book_xlsm.sheets[-1]  # ชีตที่ถูกคัดลอกจะเป็นชีตสุดท้าย
+                if sheet_name_with_suffix in [s.name for s in book_xlsm.sheets]:
+                    new_sheet_name = f"{sheet_name_with_suffix}-{location}"
+                else:
+                    new_sheet_name = sheet_name_with_suffix
+
+                new_sheet.name = new_sheet_name
+
+            # บันทึกไฟล์ .xlsm ที่ตกแต่งแล้ว
+            book_xlsm.save(file_template_xlsm)
+            print(f"File saved successfully as {file_template_xlsm}")
+            
+    except Exception as e:
+        logger.error(f"Failed to copy sheets to Excel: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถคัดลอกชีตไปยังไฟล์ Excel ได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดในระหว่างคัดลอกชีต กรุณาตรวจสอบข้อมูลอีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
