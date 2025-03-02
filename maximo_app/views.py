@@ -2486,9 +2486,9 @@ def create_pm_plan(request, df_original_filter, siteid,
             #######kks_new_desc
             kks_new_desc = row['KKS_NEW_DESC']
             pm_master_dict['KKS_NEW_DESC'].append(kks_new_desc)
-            #######unit_type
-            unit_type = row['UNIT']
-            pm_master_dict['UNIT'].append(unit_type)
+            #######unit
+            unit = row['UNIT']
+            pm_master_dict['UNIT'].append(unit)
             #######carft_desc
             TYPE = row['TYPE']
             pm_master_dict['TYPE'].append(TYPE)
@@ -2513,11 +2513,11 @@ def create_pm_plan(request, df_original_filter, siteid,
         messages.error(request, error_message)
         return redirect('index')
 
-def generate_pmnum(loop_num, type, unit_type, worktype):
+def generate_pmnum(loop_num, type, unit, worktype):
     if worktype == 'APAO':
-        return f'Group-{loop_num:02d}-{type}-{unit_type}-AD'
+        return f'Group-{loop_num:02d}-{type}-{unit}-AD'
     else:
-        return f'Group-{loop_num:02d}-{type}-{unit_type}'
+        return f'Group-{loop_num:02d}-{type}-{unit}'
 
 def generate_description(*args):
     return ', '.join(map(str, args))

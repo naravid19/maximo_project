@@ -34,8 +34,8 @@ SECRET_KEY = 'django-insecure-8qr^6l&nb!g6g22xu(^6h@wb#hc$54e@qr76(@x*npdvhh#&!u
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False    # ควรตั้งค่าเป็น False ใน production
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'cde7-161-246-199-200.ngrok-free.app']
-CSRF_TRUSTED_ORIGINS = ['https://cde7-161-246-199-200.ngrok-free.app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '8dbb-161-246-199-200.ngrok-free.app']
+CSRF_TRUSTED_ORIGINS = ['https://8dbb-161-246-199-200.ngrok-free.app']
 # CSRF_COOKIE_SECURE = True   # ส่ง CSRF Cookie เฉพาะผ่าน HTTPS
 # SESSION_COOKIE_SECURE = True  # ใช้ Secure Cookie (เฉพาะ HTTPS)
 PORT = int(os.environ.get("PORT", 8000))
@@ -260,18 +260,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
-
-# ==============================================================================
-# CELERY SETTINGS
-# ==============================================================================
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-
-# CELERY_TASK_TRACK_STARTED = True
-# CELERY_TASK_TIME_LIMIT = 30 * 60
 
 # ==============================================================================
 # CUSTOM SETTINGS
