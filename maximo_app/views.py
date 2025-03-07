@@ -10,6 +10,7 @@ import regex
 import shutil
 import sys
 import time
+import traceback
 import uuid
 import warnings
 
@@ -56,7 +57,27 @@ status = 'ACTIVE'
 pluscjprevnum = 0
 frequnit = 'YEARS'
 leadtime = 7
+
+# def test_404(request):
+#     return render(request, "errors/404.html")
+
+# def test_500(request):
+#     return render(request, "errors/500.html")
+
 def index(request):
+    # log_error = ['Schedule file', 'Location file', 'C', 'D', 'E', 'F']
+    # error_message = (
+    #                 f"<div class='error-container'>"
+    #                 f"<strong class='error-title'>ข้อผิดพลาด:</strong> ข้อมูลที่จำเป็นไม่ได้รับการระบุจากฟอร์ม<br>"
+    #                 f"<ul class='error-details'>"
+    #                 f"{''.join(f'<li>{error}</li>' for error in log_error)}"
+    #                 f"</ul>"
+    #                 f"<p class='error-note'>*** โปรดตรวจสอบและเลือกข้อมูลที่จำเป็นในฟอร์มทุกฟิลด์ที่เกี่ยวข้อง ***</p>"
+    #                 f"</div>"
+    #             )
+    # messages.error(request, error_message)
+    # return render(request, 'maximo_app/upload_form.html')
+
     # sheet_name = 'Sheet1'
     schedule_filename = None
     location_filename = None
@@ -984,7 +1005,7 @@ def index(request):
             xx = cond1|cond2
             df_original_filter['GROUP_LEVEL_1'] = xx.cumsum().rename('GROUP_LEVEL_1')
             # df_original_filter['GROUP_LEVEL_2'] = df_original_filter['GROUP_LEVEL_1'].astype('str')+'-'+df_original_filter['KKS_NEW']
-            df_original_filter['GROUP_LEVEL_2'] = (df_original_filter['GROUP_LEVEL_1'].astype(int) * 10).astype(str).str.zfill(5) + '-' + df_original_filter['KKS_NEW']
+            df_original_filter['GROUP_LEVEL_2'] = (df_original_filter['GROUP_LEVEL_1'].astype(int) * 10).astype(str).str.zfill(5) + '-' + df_original_filter['KKS_NEW'].astype(str)
             df_original_filter['GROUP_LEVEL_2'] = df_original_filter['GROUP_LEVEL_2'].astype(str)
             df_original_filter['TYPE'] = df_original_filter['TYPE'].astype(str)
             df_original_filter['UNIT'] = df_original_filter['UNIT'].astype(str)
@@ -2184,10 +2205,33 @@ def filter_wostatus(request):
 # ---------------------------------
 
 def custom_404(request, exception):
-    return render(request, '404.html', status=404)
+    # ดึง stack trace ของเฟรมปัจจุบัน (ข้อมูลสำหรับ debug)
+    stack_trace = ''.join(traceback.format_stack())
+    
+    error_details = (
+        f"Page not found (404)\n"
+        f"Request Method: {request.method}\n"
+        f"Request URL: {request.build_absolute_uri()}\n\n"
+        f"Stack trace (most recent call last):\n{stack_trace}\n\n"
+        f"Django tried these URL patterns:\n{exception}"
+    )
+    logger.error(error_details)
+    return render(request, 'errors/404.html', {'error_details': error_details}, status=404)
 
 def custom_500(request):
-    return render(request, '500.html', status=500)
+    # ดึงรายละเอียดของ exception
+    exc_type, exc_value, exc_traceback = sys.exc_info()
+
+    error_trace = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+
+    error_details = (
+        f"Server Error (500)\n"
+        f"Request Method: {request.method}\n"
+        f"Request URL: {request.build_absolute_uri()}\n\n"
+        f"{error_trace}"
+    )
+    return render(request, 'errors/500.html', {'error_details': error_details}, status=500)
+
 
 # ---------------------------------
 # ฟังก์ชันช่วยเหลือ (Helper Functions)
@@ -2240,13 +2284,9 @@ def replace_or_append_comment(df, condition, comment_col, message, replace_messa
     df.loc[condition & ~comment_empty_or_na, comment_col] = df.loc[condition & ~comment_empty_or_na, comment_col].apply(update_comment_text)
 
 
-def read_excel_with_error_handling(request, schedule_path, sheet_name=0):
+def read_excel_with_error_handling(request, schedule_path, sheet_name=0, header=1, dtype_spec=None):
     try:
-        # พยายามอ่านไฟล์ Excel ด้วย sheet_name ที่ระบุ
-        df_original = pd.read_excel(schedule_path, 
-                                    sheet_name=sheet_name, 
-                                    header=1,
-                                    dtype={'START_DATE': str, 'FINISH_DATE': str})
+        df_original = pd.read_excel(schedule_path, sheet_name=sheet_name, header=header, dtype=dtype_spec)
         return df_original
     except ValueError as ve:
         # sheet_name ไม่มีข้อมูล
@@ -2431,14 +2471,17 @@ def create_pm_plan(request, df_original_filter, siteid,
             pm_master_dict['WOSTATUS'] = wostatus
             ######EGCRAFT
             carft_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==row['GROUP_LEVEL_1']]['RESPONSE_CRAFT'].dropna().drop_duplicates().to_list()
+            carft_lst = [str(x) for x in carft_lst] 
             carft = '//'.join(carft_lst)
             pm_master_dict['EGCRAFT'].append(carft)
             ######RESPONSED BY
             response_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==row['GROUP_LEVEL_1']]['RESPONSE'].dropna().drop_duplicates().to_list()
+            response_lst = [str(x) for x in response_lst]
             response = '//'.join(response_lst)
             pm_master_dict['RESPONSED BY'].append(response)
             ######PTW
             ptw_lst = df_group_temp[df_group_temp['GROUP_LEVEL_1']==row['GROUP_LEVEL_1']]['ประเภทของ_PERMIT_TO_WORK'].dropna().drop_duplicates().to_list()
+            ptw_lst = [str(x) for x in ptw_lst]
             ptw = '//'.join(ptw_lst)
             pm_master_dict['PTW'].append(ptw)
             ######LOTO

@@ -34,8 +34,8 @@ SECRET_KEY = 'django-insecure-8qr^6l&nb!g6g22xu(^6h@wb#hc$54e@qr76(@x*npdvhh#&!u
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False    # ควรตั้งค่าเป็น False ใน production
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '8dbb-161-246-199-200.ngrok-free.app']
-CSRF_TRUSTED_ORIGINS = ['https://8dbb-161-246-199-200.ngrok-free.app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '2c0f-161-246-199-200.ngrok-free.app']
+CSRF_TRUSTED_ORIGINS = ['https://2c0f-161-246-199-200.ngrok-free.app']
 # CSRF_COOKIE_SECURE = True   # ส่ง CSRF Cookie เฉพาะผ่าน HTTPS
 # SESSION_COOKIE_SECURE = True  # ใช้ Secure Cookie (เฉพาะ HTTPS)
 PORT = int(os.environ.get("PORT", 8000))
@@ -72,7 +72,10 @@ ROOT_URLCONF = 'maximo_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'maximo_app', 'templates')],
+        'DIRS': [
+                    os.path.join(BASE_DIR, 'maximo_app', 'templates'),
+                    os.path.join(BASE_DIR, 'maximo_project', 'templates')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

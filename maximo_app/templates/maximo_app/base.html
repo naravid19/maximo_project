@@ -26,8 +26,9 @@
     {% endcompress %}
 
     <!-- Favicon -->
+    {% block icon %}
     <link rel="icon" href="{% static 'icon/mms.ico' %}" type="image/x-icon">
-
+    {% endblock %}
     <!-- Custom inline style for font-family -->
     <style>
     @font-face {

@@ -13,7 +13,7 @@
   "keywords": [],
   "dependencies": {
     "autoprefixer": "latest",
-    "caniuse-lite": "latest",
+    "caniuse-lite": "^1.0.30001702",
     "flowbite": "^2.5.2",
     "postcss": "latest"
   },

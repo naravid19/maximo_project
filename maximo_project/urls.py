@@ -19,6 +19,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+# กำหนด custom error handlers
+handler404 = 'maximo_app.views.custom_404'
+handler500 = 'maximo_app.views.custom_500'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('maximo_app.urls')),

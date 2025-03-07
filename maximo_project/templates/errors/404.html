@@ -1,0 +1,116 @@
+{% extends 'maximo_app/base.html' %}
+
+{% load static %}
+
+{% block icon %}
+<link rel="icon" href="{% static 'icon/mms_error.ico' %}" type="image/x-icon">
+{% endblock %}
+
+{% block title %}404 - Page Not Found{% endblock %}
+
+{% block style %}
+    <style> 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .animate-fade-in {
+            animation: fadeIn 1.3s ease-out;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                transform: translateY(25px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .animate-slide-in-up {
+            animation: slideInUp 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(40px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        .animate-slide-in-right {
+            animation: slideInRight 1.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }        
+    </style>
+{% endblock %}
+
+{% block content %}
+    <section class="relative flex flex-col items-center justify-center min-h-screen bg-center bg-cover"
+        style="background-image: url('/static/picture/background_1.png');">
+        
+        <div class="w-full max-w-3xl p-6 bg-white rounded-lg shadow-lg bg-opacity-85 md:p-12 animate-fade-in">
+            <div class="grid items-center grid-cols-1 gap-6 md:grid-cols-2">
+                
+                <div class="text-center animate-slide-in-up">
+                    <h1 class="mb-6 text-6xl font-extrabold tracking-tight text-blue-600 md:text-7xl lg:text-8xl dark:text-blue-400">
+                        404
+                    </h1>
+                    <p class="mb-2 text-2xl font-bold tracking-tight text-gray-900 md:text-3xl dark:text-white">
+                        ไม่พบหน้าที่คุณต้องการ
+                    </p>
+                    <p class="mb-6 text-lg font-normal text-gray-600 dark:text-gray-400">
+                        ขออภัย! หน้าที่คุณกำลังค้นหาอาจถูกลบ หรือไม่มีอยู่ในระบบ
+                    </p>
+                    <a href="{% url 'index' %}"
+                        class="inline-flex text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 
+                            focus:outline-none focus:ring-blue-300 font-medium rounded-lg 
+                            text-sm px-5 py-2.5 text-center dark:focus:ring-blue-900 
+                            transform transition duration-300 hover:scale-105">
+                        กลับสู่หน้าหลัก
+                    </a>
+                </div>
+
+                <div class="text-sm leading-relaxed text-right text-gray-900 dark:text-gray-300 md:text-base md:text-left animate-slide-in-right">
+                    <p class="font-semibold text-gray-900 dark:text-white">
+                        หากพบปัญหาการใช้งาน กรุณาติดต่อ
+                    </p>
+                    <p>แผนกระบบงานบำรุงรักษา (หรบ-ฟ.)</p>
+                    <p>กองวิศวกรรมบำรุงรักษา (กวบ-ฟ.)</p>
+                    <p>ฝ่ายบริหารจัดการสินทรัพย์ผลิตไฟฟ้า (อหฟ.)</p>
+                    <p class="flex items-center justify-end mt-2 space-x-1 md:justify-start">
+                        <span class="text-red-500">📞</span>
+                        <span>โทร. 67341, 67348</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        {% if error_details %}
+        <div class="w-full max-w-2xl p-4 mt-8 text-white bg-gray-900 rounded-lg shadow-xl animate-slide-in-up">
+            <div class="flex items-center justify-between mb-2">
+                <p class="font-semibold text-red-400">⚠ รายละเอียดข้อผิดพลาด:</p>
+                <button id="copy-button" 
+                    class="px-3 py-1 text-xs font-medium text-gray-900 bg-white border rounded-lg hover:bg-gray-200">
+                    📋 Copy
+                </button>
+            </div>
+            <pre id="error-text" class="overflow-y-auto text-sm break-words whitespace-pre-wrap max-h-60">{{ error_details }}</pre>
+        </div>
+        {% endif %}
+    </section>
+    <script src="{% static 'js/copy.js' %}"></script>
+{% endblock %}
+
+{% block script %}
+
+    <script src="{% static 'js/copy.js' %}"></script>
+    
+{% endblock %}

@@ -3,13 +3,10 @@
 from django.urls import path
 from . import views
 
-# กำหนด custom error handlers
-handler404 = 'maximo_app.views.custom_404'
-handler500 = 'maximo_app.views.custom_500'
-
 urlpatterns = [
-    
     path('', views.index, name='index'),
+    # path("test-404/", views.test_404, name="test_404"),
+    # path("test-500/", views.test_500, name="test_500"),
     
     # URL สำหรับ AJAX
     path('filter-plant-type/', views.filter_plant_type, name='filter_plant_type'),
