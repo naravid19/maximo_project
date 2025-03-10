@@ -30,4 +30,5 @@ urlpatterns = [
     path('download-schedule/', views.download_schedule, name='download_schedule'),
     path('download-example-schedule/', views.download_example_schedule, name='download_example_schedule'),
     path('download-example-template/', views.download_example_template, name='download_example_template'),
+    path('download-user-manual/', views.download_user_manual, name='download_user_manual'),
 ]

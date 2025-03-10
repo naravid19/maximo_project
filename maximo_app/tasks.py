@@ -20,8 +20,6 @@ LOCK_FILE = os.path.join(TEMP_DIR, ".cleanup.lock")
 @background(schedule=3600)  # รันทุก 1 ชั่วโมง
 def delete_old_files_task():
     now = time.time()
-
-    # ตรวจสอบว่าโฟลเดอร์ TEMP_DIR มีอยู่หรือไม่
     if not os.path.exists(TEMP_DIR):
         logging.warning(f"Folder '{TEMP_DIR}' does not exist. Skipping cleanup.")
         return
@@ -40,11 +38,9 @@ def delete_old_files_task():
         return
 
     try:
-        # วนลูปตรวจสอบไฟล์ใน TEMP_DIR
         for filename in os.listdir(TEMP_DIR):
             file_path = os.path.join(TEMP_DIR, filename)
-
-            # ตรวจสอบว่าเป็นไฟล์ (ไม่ใช่โฟลเดอร์)
+            
             if os.path.isfile(file_path):
                 try:
                     file_age = now - os.path.getmtime(file_path)
@@ -52,7 +48,6 @@ def delete_old_files_task():
                     logging.error(f"Error getting modification time for {file_path}: {e}")
                     continue
 
-                # ถ้าไฟล์มีอายุมากกว่า AGE_LIMIT ให้ลบไฟล์นั้น
                 if file_age > AGE_LIMIT:
                     try:
                         os.remove(file_path)
@@ -66,7 +61,6 @@ def delete_old_files_task():
     except Exception as e:
         logging.error(f"Error during cleanup process: {e}")
     finally:
-        # ลบ lock file เมื่อ task เสร็จสิ้น
         try:
             if os.path.exists(LOCK_FILE):
                 os.remove(LOCK_FILE)

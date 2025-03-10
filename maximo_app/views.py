@@ -47,7 +47,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Create your views here.
-
 # ---------------------------------
 # ฟังก์ชันพื้นฐาน
 # ---------------------------------
@@ -65,20 +64,6 @@ leadtime = 7
 #     return render(request, "errors/500.html")
 
 def index(request):
-    # log_error = ['Schedule file', 'Location file', 'C', 'D', 'E', 'F']
-    # error_message = (
-    #                 f"<div class='error-container'>"
-    #                 f"<strong class='error-title'>ข้อผิดพลาด:</strong> ข้อมูลที่จำเป็นไม่ได้รับการระบุจากฟอร์ม<br>"
-    #                 f"<ul class='error-details'>"
-    #                 f"{''.join(f'<li>{error}</li>' for error in log_error)}"
-    #                 f"</ul>"
-    #                 f"<p class='error-note'>*** โปรดตรวจสอบและเลือกข้อมูลที่จำเป็นในฟอร์มทุกฟิลด์ที่เกี่ยวข้อง ***</p>"
-    #                 f"</div>"
-    #             )
-    # messages.error(request, error_message)
-    # return render(request, 'maximo_app/upload_form.html')
-
-    # sheet_name = 'Sheet1'
     schedule_filename = None
     location_filename = None
     missing_messages = []
@@ -86,19 +71,9 @@ def index(request):
     error_messages = []
     selected_order = []
 
-    # logger.info(f"POST: {request.POST}")
-    # logger.info(f"FILES: {request.FILES}")
-    # logger.info(f"0 def schedule_filename: {schedule_filename}")
-    # logger.info(f"0 def location_filename: {location_filename}")
-
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-
-            # logger.info(f'1 form schedule_filename: {schedule_filename}')
-            # logger.info(f'1 form location_filename: {location_filename}')
-
-            # ตรวจสอบและสร้างโฟลเดอร์ temp
             temp_dir = 'temp'
             if not os.path.exists(temp_dir):
                 os.makedirs(temp_dir)
@@ -239,11 +214,6 @@ def index(request):
                 
                 wbs_desc = f"{wbs.description} {acttype.description} {location} {buddhist_year}"
                 
-                # logger.info(f"LOCATION: {location}") 
-                # logger.info(f"EGPROJECTID: {egprojectid}")
-                # logger.info(f"EGWBS: {egwbs}")
-                # logger.info(f"WBS DESC: {wbs_desc}")
-                
             except Exception as e:
                 logger.error(f"An error occurred: {str(e)}", exc_info=True)
                 error_message = (
@@ -263,13 +233,9 @@ def index(request):
             location_filename = location_file.name
             unique_schedule_name = f"{uuid.uuid4()}_{schedule_file.name}"
             unique_location_name = f"{uuid.uuid4()}_{location_file.name}"
-            
             schedule_path = os.path.join(temp_dir, unique_schedule_name)
             location_path = os.path.join(temp_dir, unique_location_name)
             comment_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Comment.xlsx")
-            
-            # logger.info(f"Schedule file: {schedule_filename}")
-            # logger.info(f"Location file: {location_filename}")
             
             try:
                 with open(schedule_path, 'wb+') as destination:
@@ -279,8 +245,6 @@ def index(request):
                 with open(location_path, 'wb+') as destination:
                     for chunk in location_file.chunks():
                         destination.write(chunk)
-                        
-                # logger.info(f"Files saved successfully at: {schedule_path} and {location_path}")
             
             except IOError as e:
                 logger.error(f"Error saving files: {str(e)}")
@@ -302,13 +266,11 @@ def index(request):
                 messages.error(request, error_message)
                 return redirect('index')
 
-            # บันทึกค่าลงเซสชัน
             request.session['schedule_filename'] = schedule_file.name
             request.session['location_filename'] = location_file.name
             request.session['temp_dir'] = temp_dir
             request.session['schedule_path'] = schedule_path
             request.session['location_path'] = location_path
-            
             request.session['year'] = year
             request.session['frequency'] = frequency
             request.session['egmntacttype'] = egmntacttype
@@ -348,9 +310,7 @@ def index(request):
                     raise ValueError("Cannot proceed without a valid DataFrame.")
                 # logger.info("Excel file loaded successfully.")
                 
-                # ลบช่องว่างที่ไม่จำเป็นออกจากชื่อคอลัมน์และแปลงชื่อคอลัมน์เป็นตัวพิมพ์ใหญ่ พร้อมแทนที่ช่องว่างด้วยขีดล่าง
                 df_original.columns = [col.strip().upper().replace(' ', '_') if isinstance(col, str) else col for col in df_original.columns]
-                
                 # logger.info("Column names cleaned and formatted.")
                 
                 # ตรวจสอบว่าคอลัมน์ที่จำเป็นทั้งหมดมีอยู่หรือไม่
@@ -528,18 +488,10 @@ def index(request):
             # เงื่อนไขตรวจสอบว่าค่าใน SUPERVISOR, FOREMAN, SKILL มีค่าที่ไม่ถูกต้อง (ไม่เป็นจำนวนเต็มบวก)
             invalid_skill_rate = ~(valid_supervisor & valid_foreman & valid_skill)
             update_comment(df_comment, (task_order & invalid_skill_rate), 'COMMENT', 'SKILL RATE ไม่ถูกต้อง')
-
-            # df_original.loc[cond2, 'COMMENT'] = 'ไม่มี RESPONSE_CRAFT'
             update_comment(df_comment, task_no_craft, 'COMMENT', 'ไม่มี RESPONSE_CRAFT')
-
-            # RESPONSE_CRAFT มีความยาวเกิน 12 อักขระ
             carft_length_exceed = df_original['RESPONSE_CRAFT'].astype(str).str.len() > 12
             update_comment(df_comment, carft_length_exceed, 'COMMENT', 'RESPONSE_CRAFT มีความยาวมากกว่า 12 ตัวอักษร')
-
-            # ไม่มี RESPONSE
             update_comment(df_comment, task_no_response, 'COMMENT', 'ไม่มี RESPONSE')
-
-            # RESPONSE มีความยาวเกิน 12 อักขระ
             response_length_exceed = df_original['RESPONSE'].astype(str).str.len() > 12 
             update_comment(df_comment, response_length_exceed, 'COMMENT', 'RESPONSE มีความยาวมากกว่า 12 ตัวอักษร')
 
@@ -548,31 +500,31 @@ def index(request):
             df_original_copy = df_original_copy.reset_index(drop=True)
             df_original_copy = df_original_copy.fillna(-1)
 
-            temp_kks = ''##kks
+            temp_kks = ''
             lst_kks = []
 
-            temp_eq = ''##equipment
+            temp_eq = ''
             lst_eq = []
 
-            temp_task_order = ''##Task_order
+            temp_task_order = ''
             lst_task_order = []
 
-            temp_task = ''##Task
+            temp_task = ''
             lst_task = []
 
-            temp_start_date = ''##start_date
+            temp_start_date = ''
             lst_start_date = []
 
-            temp_finish_date = ''##finish_date
+            temp_finish_date = ''
             lst_finish_date = []
 
-            temp_type_work = ''##PTW
+            temp_type_work = ''
             lst_type_work = []
 
-            temp_response = ''##response
+            temp_response = ''
             lst_response = []
 
-            temp_RESPONSE_CRAFT = ''##response carft
+            temp_RESPONSE_CRAFT = ''
             lst_RESPONSE_CRAFT = []
 
             for i in (df_original_copy['KKS']):
@@ -722,36 +674,27 @@ def index(request):
 
             update_comment(df_comment, (cond1 & cond4 & ~cond5 & ((df_original_copy['KKS']!= -1))), 'COMMENT', 'ไม่พบ kks')
 
-            # DURATION_(HR.)
             task_no_duration = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['DURATION_(HR.)'].isna())
             update_comment(df_comment, task_no_duration, 'COMMENT', 'ไม่มี DURATION_(HR.)')
-
-            # DURATION_(HR.) ยาวเกิน 8 อักขระ
-            # กรองเฉพาะค่าที่ไม่มี NaN และมีค่ามากกว่า 8 หลัก
+            
             duration_length_exceed = df_original['DURATION_(HR.)'].apply(
                 lambda x: len(f'{int(x):.0f}') > 8 if pd.notna(x) and isinstance(x, (int, float)) else False
             )
             update_comment(df_comment, duration_length_exceed, 'COMMENT', 'DURATION_(HR.) มีความยาวมากกว่า 8 หลัก')
 
-            # ประเภทของ_PERMIT_TO_WORK
             task_no_ptw = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['ประเภทของ_PERMIT_TO_WORK'].isna())
             update_comment(df_comment, task_no_ptw, 'COMMENT', 'ไม่มี ประเภทของ_PERMIT_TO_WORK')
 
-            # ประเภทของ_PERMIT_TO_WORK ความยาวเกิน 250 อักขระ
             ptw_length_exceed = df_original['ประเภทของ_PERMIT_TO_WORK'].astype(str).str.len() > 250
             update_comment(df_comment, ptw_length_exceed, 'COMMENT', 'ประเภทของ_PERMIT_TO_WORK มีความยาวมากกว่า 250 ตัวอักษร')
 
-            # TYPE
             task_no_type = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['TYPE'].isna())
             update_comment(df_comment, task_no_type, 'COMMENT', 'ไม่มี TYPE (จำเป็นต้องกรอก)')
 
-            # TYPE ไม่ถูกต้อง
             task_type = (df_original['TASK_ORDER'].notna()) & (df_original['TASK_ORDER'] != 'xx') & (df_original['TYPE'].notna())
             valid_type = (df_original['TYPE'].isin(['ME', 'EE', 'CV', 'IC']))
             update_comment(df_comment, (task_type & ~valid_type), 'COMMENT', 'TYPE ไม่ถูกต้อง')
 
-            # TASK_ORDER
-            # TASK_ORDER ไม่ถูกต้อง
             df_original_check = df_original_copy.copy()
             df_original_check['TASK_ORDER_NEW'] = df_original_check['TASK_ORDER_NEW'].astype(str)
             # ตรวจสอบว่าค่าใน TASK_ORDER_NEW เป็นจำนวนเต็มบวกหรือ 'xx' เท่านั้น
@@ -762,12 +705,10 @@ def index(request):
 
             update_comment(df_comment, (~task_order_valid & (df_original_check['TASK_ORDER']!= -1)), 'COMMENT', 'TASK_ORDER ไม่ถูกต้อง')
 
-            # TASK_ORDER ไม่มี
             duration_notna_cond = df_original['DURATION_(HR.)'].notna()
             task_missing_cond = df_original['TASK_ORDER'].isna() | (df_original['TASK_ORDER'] == '')
             update_comment(df_comment, (duration_notna_cond & task_missing_cond), 'COMMENT', 'ไม่มี TASK_ORDER')
 
-            # TASK_ORDER ยาวเกิน 12 อักขระ
             task_order_length_exceed = df_original_check['TASK_ORDER_NEW'].astype(str).str.len() > 12
             update_comment(df_comment, (task_order_length_exceed & (df_original_check['TASK_ORDER']!= -1)), 'COMMENT', 'TASK_ORDER มีความยาวมากกว่า 12 ตัวอักษร')
 
@@ -792,7 +733,6 @@ def index(request):
             replace_or_append_comment(df_comment, (task_not_xx & response_new_na), 'COMMENT', 'ไม่มี RESPONSE (จำเป็นต้องกรอก)', replace_message='ไม่มี RESPONSE')
             replace_or_append_comment(df_comment, (task_not_xx & response_craft_na), 'COMMENT', 'ไม่มี RESPONSE_CRAFT (จำเป็นต้องกรอก)', replace_message='ไม่มี RESPONSE_CRAFT')
 
-            # ลบคอมมาและช่องว่างที่ไม่จำเป็นออกจาก COMMENT (ถ้ามี)
             df_comment['COMMENT'] = df_comment['COMMENT'].str.strip(', ')
 
 
@@ -817,15 +757,12 @@ def index(request):
                     comment_col = idx
                     break
 
-            # เขียนข้อมูลลงใน Excel
             for i, (task_order, comment) in enumerate(zip(df_comment['TASK_ORDER'], df_comment['COMMENT']), start=start_row):
-                # เขียนข้อมูล TASK_ORDER
                 # task_order_cell = sheet.cell(row=i, column=task_order_col)
                 # task_order_cell.value = task_order
-                # task_order_cell.alignment = center_alignment  # จัดตัวอักษรให้อยู่ตรงกลาง
+                # task_order_cell.alignment = center_alignment
                 # task_order_cell.fill = blue_fill
                 
-                # เขียนข้อมูล COMMENT
                 comment_cell = sheet.cell(row=i, column=comment_col)
                 comment_cell.value = comment
                 
@@ -971,6 +908,7 @@ def index(request):
             
 
             if missing_messages or invalid_messages:
+                error_messages = "\n".join(missing_messages + invalid_messages)
                 return render(request, 'maximo_app/upload_form.html', {
                     'form': form,
                     'missing_messages': missing_messages,
@@ -982,18 +920,6 @@ def index(request):
                 })
             #! END RECHECK
 
-            # logger.info(f'1 form schedule_filename: {schedule_filename}')
-            # logger.info(f'1 form location_filename: {location_filename}')
-            # logger.info(f'1 form comment_path: {comment_path}')
-            
-            # Define path
-            # job_plan_task_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Job_Plan.xlsx")
-            # job_plan_labor_path = os.path.join(temp_dir, f"{uuid.uuid4()}_Job_Plan_Labor.xlsx")
-            # pm_plan_path = os.path.join(temp_dir, f"{uuid.uuid4()}_PM_Plan.xlsx")
-            
-            # logger.info(f'2 elif schedule_filename: {schedule_filename}')
-            # logger.info(f'2 elif location_filename: {location_filename}')
-            # logger.info(f'2 elif comment_path: {comment_path}')
 
             #! Creat JOB PLAN TASK
             df_original_newcol['UNIT'] = df_original_newcol['KKS_NEW'].str[0:3]
@@ -1046,7 +972,6 @@ def index(request):
                 df = dict_jp_master[group1].copy()
                 lst = ['DURATION_TOTAL','TASK_ORDER_NEW','DURATION_(HR.)','START_DATE','FINISH_DATE','TASK_NEW']
                 df_new = df[lst].copy()
-                # ขยายค่า group3 และ eq ให้เท่ากับจำนวนแถวของ df_new
                 df_new.loc[:, 'JOB_NUM'] = [group3] * len(df_new)
                 df_new.loc[:, 'EQUIPMENT'] = [eq] * len(df_new)
                 lst2 = ['JOB_NUM','EQUIPMENT','DURATION_TOTAL','TASK_ORDER_NEW','DURATION_(HR.)','START_DATE','FINISH_DATE','TASK_NEW']
@@ -1085,8 +1010,7 @@ def index(request):
 
             job_plan_cond3 = df_jop_plan_master['TASK_NEW'].astype(str).str.len()>100
             update_comment(df_jop_plan_master, job_plan_cond3, 'COMMENT', 'JOBTASK มีความยาวมากกว่า 100 ตัวอักษร')
-
-            #! Create Job_Plan_Task.xlsx
+            
             # df_jop_plan_master.to_excel(job_plan_task_path,index=False)
 
 
@@ -1156,7 +1080,6 @@ def index(request):
                 'STATUS','JPTASK', 'CRAFT','SKILLLEVEL',
                 'LABORHRS','QUANTITY','GROUP','MOD', 'COMMENT']
             
-            #! Create Job_Plan_Labor.xlsx
             # df_labor_new[lst_labor1].to_excel(job_plan_labor_path, index=False)
 
 
@@ -1179,12 +1102,8 @@ def index(request):
                     index = group_columns.index('SYSTEM')
                     group_columns[index:index+1] = ['MAIN_SYSTEM', 'MAIN_SYSTEM_DESC']
                 
-                # logger.info(f"Grouping Options2 : {group_columns}")
-                
                 group_base = ['UNIT', 'TYPE']
                 all_group_columns = group_columns + group_base
-                
-                # logger.info(f"ALL GROUP : {all_group_columns}")
                 
                 df_yy = pm_master_df.groupby(all_group_columns).size()
                 level_to_sort = [all_group_columns.index('TYPE'), all_group_columns.index('UNIT')]
@@ -1202,7 +1121,6 @@ def index(request):
                     pm_master_df['MOD'] = 1
                     pm_master_df['GROUP'] = ''
                     df_pm_plan3 = pm_master_df.copy()
-
 
             df_pm_plan3['PARENTCHGSSTATUS']=''
             df_pm_plan3['WOSEQUENCE']=''
@@ -1241,8 +1159,8 @@ def index(request):
             pm_plan_cond0 = df_pm_plan3_master['PMNUM'].astype(str).str.len()>30
             update_comment(df_pm_plan3_master, pm_plan_cond0, 'COMMENT', 'PMNUM มีความยาวมากกว่า 30 ตัวอักษร')
 
-            #! Create PM_Plan.xlsx
             # df_pm_plan3_master.to_excel(pm_plan_path, index=False)
+
 
             #! TYPE 2
             class PMNumGenerator:
@@ -1349,7 +1267,6 @@ def index(request):
             }
             pm_plan_column2 = [replace_columns(col, replace_dict) for col in pm_plan_column1]
 
-
             jop_plan_column1 = ['JOB_NUM', 'ORGID', 'SITEID', 'PLUSCREVNUM', 'STATUS', 'EQUIPMENT', 
                                     'DURATION_TOTAL', 'TASK_ORDER_NEW', 'PLUSCJPREVNUM', 'DURATION_(HR.)', 
                                     'TASK_NEW', 'START_DATE', 'FINISH_DATE', 'GROUP', 'MOD', 'COMMENT']
@@ -1361,10 +1278,7 @@ def index(request):
             lst_labor2 = [replace_columns(col, replace_dict) for col in lst_labor1]
             
             #! Create WORKORDER
-            
-            # ใช้ฟังก์ชันสำหรับ PMNUM
             df_workorder1 = create_workorder(request, df_pm_plan3_master, 'PMNUM', orgid)
-            # ใช้ฟังก์ชันสำหรับ PMNUM1
             df_workorder2 = create_workorder(request, df_pm_plan3_master, 'PMNUM1', orgid)
             
             #! Create Template-MxLoader-JP-PMPlan
@@ -1405,13 +1319,6 @@ def index(request):
                     for sheet_name in basic_sheet_names:
                         copy_worksheet(request, file_template_xlsx, sheet_name, i)
                 
-                # with pd.ExcelWriter(file_template_xlsx, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
-                # # เขียนข้อมูลจาก DataFrame ลงในชีตที่ระบุ
-                #     df_labor_new[lst_labor1].to_excel(writer, sheet_name=sheet_jp_labor, startrow=start_row, startcol=0, index=False, header=False)
-                #     df_jop_plan_master[jop_plan_column1].to_excel(writer, sheet_name=sheet_jp_task, startrow=start_row, startcol=0, index=False, header=False)
-                #     df_pm_plan3_master[pm_plan_column1].to_excel(writer, sheet_name=sheet_pm, startrow=start_row, startcol=0, index=False, header=False)
-                #     df_workorder1.to_excel(writer, sheet_name=sheet_wo, startrow=(start_row+5), startcol=1, index=False, header=False)
-                
                 with pd.ExcelWriter(file_template_xlsx, engine='openpyxl', mode='a', if_sheet_exists='overlay') as writer:
                     # ชุดที่ 1
                     write_dataframes_to_excel(
@@ -1443,13 +1350,11 @@ def index(request):
                     sheet = openpyxl_book[sheet_name]
                     decorate_sheet(sheet, sheet_name, thin_border, fill_color, yellow_fill, start_row, df_jop_plan_master, df_pm_plan3_master)
 
-                # วนลูปสำหรับชีตที่มี -1 ต่อท้าย
                 for sheet_name in basic_sheet_names:
                     sheet_name_with_suffix = f"{sheet_name}-1"
                     sheet = openpyxl_book[sheet_name_with_suffix]
                     decorate_sheet(sheet, sheet_name_with_suffix, thin_border, fill_color, yellow_fill, start_row, df_jop_plan_master, df_pm_plan3_master)
                 
-                # บันทึกไฟล์ตกแต่งในรูปแบบ .xlsx
                 openpyxl_book.save(file_template_xlsx)
                 
                 copy_sheets_to_macro_file(
@@ -1476,7 +1381,6 @@ def index(request):
                 return redirect('index')
             
             finally:
-                # ปิดไฟล์
                 try:
                     openpyxl_book.close()
                 except Exception as e:
@@ -1513,28 +1417,15 @@ def index(request):
                     )
                     messages.error(request, error_message)
                     return redirect('index')
-############
-############
-            # Save variables
+            
+            # Save session
             request.session['first_plant'] = first_plant
             request.session['most_common_plant_unit'] = most_common_plant_unit
             
-            # Save files
-            # request.session['download_link_comment'] = comment_path
-            # request.session['download_link_job_plan_task'] = job_plan_task_path
-            # request.session['download_link_job_plan_labor'] = job_plan_labor_path
-            # request.session['download_link_pm_plan'] = pm_plan_path
             request.session['download_link_template'] = {
                 '8.4.2': mxloader_template_output_v842_path,
                 '8.1.0': mxloader_template_output_v810_path,
             }
-            
-            #! Check session
-            # logger.info(f'form: {form}')
-            # logger.info(f'schedule_filename: {schedule_filename}')
-            # logger.info(f'location_filename: {location_filename}')
-            # logger.info(f'download_link_comment: {request.session["download_link_comment"]}')
-            # logger.info(f'download_link_template: {request.session["download_link_template"]}')
         
     else:
         keys_to_clear = [
@@ -1565,7 +1456,6 @@ def index(request):
 # ---------------------------------
 # ฟังก์ชันการจัดการการดาวน์โหลด (Download Functions)
 # ---------------------------------
-
 def generic_download(request, session_key, original_file_name, content_type, file_path):
     if session_key is None:
         file_path = file_path
@@ -1583,7 +1473,7 @@ def generic_download(request, session_key, original_file_name, content_type, fil
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload_form.html', {})
+        return redirect('index')
     
     full_file_path = os.path.abspath(file_path) if not os.path.isabs(file_path) else file_path
     
@@ -1600,7 +1490,7 @@ def generic_download(request, session_key, original_file_name, content_type, fil
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload_form.html', {})
+        return redirect('index')
     
     try:
         with open(full_file_path, 'rb') as fh:
@@ -1620,7 +1510,7 @@ def generic_download(request, session_key, original_file_name, content_type, fil
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload_form.html', {})
+        return redirect('index')
 
 def download_comment_file(request):
     return generic_download(
@@ -1658,6 +1548,46 @@ def download_comment_file(request):
 #         file_path=None
 #     )
 
+def download_user_manual(request):
+    try:
+        file_path = os.path.join(settings.STATIC_ROOT, 'pdf', 'คู่มือการใช้งาน.pdf')
+        
+        if not os.path.exists(file_path):
+            logger.error("User manual file not found at: %s", file_path)
+            error_message = (
+                f"<div class='error-container'>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์คู่มือการใช้งานที่ต้องการดาวน์โหลด<br>"
+                f"<ul class='error-details'>"
+                f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+                f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
+                f"<li>ไฟล์ที่ต้องการดาวน์โหลดได้หมดอายุแล้ว</li>"
+                f"</ul>"
+                f"<p class='error-note'>คำแนะนำ: กรุณาตรวจสอบว่าไฟล์มีอยู่จริง หรือติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+                f"</div>"
+            )
+            messages.error(request, error_message)
+            return redirect('index')
+        
+        # สร้าง FileResponse สำหรับส่งไฟล์ PDF ให้ผู้ใช้ดาวน์โหลด
+        response = FileResponse(open(file_path, 'rb'), content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
+        return response
+
+    except Exception as e:
+        logger.error(f"Failed to download user manual file: {str(e)}", exc_info=True)
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์คู่มือการใช้งานได้<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
+
 def download_template_file(request, version):
     location = request.session.get('location', 'BLANK')
     download_links = request.session.get('download_link_template', {})
@@ -1677,8 +1607,24 @@ def download_template_file(request, version):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload_form.html', {})
-        
+        return redirect('index')
+    
+    if not os.path.exists(file_path):
+        logger.error(f"File path does not exist: {file_path}")
+        error_message = (
+            f"<div class='error-container'>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template MxLoader JB-PM Plan เวอร์ชัน {version} ที่ต้องการดาวน์โหลด<br>"
+            f"<ul class='error-details'>"
+            f"<p class='error-description'>สาเหตุของปัญหา:</p>"
+            f"<li>ไฟล์อาจถูกลบ หรือหมดอายุแล้ว</li>"
+            f"<li>>อาจเกิดข้อผิดพลาดระหว่างการอัปโหลด หรือไฟล์ยังไม่ถูกสร้าง</li>"
+            f"</ul>"
+            f"<p class='error-note'>คำแนะนำ: กรุณาอัปโหลดไฟล์อีกครั้ง หากยังพบปัญหา โปรดติดต่อฝ่ายสนับสนุนเพื่อขอความช่วยเหลือเพิ่มเติม</p>"
+            f"</div>"
+        )
+        messages.error(request, error_message)
+        return redirect('index')
+    
     # กำหนด session_key และ original_file_name ตามเวอร์ชัน
     if version == '8.4.2':
         original_file_name = f'Template MxLoader JB-PM Plan_{location}.xlsm'
@@ -1706,15 +1652,12 @@ def download_template_file(request, version):
         file_path=file_path
     )
 
-
 def download_original_template(request):
     try:
-        # ระบุตำแหน่งไฟล์เทมเพลตที่ต้องการดาวน์โหลด
         file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template MxLoader JB-PM Plan.xlsm')
         
-        # ตรวจสอบว่าไฟล์มีอยู่หรือไม่
         if not os.path.exists(file_path):
-            logger.error("Template MxLoader JB-PM Plan file not found in the specified path for download.")
+            logger.error("Template MxLoader JB-PM Plan file not found at: %s", file_path)
             error_message = (
                 f"<div class='error-container'>"
                 f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template MxLoader JB-PM Plan ที่ต้องการดาวน์โหลด<br>"
@@ -1727,15 +1670,13 @@ def download_original_template(request):
                 f"</div>"
             )
             messages.error(request, error_message)
-            return render(request, 'maximo_app/upload_form.html', {})
+            return redirect('index')
         
-        # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel.sheet.macroEnabled.12')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response
 
     except Exception as e:
-        # แสดงข้อผิดพลาดเมื่อไม่สามารถดำเนินการได้
         logger.error(f"Failed to download Template MxLoader JB-PM Plan file: {str(e)}", exc_info=True)
         error_message = (
             f"<div class='error-container'>"
@@ -1748,16 +1689,14 @@ def download_original_template(request):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload_form.html', {})
+        return redirect('index')
 
 def download_schedule(request):
     try:
-        # ระบุตำแหน่งของไฟล์ที่ต้องการดาวน์โหลด
         file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Final Schedule.xlsx')
         
-        # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if not os.path.exists(file_path):
-            logger.error("Final Schedule file not found in the specified path for download.")
+            logger.error("Final Schedule file not found at: %s", file_path)
             error_message = (
                 f"<div class='error-container'>"
                 f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Final Schedule ที่ต้องการดาวน์โหลด<br>"
@@ -1772,13 +1711,11 @@ def download_schedule(request):
             messages.error(request, error_message)
             return redirect('index')
         
-        # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response
 
     except Exception as e:
-        # แสดงข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
         logger.error(f"Failed to download Final Schedule file: {str(e)}", exc_info=True)
         error_message = (
             f"<div class='error-container'>"
@@ -1795,15 +1732,13 @@ def download_schedule(request):
 
 def download_example_template(request):
     try:
-        # ระบุตำแหน่งไฟล์ที่ต้องการดาวน์โหลด
-        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Template MxLoader JB-PM Plan (SNR-H03).xlsm')
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'TEMPLATE MXLOADERก JB-PM PLAN(EXAMPLE).zip')
         
-        # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if not os.path.exists(file_path):
-            logger.error("Template MxLoader JB-PM Plan (SNR-H03) file not found in the specified path for download.")
+            logger.error("TEMPLATE MXLOADER JB-PM PLAN(EXAMPLE) zip file not found at: %s", file_path)
             error_message = (
                 f"<div class='error-container'>"
-                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Template MxLoader JB-PM Plan ที่ต้องการดาวน์โหลด<br>"
+                f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ TEMPLATE MXLOADER JB-PM PLAN(EXAMPLE) ที่ต้องการดาวน์โหลด<br>"
                 f"<ul class='error-details'>"
                 f"<p class='error-description'>สาเหตุของปัญหา:</p>"
                 f"<li>ระบบไม่สามารถหาไฟล์ที่ต้องการดาวน์โหลดได้</li>"
@@ -1813,19 +1748,17 @@ def download_example_template(request):
                 f"</div>"
             )
             messages.error(request, error_message)
-            return render(request, 'maximo_app/upload_form.html', {})
+            return redirect('index')
 
-        # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
-        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.ms-excel.sheet.macroEnabled.12')
+        response = FileResponse(open(file_path, 'rb'), content_type='application/zip')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response
 
     except Exception as e:
-        # แสดงข้อความข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
-        logger.error(f"Failed to download Template MxLoader JB-PM Plan (SNR-H03) file: {str(e)}", exc_info=True)
+        logger.error(f"Failed to download TEMPLATE MXLOADER JB-PM PLAN(EXAMPLE) zip file: {str(e)}", exc_info=True)
         error_message = (
             f"<div class='error-container'>"
-            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Template MxLoader JB-PM Plan ได้<br>"
+            f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ TEMPLATE MXLOADER JB-PM PLAN(EXAMPLE) ได้<br>"
             f"<ul class='error-details'>"
             f"<p class='error-description'>สาเหตุของปัญหา:</p>"
             f"<li>เกิดข้อผิดพลาดระหว่างการดาวน์โหลดไฟล์ กรุณาลองใหม่อีกครั้ง</li>"
@@ -1834,16 +1767,14 @@ def download_example_template(request):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload_form.html', {})
+        return redirect('index')
 
 def download_example_schedule(request):
     try:
-        # ระบุตำแหน่งของไฟล์ที่ต้องการดาวน์โหลด
-        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'Final Schedule (SNR-H).xlsx')
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'FINAL SCHEDULE(EXAMPLE).zip')
         
-        # ตรวจสอบว่าไฟล์มีอยู่จริงหรือไม่
         if not os.path.exists(file_path):
-            logger.error("Final Schedule (SNR-H) file not found in the specified path for download.")
+            logger.error("FINAL SCHEDULE(EXAMPLE) zip file not found at: %s", file_path)
             error_message = (
                 f"<div class='error-container'>"
                 f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Final Schedule ที่ต้องการดาวน์โหลด<br>"
@@ -1856,16 +1787,14 @@ def download_example_schedule(request):
                 f"</div>"
             )
             messages.error(request, error_message)
-            return render(request, 'maximo_app/upload_form.html', {})
+            return redirect('index')
         
-        # เปิดไฟล์และสร้าง response สำหรับการดาวน์โหลด
-        response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        response = FileResponse(open(file_path, 'rb'), content_type='application/zip')
         response['Content-Disposition'] = f'attachment; filename="{os.path.basename(file_path)}"'
         return response
 
     except Exception as e:
-        # แสดงข้อความข้อผิดพลาดเมื่อเกิดข้อผิดพลาดในการทำงาน
-        logger.error(f"Failed to download Final Schedule (SNR-H) file: {str(e)}", exc_info=True)
+        logger.error(f"Failed to download FINAL SCHEDULE(EXAMPLE) zip file: {str(e)}", exc_info=True)
         error_message = (
             f"<div class='error-container'>"
             f"<strong class='error-title'>พบปัญหา:</strong> ไม่สามารถดาวน์โหลดไฟล์ Final Schedule ได้<br>"
@@ -1877,17 +1806,15 @@ def download_example_schedule(request):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload_form.html', {})
+        return redirect('index')
 
 def download_user_schedule(request):
     try:
-        # ดึง path และชื่อไฟล์จาก session
         file_path = request.session.get('schedule_path', None)
         file_name = request.session.get('schedule_filename', 'Final Schedule.xlsx')
 
-        # ตรวจสอบว่า path ของไฟล์มีอยู่จริงหรือไม่
         if not file_path or not os.path.exists(file_path):
-            logger.error("Final Schedule file not found in the specified path for download.")
+            logger.error("Final Schedule file not found at: %s", file_path)
             error_message = (
                 f"<div class='error-container'>"
                 f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Final Schedule ที่ต้องการดาวน์โหลด<br>"
@@ -1900,7 +1827,7 @@ def download_user_schedule(request):
                 f"</div>"
             )
             messages.error(request, error_message)
-            return render(request, 'maximo_app/upload_form.html', {})
+            return redirect('index')
 
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = f'attachment; filename="{file_name}"'
@@ -1919,17 +1846,15 @@ def download_user_schedule(request):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload_form.html', {})
+        return redirect('index')
 
 def download_user_location(request):
     try:
-        # ดึง path และชื่อไฟล์จาก session
         file_path = request.session.get('location_path', None)
         file_name = request.session.get('location_filename', 'Location.xlsx')
 
-        # ตรวจสอบว่า path ของไฟล์มีอยู่จริงหรือไม่
         if not file_path or not os.path.exists(file_path):
-            logger.error("Location file not found in the specified path for download.")
+            logger.error("Location file not found at: %s", file_path)
             error_message = (
                 f"<div class='error-container'>"
                 f"<strong class='error-title'>พบปัญหา:</strong> ไม่พบไฟล์ Location ที่ต้องการดาวน์โหลด<br>"
@@ -1942,7 +1867,7 @@ def download_user_location(request):
                 f"</div>"
             )
             messages.error(request, error_message)
-            return render(request, 'maximo_app/upload_form.html', {})
+            return redirect('index')
 
         response = FileResponse(open(file_path, 'rb'), content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response['Content-Disposition'] = f'attachment; filename="{file_name}"'
@@ -1961,15 +1886,15 @@ def download_user_location(request):
             f"</div>"
         )
         messages.error(request, error_message)
-        return render(request, 'maximo_app/upload_form.html', {})
+        return redirect('index')
+
 
 # ---------------------------------
 # ฟังก์ชันการกรองข้อมูล (Filter Functions)
 # ---------------------------------
-
 @require_GET
 def filter_site(request):
-    site_id = request.GET.get('site_id')  # รับค่า site_id ที่ถูกส่งมาจาก request
+    site_id = request.GET.get('site_id')
     
     if not site_id:
         return JsonResponse({'error': 'No site_id provided.'}, status=400)
@@ -1980,7 +1905,7 @@ def filter_site(request):
         return JsonResponse({'error': 'Invalid site_id format. Must be an integer.'}, status=400)
     
     try:
-        site = Site.objects.get(id=site_id) # ดึงข้อมูล Site จากฐานข้อมูลโดยใช้ site_id
+        site = Site.objects.get(id=site_id)
         # logger.info(f"Successfully retrieved Site with id {site_id}")
         child_sites = site.child_sites.values('id', 'site_id', 'site_name')
         
@@ -2004,7 +1929,6 @@ def filter_site(request):
 
 @require_GET
 def filter_child_site(request):
-    # ดึงค่า child_site_id จาก request GET
     child_site_id = request.GET.get('child_site_id')
 
     if not child_site_id:
@@ -2026,7 +1950,7 @@ def filter_child_site(request):
 
 @require_GET
 def filter_worktype(request):
-    work_type_id = request.GET.get('work_type_id')  # รับค่า work_type_id จาก request
+    work_type_id = request.GET.get('work_type_id')
     
     if not work_type_id:
         return JsonResponse({'error': 'No work_type_id provided.'}, status=400)
@@ -2203,7 +2127,6 @@ def filter_wostatus(request):
 # ---------------------------------
 # ส่วนของ Custom Error Handlers
 # ---------------------------------
-
 def custom_404(request, exception):
     # ดึง stack trace ของเฟรมปัจจุบัน (ข้อมูลสำหรับ debug)
     stack_trace = ''.join(traceback.format_stack())
@@ -2236,31 +2159,10 @@ def custom_500(request):
 # ---------------------------------
 # ฟังก์ชันช่วยเหลือ (Helper Functions)
 # ---------------------------------
-
 def get_grouping_text(selected_order):
     if 'no_arrange' in selected_order:
         return 'ไม่มีการจัดกลุ่ม'
     return f"จัดกลุ่มตาม {', '.join(selected_order)}"
-
-# ฟังก์ชันสำหรับแปลงคอลัมน์ที่เป็น Timestamp เป็น string
-def convert_timestamp_columns_to_str(df, columns):
-    for col in columns:
-        if col in df.columns:
-            try:
-                df[col] = df[col].astype(str)
-            except Exception as e:
-                logger.error(f"Failed to convert column '{col}' to string: {str(e)}", exc_info=True)
-    return df
-
-# ฟังก์ชันสำหรับแปลงคอลัมน์ string กลับเป็น Timestamp
-def convert_str_columns_to_timestamp(df, columns):
-    for col in columns:
-        if col in df.columns:
-            try:
-                df[col] = pd.to_datetime(df[col], errors='coerce')  # แปลงเป็น Timestamp
-            except Exception as e:
-                logger.error(f"Failed to convert column '{col}' to timestamp: {str(e)}", exc_info=True)
-    return df
 
 def update_comment(df, condition, column_name, message):
     comment_empty_or_na = (df[column_name] == '') | (df[column_name].isna())
@@ -2274,15 +2176,12 @@ def replace_or_append_comment(df, condition, comment_col, message, replace_messa
 
     # กรณีที่ COMMENT มีข้อความแล้ว ให้เพิ่มหรือแทนที่ข้อความ
     def update_comment_text(existing_comment):
-        # ตรวจสอบว่ามีข้อความ replace_message แบบเต็มๆ ในคอมเมนต์หรือไม่
         if replace_message and replace_message in existing_comment.split(', '):
             return existing_comment.replace(replace_message, message)
         else:
             return f"{existing_comment}, {message}"
 
-    # ใช้ฟังก์ชัน update_comment_text กับแถวที่มีข้อความแล้ว
     df.loc[condition & ~comment_empty_or_na, comment_col] = df.loc[condition & ~comment_empty_or_na, comment_col].apply(update_comment_text)
-
 
 def read_excel_with_error_handling(request, schedule_path, sheet_name=0, header=1, dtype_spec=None):
     try:
@@ -2321,16 +2220,13 @@ def read_excel_with_error_handling(request, schedule_path, sheet_name=0, header=
 def convert_duration(value):
     try:
         value = float(value)
-        # ตรวจสอบว่าเป็นจำนวนเต็มหรือไม่ หากใช่ ให้แปลงเป็น int
         if value.is_integer():
             return int(value)
         else:
             return value
     except (ValueError, TypeError):
-        # หากไม่สามารถแปลงเป็น float ได้ หรือค่าที่ไม่สามารถแปลงได้
         return value
 
-# ฟังก์ชันเพื่อตรวจสอบว่าค่าคือวันที่ตามรูปแบบ "DD-MMM-YYYY" หรือไม่
 def is_date(value):
     try:
         # ตรวจสอบว่าค่าคือวันที่ในรูปแบบ "DD-MMM-YYYY"
@@ -2345,46 +2241,30 @@ def parse_dates(date_series):
     date_3 = pd.to_datetime(date_series, format='%d-%b-%Y', errors='coerce')
     date_4 = pd.to_datetime(date_series, format='%m/%d/%Y', errors='coerce')
 
-    # รวมผลลัพธ์จากรูปแบบต่าง ๆ (ใช้ค่าแรกที่ไม่เป็น NaN)
     return date_1.fillna(date_2).fillna(date_3).fillna(date_4)
 
-# Clean '//'
 def clean_ptw_column(ptw_value):
     try:
-        # ตรวจสอบว่าข้อมูลไม่เป็นค่าว่างหรือ None
         if not ptw_value or not isinstance(ptw_value, str):
             raise ValueError("ค่า PTW ต้องเป็นสตริงที่ไม่ว่าง")
 
         # แยกข้อความตาม '//'
         if '//' in ptw_value:
-            # แยกข้อความตาม '//' ทั้งหมด
             parts = ptw_value.split('//')
-            
-            # ส่วนซ้ายจะเป็นส่วนแรกเสมอ
             left_side = parts[0]
-            
-            # ฝั่งขวาทั้งหมดรวมเข้าด้วยกัน
             right_side = ','.join([part.strip() for part in parts[1:]])
-
-            # แปลงฝั่งซ้ายเป็น list เพื่อคงลำดับ
             left_side_list = [item.strip() for item in left_side.split(',')]
-            # แปลงฝั่งขวาเป็น set เพื่อกำจัดคำซ้ำ
             right_side_set = set([item.strip() for item in right_side.split(',')])
-            
-            # ลบคำซ้ำจากฝั่งขวาที่มีในฝั่งซ้าย
             cleaned_right_side = [item for item in right_side_set if item not in left_side_list]
+            cleaned_left_str = ', '.join(left_side_list)
+            cleaned_right_str = ', '.join(cleaned_right_side)
             
-            # รวมค่าใหม่กลับมา
-            cleaned_left_str = ', '.join(left_side_list)  # ฝั่งซ้ายคงอยู่เหมือนเดิม
-            cleaned_right_str = ', '.join(cleaned_right_side)  # ลบคำซ้ำจากฝั่งขวา
-            
-            # ถ้าฝั่งขวามีค่า ให้รวมฝั่งซ้ายและขวาเข้าด้วยกัน
             if cleaned_right_str:
                 return f'{cleaned_left_str}//{cleaned_right_str}'
             else:
-                return cleaned_left_str  # ถ้าฝั่งขวาว่าง ให้แสดงเฉพาะฝั่งซ้าย
+                return cleaned_left_str
         else:
-            return ptw_value  # ถ้าไม่มี '//' ในข้อความให้คืนค่าตามเดิม
+            return ptw_value
 
     except Exception as e:
         logger.error(f"An error occurred: {e}")
@@ -2436,7 +2316,7 @@ def create_pm_plan(request, df_original_filter, siteid,
             'UNIT': [],
             'TYPE': [],
         }
-        ############################
+
         for _,row in  df_original_filter_group_pm.iterrows():
             #row_index
             ####PM Number
@@ -2732,10 +2612,7 @@ def replace_columns(col, replace_dict):
 
 def create_workorder(request, df, pmnum_col, orgid):
     try:
-        # เลือกคอลัมน์ที่ต้องการจาก DataFrame
         df_workorder = df[['SITEID', pmnum_col, 'WOSTATUS', 'NEXTDATE', 'FINISH_DATE']].copy()
-        
-        # กำหนดค่าใหม่ในคอลัมน์ต่างๆ
         df_workorder['PARENTCHGSSTATUS'] = 0
         df_workorder['ORGID'] = orgid
         df_workorder['NEXTDATE'] = df_workorder['NEXTDATE'] + ' ' + '01:00:00'
@@ -2819,7 +2696,6 @@ def copy_worksheet(request, file_path, sheet_name, index):
         return redirect('index')
 
 def write_dataframes_to_excel(request, writer, df_labor, lst_labor, df_jop, jop_plan_column, df_pm, pm_plan_column, df_workorder, sheet_name_labor, sheet_name_task, sheet_name_pm, sheet_name_wo, start_row, start_offset):
-    # เขียนข้อมูลจาก DataFrame ลงในชีตที่ระบุ
     try:
         df_labor[lst_labor].to_excel(writer, sheet_name=sheet_name_labor, startrow=start_row, startcol=0, index=False, header=False)
         df_jop[jop_plan_column].to_excel(writer, sheet_name=sheet_name_task, startrow=start_row, startcol=0, index=False, header=False)
@@ -2861,7 +2737,6 @@ def decorate_sheet_labor(sheet, thin_border, fill_color, yellow_fill):
     sheet.insert_cols(idx=11)
     sheet.auto_filter.ref = "A2:N2"
 
-# ฟังก์ชันสำหรับตกแต่งชีต JPPLAN-TASK
 def decorate_sheet_task(sheet, thin_border, fill_color, yellow_fill, start_row, df_jop_plan_master):
     headers = ['START_DATE', 'FINISH_DATE', 'GROUP', 'MOD', 'COMMENT']
     for row in range(start_row + 1, start_row + 1 + len(df_jop_plan_master)):
@@ -2888,7 +2763,6 @@ def decorate_sheet_task(sheet, thin_border, fill_color, yellow_fill, start_row, 
     sheet.column_dimensions['N'].width = 20.0
     sheet.auto_filter.ref = "A2:Q2"
 
-# ฟังก์ชันสำหรับตกแต่งชีต PM-PLAN
 def decorate_sheet_pm(sheet, thin_border, fill_color, yellow_fill, start_row, df_pm_plan3_master):
     headers = ['MOD', 'MAIN_SYSTEM', 'MAIN_SYSTEM_DESC', 'UNIT',
             'TYPE','SUB_SYSTEM', 'EQUIPMENT', 'SUB_SYSTEM_DESC',
@@ -2925,13 +2799,7 @@ def decorate_sheet_pm(sheet, thin_border, fill_color, yellow_fill, start_row, df
     # sheet.column_dimensions['AH'].width = 90.0
     sheet.column_dimensions['AJ'].width = 15.0
     sheet.column_dimensions['AK'].width = 15.0
-
     sheet.auto_filter.ref = 'A2:AL2'
-
-# ฟังก์ชันสำหรับตกแต่งชีต WO
-# def decorate_sheet_wo(sheet):
-#     # เพิ่มการตกแต่งสำหรับชีต WO ตามต้องการ
-#     pass
 
 def decorate_sheet(sheet, sheet_name, thin_border, fill_color, yellow_fill, start_row, df_jop_plan_master, df_pm_plan3_master):
     if "JPPLAN-LABOR" in sheet_name:
@@ -2945,11 +2813,9 @@ def decorate_sheet(sheet, sheet_name, thin_border, fill_color, yellow_fill, star
 
 def copy_sheets_to_macro_file(request, file_template_xlsx, file_path, file_template_xlsm, basic_sheet_names, location):
     try:
-        # 5. ใช้ xlwings คัดลอกเนื้อหาและการตกแต่งจาก .xlsx ไปยัง .xlsm
         with xw.App(visible=False) as app:
             time.sleep(2)
 
-            # เปิดไฟล์ .xlsx และ .xlsm
             book_xlsx = app.books.open(file_template_xlsx)
             book_xlsm = app.books.open(file_path)  # เปิดไฟล์ต้นฉบับ
 
@@ -2961,10 +2827,8 @@ def copy_sheets_to_macro_file(request, file_template_xlsx, file_path, file_templ
             # คัดลอกชีตทั้งหมดจาก .xlsx ไปยัง .xlsm
             for sheet_name in basic_sheet_names:
                 sheet_xlsx = book_xlsx.sheets[sheet_name]
-                # คัดลอกชีตจาก .xlsx ไปยัง .xlsm วางไว้หลังชีตสุดท้ายใน .xlsm
-                sheet_xlsx.api.Copy(After=book_xlsm.sheets[-1].api)
+                sheet_xlsx.api.Copy(After=book_xlsm.sheets[-1].api) # คัดลอกชีตจาก .xlsx ไปยัง .xlsm วางไว้หลังชีตสุดท้ายใน .xlsm
 
-                # ตั้งชื่อชีตใหม่ใน .xlsm
                 new_sheet = book_xlsm.sheets[-1]  # ชีตที่ถูกคัดลอกจะเป็นชีตสุดท้าย
                 if sheet_name in [s.name for s in book_xlsm.sheets]:
                     new_sheet_name = f"{sheet_name}-{location}"
@@ -2976,11 +2840,9 @@ def copy_sheets_to_macro_file(request, file_template_xlsx, file_path, file_templ
             for sheet_name in basic_sheet_names:
                 sheet_name_with_suffix = f"{sheet_name}-1"
                 sheet_xlsx = book_xlsx.sheets[sheet_name_with_suffix]
-                # คัดลอกชีตจาก .xlsx ไปยัง .xlsm วางไว้หลังชีตสุดท้ายใน .xlsm
                 sheet_xlsx.api.Copy(After=book_xlsm.sheets[-1].api)
 
-                # ตั้งชื่อชีตใหม่ใน .xlsm
-                new_sheet = book_xlsm.sheets[-1]  # ชีตที่ถูกคัดลอกจะเป็นชีตสุดท้าย
+                new_sheet = book_xlsm.sheets[-1]
                 if sheet_name_with_suffix in [s.name for s in book_xlsm.sheets]:
                     new_sheet_name = f"{sheet_name_with_suffix}-{location}"
                 else:
@@ -2988,7 +2850,6 @@ def copy_sheets_to_macro_file(request, file_template_xlsx, file_path, file_templ
 
                 new_sheet.name = new_sheet_name
 
-            # บันทึกไฟล์ .xlsm ที่ตกแต่งแล้ว
             book_xlsm.save(file_template_xlsm)
             print(f"File saved successfully as {file_template_xlsm}")
             

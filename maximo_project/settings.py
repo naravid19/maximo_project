@@ -36,9 +36,15 @@ SECRET_KEY = 'django-insecure-8qr^6l&nb!g6g22xu(^6h@wb#hc$54e@qr76(@x*npdvhh#&!u
 DEBUG = False    # ควรตั้งค่าเป็น False ใน production
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '2c0f-161-246-199-200.ngrok-free.app']
 CSRF_TRUSTED_ORIGINS = ['https://2c0f-161-246-199-200.ngrok-free.app']
-# CSRF_COOKIE_SECURE = True   # ส่ง CSRF Cookie เฉพาะผ่าน HTTPS
-# SESSION_COOKIE_SECURE = True  # ใช้ Secure Cookie (เฉพาะ HTTPS)
 PORT = int(os.environ.get("PORT", 8000))
+
+# SECURE_HSTS_SECONDS = 31536000  # เฉพาะ HTTPS
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True   # เฉพาะ HTTPS
+# SECURE_HSTS_PRELOAD = True  # เฉพาะ HTTPS
+# CSRF_COOKIE_SECURE = True   # ส่ง CSRF Cookie เฉพาะ HTTPS
+# SESSION_COOKIE_SECURE = True  # ใช้ Secure Cookie เฉพาะ HTTPS
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
 
 # ==============================================================================
 # APPLICATION DEFINITION
@@ -228,19 +234,19 @@ LOGGING = {
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
-            'level': 'DEBUG',
+            'level': 'INFO',
             'stream': sys.stdout,
         },
     },
     'loggers': {
         'django': {
             'handlers': ['file_info', 'file_error', 'file_warning', 'file_critical', 'file_debug', 'console'],  # กำหนดว่าข้อความ log จะถูกจัดการอย่างไรหรือจะถูกส่งไปที่ไหน Console: แสดง log ใน terminal หรือ console ,File: บันทึก log ลงไฟล์
-            'level': 'DEBUG',   # ระดับความสำคัญของข้อความที่จะถูกบันทึก
+            'level': 'INFO',   # ระดับความสำคัญของข้อความที่จะถูกบันทึก
             'propagate': True,
         },
         'maximo_app': {
             'handlers': ['file_info', 'file_error', 'file_warning', 'file_critical', 'file_debug', 'console'],
-            'level': 'DEBUG',
+            'level': 'INFO',
             'propagate': True,
         },
     },
