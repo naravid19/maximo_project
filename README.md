@@ -1,11 +1,12 @@
 <!-- markdownlint-disable MD030 -->
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/54550f9d-5f29-4d87-a573-c95b53a637b0" alt="Maximo Project Banner" style="width:100%">
 </p>
 
 # Maximo Project
 
-**Maximo Project** คือโปรแกรมตรวจสอบและจัดทำข้อมูลงานบำรุงรักษาแบบหยุดตามวาระ (Shutdown Maintenance) ในรูปแบบใหม่ โดยผสานระบบบริหารจัดการงานบำรุงรักษาด้วยคอมพิวเตอร์ (CMMS) เพื่อให้กระบวนการจัดทำข้อมูลมีความถูกต้อง โปร่งใส และรวดเร็ว
+**Maximo Project** คือโปรแกรมตรวจสอบและจัดทำข้อมูลงานบำรุงรักษาแบบหยุดตามวาระในรูปแบบใหม่ โดยผสานระบบบริหารจัดการงานบำรุงรักษาด้วยคอมพิวเตอร์ (CMMS) เพื่อให้กระบวนการจัดทำข้อมูลมีความถูกต้อง โปร่งใส และรวดเร็ว
 
 ## ⚙️ เกริ่นนำ
 
@@ -148,3 +149,4 @@ maximo_project/
 - **Tailwind CSS Documentation:** [https://tailwindcss.com/docs](https://tailwindcss.com/docs)
 - **Flowbite Documentation:** [https://flowbite.com/docs](https://flowbite.com/docs)
 - **Pandas Documentation:** [https://pandas.pydata.org/docs/](https://pandas.pydata.org/docs/)
+
