@@ -1732,7 +1732,7 @@ def download_schedule(request):
 
 def download_example_template(request):
     try:
-        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'TEMPLATE MXLOADERก JB-PM PLAN(EXAMPLE).zip')
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'TEMPLATE MXLOADER JB-PM PLAN(EXAMPLE).zip')
         
         if not os.path.exists(file_path):
             logger.error("TEMPLATE MXLOADER JB-PM PLAN(EXAMPLE) zip file not found at: %s", file_path)
