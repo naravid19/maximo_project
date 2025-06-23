@@ -36,7 +36,7 @@ class Site(models.Model):
         return f"{self.site_id}"
 
     def save(self, *args, **kwargs):
-        # แปลง plant_code ให้เป็นตัวพิมพ์ใหญ่
+        # แปลง site_id ให้เป็นตัวพิมพ์ใหญ่
         self.site_id = self.site_id.upper()
         super().save(*args, **kwargs)
 
@@ -53,7 +53,7 @@ class ChildSite(models.Model):
         return f"{self.site_id}"
 
     def save(self, *args, **kwargs):
-        # แปลง plant_code ให้เป็นตัวพิมพ์ใหญ่
+        # แปลง site_id ให้เป็นตัวพิมพ์ใหญ่
         self.site_id = self.site_id.upper()
         super().save(*args, **kwargs)
 
