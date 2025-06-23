@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'django_extensions',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -269,6 +270,14 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
+
+# ==============================================================================
+# GRAPHVIZ CONFIGURATION
+# ==============================================================================
+GRAPH_MODELS = {
+    'all_applications': True,
+    'group_models': True,
+}
 
 # ==============================================================================
 # CUSTOM SETTINGS
