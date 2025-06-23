@@ -283,7 +283,6 @@ def index(request):
             request.session['wbs'] = wbs.wbs_code
             request.session['wbs_desc'] = wbs_desc
             request.session['worktype'] = worktype
-            request.session['wostatus'] = wostatus
             request.session['grouping_text'] = grouping_text
 
             try:
@@ -649,7 +648,6 @@ def index(request):
                 else:
                     lst_sub_sys.append('No_kks_found')
 
-
             lst_equipment = []
             for i,j in df_original_newcol.iterrows():
                 if len(kks_read[kks_read['Location_x']==j['KKS_NEW']]['Description'])==1:
@@ -736,7 +734,7 @@ def index(request):
             df_comment['COMMENT'] = df_comment['COMMENT'].str.strip(', ')
 
 
-            #! Create Commnet.xlsx file
+            #! สร้างไฟล์ Comment.xlsx
             df_comment['TASK_ORDER'] = df_original_copy['TASK_ORDER_NEW']
             red_fill = PatternFill(start_color="FF0000", end_color="FF0000", fill_type="solid")
             yellow_fill = PatternFill(start_color='FFFF00', end_color='FFFF00', fill_type='solid')
@@ -918,10 +916,9 @@ def index(request):
                     'location_filename': location_filename,
                     'selected_order': selected_order,
                 })
-            #! END RECHECK
 
 
-            #! Creat JOB PLAN TASK
+            #! สร้าง Job Plan Task รูปแบบที่ 1
             df_original_newcol['UNIT'] = df_original_newcol['KKS_NEW'].str[0:3]
             df_original_filter = df_original_newcol[df_original_newcol['TASK_ORDER_NEW']!='xx'].copy()
             df_original_filter['TASK_ORDER_NEW'] = df_original_filter['TASK_ORDER_NEW'].astype('int32')
@@ -1014,7 +1011,7 @@ def index(request):
             # df_jop_plan_master.to_excel(job_plan_task_path,index=False)
 
 
-            #! JOB PLAN Labor
+            #! สร้าง Job Plan Labor รูปแบบที่ 1
             df_jop_plan_master_labor = df_jop_plan_master.copy()
             df_jop_plan_master_labor['GROUP_LEVEL_1'] = df_jop_plan_master_labor['JOB_NUM'].str.extract(r'JP-(\d+)-')
             df_jop_plan_master_labor['GROUP_LEVEL_1'] = df_jop_plan_master_labor['GROUP_LEVEL_1'].astype('int32')
@@ -1026,7 +1023,7 @@ def index(request):
                 work_group = df_original_filter[cond1].iloc[:,0:].reset_index(drop=True) # separate each group
                 cond2 = work_group['DURATION_(HR.)']!=-1 # to eliminate redundant task
                 df_new = work_group[cond2].copy()
-                df_new['DURATION_TOTAL']=df_new['DURATION_(HR.)'].sum()
+                df_new['DURATION_TOTAL'] = df_new['DURATION_(HR.)'].sum()
                 df_new = df_new.replace(-1,np.nan)
                 df_new = df_new.ffill()
                 df_new = df_new.fillna(-1)
@@ -1083,7 +1080,7 @@ def index(request):
             # df_labor_new[lst_labor1].to_excel(job_plan_labor_path, index=False)
 
 
-            #! Create PM PLAN
+            #! เตรียมข้อมูล PM Plan
             # 'MAIN_SYSTEM','MAIN_SYSTEM_DESC','EGCRAFT','PTW'
             # logger.info(f"Grouping Options1 : {selected_order}")
             
@@ -1093,10 +1090,15 @@ def index(request):
                                             first_plant, worktype, egmntacttype,
                                             wostatus, egprojectid, egwbs, frequency)
             
+            
+            #! สร้าง PM Plan รูปแบบที่ 1 (ใบเดี่ยว)
             if 'no_arrange' in group_columns:
                 pm_master_df['MOD'] = 1
                 pm_master_df['GROUP'] = ''
                 df_pm_plan3 = pm_master_df.copy()
+            
+            
+            #! สร้าง PM Plan รูปแบบที่ 1 (ใบแม่ใบลูก)
             else:
                 if 'SYSTEM' in group_columns:
                     index = group_columns.index('SYSTEM')
@@ -1122,6 +1124,8 @@ def index(request):
                     pm_master_df['GROUP'] = ''
                     df_pm_plan3 = pm_master_df.copy()
 
+
+            #! ปรับปรุงและจัดระเบียบข้อมูล PM Plan พร้อมกำหนดค่าเพิ่มเติม
             df_pm_plan3['PARENTCHGSSTATUS']=''
             df_pm_plan3['WOSEQUENCE']=''
 
@@ -1162,7 +1166,7 @@ def index(request):
             # df_pm_plan3_master.to_excel(pm_plan_path, index=False)
 
 
-            #! TYPE 2
+            #! สร้าง PM Plan, Job Plan Task และ Job Plan Labor รูปแบบที่ 2
             class PMNumGenerator:
                 def __init__(self):
                     self.primary_counter = 0
@@ -1732,7 +1736,7 @@ def download_schedule(request):
 
 def download_example_template(request):
     try:
-        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'TEMPLATE MXLOADERก JB-PM PLAN(EXAMPLE).zip')
+        file_path = os.path.join(settings.STATIC_ROOT, 'excel', 'TEMPLATE MXLOADER JB-PM PLAN(EXAMPLE).zip')
         
         if not os.path.exists(file_path):
             logger.error("TEMPLATE MXLOADER JB-PM PLAN(EXAMPLE) zip file not found at: %s", file_path)
