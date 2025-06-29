@@ -283,7 +283,6 @@ def index(request):
             request.session['wbs'] = wbs.wbs_code
             request.session['wbs_desc'] = wbs_desc
             request.session['worktype'] = worktype
-            request.session['wostatus'] = wostatus
             request.session['grouping_text'] = grouping_text
 
             try:
