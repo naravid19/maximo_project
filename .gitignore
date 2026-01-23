@@ -1,0 +1,33 @@
+/venv
+node_modules
+.agent
+.shared
+
+# Environment variables (NEVER commit these!)
+.env
+*.env.local
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Logs
+*.log
+logs/
+
+# Temp files
+temp/
+*.tmp
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Database
+*.sqlite3
+db.sqlite3

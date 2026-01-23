@@ -1,4 +1,10 @@
 # path : maximo_project/maximo_app/views.py
+"""
+Views for Maximo App.
+
+This module handles all HTTP requests for the Maximo maintenance data processing
+application, including file uploads, data validation, and Excel generation.
+"""
 
 # Standard Library Imports
 import datetime
@@ -32,23 +38,14 @@ from openpyxl.styles import Border, Side, PatternFill, Alignment, Font
 from .forms import UploadFileForm
 from maximo_app.models import Site, ChildSite, PlantType, Unit, WorkType, ActType, WBSCode, Status
 
+# Suppress warnings for cleaner output
 warnings.simplefilter("ignore")
 
-# ตั้งค่า stdout ให้ใช้การเข้ารหัสแบบ utf-8
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-logging.basicConfig(
-    level=logging.INFO,
-    handlers=[
-        logging.StreamHandler(sys.stdout),  # แสดงผลในคอนโซลด้วย utf-8
-        logging.FileHandler("logfile.log", encoding="utf-8"),  # บันทึกลงไฟล์ด้วย utf-8
-    ]
-)
-
+# Get logger configured in settings.py (no duplicate configuration needed)
 logger = logging.getLogger(__name__)
 
-# Create your views here.
 # ---------------------------------
-# ฟังก์ชันพื้นฐาน
+# Default Constants
 # ---------------------------------
 orgid = 'EGAT'
 pluscrevum = 0

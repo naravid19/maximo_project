@@ -1,170 +1,268 @@
-<!-- markdownlint-disable MD030 -->
+<!-- Improved compatibility of back to top link -->
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/54550f9d-5f29-4d87-a573-c95b53a637b0" alt="Maximo Project Banner" style="width:100%">
-</p>
+<a id="readme-top"></a>
 
-# Maximo Project
+<!-- PROJECT SHIELDS -->
 
-**Maximo Project** คือโปรแกรมตรวจสอบและจัดทำข้อมูลงานบำรุงรักษาแบบหยุดตามวาระในรูปแบบใหม่ โดยผสานระบบบริหารจัดการงานบำรุงรักษาด้วยคอมพิวเตอร์ (CMMS) เพื่อให้กระบวนการจัดทำข้อมูลมีความถูกต้อง โปร่งใส และรวดเร็ว
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-## สารบัญ
-- [Maximo Project](#maximo-project)
-- [⚙️ เกริ่นนำ](#%EF%B8%8F-เกริ่นนำ)
-- [🌟 ฟีเจอร์หลัก](#-ฟีเจอร์หลัก)
-- [📋 สิ่งที่ต้องเตรียม](#-สิ่งที่ต้องเตรียม)
-- [🔧 การติดตั้ง](#-การติดตั้ง)
-  - [1. โคลนโปรเจกต์](#1-โคลนโปรเจกต์)
-  - [2. ติดตั้งไลบรารี Python](#2-ติดตั้งไลบรารี-python)
-  - [3. ติดตั้ง Dependencies Node.js](#3-ติดตั้ง-dependencies-nodejs)
-  - [4. คอมไพล์ CSS ด้วย Tailwind CSS](#4-คอมไพล์-css-ด้วย-tailwind-css)
-- [🚀 การใช้งาน](#-การใช้งาน)
-  - [รัน Backend (Django)](#รัน-backend-django)
-  - [Background Task Processing](#background-task-processing)
-- [🗂️ โครงสร้างโปรเจกต์](#%EF%B8%8F-โครงสร้างโปรเจกต์)
-- [🤝 การมีส่วนร่วม](#-การมีส่วนร่วม)
-- [📜 License](#-license)
-- [📚 เอกสารอ้างอิง](#-เอกสารอ้างอิง)
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/naravid19/maximo_project">
+    <img src="https://github.com/user-attachments/assets/54550f9d-5f29-4d87-a573-c95b53a637b0" alt="Maximo Project Logo" width="100%">
+  </a>
 
-## ⚙️ เกริ่นนำ
+  <h3 align="center">Maximo Project</h3>
 
-โปรเจกต์นี้ออกแบบมาเพื่อแก้ปัญหาความซับซ้อนและข้อผิดพลาดในกระบวนการจัดทำ:
-- **Job Plan Task** (ใบงานงาน)
-- **Job Plan Labor** (ใบงานค่าแรง)
-- **PM Plan** (แผนบำรุงรักษาตามวาระ)
+  <p align="center">
+    ระบบบริหารจัดการและจัดทำข้อมูลงานบำรุงรักษาแบบหยุดตามวาระสำหรับโรงไฟฟ้า (Planned Outage Management System)
+    <br />
+    <a href="#getting-started"><strong>เริ่มต้นใช้งาน »</strong></a>
+    <br />
+    <br />
+    <a href="#usage">ดูตัวอย่าง</a>
+    &middot;
+    <a href="https://github.com/naravid19/maximo_project/issues">แจ้งปัญหา</a>
+    &middot;
+    <a href="https://github.com/naravid19/maximo_project/issues">ขอฟีเจอร์ใหม่</a>
+  </p>
+</div>
 
-โดยข้อมูลจะถูกจัดทำเป็นไฟล์ Excel Macro-Enabled Workbook ที่สามารถใช้งานร่วมกับ **MxLoader (v8.4.2)** ได้อย่างมีประสิทธิภาพ ซึ่งช่วยสนับสนุนการดำเนินงานในโรงไฟฟ้าให้มีความปลอดภัยและพร้อมจ่ายไฟฟ้าได้รวดเร็ว
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>สารบัญ</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">เกี่ยวกับโปรเจกต์</a>
+      <ul>
+        <li><a href="#built-with">เทคโนโลยีที่ใช้</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">การเริ่มต้นใช้งาน</a>
+      <ul>
+        <li><a href="#prerequisites">สิ่งที่ต้องเตรียม</a></li>
+        <li><a href="#installation">การติดตั้ง</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">การใช้งาน</a></li>
+    <li><a href="#roadmap">แผนในอนาคต</a></li>
+    <li><a href="#changelog">ประวัติการเปลี่ยนแปลง</a></li>
+    <li><a href="#contributing">การมีส่วนร่วม</a></li>
+    <li><a href="#license">สัญญาอนุญาต</a></li>
+    <li><a href="#contact">ติดต่อ</a></li>
+    <li><a href="#acknowledgments">กิตติกรรมประกาศ</a></li>
+  </ol>
+</details>
 
-## 🌟 ฟีเจอร์หลัก
+<!-- ABOUT THE PROJECT -->
 
-- **Data Validation**  
-  ตรวจสอบและกลั่นกรองข้อมูลก่อนสร้างใบงาน ลดข้อผิดพลาดและเพิ่มความถูกต้อง
+## ℹ️ เกี่ยวกับโปรเจกต์
 
-- **MxLoader Template Generation**  
-  สร้างไฟล์ Excel Macro-Enabled สำหรับนำเข้าข้อมูลสู่ระบบ Maximo อย่างครบถ้วน
+**Maximo Project** คือโซลูชันนวัตกรรมที่ออกแบบมาเพื่อปฏิวัติกระบวนการจัดทำข้อมูลงานบำรุงรักษาแบบหยุดตามวาระ (Planned Outage) เชื่อมต่อช่องว่างระหว่างการวางแผนงานและการนำเข้าข้อมูลสู่ระบบ CMMS (Maximo) ช่วยให้วิศวกรและผู้เกี่ยวข้องทำงานได้รวดเร็ว แม่นยำ และมีประสิทธิภาพสูงสุด
 
-- **Job Plan & PM Plan Management**  
-  จัดกลุ่มใบงาน (Job Plan Task, Job Plan Labor) และสร้าง PM Plan ด้วยวิธีที่มีประสิทธิภาพ
+ระบบนี้ถูกพัฒนาเพื่อแก้ปัญหาความซับซ้อนในการจัดการ:
 
-- **Responsive UI Development**  
-  พัฒนา Frontend ทันสมัยด้วย **Tailwind CSS**, **Flowbite** และ **jQuery**
+- 📄 **Job Plan Task** (ใบงานแผนงาน)
+- 👷 **Job Plan Labor** (ใบงานค่าแรงและกำลังคน)
+- 📅 **PM Plan** (แผนบำรุงรักษาเชิงป้องกันตามวาระ)
 
-- **Robust Backend**  
-  ใช้ **Django 5.1** ผสานกับ **Pandas, NumPy, OpenPyXL** เพื่อประมวลผลข้อมูล Excel และจัดการไฟล์
+โดยผลลัพธ์ที่ได้คือไฟล์ Excel Macro-Enabled ที่พร้อมใช้งานกับ **MxLoader (v8.4.2)** ทันที ลดเวลาการเตรียมข้อมูลจากเดิมที่ใช้เวลาหลายวันเหลือเพียงไม่กี่นาที
 
-- **Background Task Processing**  
-  รันงาน background (เช่น การลบไฟล์เก่า) 
+<p align="right">(<a href="#readme-top">กลับไปด้านบน</a>)</p>
 
-## 📋 สิ่งที่ต้องเตรียม
+### 🛠️ เทคโนโลยีที่ใช้
 
-- **Node.js** (เวอร์ชัน LTS)  
-  [ดาวน์โหลด Node.js](https://nodejs.org/)
+โปรเจกต์นี้พัฒนาด้วยเทคโนโลยีที่ทันสมัยและมีเสถียรภาพ เพื่อให้มั่นใจในประสิทธิภาพและการรองรับการขยายตัวในอนาคต
 
-- **Python** (เวอร์ชัน 3.10 ขึ้นไป)  
-  [ดาวน์โหลด Python](https://www.python.org/)
+- [![Django][Django]][Django-url] - Web Framework ประสิทธิภาพสูง
+- [![TailwindCSS][TailwindCSS]][TailwindCSS-url] - Utility-first CSS framework สำหรับ UI ที่สวยงาม
+- [![Flowbite][Flowbite]][Flowbite-url] - UI Component library
+- [![Pandas][Pandas]][Pandas-url] - Library ประมวลผลและวิเคราะห์ข้อมูล Excel
+- [![JQuery][JQuery.com]][JQuery-url] - จัดการ DOM และ AJAX interactions
 
-## 🔧 การติดตั้ง
+<p align="right">(<a href="#readme-top">กลับไปด้านบน</a>)</p>
 
-### 1. โคลนโปรเจกต์
+<!-- GETTING STARTED -->
 
-```bash
-git clone https://github.com/naravid19/maximo_project.git
-cd maximo_project
-```
+## 🚀 การเริ่มต้นใช้งาน
 
-### 2. ติดตั้งไลบรารี Python
+ทำตามขั้นตอนด้านล่างเพื่อติดตั้งและรันโปรเจกต์บนเครื่องของคุณสำหรับการพัฒนาหรือทดสอบ
 
-```bash
-pip install -r requirements.txt
-```
+### 📋 สิ่งที่ต้องเตรียม
 
-### 3. ติดตั้ง Dependencies Node.js
+เพื่อให้แน่ใจว่าโปรแกรมจะทำงานได้อย่างสมบูรณ์ โปรดตรวจสอบว่าเครื่องของคุณมีซอฟต์แวร์ต่อไปนี้:
 
-```bash
-npm install
-```
+- **Python (3.12+)**: [ติดตั้ง Python](https://www.python.org/downloads/)
+- **Node.js (LTS version)**: [ติดตั้ง Node.js](https://nodejs.org/)
+- **Git**: [ติดตั้ง Git](https://git-scm.com/)
 
-### 4. คอมไพล์ CSS ด้วย Tailwind CSS
+### 🔧 การติดตั้ง
 
-- **คอมไพล์ครั้งเดียว**
+1.  **Clone โปรเจกต์**
 
-  ```bash
-  npm run build
-  ```
+    ```sh
+    git clone https://github.com/naravid19/maximo_project.git
+    cd maximo_project
+    ```
 
-- **คอมไพล์แบบเรียลไทม์**
+2.  **ตั้งค่า Python Environment**
 
-  ```bash
-  npm run watch
-  ```
+    ```sh
+    # สร้าง Virtual Environment
+    python -m venv venv
 
-> **หมายเหตุ:** สำหรับ production ควรรันคำสั่ง  
-> ```bash
-> python manage.py collectstatic --noinput
-> ```  
-> เพื่อรวบรวมไฟล์ static ไว้ในโฟลเดอร์ที่กำหนด
+    # Active Environment
+    # Windows:
+    .\venv\Scripts\activate
+    # macOS/Linux:
+    source venv/bin/activate
+    ```
 
-## 🚀 การใช้งาน
+3.  **ติดตั้ง Python Dependencies**
 
-### รัน Backend (Django)
+    ```sh
+    pip install -r requirements.txt
+    ```
 
-```bash
-python manage.py runserver
-```
+4.  **ติดตั้ง Node.js Dependencies และ Build CSS**
 
-เปิดเว็บแอปที่ [http://localhost:8000](http://localhost:8000)
+    ```sh
+    npm install
+    npm run build
+    ```
 
-### Background Task Processing
+5.  **ตั้งค่า Environment Variables**
+    เปลี่ยนชื่อไฟล์ `.env.example` เป็น `.env` และแก้ไขค่า `DJANGO_SECRET_KEY` ให้ปลอดภัย
 
-เพื่อให้ task ทำงาน (เช่น ลบไฟล์เก่า) ต้องรันคำสั่ง:
+    ```sh
+    cp .env.example .env
+    ```
 
-```bash
+6.  **เริ่มต้นใช้งาน**
+    ```sh
+    python manage.py migrate
+    python manage.py runserver
+    ```
+    เข้าใช้งานได้ที่ [http://localhost:8000](http://localhost:8000)
+
+<p align="right">(<a href="#readme-top">กลับไปด้านบน</a>)</p>
+
+<!-- USAGE EXAMPLES -->
+
+## 💡 การใช้งาน
+
+ระบบออกแบบมาให้ใช้งานง่ายใน 3 ขั้นตอนหลัก:
+
+1.  **Upload & Config**: อัปโหลดไฟล์แผนงาน (Schedule) และไฟล์สถานที่ (Location) พร้อมระบุปีและเงื่อนไขการกรอง
+2.  **Validate**: ระบบจะตรวจสอบความถูกต้องของข้อมูล (Data Validation) และแจ้งเตือนหากพบข้อผิดพลาด
+3.  **Download**: ดาวน์โหลดไฟล์ Excel ที่ผ่านการประมวลผลแล้ว เพื่อนำไปใช้กับ MxLoader ต่อไป
+
+### Background Tasks
+
+ระบบมีระบบจัดการงานเบื้องหลังเพื่อทำความสะอาดไฟล์ชั่วคราว สามารถรันได้ด้วยคำสั่ง:
+
+```sh
 python manage.py process_tasks
 ```
 
-ใน production คุณสามารถใช้ process manager (เช่น Supervisor หรือ systemd) เพื่อให้คำสั่งนี้ทำงานตลอดเวลา
+<p align="right">(<a href="#readme-top">กลับไปด้านบน</a>)</p>
 
-## 🗂️ โครงสร้างโปรเจกต์
+<!-- ROADMAP -->
 
-```
-maximo_project/
-│
-├── manage.py
-├── requirements.txt
-│
-├── maximo_app/
-│   ├── models.py              # โครงสร้างฐานข้อมูล
-│   ├── views.py               # ฟังก์ชันจัดการและประมวลผลข้อมูล
-│   ├── forms.py               # ฟอร์มรับข้อมูลผู้ใช้
-│   ├── urls.py                # URL และ API สำหรับ AJAX
-│   ├── tasks.py               # งาน background (เช่น ลบไฟล์เก่า)
-│   └── templates/
-│       └── maximo_app/
-│           └── upload_form.html
-│
-├── static/
-│   ├── js/                    # ไฟล์ JavaScript (all-code.js, ajax-*.js, grouping.js, upload-loading.js, etc.)
-│   └── src/                   # Tailwind CSS input/output
-│
-├── package.json               # การตั้งค่า Node.js และ Tailwind CSS
-├── tailwind.config.js         # กำหนดค่า Tailwind CSS
-└── README.md
-```
+## 🗺️ แผนในอนาคต
+
+- [x] ระบบสร้าง Template สำหรับ MxLoader
+- [x] ระบบตรวจสอบความถูกต้องของข้อมูล (Validation) และแจ้งเตือนข้อผิดพลาด
+- [x] UI/UX ปรับปรุงใหม่ พร้อม Responsive Design
+- [ ] เพิ่ม Dashboard สรุปภาพรวมสถิติข้อมูล
+- [ ] รองรับการ Export ข้อมูลในรูปแบบ JSON API
+- [ ] ระบบจัดการสิทธิ์ผู้ใช้งาน (Authentication & Authorization)
+- [ ] รองรับหลายภาษา (Multi-language Support)
+
+<p align="right">(<a href="#readme-top">กลับไปด้านบน</a>)</p>
+
+<!-- CHANGELOG -->
+
+## 📅 ประวัติการเปลี่ยนแปลง
+
+ดูรายละเอียดการเปลี่ยนแปลงทั้งหมดได้ที่ไฟล์ [CHANGELOG.md](CHANGELOG.md)
+
+<p align="right">(<a href="#readme-top">กลับไปด้านบน</a>)</p>
+
+<!-- CONTRIBUTING -->
 
 ## 🤝 การมีส่วนร่วม
 
-นักพัฒนาที่สนใจสามารถ:
-- **Fork** โปรเจกต์นี้และส่ง Pull Request เพื่อเพิ่มฟีเจอร์หรือแก้ไขบั๊ก
-- เปิด **Issue** หากพบปัญหาหรือมีข้อเสนอแนะ
+การมีส่วนร่วมคือกุญแจสำคัญที่ทำให้ชุมชนโอเพนซอร์สเติบโต เรายินดีต้อนรับทุกคำแนะนำและการช่วยเหลือ:
 
-## 📜 License
+1.  **Fork** โปรเจกต์
+2.  สร้าง Branch สำหรับฟีเจอร์ของคุณ (`git checkout -b feature/AmazingFeature`)
+3.  Commit การเปลี่ยนแปลง (`git commit -m 'Add some AmazingFeature'`)
+4.  Push ไปยัง Branch (`git push origin feature/AmazingFeature`)
+5.  เปิด **Pull Request**
 
-โปรเจกต์นี้ใช้ **MIT License** ดูรายละเอียดเพิ่มเติมในไฟล์ [LICENSE](LICENSE)
+<p align="right">(<a href="#readme-top">กลับไปด้านบน</a>)</p>
 
-## 📚 เอกสารอ้างอิง
+<!-- LICENSE -->
 
-- **Django Documentation:** [https://docs.djangoproject.com/](https://docs.djangoproject.com/)
-- **Tailwind CSS Documentation:** [https://tailwindcss.com/docs](https://tailwindcss.com/docs)
-- **Flowbite Documentation:** [https://flowbite.com/docs](https://flowbite.com/docs)
-- **Pandas Documentation:** [https://pandas.pydata.org/docs/](https://pandas.pydata.org/docs/)
+## 📜 สัญญาอนุญาต
 
+โปรเจกต์นี้เผยแพร่ภายใต้สัญญาอนุญาต **MIT License** ดูรายละเอียดเพิ่มเติมในไฟล์ `LICENSE`
+
+<p align="right">(<a href="#readme-top">กลับไปด้านบน</a>)</p>
+
+<!-- CONTACT -->
+
+## 📧 ติดต่อ
+
+Naravid - [github.com/naravid19](https://github.com/naravid19)
+
+Project Link: [https://github.com/naravid19/maximo_project](https://github.com/naravid19/maximo_project)
+
+<p align="right">(<a href="#readme-top">กลับไปด้านบน</a>)</p>
+
+<!-- ACKNOWLEDGMENTS -->
+
+## 🙏 กิตติกรรมประกาศ
+
+ขอขอบคุณเครื่องมือและไลบรารีดีๆ ที่ช่วยให้โปรเจกต์นี้เกิดขึ้นได้:
+
+- [Django](https://www.djangoproject.com/)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Flowbite](https://flowbite.com)
+- [MxLoader](https://www.mro.com/)
+- [Img Shields](https://shields.io)
+
+<p align="right">(<a href="#readme-top">กลับไปด้านบน</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+
+[contributors-shield]: https://img.shields.io/github/contributors/naravid19/maximo_project.svg?style=for-the-badge
+[contributors-url]: https://github.com/naravid19/maximo_project/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/naravid19/maximo_project.svg?style=for-the-badge
+[forks-url]: https://github.com/naravid19/maximo_project/network/members
+[stars-shield]: https://img.shields.io/github/stars/naravid19/maximo_project.svg?style=for-the-badge
+[stars-url]: https://github.com/naravid19/maximo_project/stargazers
+[issues-shield]: https://img.shields.io/github/issues/naravid19/maximo_project.svg?style=for-the-badge
+[issues-url]: https://github.com/naravid19/maximo_project/issues
+[license-shield]: https://img.shields.io/github/license/naravid19/maximo_project.svg?style=for-the-badge
+[license-url]: https://github.com/naravid19/maximo_project/blob/main/LICENSE
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/naravid
+[Django]: https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white
+[Django-url]: https://www.djangoproject.com/
+[TailwindCSS]: https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white
+[TailwindCSS-url]: https://tailwindcss.com/
+[Flowbite]: https://img.shields.io/badge/Flowbite-1C64F2?style=for-the-badge&logo=flowbite&logoColor=white
+[Flowbite-url]: https://flowbite.com/
+[Pandas]: https://img.shields.io/badge/pandas-%23150458.svg?style=for-the-badge&logo=pandas&logoColor=white
+[Pandas-url]: https://pandas.pydata.org/
+[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
+[JQuery-url]: https://jquery.com

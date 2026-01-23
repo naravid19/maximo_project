@@ -13,8 +13,11 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 import sys
-from logging.handlers import RotatingFileHandler
 from concurrent_log_handler import ConcurrentRotatingFileHandler
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # ==============================================================================
 # PATHS
@@ -30,21 +33,36 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY SETTINGS
 # ==============================================================================
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8qr^6l&nb!g6g22xu(^6h@wb#hc$54e@qr76(@x*npdvhh#&!u'
+# Load SECRET_KEY from environment variable for security
+SECRET_KEY = os.environ.get(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-dev-key-change-this-in-production'
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False    # ควรตั้งค่าเป็น False ใน production
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '2c0f-161-246-199-200.ngrok-free.app']
-CSRF_TRUSTED_ORIGINS = ['https://2c0f-161-246-199-200.ngrok-free.app']
-PORT = int(os.environ.get("PORT", 8000))
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() in ('true', '1', 'yes')
 
-# SECURE_HSTS_SECONDS = 31536000  # เฉพาะ HTTPS
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True   # เฉพาะ HTTPS
-# SECURE_HSTS_PRELOAD = True  # เฉพาะ HTTPS
-# CSRF_COOKIE_SECURE = True   # ส่ง CSRF Cookie เฉพาะ HTTPS
-# SESSION_COOKIE_SECURE = True  # ใช้ Secure Cookie เฉพาะ HTTPS
+# Parse allowed hosts from environment variable
+_allowed_hosts = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1')
+ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts.split(',') if h.strip()]
+
+# Parse CSRF trusted origins from environment variable
+_csrf_origins = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
+CSRF_TRUSTED_ORIGINS = [o.strip() for o in _csrf_origins.split(',') if o.strip()]
+
+# Port configuration
+PORT = int(os.environ.get('PORT', 8000))
+
+# Security headers
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
+
+# HTTPS-only settings (uncomment in production with HTTPS)
+# SECURE_HSTS_SECONDS = 31536000
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
 
 # ==============================================================================
 # APPLICATION DEFINITION
